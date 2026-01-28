@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Уруу — Родовая структура каракалпаков</title>
+    <title>Уруу — Полная родовая структура каракалпаков</title>
     <style>
         * {
             margin: 0;
@@ -12,16 +12,16 @@
         }
 
         :root {
-            --primary: #1e3a5f;
-            --secondary: #d4a574;
-            --accent: #c9a227;
+            --konyrat: #e74c3c;
+            --on-tort: #3498db;
+            --shulik: #c0392b;
+            --jaungir: #2980b9;
+            --gold: #d4a574;
             --bg-dark: #0f172a;
             --bg-card: #1e293b;
             --text: #f1f5f9;
             --text-muted: #94a3b8;
             --border: #334155;
-            --gradient-1: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
-            --gradient-2: linear-gradient(135deg, #d4a574 0%, #c9a227 100%);
         }
 
         body {
@@ -29,42 +29,53 @@
             background: var(--bg-dark);
             color: var(--text);
             min-height: 100vh;
-            line-height: 1.6;
         }
 
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(ellipse at 20% 80%, rgba(30, 58, 95, 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(212, 165, 116, 0.15) 0%, transparent 50%);
-        }
-
+        /* Header */
         header {
-            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+            padding: 1.5rem;
             text-align: center;
+            border-bottom: 2px solid var(--gold);
         }
 
         .logo {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
-            background: var(--gradient-2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+            color: var(--gold);
+            text-shadow: 0 2px 10px rgba(212, 165, 116, 0.3);
         }
 
         .subtitle {
             color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
         }
 
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            flex-wrap: wrap;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        /* Search */
         .search-container {
             max-width: 800px;
             margin: 1rem auto;
@@ -73,93 +84,23 @@
 
         .search-box {
             background: var(--bg-card);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 1rem;
             border: 1px solid var(--border);
         }
 
-        .search-input-wrapper {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .search-icon {
-            width: 20px;
-            height: 20px;
-            color: var(--secondary);
-            flex-shrink: 0;
-        }
-
         #searchInput {
-            flex: 1;
+            width: 100%;
             background: transparent;
             border: none;
             color: var(--text);
             font-size: 1rem;
+            padding: 0.5rem;
             outline: none;
         }
 
-        #searchInput::placeholder {
-            color: var(--text-muted);
-        }
-
-        .search-filters {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--secondary);
-            color: var(--bg-dark);
-            border-color: var(--secondary);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            max-width: 800px;
-            margin: 1rem auto;
-            padding: 0 1rem;
-        }
-
-        @media (min-width: 640px) {
-            .stats { grid-template-columns: repeat(4, 1fr); }
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            padding: 1.25rem;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .stat-number {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--secondary);
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .container {
+        /* Main Layout */
+        .main-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 1rem;
@@ -169,21 +110,25 @@
         }
 
         @media (min-width: 1024px) {
-            .container { grid-template-columns: 1fr 380px; padding: 2rem; }
+            .main-container {
+                grid-template-columns: 1fr 400px;
+            }
         }
 
-        .tree-section {
+        /* Tree Visualization */
+        .tree-container {
             background: var(--bg-card);
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 1.5rem;
             border: 1px solid var(--border);
         }
 
-        .section-title {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
+        .tree-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
             gap: 0.5rem;
         }
 
@@ -191,207 +136,277 @@
             display: flex;
             gap: 0.5rem;
             align-items: center;
-            margin-bottom: 1rem;
             flex-wrap: wrap;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .breadcrumb-item {
             color: var(--text-muted);
             cursor: pointer;
             padding: 0.25rem 0.5rem;
-            border-radius: 6px;
+            border-radius: 4px;
+            transition: all 0.2s;
         }
 
         .breadcrumb-item:hover {
-            color: var(--secondary);
+            color: var(--gold);
             background: rgba(212, 165, 116, 0.1);
         }
 
         .breadcrumb-item.active {
-            color: var(--secondary);
-            font-weight: 500;
-        }
-
-        .tree-container {
-            overflow-x: auto;
-        }
-
-        .tree {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .tree-level {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .tree-node {
-            background: var(--gradient-1);
-            border: 2px solid var(--secondary);
-            border-radius: 12px;
-            padding: 1rem 1.25rem;
-            min-width: 120px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            user-select: none;
-        }
-
-        .tree-node:active {
-            transform: scale(0.95);
-        }
-
-        .tree-node:hover, .tree-node.active {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.3);
-            border-color: var(--accent);
-        }
-
-        .tree-node.active {
-            background: var(--gradient-2);
-            color: var(--bg-dark);
-        }
-
-        .tree-node .label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0.9;
-            margin-bottom: 0.25rem;
-        }
-
-        .tree-node .name {
-            font-size: 1rem;
+            color: var(--gold);
             font-weight: 600;
         }
 
-        .tree-node .count {
-            font-size: 0.75rem;
-            margin-top: 0.4rem;
-            opacity: 0.8;
-        }
-
-        .branches {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.75rem;
-            width: 100%;
-        }
-
-        .leaf-nodes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        /* Level Navigation */
+        .level-tabs {
+            display: flex;
             gap: 0.5rem;
-            width: 100%;
-        }
-
-        .back-btn {
-            background: rgba(212, 165, 116, 0.15);
-            border: 1px solid var(--secondary);
-            color: var(--secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
             margin-bottom: 1rem;
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
         }
 
-        .back-btn:hover {
-            background: var(--secondary);
+        .level-tab {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .level-tab:hover, .level-tab.active {
+            background: var(--gold);
             color: var(--bg-dark);
+            border-color: var(--gold);
         }
 
+        /* Tree Grid */
+        .tree-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .tree-level {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .tree-level::before {
+            content: attr(data-label);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--bg-card);
+            padding: 0 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Cards */
+        .clan-card {
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .clan-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .clan-card.konyrat {
+            background: linear-gradient(135deg, var(--konyrat) 0%, #c0392b 100%);
+        }
+
+        .clan-card.on-tort {
+            background: linear-gradient(135deg, var(--on-tort) 0%, #2980b9 100%);
+        }
+
+        .clan-card.shulik {
+            background: linear-gradient(135deg, var(--shulik) 0%, #962d22 100%);
+        }
+
+        .clan-card.jaungir {
+            background: linear-gradient(135deg, var(--jaungir) 0%, #1c5a85 100%);
+        }
+
+        .clan-card.neutral {
+            background: linear-gradient(135deg, #7f8c8d 0%, #566573 100%);
+        }
+
+        .clan-card.active {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 165, 116, 0.4);
+        }
+
+        .clan-card .name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .clan-card .tamga {
+            font-size: 1.5rem;
+            margin: 0.25rem 0;
+        }
+
+        .clan-card .meta {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        /* Info Panel */
         .info-panel {
             background: var(--bg-card);
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 1.5rem;
             border: 1px solid var(--border);
+            position: sticky;
+            top: 1rem;
+            max-height: calc(100vh - 2rem);
+            overflow-y: auto;
         }
 
         .info-header {
             text-align: center;
-            margin-bottom: 1.5rem;
             padding-bottom: 1.5rem;
             border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
         }
 
-        .info-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-2);
+        .info-tamga {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.75rem;
+            font-size: 2.5rem;
+            background: var(--bg-dark);
+            border: 3px solid var(--gold);
         }
 
         .info-title {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             margin-bottom: 0.25rem;
         }
 
-        .info-type {
-            color: var(--secondary);
-            font-size: 0.85rem;
-            text-transform: uppercase;
+        .info-path {
+            color: var(--gold);
+            font-size: 0.9rem;
         }
 
-        .info-item {
-            margin-bottom: 1rem;
+        .info-section {
+            margin-bottom: 1.5rem;
         }
 
-        .info-item-label {
-            color: var(--text-muted);
+        .info-section-title {
             font-size: 0.8rem;
-            margin-bottom: 0.4rem;
             text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .info-section-content {
+            line-height: 1.6;
         }
 
         .tag-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
 
         .tag {
             background: rgba(212, 165, 116, 0.15);
-            color: var(--secondary);
-            padding: 0.3rem 0.7rem;
-            border-radius: 16px;
-            font-size: 0.8rem;
+            color: var(--gold);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             border: 1px solid rgba(212, 165, 116, 0.3);
         }
 
-        .search-results {
-            max-width: 800px;
-            margin: 1rem auto;
-            padding: 0 1rem;
-            display: none;
+        /* Subdivisions List */
+        .sub-list {
+            display: grid;
+            gap: 0.5rem;
         }
 
-        .search-results.active {
+        .sub-item {
+            background: rgba(0,0,0,0.2);
+            padding: 0.75rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sub-item-name {
+            font-weight: 500;
+        }
+
+        .sub-item-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Search Results */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.98);
+            z-index: 100;
+            padding: 1rem;
+            display: none;
+            overflow-y: auto;
+        }
+
+        .search-overlay.active {
             display: block;
         }
 
-        .results-header {
+        .search-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
         }
 
-        .close-search-btn {
+        .close-search {
             background: var(--bg-card);
             border: 1px solid var(--border);
             color: var(--text);
@@ -400,7 +415,7 @@
             cursor: pointer;
         }
 
-        .result-card {
+        .result-item {
             background: var(--bg-card);
             border-radius: 12px;
             padding: 1rem;
@@ -410,589 +425,775 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            transition: all 0.2s;
         }
 
-        .result-card:hover {
-            border-color: var(--secondary);
+        .result-item:hover {
+            border-color: var(--gold);
+            transform: translateX(5px);
         }
 
-        .result-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--gradient-1);
+        .result-tamga {
+            width: 50px;
+            height: 50px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             flex-shrink: 0;
         }
 
-        .result-path {
-            color: var(--text-muted);
-            font-size: 0.8rem;
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.2);
+            margin-bottom: 1rem;
+            border-radius: 12px;
         }
 
-        .empty-state {
+        .stat-item {
             text-align: center;
-            padding: 3rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
             color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .tree-level {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.4s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="bg-animation"></div>
-
     <header>
-        <h1 class="logo">УРУУ</h1>
-        <p class="subtitle">Интерактивная база родовой структуры каракалпаков</p>
+        <h1 class="logo">🌳 УРУУ</h1>
+        <p class="subtitle">Полная родовая структура каракалпаков</p>
     </header>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--konyrat)"></div>
+            <span>Арыс Қоңырат</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--on-tort)"></div>
+            <span>Арыс Он төрт уруу</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--shulik)"></div>
+            <span>Шүллик бөлімі</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--jaungir)"></div>
+            <span>Жауыңыр бөлімі</span>
+        </div>
+    </div>
 
     <div class="search-container">
         <div class="search-box">
-            <div class="search-input-wrapper">
-                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-                <input type="text" id="searchInput" placeholder="Поиск рода..." autocomplete="off">
-            </div>
-            <div class="search-filters">
-                <button class="filter-btn active" data-filter="all">Все</button>
-                <button class="filter-btn" data-filter="arys">Арыс</button>
-                <button class="filter-btn" data-filter="ulken">Үлкен уруу</button>
-                <button class="filter-btn" data-filter="uruu">Уруу</button>
-                <button class="filter-btn" data-filter="tiyre">Тийре</button>
-            </div>
+            <input type="text" id="searchInput" placeholder="Поиск по названию рода, тамге...">
         </div>
     </div>
 
-    <div class="stats">
-        <div class="stat-card"><span class="stat-number">2</span><span class="stat-label">Арыса</span></div>
-        <div class="stat-card"><span class="stat-number">6</span><span class="stat-label">Үлкен уруу</span></div>
-        <div class="stat-card"><span class="stat-number">300+</span><span class="stat-label">Уруу</span></div>
-        <div class="stat-card"><span class="stat-number">∞</span><span class="stat-label">Көше</span></div>
-    </div>
-
-    <div class="search-results" id="searchResults">
-        <div class="results-header">
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-header">
             <h3>Результаты поиска</h3>
-            <button class="close-search-btn" onclick="closeSearch()">✕ Закрыть</button>
+            <button class="close-search" onclick="closeSearch()">✕ Закрыть</button>
         </div>
-        <div id="resultsList"></div>
+        <div id="searchResults"></div>
     </div>
 
-    <div class="container" id="mainContent">
-        <div class="tree-section">
-            <h2 class="section-title"><span>🌳</span>Иерархия родов</h2>
-            <div class="breadcrumb" id="breadcrumb">
-                <span class="breadcrumb-item active" onclick="goHome()">Все арысы</span>
+    <div class="main-container">
+        <div class="tree-container">
+            <div class="tree-header">
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="breadcrumb-item active" onclick="showLevel('root')">Все арысы</span>
+                </div>
             </div>
-            <button class="back-btn" id="backBtn" onclick="goBack()">← Назад</button>
-            <div class="tree-container">
-                <div class="tree" id="treeView"></div>
+
+            <div class="stats-bar" id="statsBar">
+                <div class="stat-item">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">Арыса</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2</div>
+                    <div class="stat-label">Бөлiм</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Үлкен уруу</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">300+</div>
+                    <div class="stat-label">Уруу</div>
+                </div>
+            </div>
+
+            <div class="level-tabs" id="levelTabs">
+                <button class="level-tab active" onclick="showLevel('root')">Арысы</button>
+            </div>
+
+            <div class="tree-grid" id="treeGrid">
+                <!-- Generated by JS -->
             </div>
         </div>
 
         <div class="info-panel" id="infoPanel">
             <div class="info-header">
-                <div class="info-icon">🏛️</div>
-                <h3 class="info-title">Каракалпаки</h3>
-                <p class="info-type">Народ</p>
+                <div class="info-tamga">🏛️</div>
+                <h2 class="info-title">Каракалпаки</h2>
+                <div class="info-path">Тюркская этническая группа</div>
             </div>
-            <div class="info-content">
-                <div class="info-item">
-                    <div class="info-item-label">Описание</div>
-                    <div class="info-item-value">Тюркоязычный народ, проживающий в Республике Каракалпакстан.</div>
+            
+            <div class="info-section">
+                <div class="info-section-title">Описание</div>
+                <div class="info-section-content">
+                    Каракалпаки делятся на два крупных арыса: <strong>Қоңырат</strong> и <strong>Он төрт уруу</strong>. 
+                    Каждый арыс имеет свои родовые тамги (тамға) и историю происхождения.
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-section-title">Структура</div>
+                <div class="tag-list">
+                    <span class="tag">Арыс</span>
+                    <span class="tag">Бөлiм</span>
+                    <span class="tag">Үлкен уруу</span>
+                    <span class="tag">Уруу</span>
+                    <span class="tag">Тийре</span>
+                    <span class="tag">Көше</span>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Данные о родовой структуре
-        const uruuData = {
+                // Полные данные на основе схем
+        const clanData = {
             id: 'root',
             name: 'Каракалпаки',
             type: 'root',
-            description: 'Тюркоязычный народ, проживающий в Республике Каракалпакстан',
+            tamga: '🏛️',
+            description: 'Тюркоязычный народ Средней Азии',
+            
             children: [
                 {
                     id: 'konyrat',
-                    name: 'Қоңырат',
+                    name: 'Арыс Қоңырат',
                     type: 'arys',
+                    color: 'konyrat',
+                    tamga: '🦅',
                     literal: 'Оглобля / Крыло',
-                    description: 'Один из двух крупных арысов. Деление связано с политикой Сейд-Мухаммедхана (после 1855-1856 гг.)',
+                    description: 'Крупнейший арыс каракалпаков. Название связано с крылом (боковой частью оглобли).',
+                    history: 'Деление на арысы произошло в XIX веке по инициативе хивинского хана Сейд-Мухаммедхана после восстания 1855-1856 гг.',
+                    
                     children: [
-                        { 
-                            id: 'kyyat', 
-                            name: 'Қыят', 
-                            type: 'ulken',
+                        {
+                            id: 'shulik',
+                            name: 'Шүллик бөлімі',
+                            type: 'bolim',
+                            color: 'shulik',
+                            tamga: '🔴',
+                            description: 'Левое крыло арыса Қоңырат',
+                            
                             children: [
-                                { 
-                                    id: 'kyyat-u', 
-                                    name: 'Қыят', 
-                                    type: 'uruu',
+                                {
+                                    id: 'kyyat',
+                                    name: 'Қыят',
+                                    type: 'ulken',
+                                    color: 'shulik',
+                                    tamga: 'Қ',
+                                    uran: 'Арқалым',
+                                    description: 'Древний кыпчакский род',
                                     children: [
-                                        { name: 'Тийре 1', type: 'tiyre' },
-                                        { name: 'Тийре 2', type: 'tiyre' }
+                                        { name: 'Уруу 1', type: 'uruu' },
+                                        { name: 'Уруу 2', type: 'uruu' }
                                     ]
+                                },
+                                {
+                                    id: 'ashamayly',
+                                    name: 'Ашамайлы',
+                                    type: 'ulken',
+                                    color: 'shulik',
+                                    tamga: '✕',
+                                    uran: 'Жұлдыз',
+                                    description: 'Имеет общую тамгу с казахским родом кереи',
+                                    tamgaDesc: 'Две пересекающиеся линии',
+                                    children: []
+                                },
+                                {
+                                    id: 'koydauly',
+                                    name: 'Қолдаулы',
+                                    type: 'ulken',
+                                    color: 'shulik',
+                                    tamga: 'Қ',
+                                    description: 'Парные уруу: Сарытон и Күлкихожақ',
+                                    children: []
+                                },
+                                {
+                                    id: 'kostamgaly',
+                                    name: 'Қостамғалы',
+                                    type: 'ulken',
+                                    color: 'shulik',
+                                    tamga: '⧉',
+                                    uran: 'Тоқсоба',
+                                    description: 'Тамга: два квадрата',
+                                    children: []
+                                },
+                                {
+                                    id: 'balgaly',
+                                    name: 'Балғалы',
+                                    type: 'ulken',
+                                    color: 'shulik',
+                                    tamga: 'Т',
+                                    uran: 'Шаңырақ',
+                                    description: 'Тамга: буква Т',
+                                    children: []
+                                },
+                                {
+                                    id: 'kandekli',
+                                    name: 'Қандекли',
+                                    type: 'ulken',
+                                    color: 'shulik',
+                                    tamga: '&',
+                                    uran: 'Ақбалпан',
+                                    description: 'Тамга: амперсанд',
+                                    children: []
+                                },
+                                {
+                                    id: 'karamoyyn',
+                                    name: 'Қарамойын',
+                                    type: 'ulken',
+                                    color: 'shulik',
+                                    tamga: 'Қ',
+                                    description: 'Проживает в ауле Бөгежейли',
+                                    children: []
+                                },
+                                {
+                                    id: 'muyten',
+                                    name: 'Мүйтен',
+                                    type: 'ulken',
+                                    color: 'shulik',
+                                    tamga: 'М',
+                                    uran: 'Ақбалпан',
+                                    description: 'Один из древних шести уруу. Парный с Қоңырат.',
+                                    cemetery: 'Қабақлы ата, Тербенбес',
+                                    children: []
                                 }
                             ]
                         },
-                        { 
-                            id: 'ashamayly', 
-                            name: 'Ашамайлы', 
-                            type: 'ulken',
-                            tamga: 'Две пересекающиеся линии',
-                            tamgaNote: 'Идентична тамге казахского рода кереи',
+                        {
+                            id: 'jaungir',
+                            name: 'Жауыңыр бөлімі',
+                            type: 'bolim',
+                            color: 'jaungir',
+                            tamga: '🔵',
+                            description: 'Правое крыло арыса Қоңырат',
+                            
                             children: [
-                                { 
-                                    id: 'ashamayly-u', 
-                                    name: 'Ашамайлы', 
-                                    type: 'uruu',
-                                    children: [
-                                        { name: 'Панқара', type: 'tiyre' },
-                                        { name: 'Другие тийре', type: 'tiyre' }
-                                    ]
-                                }
-                            ]
-                        },
-                        { 
-                            id: 'koydauly', 
-                            name: 'Қолдаулы', 
-                            type: 'ulken',
-                            children: [
-                                { 
-                                    id: 'koydauly-u', 
-                                    name: 'Қолдаулы', 
-                                    type: 'uruu',
-                                    exogamyNote: 'Парные: Сарытон ↔ Күлкихожақ',
-                                    children: [
-                                        { name: 'Сарытон', type: 'tiyre', cemetery: 'Шытлы' },
-                                        { name: 'Күлкихожақ', type: 'tiyre' },
-                                        { name: 'Қалмақ', type: 'tiyre' },
-                                        { name: 'Үлкенбөрик', type: 'tiyre' }
-                                    ]
-                                }
-                            ]
-                        },
-                        { id: 'kostamgaly', name: 'Қостамғалы', type: 'ulken', children: [] },
-                        { id: 'balgaly', name: 'Балғалы', type: 'ulken', children: [] },
-                        { id: 'kandekli', name: 'Қандекли', type: 'ulken', children: [] },
-                        { 
-                            id: 'karamoyyn', 
-                            name: 'Қарамойын', 
-                            type: 'ulken',
-                            note: 'Проживает в ауле Бөгежейли',
-                            children: [] 
-                        },
-                        { 
-                            id: 'muyten', 
-                            name: 'Мүйтен', 
-                            type: 'ulken',
-                            history: 'Древний род, парный с Қоңырат',
-                            cemetery: 'Қабақлы ата, Тербенбес',
-                            children: [] 
-                        },
-                        { 
-                            id: 'teristamgaly', 
-                            name: 'Теристамғалы', 
-                            type: 'ulken',
-                            note: 'Аул из 15 домов — чисто родовое поселение',
-                            children: [
-                                { 
-                                    id: 'teristamgaly-u', 
-                                    name: 'Теристамғалы', 
-                                    type: 'uruu',
+                                {
+                                    id: 'teristamgaly',
+                                    name: 'Теристамғалы',
+                                    type: 'ulken',
+                                    color: 'jaungir',
+                                    tamga: 'Т',
+                                    description: 'Аул из 15 домов — чисто родовое поселение',
                                     location: 'Караузякский район',
-                                    structure: 'Тийре Шомақ (3-4 поколения)',
-                                    children: [
-                                        { name: 'Шомақ', type: 'tiyre' },
-                                        { name: 'Тоғай', type: 'tiyre' }
-                                    ]
+                                    children: []
+                                },
+                                {
+                                    id: 'bakanaly',
+                                    name: 'Бақаналы-Шаужейли',
+                                    type: 'ulken',
+                                    color: 'jaungir',
+                                    tamga: 'Б',
+                                    description: 'Двойное название рода',
+                                    children: []
+                                },
+                                {
+                                    id: 'tiyekli',
+                                    name: 'Тийекли',
+                                    type: 'ulken',
+                                    color: 'jaungir',
+                                    tamga: 'Т',
+                                    description: 'Происходит от слова "тийек" (опора)',
+                                    children: []
+                                },
+                                {
+                                    id: 'yrgakly',
+                                    name: 'Ырғақлы',
+                                    type: 'ulken',
+                                    color: 'jaungir',
+                                    tamga: 'Ы',
+                                    description: 'Уникальный род, входит в оба арыса!',
+                                    note: 'Есть представители и в Қоңырат, и в Он төрт уруу',
+                                    legend: 'Легенда о молодой паре, изгнанной за нарушение экзогамии',
+                                    children: []
+                                },
+                                {
+                                    id: 'baymakly',
+                                    name: 'Баймақлы',
+                                    type: 'ulken',
+                                    color: 'jaungir',
+                                    tamga: 'Б',
+                                    description: 'От слова "баймақ" (богатый)',
+                                    children: []
+                                },
+                                {
+                                    id: 'kazayakly',
+                                    name: 'Қазаяқлы',
+                                    type: 'ulken',
+                                    color: 'jaungir',
+                                    tamga: 'Қ',
+                                    description: 'Казахские связи рода',
+                                    children: []
+                                },
+                                {
+                                    id: 'uygyr',
+                                    name: 'Уйғыр',
+                                    type: 'ulken',
+                                    color: 'jaungir',
+                                    tamga: 'Ұ',
+                                    description: 'Связи с уйгурскими племенами',
+                                    children: []
                                 }
                             ]
-                        },
-                        { id: 'bakanaly', name: 'Бақаналы-Шаужейли', type: 'ulken', children: [] },
-                        { id: 'tiyekli', name: 'Тийекли', type: 'ulken', children: [] },
-                        { 
-                            id: 'yrgakly', 
-                            name: 'Ырғақлы', 
-                            type: 'ulken',
-                            note: 'Входит в оба арыса!',
-                            children: [
-                                { 
-                                    id: 'yrgakly-s', 
-                                    name: 'Ырғақлы-Сарытон', 
-                                    type: 'uruu',
-                                    legend: 'Легенда о паре, изгнанной за нарушение экзогамии',
-                                    children: [
-                                        { name: 'Сарытон', type: 'tiyre' },
-                                        { name: 'Ешкили', type: 'tiyre' },
-                                        { name: 'Байбура', type: 'tiyre', cemetery: 'Тамдыкум' },
-                                        { name: 'Атанай', type: 'tiyre', cemetery: 'Оразбай' }
-                                    ]
-                                }
-                            ]
-                        },
-                        { id: 'baymakly', name: 'Баймақлы', type: 'ulken', children: [] },
-                        { id: 'kazayakly', name: 'Қазаяқлы', type: 'ulken', children: [] },
-                        { id: 'uygyr', name: 'Уйғыр', type: 'ulken', children: [] }
+                        }
                     ]
                 },
                 {
                     id: 'on-tort',
-                    name: 'Он төрт уруу',
+                    name: 'Арыс Он төрт уруу',
                     type: 'arys',
+                    color: 'on-tort',
+                    tamga: '🐺',
                     literal: 'Четырнадцать родов',
-                    description: 'Второй крупный арыс',
-                    history: 'До XIX века — 6 крупных уруу в 3 парах',
+                    description: 'Второй крупный арыс каракалпаков',
+                    history: 'До XIX века существовало деление на 6 крупных уруу в 3 парах (жиптикдәк)',
+                    
                     children: [
-                        { 
-                            id: 'ktay', 
-                            name: 'Қтай', 
-                            type: 'ulken',
-                            history: 'Древний род, парный с Қыпшақ',
-                            pair: 'Қыпшақ',
+                        {
+                            id: 'on-tort-bolim-1',
+                            name: 'Бөлiм I',
+                            type: 'bolim',
+                            color: 'on-tort',
+                            tamga: '🔷',
+                            description: 'Первое отделение',
+                            
                             children: [
-                                { 
-                                    id: 'ktay-u', 
-                                    name: 'Қтай', 
-                                    type: 'uruu',
-                                    children: [
-                                        { name: 'Бессары', type: 'tiyre' },
-                                        { name: 'Айтекешериуйши', type: 'tiyre', exogamy: 'Экзогамны с Анна-қуйын' },
-                                        { name: 'Анна-қуйын', type: 'tiyre' }
-                                    ]
+                                {
+                                    id: 'ktay',
+                                    name: 'Қтай',
+                                    type: 'ulken',
+                                    color: 'on-tort',
+                                    tamga: 'Р',
+                                    uran: 'Улы-Тау',
+                                    description: 'Древний род, парный с Қыпшақ',
+                                    pair: 'Қыпшақ',
+                                    children: []
+                                },
+                                {
+                                    id: 'kypshak',
+                                    name: 'Қыпшақ',
+                                    type: 'ulken',
+                                    color: 'on-tort',
+                                    tamga: 'Қ',
+                                    uran: 'Токсоба',
+                                    description: 'Крупнейший кыпчакский род',
+                                    pair: 'Қтай',
+                                    children: []
                                 }
                             ]
                         },
-                        { id: 'kypshak', name: 'Қыпшақ', type: 'ulken', pair: 'Қтай', children: [] },
-                        { id: 'keneges', name: 'Кенегес', type: 'ulken', pair: 'Манғыт', children: [] },
-                        { id: 'mangyt', name: 'Манғыт', type: 'ulken', pair: 'Кенегес', children: [] }
+                        {
+                            id: 'on-tort-bolim-2',
+                            name: 'Бөлiм II',
+                            type: 'bolim',
+                            color: 'on-tort',
+                            tamga: '🔶',
+                            description: 'Второе отделение',
+                            
+                            children: [
+                                {
+                                    id: 'keneges',
+                                    name: 'Кенегес',
+                                    type: 'ulken',
+                                    color: 'on-tort',
+                                    tamga: 'Х',
+                                    uran: 'Шаңырақ',
+                                    description: 'Парный с Манғыт',
+                                    pair: 'Манғыт',
+                                    children: []
+                                },
+                                {
+                                    id: 'mangyt',
+                                    name: 'Манғыт',
+                                    type: 'ulken',
+                                    color: 'on-tort',
+                                    tamga: 'М',
+                                    uran: 'Шаңырақ',
+                                    description: 'Монгольского происхождения',
+                                    pair: 'Кенегес',
+                                    children: []
+                                }
+                            ]
+                        }
                     ]
                 }
             ]
         };
 
-        // Состояние приложения
-        let navigationStack = ['root'];
-        let currentFilter = 'all';
-        let flatData = [];
+        // Состояние
+        let currentPath = ['root'];
+        let flatList = [];
 
         // Инициализация
         function init() {
-            flattenData(uruuData);
-            renderTree('root');
+            flattenData(clanData);
+            showLevel('root');
             setupSearch();
         }
 
-        // Создание плоского массива для поиска
+        // Создание плоского списка для поиска
         function flattenData(node, path) {
             path = path || [];
-            const currentPath = path.concat(node);
-            flatData.push({
+            const current = {
                 id: node.id,
                 name: node.name,
                 type: node.type,
-                pathNames: currentPath.map(p => p.name).join(' → ')
-            });
+                tamga: node.tamga,
+                color: node.color,
+                path: path.map(p => p.name).join(' → ')
+            };
+            flatList.push(current);
+            
             if (node.children) {
-                node.children.forEach(child => flattenData(child, currentPath));
-            }
-        }
-
-        // Поиск узла по ID
-        function findNode(id) {
-            function search(node) {
-                if (node.id === id) return node;
-                if (node.children) {
-                    for (let i = 0; i < node.children.length; i++) {
-                        const found = search(node.children[i]);
-                        if (found) return found;
-                    }
+                for (let i = 0; i < node.children.length; i++) {
+                    flattenData(node.children[i], path.concat(node));
                 }
-                return null;
             }
-            return search(uruuData);
         }
 
-        // Получить путь к узлу
-        function getPath(id) {
-            const path = [];
-            function build(node, target) {
-                path.push(node);
-                if (node.id === target) return true;
-                if (node.children) {
-                    for (let i = 0; i < node.children.length; i++) {
-                        if (build(node.children[i], target)) return true;
-                    }
+        // Найти узел
+        function findNode(id, node) {
+            node = node || clanData;
+            if (node.id === id) return node;
+            if (node.children) {
+                for (let i = 0; i < node.children.length; i++) {
+                    const found = findNode(id, node.children[i]);
+                    if (found) return found;
                 }
-                path.pop();
-                return false;
             }
-            build(uruuData, id);
-            return path;
+            return null;
         }
 
-        // Рендер дерева
-        function renderTree(nodeId) {
-            const node = findNode(nodeId);
+        // Показать уровень
+        function showLevel(id) {
+            const node = findNode(id);
             if (!node) return;
 
-            const treeView = document.getElementById('treeView');
-            treeView.innerHTML = '';
-
-            // Текущий узел
-            const currentLevel = document.createElement('div');
-            currentLevel.className = 'tree-level';
-            currentLevel.appendChild(createNode(node, true));
-            treeView.appendChild(currentLevel);
-
-            // Дети
-            if (node.children && node.children.length > 0) {
-                const childrenLevel = document.createElement('div');
-                childrenLevel.className = 'tree-level';
-                
-                const container = document.createElement('div');
-                container.className = (node.type === 'arys' || node.type === 'root') ? 'branches' : 'leaf-nodes';
-                
-                for (let i = 0; i < node.children.length; i++) {
-                    container.appendChild(createNode(node.children[i], false));
+            // Обновить путь
+            if (id === 'root') {
+                currentPath = ['root'];
+            } else {
+                const idx = currentPath.indexOf(id);
+                if (idx !== -1) {
+                    currentPath = currentPath.slice(0, idx + 1);
+                } else {
+                    currentPath.push(id);
                 }
-                
-                childrenLevel.appendChild(container);
-                treeView.appendChild(childrenLevel);
             }
 
-            updateBreadcrumb(nodeId);
+            renderBreadcrumb();
+            renderGrid(node);
             updateInfoPanel(node);
-            
-            // Показать/скрыть кнопку назад
-            const backBtn = document.getElementById('backBtn');
-            backBtn.style.display = navigationStack.length > 1 ? 'inline-flex' : 'none';
+            updateTabs(node);
         }
 
-        // Создание элемента узла
-        function createNode(node, isActive) {
-            const div = document.createElement('div');
-            div.className = 'tree-node' + (isActive ? ' active' : '');
-            div.onclick = function() { handleNodeClick(node.id); };
-            
-            const labels = {
-                root: 'Народ',
-                arys: 'Арыс',
-                ulken: 'Үлкен уруу',
-                uruu: 'Уруу',
-                tiyre: 'Тийре'
-            };
-
-            let html = '<div class="label">' + (labels[node.type] || node.type) + '</div>';
-            html += '<div class="name">' + node.name + '</div>';
-            if (node.children && node.children.length > 0) {
-                html += '<div class="count">' + node.children.length + ' подгрупп</div>';
-            }
-            div.innerHTML = html;
-            return div;
-        }
-
-        // Обработка клика по узлу
-        function handleNodeClick(id) {
-            if (id === navigationStack[navigationStack.length - 1]) return;
-            navigationStack.push(id);
-            renderTree(id);
-        }
-
-        // Назад
-        function goBack() {
-            if (navigationStack.length > 1) {
-                navigationStack.pop();
-                renderTree(navigationStack[navigationStack.length - 1]);
-            }
-        }
-
-        // Домой
-        function goHome() {
-            navigationStack = ['root'];
-            renderTree('root');
-        }
-
-        // Обновление хлебных крошек
-        function updateBreadcrumb(nodeId) {
-            const path = getPath(nodeId);
+        // Рендер хлебных крошек
+        function renderBreadcrumb() {
             const bc = document.getElementById('breadcrumb');
             let html = '';
-            for (let i = 0; i < path.length; i++) {
-                const isLast = i === path.length - 1;
-                const onclick = isLast ? '' : 'onclick="jumpTo(\'' + path[i].id + '\')"';
-                const cls = isLast ? 'active' : '';
-                html += '<span class="breadcrumb-item ' + cls + '" ' + onclick + '>' + path[i].name + '</span>';
-                if (!isLast) html += '<span class="breadcrumb-separator">›</span>';
+            for (let i = 0; i < currentPath.length; i++) {
+                const node = findNode(currentPath[i]);
+                const isLast = i === currentPath.length - 1;
+                html += '<span class="breadcrumb-item ' + (isLast ? 'active' : '') + '" ' + 
+                       (isLast ? '' : 'onclick="showLevel(\'' + currentPath[i] + '\')"') + '>' +
+                       node.name + '</span>';
             }
             bc.innerHTML = html;
         }
 
-        // Прыжок к узлу
-        function jumpTo(id) {
-            const idx = navigationStack.indexOf(id);
-            if (idx !== -1) {
-                navigationStack = navigationStack.slice(0, idx + 1);
-            } else {
-                navigationStack = [id];
-            }
-            renderTree(id);
-        }
+        // Рендер сетки
+        function renderGrid(node) {
+            const grid = document.getElementById('treeGrid');
+            grid.innerHTML = '';
 
-        // Обновление инфо-панели
-        function updateInfoPanel(node) {
-            const panel = document.getElementById('infoPanel');
-            const icons = {
-                root: '🏛️', arys: '🦅', ulken: '🌳', 
-                uruu: '🏘️', tiyre: '🏠'
-            };
-            const types = {
-                root: 'Народ', arys: 'Арыс (крыло)', 
-                ulken: 'Үлкен уруу', uruu: 'Уруу (род)', 
-                tiyre: 'Тийре'
-            };
-
-            let html = '<div class="info-header">';
-            html += '<div class="info-icon">' + (icons[node.type] || '📋') + '</div>';
-            html += '<h3 class="info-title">' + node.name + '</h3>';
-            html += '<p class="info-type">' + (types[node.type] || node.type) + '</p>';
-            html += '</div><div class="info-content">';
-
-            if (node.literal) {
-                html += '<div class="info-item"><div class="info-item-label">Значение</div><div class="info-item-value">' + node.literal + '</div></div>';
-            }
-            if (node.description) {
-                html += '<div class="info-item"><div class="info-item-label">Описание</div><div class="info-item-value">' + node.description + '</div></div>';
-            }
-            if (node.history) {
-                html += '<div class="info-item"><div class="info-item-label">История</div><div class="info-item-value">' + node.history + '</div></div>';
-            }
-            if (node.tamga) {
-                html += '<div class="info-item"><div class="info-item-label">Тамга</div><div class="info-item-value">✕ ' + node.tamga;
-                if (node.tamgaNote) html += '<br><small style="color:var(--text-muted)">' + node.tamgaNote + '</small>';
-                html += '</div></div>';
-            }
-            if (node.pair) {
-                html += '<div class="info-item"><div class="info-item-label">Парный род</div><div class="info-item-value">🔗 ' + node.pair + '</div></div>';
-            }
-            if (node.cemetery) {
-                html += '<div class="info-item"><div class="info-item-label">Кладбище</div><div class="info-item-value">⚰️ ' + node.cemetery + '</div></div>';
-            }
-            if (node.exogamyNote || node.exogamy) {
-                html += '<div class="info-item"><div class="info-item-label">Экзогамия</div><div class="info-item-value">' + (node.exogamyNote || node.exogamy) + '</div></div>';
-            }
-            if (node.location) {
-                html += '<div class="info-item"><div class="info-item-label">Место</div><div class="info-item-value">📍 ' + node.location + '</div></div>';
-            }
-            if (node.legend) {
-                html += '<div class="info-item"><div class="info-item-label">Легенда</div><div class="info-item-value" style="font-style:italic;border-left:3px solid var(--secondary);padding-left:1rem;">"' + node.legend + '"</div></div>';
-            }
-            if (node.children && node.children.length > 0) {
-                html += '<div class="info-item"><div class="info-item-label">Подгруппы (' + node.children.length + ')</div><div class="tag-list">';
-                for (let i = 0; i < node.children.length; i++) {
-                    html += '<span class="tag">' + node.children[i].name + '</span>';
-                }
-                html += '</div></div>';
-            }
-
-            html += '</div>';
-            panel.innerHTML = html;
-        }
-
-        // Настройка поиска
-        function setupSearch() {
-            const searchInput = document.getElementById('searchInput');
-            
-            searchInput.addEventListener('input', function(e) {
-                const query = e.target.value.toLowerCase().trim();
-                if (query.length < 2) {
-                    closeSearch();
-                    return;
-                }
-                performSearch(query);
-            });
-
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            for (let i = 0; i < filterBtns.length; i++) {
-                filterBtns[i].addEventListener('click', function(e) {
-                    for (let j = 0; j < filterBtns.length; j++) {
-                        filterBtns[j].classList.remove('active');
-                    }
-                    e.target.classList.add('active');
-                    currentFilter = e.target.dataset.filter;
-                    if (searchInput.value.trim().length >= 2) {
-                        performSearch(searchInput.value.toLowerCase().trim());
-                    }
-                });
-            }
-        }
-        // Выполнение поиска
-        function performSearch(query) {
-            const filtered = [];
-            for (let i = 0; i < flatData.length; i++) {
-                const item = flatData[i];
-                const matchesType = currentFilter === 'all' || item.type === currentFilter;
-                const matchesQuery = item.name.toLowerCase().indexOf(query) !== -1;
-                if (matchesType && matchesQuery) {
-                    filtered.push(item);
-                }
-            }
-
-            document.getElementById('searchResults').classList.add('active');
-            document.getElementById('mainContent').style.display = 'none';
-
-            const resultsList = document.getElementById('resultsList');
-            if (filtered.length === 0) {
-                resultsList.innerHTML = '<div class="empty-state">Ничего не найдено</div>';
+            if (!node.children || node.children.length === 0) {
+                grid.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:2rem;">Нет подгрупп</div>';
                 return;
             }
 
-            let html = '';
-            for (let i = 0; i < Math.min(filtered.length, 10); i++) {
-                const item = filtered[i];
-                html += '<div class="result-card" onclick="goToResult(\'' + item.id + '\')">';
-                html += '<div class="result-icon">' + getIcon(item.type) + '</div>';
-                html += '<div class="result-info"><h3>' + item.name + '</h3>';
-                html += '<div class="result-path">' + item.pathNames + '</div></div></div>';
+            // Группировка по типам
+            const byType = {};
+            for (let i = 0; i < node.children.length; i++) {
+                const child = node.children[i];
+                if (!byType[child.type]) byType[child.type] = [];
+                byType[child.type].push(child);
             }
-            resultsList.innerHTML = html;
+
+            // Рендер по уровням
+            const typeOrder = ['arys', 'bolim', 'ulken', 'uruu', 'tiyre'];
+            for (let t = 0; t < typeOrder.length; t++) {
+                const type = typeOrder[t];
+                if (byType[type]) {
+                    const levelDiv = document.createElement('div');
+                    levelDiv.className = 'tree-level animate-in';
+                    levelDiv.setAttribute('data-label', getTypeLabel(type));
+                    
+                    for (let i = 0; i < byType[type].length; i++) {
+                        levelDiv.appendChild(createCard(byType[type][i]));
+                    }
+                    grid.appendChild(levelDiv);
+                }
+            }
+
+            // Обновить статистику
+            updateStats(node);
         }
 
-        // Закрыть поиск
+        // Создание карточки
+        function createCard(node) {
+            const div = document.createElement('div');
+            div.className = 'clan-card ' + (node.color || 'neutral');
+            div.onclick = function() { showLevel(node.id); };
+            
+            let html = '';
+            if (node.tamga) {
+                html += '<div class="tamga">' + node.tamga + '</div>';
+            }
+            html += '<div class="name">' + node.name + '</div>';
+            if (node.uran) {
+                html += '<div class="meta">Уран: ' + node.uran + '</div>';
+            }
+            if (node.children && node.children.length > 0) {
+                html += '<div class="meta">' + node.children.length + ' подгрупп</div>';
+            }
+            
+            div.innerHTML = html;
+            return div;
+        }
+
+        // Получить метку типа
+        function getTypeLabel(type) {
+            const labels = {
+                arys: 'Арыс',
+                bolim: 'Бөлiм',
+                ulken: 'Үлкен уруу',
+                uruu: 'Уруу',
+                tiyre: 'Тийре'
+            };
+            return labels[type] || type;
+        }
+
+        // Обновить статистику
+        function updateStats(node) {
+            const stats = { arys: 0, bolim: 0, ulken: 0, uruu: 0, tiyre: 0 };
+            
+            function count(n) {
+                if (n.children) {
+                    for (let i = 0; i < n.children.length; i++) {
+                        const c = n.children[i];
+                        if (stats[c.type] !== undefined) stats[c.type]++;
+                        count(c);
+                    }
+                }
+            }
+            count(node);
+
+            document.getElementById('statsBar').innerHTML = 
+                '<div class="stat-item"><div class="stat-value">' + stats.arys + '</div><div class="stat-label">Арыса</div></div>' +
+                '<div class="stat-item"><div class="stat-value">' + stats.bolim + '</div><div class="stat-label">Бөлiм</div></div>' +
+                '<div class="stat-item"><div class="stat-value">' + stats.ulken + '</div><div class="stat-label">Үлкен уруу</div></div>' +
+                '<div class="stat-item"><div class="stat-value">' + (stats.uruu + stats.tiyre) + '</div><div class="stat-label">Уруу/Тийре</div></div>';
+        }
+        // Обновить вкладки уровней
+        function updateTabs(node) {
+            const tabs = document.getElementById('levelTabs');
+            let html = '<button class="level-tab ' + (node.id === 'root' ? 'active' : '') + '" onclick="showLevel(\'root\')">Арысы</button>';
+            
+            if (node.children) {
+                for (let i = 0; i < node.children.length; i++) {
+                    const child = node.children[i];
+                    html += '<button class="level-tab" onclick="showLevel(\'' + child.id + '\')">' + child.name + '</button>';
+                }
+            }
+            tabs.innerHTML = html;
+        }
+
+        // Обновить инфо-панель
+        function updateInfoPanel(node) {
+            const panel = document.getElementById('infoPanel');
+            
+            let html = '<div class="info-header">' +
+                '<div class="info-tamga">' + (node.tamga || '🏛️') + '</div>' +
+                '<h2 class="info-title">' + node.name + '</h2>' +
+                '<div class="info-path">' + getTypeLabel(node.type) + '</div>' +
+                '</div>';
+
+            // Основная информация
+            html += '<div class="info-section">';
+            if (node.literal) {
+                html += '<div class="info-section-title">Буквальное значение</div>';
+                html += '<div class="info-section-content">' + node.literal + '</div>';
+            }
+            if (node.description) {
+                html += '<div class="info-section-title">Описание</div>';
+                html += '<div class="info-section-content">' + node.description + '</div>';
+            }
+            if (node.history) {
+                html += '<div class="info-section-title">История</div>';
+                html += '<div class="info-section-content">' + node.history + '</div>';
+            }
+            html += '</div>';
+
+            // Тамга
+            if (node.tamgaDesc || node.uran) {
+                html += '<div class="info-section">';
+                html += '<div class="info-section-title">Родовые знаки</div>';
+                html += '<div class="info-section-content">';
+                if (node.tamgaDesc) html += '<p><strong>Тамга:</strong> ' + node.tamgaDesc + '</p>';
+                if (node.uran) html += '<p><strong>Уран:</strong> ' + node.uran + '</p>';
+                html += '</div></div>';
+            }
+
+            // Парный род
+            if (node.pair) {
+                html += '<div class="info-section">';
+                html += '<div class="info-section-title">Парный род (Жиптикдәк)</div>';
+                html += '<div class="info-section-content">🔗 ' + node.pair + '</div></div>';
+            }
+
+            // Локация и кладбище
+            if (node.location || node.cemetery) {
+                html += '<div class="info-section">';
+                html += '<div class="info-section-title">Места</div>';
+                html += '<div class="info-section-content">';
+                if (node.location) html += '<p>📍 ' + node.location + '</p>';
+                if (node.cemetery) html += '<p>⚰️ Кладбище: ' + node.cemetery + '</p>';
+                html += '</div></div>';
+            }
+
+            // Легенда
+            if (node.legend) {
+                html += '<div class="info-section">';
+                html += '<div class="info-section-title">Легенда</div>';
+                html += '<div class="info-section-content" style="font-style:italic;border-left:3px solid var(--gold);padding-left:1rem;">';
+                html += '"' + node.legend + '"</div></div>';
+            }
+
+            // Подгруппы
+            if (node.children && node.children.length > 0) {
+                html += '<div class="info-section">';
+                html += '<div class="info-section-title">Подгруппы (' + node.children.length + ')</div>';
+                html += '<div class="sub-list">';
+                for (let i = 0; i < node.children.length; i++) {
+                    const c = node.children[i];
+                    html += '<div class="sub-item">';
+                    html += '<span class="sub-item-name">' + c.name + '</span>';
+                    html += '<span class="sub-item-count">' + (c.children ? c.children.length : 0) + '</span>';
+                    html += '</div>';
+                }
+                html += '</div></div>';
+            }
+
+            panel.innerHTML = html;
+        }
+
+        // Поиск
+        function setupSearch() {
+            const input = document.getElementById('searchInput');
+            input.addEventListener('input', function(e) {
+                const q = e.target.value.toLowerCase().trim();
+                if (q.length < 2) return;
+                
+                const results = flatList.filter(item => 
+                    item.name.toLowerCase().indexOf(q) !== -1
+                );
+                
+                showSearchResults(results);
+            });
+        }
+
+        function showSearchResults(results) {
+            const overlay = document.getElementById('searchOverlay');
+            const container = document.getElementById('searchResults');
+            overlay.classList.add('active');
+            
+            if (results.length === 0) {
+                container.innerHTML = '<div class="empty-state">Ничего не найдено</div>';
+                return;
+            }
+            
+            let html = '';
+            for (let i = 0; i < Math.min(results.length, 20); i++) {
+                const r = results[i];
+                html += '<div class="result-item" onclick="goToResult(\'' + r.id + '\')">';
+                html += '<div class="result-tamga ' + (r.color || 'neutral') + '">' + (r.tamga || '📋') + '</div>';
+                html += '<div>';
+                html += '<h4>' + r.name + '</h4>';
+                html += '<small style="color:var(--text-muted)">' + r.path + '</small>';
+                html += '</div></div>';
+            }
+            container.innerHTML = html;
+        }
+
         function closeSearch() {
-            document.getElementById('searchResults').classList.remove('active');
-            document.getElementById('mainContent').style.display = 'grid';
+            document.getElementById('searchOverlay').classList.remove('active');
             document.getElementById('searchInput').value = '';
         }
 
-        // Перейти к результату
         function goToResult(id) {
             closeSearch();
-            navigationStack = ['root'];
-            const path = getPath(id);
-            for (let i = 1; i < path.length; i++) {
-                navigationStack.push(path[i].id);
+            currentPath = ['root'];
+            const node = findNode(id);
+            if (node) {
+                showLevel(id);
             }
-            renderTree(id);
         }
 
-        // Получить иконку
-        function getIcon(type) {
-            const icons = { 
-                arys: '🦅', ulken: '🌳', 
-                uruu: '🏘️', tiyre: '🏠', 
-                root: '🏛️' 
-            };
-            return icons[type] || '📋';
-        }
-
-        // Запуск
+        // Старт
         init();
     </script>
 </body>
 </html>
 
+        
