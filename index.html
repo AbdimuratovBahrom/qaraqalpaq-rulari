@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уруу — Родовая структура каракалпаков</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a87;
+            --secondary: #d4a574;
+            --accent: #c9a227;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+            --gradient-1: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+            --gradient-2: linear-gradient(135deg, #d4a574 0%, #c9a227 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(30, 58, 95, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 165, 116, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 40%, rgba(201, 162, 39, 0.1) 0%, transparent 50%);
+            animation: bgPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Header */
+        header {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Search Section */
+        .search-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .search-box {
+            position: relative;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(212, 165, 116, 0.1);
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--secondary);
+            flex-shrink: 0;
+        }
+
+        #searchInput {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.1rem;
+            outline: none;
+            font-family: inherit;
+        }
+
+        #searchInput::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary);
+            color: var(--bg-dark);
+            border-color: var(--secondary);
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tree Visualization */
+        .tree-section {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .tree-container {
+            position: relative;
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
+
+        .tree {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            min-width: 600px;
+        }
+
+        .tree-level {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .tree-node {
+            background: var(--gradient-1);
+            border: 2px solid var(--secondary);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            min-width: 140px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .tree-node:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.3);
+            border-color: var(--accent);
+        }
+
+        .tree-node.active {
+            background: var(--gradient-2);
+            color: var(--bg-dark);
+            border-color: var(--accent);
+        }
+
+        .tree-node .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 0.25rem;
+        }
+
+        .tree-node .name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .tree-node .count {
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+
+        /* Connection Lines */
+        .tree-level::before {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            left: 50%;
+            width: 2px;
+            height: 1rem;
+            background: var(--secondary);
+            transform: translateX(-50%);
+        }
+
+        .tree-level:first-child::before {
+            display: none;
+        }
+
+        /* Branches */
+        .branches {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .sub-branches {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .leaf-nodes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .tree-node.small {
+            padding: 0.75rem;
+            min-width: auto;
+        }
+
+        .tree-node.small .name {
+            font-size: 0.9rem;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+
+        .info-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+
+        .info-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-type {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .info-content {
+            space-y: 1rem;
+        }
+
+        .info-item {
+            margin-bottom: 1.25rem;
+        }
+
+        .info-item-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .info-item-value {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(212, 165, 116, 0.15);
+            color: var(--secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(212, 165, 116, 0.3);
+        }
+
+        /* Search Results */
+        .search-results {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .result-card:hover {
+            border-color: var(--secondary);
+            transform: translateX(10px);
+        }
+
+        .result-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .result-info h3 {
+            margin-bottom: 0.25rem;
+        }
+
+        .result-path {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb-item {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item:not(:last-child)::after {
+            content: '›';
+            margin-left: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo { font-size: 2rem; }
+            .tree-node { min-width: 100px; padding: 1rem; }
+            .branches { grid-template-columns: 1fr; }
+            .sub-branches { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(212, 165, 116, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--secondary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header>
+        <h1 class="logo">УРУУ</h1>
+        <p class="subtitle">Интерактивная база данных родовой структуры каракалпаков. Исследуйте иерархию от арыса до көше.</p>
+    </header>
+
+    <div class="search-container">
+        <div class="search-box">
+            <div class="search-input-wrapper">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Поиск рода, тийре или көше...">
+            </div>
+            <div class="search-filters">
+                <button class="filter-btn active" data-filter="all">Все</button>
+                <button class="filter-btn" data-filter="arys">Арыс</button>
+                <button class="filter-btn" data-filter="ulken">Үлкен уруу</button>
+                <button class="filter-btn" data-filter="uruu">Уруу</button>
+                <button class="filter-btn" data-filter="tiyre">Тийре</button>
+                <button class="filter-btn" data-filter="koshe">Көше</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card animate-in">
+            <span class="stat-number">2</span>
+            <span class="stat-label">Арыса</span>
+        </div>
+        <div class="stat-card animate-in" style="animation-delay: 0.1s">
+            <span class="stat-number">6</span>
+            <span class="stat-label">Үлкен уруу</span>
+        </div>
+        <div class="stat-card animate-in" style="animation-delay: 0.2s">
+            <span class="stat-number">300+</span>
+            <span class="stat-label">Уруу</span>
+        </div>
+        <div class="stat-card animate-in" style="animation-delay: 0.3s">
+            <span class="stat-number">∞</span>
+            <span class="stat-label">Көше</span>
+        </div>
+    </div>
+
+    <div class="search-results" id="searchResults">
+        <div class="results-header">
+            <h3>Результаты поиска</h3>
+            <button onclick="closeSearch()" style="background: none; border: none; color: var(--text-muted); cursor: pointer;">✕ Закрыть</button>
+        </div>
+        <div id="resultsList"></div>
+    </div>
+
+    <div class="container" id="mainContent">
+        <div class="tree-section">
+            <h2 class="section-title">
+                <span>🌳</span>
+                Иерархия родов
+            </h2>
+            <div class="breadcrumb" id="breadcrumb">
+                <span class="breadcrumb-item active">Все арысы</span>
+            </div>
+            <div class="tree-container">
+                <div class="tree" id="treeView">
+                    <!-- Generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel" id="infoPanel">
+            <div class="info-header">
+                <div class="info-icon">🏛️</div>
+                <h3 class="info-title">Выберите элемент</h3>
+                <p class="info-type">Информация</p>
+            </div>
+            <div class="info-content">
+                <div class="info-item">
+                    <div class="info-item-label">Описание</div>
+                    <div class="info-item-value" style="color: var(--text-muted);">
+                        Нажмите на любой элемент в дереве, чтобы увидеть подробную информацию о родовой структуре.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Structure based on the article
+        const uruuData = {
+            id: 'root',
+            name: 'Каракалпаки',
+            type: 'root',
+            description: 'Тюркоязычный народ, проживающий в Республике Каракалпакстан',
+            children: [
+                {
+                    id: 'konyrat',
+                    name: 'Қоңырат',
+                    type: 'arys',
+                    literal: 'Оглобля / Крыло',
+                    description: 'Один из двух крупных арысов каракалпаков. Деление на два арыса относительно позднее, связано с политикой Сейд-Мухаммедхана (после 1855-1856 гг.)',
+                    history: 'Включает subdivision шүллик (шуллик) и жауыңыр (жаунгыр)',
+                    children: [
+                        {
+                            id: 'kyyat',
+                            name: 'Қыят',
+                            type: 'ulken',
+                            description: 'Крупный род (үлкен уруу) в составе арыса Қоңырат',
+                            children: [
+                                {
+                                    id: 'kyyat-uruu',
+                                    name: 'Қыят',
+                                    type: 'uruu',
+                                    children: [
+                                        { name: 'Тийре 1', type: 'tiyre' },
+                                        { name: 'Тийре 2', type: 'tiyre' }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: 'ashamayly',
+                            name: 'Ашамайлы',
+                            type: 'ulken',
+                            tamga: 'Две пересекающиеся линии',
+                            tamgaNote: 'Идентична тамге рода ашамайлы племени кереи у казахов',
+                            description: 'Имеет родовую тамгу в виде двух пересекающихся линий',
+                            children: [
+                                {
+                                    id: 'ashamayly-uruu',
+                                    name: 'Ашамайлы',
+                                    type: 'uruu',
+                                    children: [
+                                 
