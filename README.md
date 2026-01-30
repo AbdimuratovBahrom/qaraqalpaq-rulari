@@ -1,2 +1,2 @@
-# -karakalpak-uruu
+qaraqalpaq rulari
 "Интерактивная база родов каракалпаков"
