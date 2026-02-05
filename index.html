@@ -163,6 +163,9 @@
             background: var(--gold);
             color: #000;
             font-weight: 600;
+            max-width: 170px;
+            text-align: center;
+            margin: 0 auto;
         }
 
         .container { 
@@ -296,7 +299,7 @@
         .legend { position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.75em; z-index: 100; }
         .legend-item { display: flex; align-items: center; gap: 5px; margin: 2px 0; }
         .legend-color { width: 12px; height: 12px; border-radius: 2px; }
-        .stats { position: fixed; top: 90px; right: 470px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.8em; z-index: 100; transition: right 0.3s ease; }
+        .stats { position: fixed; top: 90px; right: 475px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.8em; z-index: 100; transition: right 0.3s ease; }
         
         /* Адаптация для планшетов */
         @media (max-width: 1024px) {
@@ -311,6 +314,7 @@
                 font-size: 0.65em;
                 max-width: 150px;
             } 
+            
             
             .info-panel { 
                 width: 100%; 
@@ -345,8 +349,12 @@
                 right: 20px;
             }
         }
+
+        @media (max-width: 765px) {
+            .stats { display: none; }
+        }
         
-        .search-box { position: fixed; top: 90px; left: 10px; z-index: 100; }
+        .search-box { position: fixed; top: 72px; left: 10px; z-index: 100; }
         .search-box input { padding: 6px 10px; border-radius: 15px; border: 1px solid var(--accent-blue); background: rgba(0,0,0,0.9); color: white; width: 180px; font-size: 0.85em; }
         .highlight { 
             animation: pulse 1.5s infinite;
@@ -448,7 +456,7 @@
         </div>
     </header>
 
-    <div class="search-box"><input type="text" id="searchInput" placeholder="Поиск..." onkeyup="searchNode()"></div>
+    <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchNode()"></div>
     <div class="stats" id="statsBox"><div><strong>Statistika:</strong></div><div>Арыс: 2</div><div>Бөлiм: 2</div><div>Ру: 50+</div><div>Тийре/Көше: 300+</div></div>
     
     <div class="container">
