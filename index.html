@@ -450,14 +450,16 @@
         
         <div class="view-switch" id="viewSwitch">
             <a href="index.html" class="view-btn active" target="_self">🏠 Главное</a>
-            <a href="lists.html" class="view-btn" target="_self">📋 Списки</a>
+            <a href="index1.html" class="view-btn " target="_self">🏠 Bas bet</a>
+            <a href="listsQQ.html" class="view-btn" target="_self">📋 Списки</a>
+            <a href="lists.html" class="view-btn " target="_self">📋 Тізімдер</a>
             <a href="scheme.html" class="view-btn" target="_self">🌳 Схема</a>
             <a href="exogamy.html" class="view-btn" target="_self">💑 Ekzogamiya</a>
         </div>
     </header>
 
     <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchNode()"></div>
-    <div class="stats" id="statsBox"><div><strong>Statistika:</strong></div><div>Арыс: 2</div><div>Бөлiм: 2</div><div>Ру: 50+</div><div>Тийре/Көше: 300+</div></div>
+    <div class="stats" id="statsBox"><div><strong>Statistika:</strong></div><div>Arıs: 2</div><div>Bólim: 2</div><div>Uriw: 50+</div><div>tiyre/ko'she: 300+</div></div>
     
     <div class="container">
         <div class="tree-panel" id="treePanel">
@@ -479,16 +481,16 @@
     <div class="legend">
         <div><strong>Иерархия:</strong></div>
         <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Xalıq</div>
-        <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Арыс</div>
-        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Бөлiм</div>
-        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Үлкен уруу</div>
-        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Уруу</div>
-        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Тийре</div>
-        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Көше</div>
+        <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Arıs</div>
+        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Bólim</div>
+        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Úlken urıw</div>
+        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Urıw</div>
+        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Tiyre</div>
+        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Ko'she</div>
     </div>
 
     <script>
-const levelsMap = ['Халық / Народ', 'Арыс', 'Бөлім', 'Үлкен ру', 'Ру / Уруу', 'Тийре', 'Көше'];
+const levelsMap = ['Xalıq / Народ', 'Arıs', 'Bólim', 'Úlken urıw', 'Tiyre', 'Ko\'she'];
 
 // Флаг состояния панели
 let isPanelOpen = false;
@@ -519,7 +521,7 @@ const treeData = {
             },
             children: [
                 {
-                    id: "shulyk", name: "ШУЛЫҚ БӨЛIМI", level: 2, type: "бөлiм",
+                    id: "shulyk", name: "ШУЛЛЫЛ БӨЛИМИ", level: 2, type: "бөлим",
                     info: { history: "Шулык - 8 рудан тұрады.", origin: "Шулык жерінің атауынан.", population: "5860 кибиток" },
                     children: [
                         {
@@ -563,7 +565,7 @@ const treeData = {
                             ]
                         },
                         {
-                            id: "ashamayly", name: "АШАМАЙЛЫ", level: 3, type: "уруу",
+                            id: "ashamayly", name: "АШАМАЙЛЫ", level: 3, type: "үлкен уруу",
                             info: { history: "Ашамай - көзі нашар көретін.", tamga: "АШ", urан: "Шулык!", population: "870 кибиток" },
                             children: [
                                 { id: "saqu", name: "Сақу", level: 4, type: "тийре", info: { tamga: "СҚ", urан: "Шулык!", history: "Сақшылар" } },
@@ -596,7 +598,7 @@ const treeData = {
                             ]
                         },
                         {
-                            id: "koldauli", name: "ҚОЛДАУЛЫ", level: 3, type: "уруу",
+                            id: "koldauli", name: "ҚОЛДАУЛЫ", level: 3, type: "үлкен уруу",
                             info: { history: "Қолдау - опора.", tamga: "ҚЛД", urан: "Қолдау!", population: "1140 кибиток" },
                             children: [
                                 { id: "beskempir", name: "Бескемпір", level: 4, type: "тийре", info: { tamga: "Б5", urан: "Қолдау!", history: "Бес кемпір" } },
@@ -624,7 +626,7 @@ const treeData = {
                             ]
                         },
                         {
-                            id: "kostambali", name: "ҚОСТАҢБАЛЫ", level: 3, type: "уруу", tamga: "II",
+                            id: "kostambali", name: "ҚОСТАҢБАЛЫ", level: 3, type: "үлкен уруу", tamga: "II",
                             info: { history: "Екі тамғалы.", tamga: "II", urан: "Қосқа!", population: "590 кибиток" },
                             children: [
                                 { id: "jangildi-k", name: "Жангелді", level: 4, type: "тийре", info: { tamga: "ЖГ", urан: "Қосқа!" } },
@@ -637,7 +639,7 @@ const treeData = {
                             ]
                         },
                         {
-                            id: "balgali", name: "БАЛҒАЛЫ", level: 3, type: "уруу",
+                            id: "balgali", name: "БАЛҒАЛЫ", level: 3, type: "үлкен уруу",
                             info: { history: "Балға ұстаған. Теміршілер.", tamga: "Б", urан: "Балға!", legend: "Теміршілер ұрпағы", population: "560 кибиток" },
                             children: [
                                 { id: "aqbalgali", name: "Ақбалғалы", level: 4, type: "тийре", info: { tamga: "АБ", urан: "Балға!" } },
@@ -654,7 +656,7 @@ const treeData = {
                             ]
                         },
                         {
-                            id: "kandekli", name: "ҚӘНДЕКЛІ", level: 3, type: "уруу", tamga: "Г",
+                            id: "kandekli", name: "ҚӘНДЕКЛІ", level: 3, type: "үлкен уруу", tamga: "Г",
                             info: { history: "Көндек - қора.", tamga: "Г", urан: "Көндек!", population: "730 кибиток" },
                             children: [
                                 { id: "qarama-kan", name: "Қарама", level: 4, type: "тийре", info: { tamga: "ҚР", urан: "Көндек!" } },
@@ -664,7 +666,7 @@ const treeData = {
                             ]
                         },
                         {
-                            id: "karamoiyn", name: "ҚАРАМОЙЫН", level: 3, type: "уруу", tamga: "ТМ",
+                            id: "karamoiyn", name: "ҚАРАМОЙЫН", level: 3, type: "үлкен уруу", tamga: "ТМ",
                             info: { history: "Қара мойын.", tamga: "ТМ", urан: "Мойын!", population: "560 кибиток" },
                             children: [
                                 { id: "annakhoja", name: "Аннахожа", level: 4, type: "тийре", info: { tamga: "АН", urан: "Мойын!", history: "Анна әулие" } },
@@ -675,7 +677,7 @@ const treeData = {
                             ]
                         },
                         {
-                            id: "muyten", name: "МҮЙТЕН", level: 3, type: "уруу", tamga: "Үш шанышқы", urан: "Ақшолпан",
+                            id: "muyten", name: "МҮЙТЕН", level: 3, type: "үлкен уруу", tamga: "Үш шанышқы", urан: "Ақшолпан",
                             info: { history: "Мұйын - мойын.", origin: "Мүйтен батыр", tamga: "Үш шанышқы", urан: "Ақшолпан", population: "540 кибиток", legend: "Мүйтеннің үш ұлы: Самат, Тели, Абыз" },
                             children: [
                                 {
@@ -719,7 +721,7 @@ const treeData = {
                     ]
                 },
                 {
-                    id: "jauyngyr", name: "ЖАУЫНГЫР БӨЛIМI", level: 2, type: "бөлiм",
+                    id: "jauyngyr", name: "ЖАУЫНГЫР БӨЛИМИ", level: 2, type: "бөлим",
                     info: { history: "Жауынгыр - 7 ру.", population: "3660 кибиток" },
                     children: [
                         { id: "teristambaly", name: "ТЕРIСТАҢБАЛЫ", level: 3, type: "уруу", children: [{id:"shomak",name:"Шомақ",level:4,type:"тийре"},{id:"hangildi",name:"Хангелді",level:4,type:"тийре"},{id:"baiqaragan",name:"Байқараған",level:4,type:"тийре"},{id:"elshibai",name:"Елшібай",level:4,type:"тийре"},{id:"qurban-t",name:"Құрбан",level:4,type:"тийре"},{id:"togai",name:"Тоғыз",level:4,type:"тийре"},{id:"tyle",name:"Тіле",level:4,type:"тийре"},{id:"tebegen",name:"Тебеген",level:4,type:"тийре"},{id:"tum",name:"Тум",level:4,type:"тийре"},{id:"tyrk",name:"Түркістан",level:4,type:"тийре"}] },
@@ -739,6 +741,7 @@ const treeData = {
             children: [
                 {
                     id: "kytaı", name: "ҚЫТАЙ", level: 2, type: "үлкен уруу", tamga: "Q", уран: "Уллы таў",
+                    
                     info: { history: "Ең ірі ру.", tamga: "Q", уран: "Уллы таў", population: "4320 кибиток" },
                     children: [
                         { id: "bessary", name: "БЕССАРЫ", level: 3, type: "уруу", children: [{id:"zhunli",name:"Жүнли",level:4,type:"тийре"},{id:"qoyly",name:"Қойлы",level:4,type:"тийре"}] },
@@ -772,7 +775,7 @@ const treeData = {
                         { id: "dobal", name: "ДОБАЛ", level: 3, type: "уруу" },
                         { id: "oymauyt", name: "ОЙМАЎЫТ", level: 3, type: "уруу", children: [{id:"qara-o",name:"Қара",level:4,type:"тийре"},{id:"sary-o",name:"Сары",level:4,type:"тийре",children:[{id:"zhiydeli",name:"Жийдели",level:5,type:"көше"}]},{id:"aq-o",name:"Ақ",level:4,type:"тийре"}] },
                         { id: "dombazqaq", name: "ДОМБАЗҚАҚ", level: 3, type: "уруу" },
-                        { id: "nokis", name: "НӨКIС", level: 3, type: "уруу", children: [{id:"zhamanzhak",name:"Жаманжақ",level:4,type:"тийре"},{id:"bozaq",name:"Бозақ",level:4,type:"тийре"},{id:"altynpyshaq",name:"Алтынпышақ",level:4,type:"тийре"},{id:"ghobdir",name:"Гобдир",level:4,type:"тийре"}] }
+                        { id: "nokis", name: "НӨКИС", level: 3, type: "уруу", children: [{id:"zhamanzhak",name:"Жаманжақ",level:4,type:"тийре"},{id:"bozaq",name:"Бозақ",level:4,type:"тийре"},{id:"altynpyshaq",name:"Алтынпышақ",level:4,type:"тийре"},{id:"ghobdir",name:"Гобдир",level:4,type:"тийре"}] }
                     ]
                 },
                 {
@@ -782,7 +785,7 @@ const treeData = {
                         { id: "qaratay", name: "ҚАРАТАЙ (Қара)", level: 3, type: "топар", children: [{id:"qaramangyt",name:"Қараманғыт",level:4,type:"тийре",children:[{id:"ushbas",name:"Үшбас",level:5,type:"көше"},{id:"karasiraq-m",name:"Қарасыйрақ",level:5,type:"көше"},{id:"aqmangyt",name:"Ақманғыт",level:5,type:"көше"}]},{id:"mamyqshy",name:"Мамықшы",level:4,type:"уруу",children:[{id:"zhetiqurt",name:"Жетіқурт",level:5,type:"көше"}]},{id:"kosar-m",name:"Қосар",level:4,type:"уруу",children:[{id:"gubidin",name:"Гүбидин",level:5,type:"көше"}]},{id:"qylqaly",name:"Қылқалы",level:4,type:"тийре"}] },
                         { id: "sarytay", name: "САРЫТАЙ (Сары)", level: 3, type: "топар", children: [{id:"arshyn",name:"Аршын",level:4,type:"тийре"},{id:"zhailyk",name:"Жайлық",level:4,type:"тийре"},{id:"toqmangyt",name:"Тоқманғыт",level:4,type:"тийре"},{id:"arsary",name:"Арсары",level:4,type:"тийре"},{id:"tazhzhanlyk",name:"Тазжанлық",level:4,type:"тийре"},{id:"shuyt",name:"Шүйт",level:4,type:"тийре"},{id:"zhamansha",name:"Жаманша",level:4,type:"тийре"},{id:"esebii",name:"Есебий",level:4,type:"тийре"},{id:"tamgaly-m",name:"Тамғалы",level:4,type:"тийре"},{id:"toqmoiyin",name:"Тоқмойын",level:4,type:"тийре"},{id:"temirhoja",name:"Темирхожа",level:4,type:"тийре"}] },
                         { id: "boztay", name: "БОЗТАЙ (Боз)", level: 3, type: "топар", children: [{id:"bozta",name:"Бозта",level:4,type:"тийре",children:[{id:"bozta-kosh",name:"Бозта",level:5,type:"көше"}]}] },
-                        { id: "jetimtay", name: "ЖЕТIМТАЙ (Жетім)", level: 3, type: "топар", children: [{id:"eshbuga",name:"Ешбуға",level:4,type:"тийре",children:[{id:"eshbuga-kosh",name:"Ешбуға",level:5,type:"көше"}]}] }
+                        { id: "jetimtay", name: "ЖЕТИМТАЙ (Жетим)", level: 3, type: "топар", children: [{id:"eshbuga",name:"Ешбуға",level:4,type:"тийре",children:[{id:"eshbuga-kosh",name:"Ешбуға",level:5,type:"көше"}]}] }
                     ]
                 }
             ]
@@ -980,7 +983,7 @@ function showInfo(node) {
     // Список всех потомков
     if (node.children && node.children.length > 0) {
         const descendantsTree = buildDescendantsTree(node);
-        html += '<div class="stats-box"><div class="stats-number">' + getAllDescendants(node).length + '</div><div>Барлық ұрпақтары / Barlıq áwladlar</div></div>';
+        html += '<div class="stats-box"><div class="stats-number">' + getAllDescendants(node).length + '</div><div> Весь род / Barlıq áwladlar</div></div>';
         
         html += '<div class="info-section"><h3>👇Tómen toparlar / Подчиненные группы</h3>';
         html += '<div class="descendants-list">';

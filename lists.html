@@ -1,1316 +1,97 @@
-
-<!-- 
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>УРУУ | Полная родовая структура каракалпаков</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Қарақалпақ рулары - Списки</title>
     <style>
         :root {
-            /* Арысы */
-            --konyrat: #e74c3c;
-            --konyrat-light: #ff6b6b;
-            --ontort: #3498db;
-            --ontort-light: #74b9ff;
-            
-            /* Бөлiмдер */
-            --shulik: #9b59b6;
-            --shulik-light: #bb8fce;
-            --jaungir: #1abc9c;
-            --jaungir-light: #76d7c4;
-            
-            /* Уровни */
-            --ulken: #e67e22;
-            --uruu: #27ae60;
-            --tiyre: #f1c40f;
-            --koshe: #e84393;
-            
-            /* Общие */
-            --gold: #d4af37;
-            --bg-dark: #0a0c10;
-            --bg-card: #151923;
-            --bg-hover: #1e2738;
-            --text: #ffffff;
-            --text-muted: #8892b0;
-            --border: #2d3548;
+            --primary-bg: #0f1419;
+            --secondary-bg: #1a1f2e;
+            --accent-red: #e74c3c;
+            --accent-orange: #e67e22;
+            --accent-yellow: #f1c40f;
+            --gold: #f1c40f;
+            --accent-green: #2ecc71;
+            --accent-blue: #3498db;
+            --accent-purple: #9b59b6;
+            --accent-cyan: #1abc9c;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --border-color: #34495e;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
             min-height: 100vh;
+            color: var(--text-primary);
             overflow-x: hidden;
+            padding-top: 80px;
         }
 
+        /* HEADER STYLES */
         header {
-            background: linear-gradient(180deg, rgba(21,27,39,0.95) 0%, rgba(10,14,23,0.98) 100%);
-            border-bottom: 2px solid var(--gold);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-        }
-
-        .header-content {
-            max-width: 1920px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo-group { display: flex; align-items: center; gap: 1rem; }
-        
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--gold) 0%, #8b6914 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .logo-text h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--gold);
-            letter-spacing: 2px;
-        }
-
-        .search-box {
-            position: relative;
-            width: 300px;
-        }
-
-        .search-box input {
-            width: 100%;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 25px;
-            padding: 0.6rem 1rem 0.6rem 2.5rem;
-            color: var(--text);
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        .search-box input:focus { border-color: var(--gold); }
-
-        /* Main Layout - 3 columns */
-        main {
-            margin-top: 80px;
-            display: grid;
-            grid-template-columns: 280px 1fr 420px;
-            height: calc(100vh - 80px);
-            overflow: hidden;
-        }
-
-        @media (max-width: 1200px) {
-            main { grid-template-columns: 1fr; height: auto; }
-            .sidebar-left, .detail-panel { display: none; }
-        }
-
-        /* Left Sidebar - Legend */
-        .sidebar-left {
-            background: var(--bg-card);
-            border-right: 1px solid var(--border);
-            padding: 1.5rem;
-            overflow-y: auto;
-        }
-
-        .legend-section { margin-bottom: 2rem; }
-        
-        .section-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            font-weight: 700;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.6rem;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .legend-item:hover {
-            background: var(--bg-hover);
-            border-color: var(--border);
-            transform: translateX(5px);
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            box-shadow: 0 0 8px currentColor;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-
-        /* Middle - Tree */
-        .tree-container {
-            overflow-y: auto;
-            padding: 2rem;
-            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
-        }
-
-        /* Accordion Tree Styling */
-        .tree-level-1 { margin-bottom: 2rem; }
-        
-        .arys-card {
-            background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
-            border-radius: 16px;
-            border: 2px solid;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .arys-card.konyrat { border-color: var(--konyrat); }
-        .arys-card.ontort { border-color: var(--ontort); }
-
-        .arys-header {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-        }
-
-        .arys-card.konyrat .arys-header { background: linear-gradient(90deg, rgba(231, 76, 60, 0.2), transparent); }
-        .arys-card.ontort .arys-header { background: linear-gradient(90deg, rgba(52, 152, 219, 0.2), transparent); }
-
-        .arys-header h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .arys-card.konyrat h2 { color: var(--konyrat-light); }
-        .arys-card.ontort h2 { color: var(--ontort-light); }
-
-        .tamga-big { font-size: 2rem; opacity: 0.9; }
-
-        .toggle-icon {
-            font-size: 1.2rem;
-            transition: transform 0.3s;
-            color: var(--text-muted);
-        }
-
-        .toggle-icon.rotated { transform: rotate(180deg); }
-
-        .arys-content {
-            display: none;
-            padding: 1rem;
-        }
-
-        .arys-content.active { display: block; }
-
-        /* Bolim Level 2 */
-        .bolim-section {
-            margin-bottom: 1rem;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid;
-        }
-
-        .bolim-section.shulik { 
-            border-color: var(--shulik); 
-            background: rgba(155, 89, 182, 0.1);
-        }
-        .bolim-section.jaungir { 
-            border-color: var(--jaungir); 
-            background: rgba(26, 188, 156, 0.1);
-        }
-
-        .bolim-header {
-            padding: 1rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .bolim-section.shulik .bolim-header { color: var(--shulik-light); }
-        .bolim-section.jaungir .bolim-header { color: var(--jaungir-light); }
-
-        .bolim-content {
-            display: none;
-            padding: 0.5rem;
-        }
-
-        .bolim-content.active { display: block; }
-
-        /* Ulken Level 3 - Cards Grid */
-        .ulken-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .ulken-card {
-            padding: 1rem;
-            border-radius: 10px;
-            border: 2px solid;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ulken-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: currentColor;
-            opacity: 0.5;
-        }
-
-        /* Unique colors for different ulken groups */
-        .ulken-card.muyten { 
-            background: linear-gradient(135deg, rgba(230, 126, 34, 0.2), rgba(230, 126, 34, 0.05));
-            border-color: #e67e22;
-            color: #fdbf60;
-        }
-        .ulken-card.kyyat { 
-            background: linear-gradient(135deg, rgba(211, 84, 0, 0.2), rgba(211, 84, 0, 0.05));
-            border-color: #d35400;
-            color: #ff9f7f;
-        }
-        .ulken-card.ashamayly { 
-            background: linear-gradient(135deg, rgba(192, 57, 43, 0.2), rgba(192, 57, 43, 0.05));
-            border-color: #c0392b;
-            color: #ff8a80;
-        }
-        .ulken-card.koydauly { 
-            background: linear-gradient(135deg, rgba(142, 68, 173, 0.2), rgba(142, 68, 173, 0.05));
-            border-color: #8e44ad;
-            color: #da9ff9;
-        }
-        .ulken-card.kostamgaly { 
-            background: linear-gradient(135deg, rgba(41, 128, 185, 0.2), rgba(41, 128, 185, 0.05));
-            border-color: #2980b9;
-            color: #85c1e9;
-        }
-
-        .ulken-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            filter: brightness(1.2);
-        }
-
-        .ulken-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 0.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .ulken-meta {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            margin-top: 0.5rem;
-        }
-
-        /* Uruu Level 4 */
-        .uruu-list {
-            margin-top: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .uruu-item {
-            background: rgba(39, 174, 96, 0.15);
-            border: 1px solid rgba(39, 174, 96, 0.3);
-            border-radius: 8px;
-            padding: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .uruu-item:hover {
-            background: rgba(39, 174, 96, 0.25);
-            transform: translateX(5px);
-            border-color: #2ecc71;
-        }
-
-        .uruu-name {
-            font-weight: 600;
-            color: #a9dfbf;
-        }
-
-        .uruu-badge {
-            font-size: 0.7rem;
-            background: rgba(0,0,0,0.3);
-            padding: 0.2rem 0.5rem;
-            border-radius: 10px;
-            color: #82e0aa;
-        }
-
-        /* Tiyre Level 5 */
-        .tiyre-list {
-            margin-left: 1rem;
-            margin-top: 0.5rem;
-            padding-left: 1rem;
-            border-left: 3px solid var(--tiyre);
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .tiyre-item {
-            font-size: 0.9rem;
-            color: #fdebd0;
-            padding: 0.25rem 0;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .tiyre-item:hover {
-            color: var(--gold);
-            transform: translateX(3px);
-        }
-
-        /* Right Panel - Details */
-        .detail-panel {
-            background: var(--bg-card);
-            border-left: 1px solid var(--border);
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-
-        .panel-header {
-            text-align: center;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
-
-        .detail-tamga {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
-            border: 3px solid var(--gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-            position: relative;
-        }
-
-        .detail-tamga::after {
-            content: attr(data-type);
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-card);
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            text-transform: uppercase;
-        }
-
-        .detail-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            color: var(--gold);
-            margin-bottom: 0.5rem;
-        }
-
-        .detail-path {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-
-        .info-block {
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--gold);
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .info-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .info-value {
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        .info-value.desc {
-            font-size: 0.95rem;
-            color: #cbd5e0;
-        }
-
-        .highlight-box {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .subgroups-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 0.75rem;
-        }
-
-        .subgroup-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.6rem 0.75rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 6px;
-            border: 1px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .subgroup-item:hover {
-            border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--gold);
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-            border: 1px solid;
-        }
-
-        .tag-uran { 
-            background: rgba(231, 76, 60, 0.2); 
-            border-color: rgba(231, 76, 60, 0.5);
-            color: #ff8a80;
-        }
-        .tag-tamga { 
-            background: rgba(52, 152, 219, 0.2); 
-            border-color: rgba(52, 152, 219, 0.5);
-            color: #74b9ff;
-        }
-        .tag-location { 
-            background: rgba(39, 174, 96, 0.2); 
-            border-color: rgba(39, 174, 96, 0.5);
-            color: #82e0aa;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 3rem 1rem;
-        }
-
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-pill {
-            background: rgba(0,0,0,0.3);
-            padding: 0.75rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .stat-num {
-            color: var(--gold);
-            font-size: 1.25rem;
-            font-weight: bold;
-        }
-
-        .stat-name {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 0.25rem;
-        }
-
-        .legend-inline {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <div class="header-content">
-            <div class="logo-group">
-                <div class="logo-icon">🌳</div>
-                <div class="logo-text">
-                    <h1>УРУУ</h1>
-                </div>
-            </div>
-            <div class="search-box">
-                <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); opacity: 0.5;">🔍</span>
-                <input type="text" id="searchInput" placeholder="Поиск по названию рода...">
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <!-- Left Column - Legend -->
-        <!-- <aside class="sidebar-left">
-            <div class="legend-section">
-                <div class="section-title">Арыстар</div>
-                <div class="legend-item" onclick="toggleArys('konyrat')">
-                    <div class="legend-color" style="background: var(--konyrat);"></div>
-                    <div>
-                        <div style="font-weight: 600;">Арыс Қоңырат</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">Красная ветвь</div>
-                    </div>
-                </div>
-                <div class="legend-item" onclick="toggleArys('ontort')">
-                    <div class="legend-color" style="background: var(--ontort);"></div>
-                    <div>
-                        <div style="font-weight: 600;">Арыс Он төрт</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">Синяя ветвь</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="legend-section">
-                <div class="section-title">Бөлiмдер</div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--shulik);"></div>
-                    <span>Шүллик (Левый)</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--jaungir);"></div>
-                    <span>Жауыңыр (Правый)</span>
-                </div>
-            </div>
-
-            <div class="legend-section">
-                <div class="section-title">Уровни иерархии</div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--ulken);"></div>
-                    <span>Үлкен уруу</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--uruu);"></div>
-                    <span>Уруу</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--tiyre);"></div>
-                    <span>Тийре</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background: var(--koshe);"></div>
-                    <span>Көше</span>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Middle Column - Tree -->
-        <!-- <section class="tree-container" id="treeContainer">
-            
-            <!-- Арыс Қоңырат -->
-            <!-- <div class="arys-card konyrat" id="konyrat-card">
-                <div class="arys-header" onclick="toggle('konyrat-content', this)">
-                    <h2><span class="tamga-big">⩃</span> Арыс Қоңырат <span style="font-size: 0.9rem; opacity: 0.7;">(Qońyrat)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="arys-content" id="konyrat-content">
-                    
-                    <!-- Шүллик бөлімі -->
-                    <!-- <div class="bolim-section shulik">
-                        <div class="bolim-header" onclick="toggle('shulik-content', this)">
-                            <div>
-                                <div>⚔️ Шүллик бөлімі</div>
-                                <div style="font-size: 0.8rem; opacity: 0.8; font-weight: normal; margin-top: 0.25rem;">Левое крыло • Уран: Жайылқан!</div>
-                            </div>
-                            <span class="toggle-icon">▼</span>
-                        </div>
-                        <div class="bolim-content" id="shulik-content">
-                             -->
-                            <!-- Мүйтен -->
-                            <!-- <div class="ulken-card muyten" onclick="showDetails({
-                                name: 'Мүйтен',
-                                type: 'Үлкен уруу',
-                                tamga: 'ψ (шанышқы - трехострая стрела)',
-                                uran: 'Ақшолпан!',
-                                desc: 'Один из древних шести уруу («Алты уруу»). Согласно шежире, Мүйтен происходит от легендарного предка, детей которого воспитывала кобылица Ак-шолпан (Белая Звезда). Название связано с древним этнонимом «сарматы». Делится на «Бес тоқсан» (Пять девяностых).',
-                                cemetery: 'Қабақлы ата, Тербенбес',
-                                arys: 'Қоңырат (Шүллик)',
-                                bolim: 'Шүллик',
-                                stats: '5 основных подгрупп',
-                                pair: 'Қоңырат (парные роды)',
-                                history: 'Входит в состав арыса Қоңырат с 1855-56 гг. Ранее был независимым уруу наряду с Қоңырат.'
-                            })">
-                                <div class="ulken-title">ψ Мүйтен <span style="font-size: 0.8rem; opacity: 0.7;">(Müiten)</span></div>
-                                <div class="ulken-meta">
-                                    <span class="tag tag-uran">Уран: Ақшолпан!</span>
-                                    <span class="tag tag-tamga">Тамга: ψ</span>
-                                </div>
-                                <div style="margin-top: 0.75rem; font-size: 0.9rem; color: #fdebd0;">
-                                    📍 Кладбище: Қабақлы ата, Тербенбес
-                                </div>
-                                
-                                <div class="uruu-list">
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({
-                                        name: 'Самат',
-                                        type: 'Уруу',
-                                        parent: 'Мүйтен',
-                                        desc: 'Потомки Самата. Возможно, этноним связан с сарматами.',
-                                        subgroups: 'Байбише, Токалқараған, Баймұрат'
-                                    })">
-                                        <span class="uruu-name">🌿 Самат</span>
-                                        <span class="uruu-badge">3 тийре</span>
-                                        <div class="tiyre-list">
-                                            <div class="tiyre-item" onclick="event.stopPropagation(); showDetails({name: 'Байбише', type: 'Тийре', parent: 'Самат'})">• Байбише</div>
-                                            <div class="tiyre-item" onclick="event.stopPropagation(); showDetails({name: 'Токалқараған', type: 'Тийре', parent: 'Самат'})">• Токалқараған</div>
-                                            <div class="tiyre-item" onclick="event.stopPropagation(); showDetails({name: 'Баймұрат', type: 'Тийре', parent: 'Самат'})">• Баймұрат</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({
-                                        name: 'Тели',
-                                        type: 'Уруу',
-                                        parent: 'Мүйтен',
-                                        desc: 'Связан с древним племенем теле (телеские племена тюркского каганата).',
-                                        subgroups: 'Тілеуберді, Аллаберді'
-                                    })">
-                                        <span class="uruu-name">🌿 Тели</span>
-                                        <span class="uruu-badge">2 тийре</span>
-                                        <div class="tiyre-list">
-                                            <div class="tiyre-item" onclick="event.stopPropagation(); showDetails({name: 'Тілеуберді', type: 'Тийре', parent: 'Тели'})">• Тілеуберді</div>
-                                            <div class="tiyre-item" onclick="event.stopPropagation(); showDetails({name: 'Аллаберді', type: 'Тийре', parent: 'Тели'})">• Аллаберді</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({
-                                        name: 'Абыз',
-                                        type: 'Уруу',
-                                        parent: 'Мүйтен',
-                                        desc: 'Тот же этноним встречается у казахов (рус Тобыкты) и ногайцев.'
-                                    })">
-                                        <span class="uruu-name">🌿 Абыз</span>
-                                    </div>
-
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({
-                                        name: 'Кеңтанау',
-                                        type: 'Уруу',
-                                        parent: 'Мүйтен',
-                                        desc: 'От топонима Кентанау (Кент-е Наукерде - Новый город). Связь с кидарито-эфталитской средой Приаралья.',
-                                        subgroups: 'Барн, Итак, Жекенсал',
-                                        location: 'Южное Приаралье'
-                                    })" style="border-color: #f1c40f; background: rgba(241, 196, 15, 0.15);">
-                                        <span class="uruu-name" style="color: #fdebd0;">🌟 Кеңтанау</span>
-                                        <span class="uruu-badge" style="background: rgba(241, 196, 15, 0.3); color: #fff;">3 тийре</span>
-                                        <div class="tiyre-list" style="border-color: #f39c12;">
-                                            <div class="tiyre-item" onclick="event.stopPropagation(); showDetails({name: 'Барн', type: 'Тийре', parent: 'Кеңтанау', desc: 'Подрод Кеңтанау'})" style="color: #fff; font-weight: 600;">• Барн</div>
-                                            <div class="tiyre-item" onclick="event.stopPropagation(); showDetails({name: 'Итак', type: 'Тийре', parent: 'Кеңтанау', desc: 'Подрод Кеңтанау'})" style="color: #fff; font-weight: 600;">• Итак</div>
-                                            <div class="tiyre-item" onclick="event.stopPropagation(); showDetails({name: 'Жекенсал', type: 'Тийре', parent: 'Кеңтанау', desc: 'Подрод Кеңтанау'})" style="color: #fff; font-weight: 600;">• Жекенсал</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-
-                            <!-- Қыят -->
-                            <!-- <div class="ulken-card kyyat" onclick="showDetails({
-                                name: 'Қыят',
-                                type: 'Үлкен уруу',
-                                tamga: 'Ψ (шанышқы)',
-                                uran: 'Арқалым!',
-                                desc: 'Древний кыпчакский род. Название связано с монгольским титулом «кият». Тамга: трехострая стрела.',
-                                arys: 'Қоңырат (Шүллик)',
-                                bolim: 'Шүллик'
-                            })">
-                                <div class="ulken-title">Ψ Қыят <span style="font-size: 0.8rem; opacity: 0.7;">(Қыйат)</span></div>
-                                <div class="ulken-meta">
-                                    <span class="tag tag-uran">Уран: Арқалым!</span>
-                                    <span class="tag tag-tamga">Тамга: Ψ</span>
-                                </div>
-                                
-                                <div class="uruu-list">
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Үш тамғалы', type: 'Уруу', parent: 'Қыят'})">
-                                        <span class="uruu-name">🌿 Үш тамғалы</span>
-                                        <div class="tiyre-list">
-                                            <div class="tiyre-item">• Саңмұрын</div>
-                                            <div class="tiyre-item">• Үштаңбалы</div>
-                                            <div class="tiyre-item">• Арыққият</div>
-                                            <div class="tiyre-item">• Тартулы</div>
-                                            <div class="tiyre-item">• Қанжығалы</div>
-                                            <div class="tiyre-item">• Қатаған</div>
-                                        </div>
-                                    </div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Тарақты', type: 'Уруу', parent: 'Қыят'})">
-                                        <span class="uruu-name">🌿 Тарақты</span>
-                                        <div class="tiyre-list">
-                                            <div class="tiyre-item">• Тоғызақ</div>
-                                            <div class="tiyre-item">• Абас</div>
-                                            <div class="tiyre-item">• Жалтыршы</div>
-                                            <div class="tiyre-item">• Ақұнқараған</div>
-                                            <div class="tiyre-item">• Тақай</div>
-                                        </div>
-                                    </div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Балғалы Қият', type: 'Уруу', parent: 'Қыят'})">
-                                        <span class="uruu-name">🌿 Балғалы Қият</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Ашамайлы -->
-                            <!-- <div class="ulken-card ashamayly" onclick="showDetails({
-                                name: 'Ашамайлы',
-                                type: 'Үлкен уруу',
-                                tamga: '✕ (две пересекающиеся линии)',
-                                uran: 'Жұлдыз!',
-                                desc: 'От батыра Байәділ — годовой табунщик, клеймивший лошадей знаком «ашамай». Имеет общую тамгу с казахским родом Керей.',
-                                location: 'Правобережье Амударьи'
-                            })">
-                                <div class="ulken-title">✕ Ашамайлы</div>
-                                <div class="ulken-meta">
-                                    <span class="tag tag-uran">Уран: Жұлдыз!</span>
-                                </div>
-                                <div class="uruu-list">
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Сақыу', type: 'Уруу'})"><span class="uruu-name">🌿 Сақыу</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қарақожа', type: 'Уруу'})"><span class="uruu-name">🌿 Қарақожа</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қабасан', type: 'Уруу'})">
-                                        <span class="uruu-name">🌿 Қабасан</span>
-                                        <div class="tiyre-list">
-                                            <div class="tiyre-item">• Ақназар</div>
-                                            <div class="tiyre-item">• Жансары</div>
-                                            <div class="tiyre-item">• Өтеміс</div>
-                                            <div class="tiyre-item">• Есбен</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Қолдаулы -->
-                            <!-- <div class="ulken-card koydauly" onclick="showDetails({
-                                name: 'Қолдаулы',
-                                type: 'Үлкен уруу',
-                                desc: 'Потомки Кайдара (сын Жанибека) — имеют керейское происхождение.',
-                                origin: 'Керейские племена'
-                            })">
-                                <div class="ulken-title">Қолдаулы</div>
-                                <div class="uruu-list">
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Бесемпір', type: 'Уруу'})"><span class="uruu-name">🌿 Бесемпір</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Майшы', type: 'Уруу'})"><span class="uruu-name">🌿 Майшы</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қалқаман', type: 'Уруу'})"><span class="uruu-name">🌿 Қалқаман</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Сарытан', type: 'Уруу'})"><span class="uruu-name">🌿 Сарытан</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Күлкіқожақ', type: 'Уруу'})"><span class="uruu-name">🌿 Күлкіқожақ</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Шылжуыт', type: 'Уруу'})"><span class="uruu-name">🌿 Шылжуыт</span></div>
-                                </div>
-                            </div> -->
-
-                            <!-- Қостамғалы -->
-                            <!-- <div class="ulken-card kostamgaly" onclick="showDetails({
-                                name: 'Қостамғалы',
-                                type: 'Үлкен уруу',
-                                tamga: '⧉ (два квадрата)',
-                                uran: 'Тоқсоба!',
-                                desc: 'Потомки Еділ және Жанәділ (сыновей Кайдара). Название означает «двойная печать».'
-                            })">
-                                <div class="ulken-title">⧉ Қостамғалы</div>
-                                <div class="uruu-list">
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Жангелді', type: 'Уруу'})"><span class="uruu-name">🌿 Жангелді</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Ағабеглі', type: 'Уруу'})"><span class="uruu-name">🌿 Ағабеглі</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қарынжуан', type: 'Уруу'})"><span class="uruu-name">🌿 Қарынжуан</span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div> -->
-
-                    <!-- Жауыңыр бөлімі -->
-                    <!-- <div class="bolim-section jaungir">
-                        <div class="bolim-header" onclick="toggle('jaungir-content', this)">
-                            <div>
-                                <div>⚔️ Жауыңыр бөлімі</div>
-                                <div style="font-size: 0.8rem; opacity: 0.8; font-weight: normal; margin-top: 0.25rem;">Правое крыло</div>
-                            </div>
-                            <span class="toggle-icon">▼</span>
-                        </div>
-                        <div class="bolim-content" id="jaungir-content">
-                            
-                            <div class="ulken-card" style="background: rgba(26, 188, 156, 0.1); border-color: #1abc9c; color: #76d7c4;" onclick="showDetails({
-                                name: 'Теристамғалы',
-                                type: 'Үлкен уруу',
-                                desc: 'Аул из 15 домов — чисто родовое поселение в Караузякском районе.',
-                                location: 'Караузякский район'
-                            })">
-                                <div class="ulken-title">Теристамғалы</div>
-                                <div class="uruu-list">
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Шомақ', type: 'Уруу'})"><span class="uruu-name">🌿 Шомақ</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Хангелді', type: 'Уруу'})"><span class="uruu-name">🌿 Хангелді</span></div>
-                                </div>
-                            </div>
-
-                            <div class="ulken-card" style="background: rgba(22, 160, 133, 0.1); border-color: #16a085; color: #a3e4d7;" onclick="showDetails({
-                                name: 'Ырғақты',
-                                type: 'Үлкен уруу',
-                                desc: 'Уникальный род! Представители есть в обоих арысах. Легенда о молодой паре, изгнанной за нарушение экзогамии.',
-                                legend: 'Молодые супруги из разных арысов были изгнаны и основали новый род.'
-                            })">
-                                <div class="ulken-title">Ырғақты</div>
-                                <div class="uruu-list">
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Саспақ', type: 'Уруу'})"><span class="uruu-name">🌿 Саспақ</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Үйес', type: 'Уруу'})"><span class="uruu-name">🌿 Үйес</span></div>
-                                    <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Найман', type: 'Уруу'})"><span class="uruu-name">🌿 Найман</span></div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div> -->
-
-            <!-- Арыс Он төрт уруу -->
-            <!-- <div class="arys-card ontort" id="ontort-card">
-                <div class="arys-header" onclick="toggle('ontort-content', this)">
-                    <h2><span class="tamga-big">⧜</span> Арыс Он төрт уруу <span style="font-size: 0.9rem; opacity: 0.7;">(On tórt)</span></h2>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="arys-content" id="ontort-content"> -->
-                    
-                    <!-- Қытай -->
-                    <!-- <div class="ulken-card" style="background: linear-gradient(135deg, rgba(52, 152, 219, 0.2), rgba(52, 152, 219, 0.05)); border-color: #3498db; color: #85c1e9; margin-bottom: 1rem;" onclick="showDetails({
-                        name: 'Қытай',
-                        type: 'Үлкен уруу',
-                        tamga: '14 (число)',
-                        uran: 'Ұллы тау!',
-                        desc: 'Древний этноним. Гунно-кытайские племена. Парный с Қыпшақ (жиптикдәк).',
-                        pair: 'Қыпшақ'
-                    })">
-                        <div class="ulken-title">14 Қытай</div>
-                        <div class="ulken-meta">
-                            <span class="tag tag-uran">Уран: Ұллы тау!</span>
-                            <span style="margin-left: 0.5rem; font-size: 0.8rem; color: #bbb;">🔗 Парный: Қыпшақ</span>
-                        </div>
-                        <div class="uruu-list">
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Бессары', type: 'Уруу', parent: 'Қытай'})">
-                                <span class="uruu-name">🌿 Бессары</span>
-                                <div class="tiyre-list">
-                                    <div class="tiyre-item">• Жүнли</div>
-                                    <div class="tiyre-item">• Қойлы</div>
-                                </div>
-                            </div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Бексыық', type: 'Уруу', parent: 'Қытай'})"><span class="uruu-name">🌿 Бексыық</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қазаяқты', type: 'Уруу', parent: 'Қытай'})"><span class="uruu-name">🌿 Қазаяқты</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Мәнжуўли', type: 'Уруу', parent: 'Қытай'})">
-                                <span class="uruu-name">🌿 Мәнжуўли</span>
-                                <div class="tiyre-list">
-                                    <div class="tiyre-item">• Екі шыйық (Қарашыйық, Ақшыйық)</div>
-                                    <div class="tiyre-item">• Қараманжуўли</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- Қыпшақ -->
-                    <!-- <div class="ulken-card" style="background: linear-gradient(135deg, rgba(41, 128, 185, 0.2), rgba(41, 128, 185, 0.05)); border-color: #2980b9; color: #aed6f1; margin-bottom: 1rem;" onclick="showDetails({
-                        name: 'Қыпшақ',
-                        type: 'Үлкен уруу',
-                        tamga: '⁄ (одна стрела)',
-                        uran: 'Тоқсаба!',
-                        desc: 'Крупнейший кыпчакский род. Тамга «әлип» — одна стрела. Парный с Қытай.',
-                        pair: 'Қытай'
-                    })">
-                        <div class="ulken-title">⁄ Қыпшақ</div>
-                        <div class="ulken-meta">
-                            <span class="tag tag-uran">Уран: Тоқсаба!</span>
-                        </div>
-                        <div class="uruu-list">
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қаңлы', type: 'Уруу', parent: 'Қыпшақ'})">
-                                <span class="uruu-name">🌿 Қаңлы</span>
-                                <div class="tiyre-list">
-                                    <div class="tiyre-item">• Трам</div>
-                                    <div class="tiyre-item">• Қатқаңлы</div>
-                                    <div class="tiyre-item">• Ырғақты</div>
-                                </div>
-                            </div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Саңмұрын', type: 'Уруу', parent: 'Қыпшақ'})"><span class="uruu-name">🌿 Саңмұрын</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Естек', type: 'Уруу', parent: 'Қыпшақ'})"><span class="uruu-name">🌿 Естек</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қанжығалы', type: 'Уруу', parent: 'Қыпшақ', desc: 'Потомки Құлжан һәм Толыбек — получили «жебелі хат» (стрелу с грамотой) от хана.'})"><span class="uruu-name">🌿 Қанжығалы</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Жағалтай', type: 'Уруу', parent: 'Қыпшақ'})"><span class="uruu-name">🌿 Жағалтай</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Майлыбалта', type: 'Уруу', parent: 'Қыпшақ'})"><span class="uruu-name">🌿 Майлыбалта</span></div>
-                        </div>
-                    </div> --> -->
-
-                    <!-- Кенегес -->
-                    <!-- <div class="ulken-card" style="background: linear-gradient(135deg, rgba(155, 89, 182, 0.2), rgba(155, 89, 182, 0.05)); border-color: #9b59b6; color: #d7bde2; margin-bottom: 1rem;" onclick="showDetails({
-                        name: 'Кенегес',
-                        type: 'Үлкен уруу',
-                        tamga: '+ (крест)',
-                        uran: 'Естерек! / Шәулі-Шауқай!',
-                        desc: 'Парный с Маңғыт. Потомки Кене. Тамга «атанақ» — крест.',
-                        pair: 'Маңғыт'
-                    })">
-                        <div class="ulken-title">+ Кенегес</div>
-                        <div class="uruu-list">
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Араншы', type: 'Уруу', parent: 'Кенегес'})">
-                                <span class="uruu-name">🌿 Араншы</span>
-                                <div class="tiyre-list">
-                                    <div class="tiyre-item">• Аннақұл</div>
-                                    <div class="tiyre-item">• Абас → Сейтимбет</div>
-                                    <div class="tiyre-item">• Сүйін</div>
-                                </div>
-                            </div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Нөкіс', type: 'Уруу', parent: 'Кенегес', desc: 'Дал название столице Республики Каракалпакстан (Нукус).'})">
-                                <span class="uruu-name">🌿 Нөкіс</span>
-                                <span style="font-size: 0.7rem; background: rgba(231, 76, 60, 0.3); padding: 0.2rem 0.5rem; border-radius: 10px; color: #ff8a80;">Столица</span>
-                            </div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Ақтоғын', type: 'Уруу', parent: 'Кенегес'})"><span class="uruu-name">🌿 Ақтоғын</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Оймаўыт', type: 'Уруу', parent: 'Кенегес'})"><span class="uruu-name">🌿 Оймаўыт</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Добал', type: 'Уруу', parent: 'Кенегес'})"><span class="uruu-name">🌿 Добал</span></div>
-                        </div>
-                    </div> -->
-
-                    <!-- Маңғыт
-                    <div class="ulken-card" style="background: linear-gradient(135deg, rgba(142, 68, 173, 0.2), rgba(142, 68, 173, 0.05)); border-color: #8e44ad; color: #d2b4de; margin-bottom: 1rem;" onclick="showDetails({
-                        name: 'Маңғыт',
-                        type: 'Үлкен уруу',
-                        tamga: '⨍ (меч)',
-                        uran: 'Шәулі-Шауқай!',
-                        desc: 'Монгольского происхождения (мангыт — монгольский клан). Парный с Кенегес.',
-                        pair: 'Кенегес',
-                        origin: 'Монгольские племена'
-                    })">
-                        <div class="ulken-title">⨍ Маңғыт</div>
-                        <div class="uruu-list">
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қарамаңғыт', type: 'Уруу', parent: 'Маңғыт'})"><span class="uruu-name">🌿 Қарамаңғыт</span></div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Ақмаңғыт', type: 'Уруу', parent: 'Маңғыт', desc: 'Считают себя потомками Едиге-бия (правителя Золотой Орды).'})">
-                                <span class="uruu-name">🌿 Ақмаңғыт</span>
-                            </div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Қылқалы', type: 'Уруу', parent: 'Маңғыт', legend: 'Чингисхан одарил баба рода козлиной шубой (қылқалы тон).'})">
-                                <span class="uruu-name">🌿 Қылқалы</span>
-                            </div>
-                            <div class="uruu-item" onclick="event.stopPropagation(); showDetails({name: 'Сарытай тобы', type: 'Топ', parent: 'Маңғыт'})">
-                                <span class="uruu-name">📦 Сарытай тобы</span>
-                                <div style="font-size: 0.8rem; color: #bbb; margin-top: 0.25rem;">Аршын, Жандық, Тоқмаңғыт</div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </section> -->
-
-        <!-- Right Column - Details -->
-        <!-- <aside class="detail-panel" id="detailPanel">
-            <div id="emptyState">
-                <div class="empty-state">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🏛️</div>
-                    <h3 style="color: var(--gold); margin-bottom: 0.5rem;">Выберите род</h3>
-                    <p>Кликните на любую карточку в дереве, чтобы увидеть подробную информацию о тамге, уране, истории и подгруппах.</p>
-                    
-                    <div style="margin-top: 2rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 8px;">
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem;">Цветовая схема:</div>
-                        <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem;">
-                            <div><span style="color: #e74c3c;">■</span> Арыс Қоңырат</div>
-                            <div><span style="color: #3498db;">■</span> Арыс Он төрт</div>
-                            <div><span style="color: #e67e22;">■</span> Үлкен уруу</div>
-                            <div><span style="color: #27ae60;">■</span> Уруу</div>
-                            <div><span style="color: #f1c40f;">■</span> Тийре</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="contentState" style="display: none;"> -->
-                <!-- Content will be inserted here -->
-            <!-- </div>
-        </aside>
-    </main>
-
-    <script>
-        function toggle(id, header) {
-            const el = document.getElementById(id);
-            const icon = header.querySelector('.toggle-icon');
-            if (el.style.display === 'block') {
-                el.style.display = 'none';
-                icon.classList.remove('rotated');
-            } else {
-                el.style.display = 'block';
-                icon.classList.add('rotated');
-            }
-        }
-
-        function toggleArys(arysId) {
-            const card = document.getElementById(arysId + '-card');
-            const content = document.getElementById(arysId + '-content');
-            const icon = card.querySelector('.toggle-icon');
-            
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-                icon.classList.remove('rotated');
-            } else {
-                content.style.display = 'block';
-                icon.classList.add('rotated');
-                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-
-        function showDetails(data) {
-            document.getElementById('emptyState').style.display = 'none';
-            const content = document.getElementById('contentState');
-            content.style.display = 'block';
-            
-            const typeColors = {
-                'Арыс': '#e74c3c',
-                'Үлкен уруу': '#e67e22',
-                'Уруу': '#27ae60',
-                'Тийре': '#f1c40f',
-                'Бөлiм': '#9b59b6',
-                'Топ': '#8e44ad'
-            };
-            
-            const color = typeColors[data.type] || '#d4af37';
-            
-            let html = `
-                <div class="panel-header">
-                    <div class="detail-tamga" data-type="${data.type}" style="border-color: ${color}">
-                        ${data.tamga ? data.tamga.charAt(0) : (data.name ? data.name.charAt(0) : '🏹')}
-                    </div>
-                    <h2 class="detail-title">${data.name}</h2>
-                    <div class="detail-path">
-                        ${data.arys ? data.arys + ' → ' : ''}
-                        ${data.bolim ? data.bolim + ' → ' : ''}
-                        ${data.parent ? data.parent + ' → ' : ''}
-                        <span style="color: ${color}">${data.name}</span>
-                    </div>
-                </div>
-                
-                <div class="stats-row">
-                    <div class="stat-pill">
-                        <div class="stat-num">${data.type || 'Род'}</div>
-                        <div class="stat-name">Тип</div>
-                    </div>
-                    ${data.tamga ? `
-                    <div class="stat-pill">
-                        <div class="stat-num" style="font-size: 1rem;">${data.tamga}</div>
-                        <div class="stat-name">Тамга</div>
-                    </div>
-                    ` : ''}
-                    ${data.uran ? `
-                    <div class="stat-pill">
-                        <div class="stat-num" style="font-size: 0.9rem;">${data.uran}</div>
-                        <div class="stat-name">Уран</div>
-                    </div>
-                    ` : ''}
-                </div>
-            `;
-            
-            if (data.desc) {
-                html += `
-                    <div class="info-block" style="border-left-color: ${color}">
-                        <div class="info-label">Описание / История</div>
-                        <div class="info-value desc">${data.desc}</div>
-                    </div>
-                `;
-            }
-            
-            if (data.legend) {
-                html += `
-                    <div class="info-block" style="border-left-color: #f39c12; background: rgba(243, 156, 18, 0.1);">
-                        <div class="info-label">📜 Легенда</div>
-                        <div class="info-value" style="font-style: italic; color: #fdebd0;">"${data.legend}"</div>
-                    </div>
-                `;
-            }
-            
-            if (data.pair) {
-                html += `
-                    <div class="info-block" style="border-left-color: #9b59b6;">
-                        <div class="info-label">🔗 Парный род (Жиптикдәк)</div>
-                        <div class="info-value" style="color: #d7bde2; font-weight: 600;">${data.pair}</div>
-                        <div style="font-size: 0.85rem; color: #aaa; margin-top: 0.5rem;">
-                            Согласно традиции, с представителями парного рода разрешены брачные отношения (ал за өтір).
-                        </div>
-                    </div>
-                `;
-            }
-            
-            if (data.cemetery || data.location) {
-                html += `<div class="info-block" style="border-left-color: #27ae60;">`;
-                html += `<div class="info-label">📍 Местоположение</div>`;
-                if (data.cemetery) html += `<div class="info-value">⚰️ Родовое кладбище: <strong>${data.cemetery}</strong></div>`;
-                if (data.location) html += `<div class="info-value" style="margin-top: 0.5rem;">🏕️ Аул/Район: ${data.location}</div>`;
-                html += `</div>`;
-            }
-            
-            if (data.origin) {
-                html += `
-                    <div class="info-block" style="border-left-color: #3498db;">
-                        <div class="info-label">👥 Происхождение</div>
-                        <div class="info-value">${data.origin}</div>
-                    </div>
-                `;
-            }
-            
-            if (data.stats || data.subgroups) {
-                html += `
-                    <div class="info-block" style="border-left-color: ${color}">
-                        <div class="info-label">📊 Состав</div>
-                        ${data.stats ? `<div class="info-value" style="margin-bottom: 0.5rem;">${data.stats}</div>` : ''}
-                        ${data.subgroups ? `
-                            <div class="highlight-box">
-                                <strong>Подгруппы:</strong> ${data.subgroups}
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-            }
-            
-            if (data.history) {
-                html += `
-                    <div class="info-block" style="border-left-color: #95a5a6;">
-                        <div class="info-label">📚 Историческая справка</div>
-                        <div class="info-value" style="font-size: 0.9rem; color: #bdc3c7;">${data.history}</div>
-                    </div>
-                `;
-            }
-            
-            content.innerHTML = html;
-        }
-
-        // Search functionality
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            const term = e.target.value.toLowerCase();
-            if (!term) {
-                document.querySelectorAll('.ulken-card, .uruu-item, .tiyre-item').forEach(el => {
-                    el.style.opacity = '1';
-                    el.style.display = '';
-                });
-                return;
-            }
-            
-            document.querySelectorAll('.ulken-card, .uruu-item').forEach(el => {
-                if (el.textContent.toLowerCase().includes(term)) {
-                    el.style.opacity = '1';
-                    el.style.display = '';
-                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else {
-                    el.style.opacity = '0.2';
-                }
-            });
-        });
-
-        // Auto-expand Konyrat on load
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                document.getElementById('konyrat-content').style.display = 'block';
-                document.querySelector('#konyrat-card .toggle-icon').classList.add('rotated');
-            }, 500);
-        });
-    </script>
-</body>
-</html> --> --> --> --> --> -->
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>УРУУ | Списочная версия</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --konyrat: #e74c3c;
-            --ontort: #3498db;
-            --shulik: #9b59b6;
-            --jaungir: #1abc9c;
-            --gold: #d4af37;
-            --bg: #0a0c10;
-            --bg-card: #151923;
-            --text: #ffffff;
-            --text-muted: #8892b0;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
-        
-        header {
-            background: linear-gradient(180deg, rgba(21,27,39,0.95), rgba(10,14,23,0.98));
-            border-bottom: 2px solid var(--gold);
-            padding: 1rem 2rem;
             position: fixed;
             top: 0; left: 0; right: 0;
+            background: rgba(10,12,16,0.95);
+            border-bottom: 2px solid var(--gold);
+            padding: 1rem 2rem;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            backdrop-filter: blur(10px);
+            height: 70px;
         }
 
-        .logo { display: flex; align-items: center; gap: 1rem; }
-        .logo h1 { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.8rem; }
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        
+        .logo a { 
+            font-family: 'Cormorant Garamond', serif; 
+            color: var(--gold); 
+            font-size: 1.8rem; 
+            margin: 0;
+            text-decoration: none;
+        }
+        
+        /* Бургер меню кнопка */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        
+        .burger-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
         
         .view-switch {
             display: flex;
@@ -1318,6 +99,41 @@
             background: rgba(255,255,255,0.1);
             padding: 0.25rem;
             border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Мобильное меню */
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: flex;
+            }
+            
+            .view-switch {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10,12,16,0.98);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 2px solid var(--gold);
+                border-radius: 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+            }
+            
+            .view-switch.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .view-btn {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+            }
         }
         
         .view-btn {
@@ -1325,562 +141,1266 @@
             border-radius: 16px;
             border: none;
             background: transparent;
-            color: var(--text-muted);
+            color: #8892b0;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
             font-size: 0.9rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .view-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.1);
         }
         
         .view-btn.active {
             background: var(--gold);
             color: #000;
             font-weight: 600;
-        }
-
-        main {
-            margin-top: 80px;
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            max-width: 1800px;
-            margin-left: auto;
-            margin-right: auto;
-            gap: 2rem;
-            padding: 2rem;
-        }
-
-        @media (max-width: 1200px) {
-            main { grid-template-columns: 1fr; }
-            .detail-panel { display: none; }
-        }
-
-        /* Accordion Styles */
-        .tree-container {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid #2d3548;
-        }
-
-        .arys-card {
-            margin-bottom: 1.5rem;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid;
-        }
-
-        .arys-card.konyrat { border-color: var(--konyrat); }
-        .arys-card.ontort { border-color: var(--ontort); }
-
-        .arys-header {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-
-        .arys-card.konyrat .arys-header { background: rgba(231, 76, 60, 0.2); color: #ff8a80; }
-        .arys-card.ontort .arys-header { background: rgba(52, 152, 219, 0.2); color: #74b9ff; }
-
-        .bolim-section {
-            margin: 1rem;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid;
-        }
-
-        .bolim-section.shulik { border-color: var(--shulik); background: rgba(155, 89, 182, 0.1); }
-        .bolim-section.jaungir { border-color: var(--jaungir); background: rgba(26, 188, 156, 0.1); }
-
-        .bolim-header {
-            padding: 1rem;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .ulken-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
-        }
-
-        .ulken-card {
-            background: rgba(230, 126, 34, 0.15);
-            border: 2px solid #e67e22;
-            border-radius: 10px;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .ulken-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            filter: brightness(1.2);
-        }
-
-        .ulken-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; color: #fdbf60; }
-        
-        .uruu-list { margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
-        
-        .uruu-item {
-            background: rgba(39, 174, 96, 0.2);
-            padding: 0.5rem;
-            border-radius: 6px;
-            border-left: 3px solid #27ae60;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .uruu-item:hover { transform: translateX(5px); background: rgba(39, 174, 96, 0.3); }
-
-        .tiyre-list {
-            margin-left: 1rem;
-            margin-top: 0.5rem;
-            padding-left: 1rem;
-            border-left: 2px solid #f1c40f;
-            font-size: 0.9rem;
-            color: #fdebd0;
-        }
-
-        .detail-panel {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid #2d3548;
-            position: sticky;
-            top: 100px;
-            height: fit-content;
-        }
-
-        .detail-header {
+            max-width: 170px;
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #2d3548;
+            margin: 0 auto;
         }
 
-        .detail-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            background: rgba(212, 175, 55, 0.2);
-            border: 2px solid var(--gold);
+        .container { 
+            display: flex; 
+            height: calc(100vh - 80px);
+            overflow: hidden; 
+            position: relative;
+        }
+        
+        .list-panel { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 15px; 
+            background: rgba(15, 20, 25, 0.98); 
+            transition: width 0.3s ease;
+        }
+        
+        /* Правая панель с возможностью сворачивания */
+        .info-panel {
+            width: 450px; 
+            background: var(--secondary-bg); 
+            border-left: 3px solid var(--accent-orange);
+            padding: 20px; 
+            overflow-y: auto; 
+            box-shadow: -5px 0 25px rgba(0,0,0,0.4);
+            position: relative;
+            transition: transform 0.3s ease, width 0.3s ease;
+            transform: translateX(0);
+        }
+        
+        /* Скрытая панель на десктопе */
+        .info-panel.collapsed {
+            transform: translateX(100%);
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+            border-left: none;
+        }
+        
+        /* Кнопка закрытия панели */
+        .close-panel-btn {
+            position: sticky;
+            top: 10px;
+            left: 400px;
+            background: var(--accent-red);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        .close-panel-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+        
+        /* Кнопка открытия панели (плавающая) */
+        .open-panel-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 100px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .open-panel-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.6);
+        }
+        
+        .open-panel-btn.visible {
+            display: flex;
         }
 
-        .detail-title { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+        /* Стили списков */
+        .hierarchical-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-        .info-block {
-            background: rgba(0,0,0,0.3);
-            padding: 1rem;
+        .list-item {
+            margin: 4px 0;
             border-radius: 8px;
-            margin-bottom: 1rem;
-            border-left: 3px solid var(--gold);
+            overflow: hidden;
         }
 
-        .info-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem; }
-        .toggle-icon { transition: transform 0.3s; }
-        .toggle-icon.rotated { transform: rotate(180deg); }
-        .hidden { display: none; }
+        .list-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .list-header:hover {
+            transform: translateX(5px);
+            border-color: var(--accent-yellow);
+        }
+
+        .list-header.active {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .expand-btn {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 0.8em;
+            color: var(--accent-yellow);
+            transition: transform 0.3s;
+            flex-shrink: 0;
+        }
+
+        .expand-btn.expanded {
+            transform: rotate(90deg);
+        }
+
+        .list-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .list-title {
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .list-subtitle {
+            font-size: 0.75em;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .list-meta {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+            font-size: 0.75em;
+            opacity: 0.7;
+        }
+
+        .children-container {
+            margin-left: 20px;
+            padding-left: 15px;
+            border-left: 2px solid var(--border-color);
+            display: none;
+        }
+
+        .children-container.expanded {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Цветовые уровни */
+        .level-0 .list-header { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .level-1 .list-header { background: linear-gradient(135deg, #e67e22, #d35400); }
+        .level-2 .list-header { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; }
+        .level-3 .list-header { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .level-4 .list-header { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .level-5 .list-header { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        .level-6 .list-header { background: linear-gradient(135deg, #1abc9c, #16a085); }
+
+        h1 { text-align: center; color: var(--accent-yellow); margin-bottom: 5px; font-size: 1.8em; }
+        .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 15px; font-size: 0.8em; }
+        
+        .info-header { border-bottom: 2px solid var(--accent-orange); padding-bottom: 10px; margin-bottom: 12px; }
+        .info-title { font-size: 1.4em; color: var(--accent-yellow); margin-bottom: 5px; }
+        .info-type { color: var(--accent-orange); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
+        .info-section { margin-bottom: 12px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 5px; border-left: 3px solid var(--accent-blue); }
+        .info-section h3 { color: var(--accent-cyan); margin-bottom: 8px; font-size: 0.9em; display: flex; align-items: center; gap: 8px; }
+        .info-section p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9em; text-align: justify; }
+        .tamga-box { background: rgba(231, 76, 60, 0.15); border: 2px solid var(--accent-red); border-radius: 8px; padding: 15px; text-align: center; margin: 12px 0; }
+        .tamga-symbol { font-size: 2em; color: var(--accent-yellow); font-weight: bold; margin-bottom: 5px; }
+        .tamga-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; }
+        .uran-box { background: rgba(46, 204, 113, 0.15); border: 2px solid var(--accent-green); border-radius: 8px; padding: 15px; text-align: center; margin: 12px 0; }
+        .uran-text { font-size: 1.4em; color: var(--accent-green); font-weight: bold; font-style: italic; margin-bottom: 5px; }
+        .uran-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; }
+        .stats-box { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--accent-blue); border-radius: 6px; padding: 10px; margin: 10px 0; text-align: center; }
+        .stats-number { font-size: 1.3em; color: var(--accent-yellow); font-weight: bold; }
+        .legend { position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.75em; z-index: 100; }
+        .legend-item { display: flex; align-items: center; gap: 5px; margin: 2px 0; }
+        .legend-color { width: 12px; height: 12px; border-radius: 2px; }
+        .stats { position: fixed; top: 90px; right: 475px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.8em; z-index: 100; transition: right 0.3s ease; }
+        
+        /* Адаптация для планшетов */
+        @media (max-width: 1024px) {
+            .stats { right: 10px; top: 90px; }
+        }
+        
+        /* Адаптация для мобильных */
+        @media (max-width: 968px) { 
+            .stats { 
+                right: 10px; 
+                top: 80px; 
+                font-size: 0.65em;
+                max-width: 150px;
+            } 
+            
+            .info-panel { 
+                width: 100%; 
+                position: fixed; 
+                bottom: 0; 
+                left: 0; 
+                height: 60vh; 
+                transform: translateY(100%); 
+                transition: transform 0.3s ease;
+                z-index: 1000;
+                border-left: none;
+                border-top: 3px solid var(--accent-orange);
+            } 
+            
+            .info-panel.active { 
+                transform: translateY(0); 
+            }
+            
+            .info-panel.collapsed {
+                transform: translateY(100%);
+            }
+            
+            header { 
+                padding: 0.5rem 1rem; 
+            }
+            
+            body { padding-top: 70px; }
+            .container { height: calc(100vh - 70px); }
+            
+            .open-panel-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .children-container {
+                margin-left: 10px;
+                padding-left: 10px;
+            }
+        }
+
+        @media (max-width: 765px) {
+            .stats { display: none; }
+        }
+        
+        .search-box { position: fixed; top: 72px; left: 10px; z-index: 100; }
+        .search-box input { padding: 6px 10px; border-radius: 15px; border: 1px solid var(--accent-blue); background: rgba(0,0,0,0.9); color: white; width: 180px; font-size: 0.85em; }
+        .highlight { 
+            animation: pulse 1.5s infinite;
+            border-color: var(--accent-yellow) !important;
+            border: solid 3px var(--accent-yellow) !important;
+        }
+
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); } 70% { box-shadow: 0 0 0 12px rgba(241, 196, 15, 0); } 100% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); } }
+        
+        /* Hierarchy styles */
+        .hierarchy-chain {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.1), rgba(230, 126, 34, 0.1));
+            border: 2px solid var(--accent-yellow);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+        }
+        .hierarchy-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(241, 196, 15, 0.3);
+        }
+        .hierarchy-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            color: var(--accent-yellow);
+        }
+        .hierarchy-arrow {
+            margin: 0 10px;
+            color: var(--accent-orange);
+        }
+        .hierarchy-level {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .descendants-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .descendant-group {
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            padding: 8px;
+        }
+        .descendant-parent {
+            font-weight: bold;
+            color: var(--accent-cyan);
+            margin-bottom: 5px;
+            font-size: 0.85em;
+        }
+        .descendant-children {
+            padding-left: 15px;
+            font-size: 0.8em;
+            color: var(--text-secondary);
+        }
+        .descendant-child {
+            padding: 2px 0;
+            display: flex;
+            align-items: center;
+        }
+        .descendant-bullet {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        /* Путь навигации (хлебные крошки) */
+        .breadcrumb {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            font-size: 0.8em;
+        }
+
+        .breadcrumb-item {
+            color: var(--accent-yellow);
+            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .breadcrumb-item:hover {
+            background: rgba(241, 196, 15, 0.2);
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--text-secondary);
+            cursor: default;
+        }
+
+        .breadcrumb-item.active:hover {
+            background: none;
+        }
+
+        /* Кнопка "Развернуть все" */
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .control-btn {
+            padding: 8px 16px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s;
+        }
+
+        .control-btn:hover {
+            background: var(--accent-yellow);
+            color: #000;
+            border-color: var(--accent-yellow);
+        }
     </style>
+<base target="_blank">
 </head>
 <body>
     <header>
         <div class="logo">
-            <span style="font-size: 2rem;">🌳</span>
-            <h1>УРУУ</h1>
+            <span style="font-size: 2rem;">📋</span>
+            <a target="_blank" href="./images/uru.jpg">URIW</a>
         </div>
-<div class="view-switch">
-    <a href="index.html" class="view-btn" target="_self">🏠 Главное</a>
-    <a href="lists.html" class="view-btn active" target="_self">📋 Списки</a>
-    <a href="scheme.html" class="view-btn" target="_self">🌳 Схема</a>
-    <a href="exogamy.html" class="view-btn" target="_self">💑 Ekzogamiya</a>
-</div>
+        
+        <!-- Бургер меню кнопка -->
+        <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+        
+        <div class="view-switch" id="viewSwitch">
+            <a href="index.html" class="view-btn" target="_self">🏠 Главное</a>
+            <a href="index1.html" class="view-btn " target="_self">🏠 Bas bet</a>
+            <a href="listsQQ.html" class="view-btn" target="_self">📋 Tizimler</a>
+            <a href="lists.html" class="view-btn active" target="_self">📋 Тізімдер</a>
+            <a href="scheme.html" class="view-btn" target="_self">🌳 Sxema</a>
+            <a href="exogamy.html" class="view-btn" target="_self">💑 Ekzogamiya</a>
+        </div>
     </header>
 
-    <main>
-        <div class="tree-container">
-            <!-- Арыс Қоңырат -->
-            <div class="arys-card konyrat">
-                <div class="arys-header" onclick="toggle('k-content', this)">
-                    <div>⩃ Арыс Қоңырат <small>(120+ родов)</small></div>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div id="k-content" class="hidden">
-                    
-                    <!-- Шүллик -->
-                    <div class="bolim-section shulik">
-                        <div class="bolim-header" onclick="toggle('sh-content', this)">
-                            <span>⚔️ Шүллик бөлімі</span>
-                            <span class="toggle-icon">▼</span>
-                        </div>
-                        <div id="sh-content" class="hidden">
-                            <div class="ulken-grid">
-                                
-                                <!-- Полный список Шуллик -->
-                                <div class="ulken-card" onclick="showDetail({name:'Мүйтен', type:'Үлкен уруу', tamga:'ψ', uran:'Ақшолпан!', desc:'Бес тоқсан. Кентанау→Барн,Итак,Жекенсал', cemetery:'Қабақлы ата'})">
-                                    <div class="ulken-title">ψ Мүйтен</div>
-                                    <div style="font-size:0.8rem;color:#aaa;margin-bottom:0.5rem;">Уран: Ақшолпан!</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Самат <div class="tiyre-list">Байбише, Токалқараған, Баймұрат</div></div>
-                                        <div class="uruu-item">Тели <div class="tiyre-list">Тілеуберді, Аллаберді</div></div>
-                                        <div class="uruu-item">Абыз</div>
-                                        <div class="uruu-item">Кеңтанау <div class="tiyre-list">Барн, Итак, Жекенсал</div></div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Қыят', type:'Үлкен уруу', tamga:'Ψ', uran:'Арқалым!', desc:'Древний кыпчакский род'})">
-                                    <div class="ulken-title">Ψ Қыят</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Үш тамғалы <div class="tiyre-list">Саңмұрын, Үштаңбалы, Арыққият, Тартулы, Қанжығалы, Қатаған</div></div>
-                                        <div class="uruu-item">Тарақты <div class="tiyre-list">Тоғызақ, Абас, Жалтыршы, Ақұнқараған, Тақай</div></div>
-                                        <div class="uruu-item">Балғалы Қият <div class="tiyre-list">Бесбышақ, Етекші</div></div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Ашамайлы', type:'Үлкен уруу', tamga:'✕', desc:'От батыра Байәділ'})">
-                                    <div class="ulken-title">✕ Ашамайлы</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Сақыу</div>
-                                        <div class="uruu-item">Қарақожа</div>
-                                        <div class="uruu-item">Жалаңаяқ</div>
-                                        <div class="uruu-item">Айылды</div>
-                                        <div class="uruu-item">Қабасан <div class="tiyre-list">Ақназар, Жансары, Өтеміс, Есбен, Тампыш</div></div>
-                                        <div class="uruu-item">Түркіменқара</div>
-                                        <div class="uruu-item">Жаппар</div>
-                                        <div class="uruu-item">Сары</div>
-                                        <div class="uruu-item">Абат (Абыз)</div>
-                                        <div class="uruu-item">Паңқара</div>
-                                        <div class="uruu-item">Үшбас <div class="tiyre-list">Жаман</div></div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Қолдаулы', type:'Үлкен уруу', desc:'Потомки Кайдара (керейское происхождение)'})">
-                                    <div class="ulken-title">Қолдаулы</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Бесемпір</div>
-                                        <div class="uruu-item">Майшы (Майшышалы)</div>
-                                        <div class="uruu-item">Қалқаман</div>
-                                        <div class="uruu-item">Ғайыпқараған</div>
-                                        <div class="uruu-item">Сарытан</div>
-                                        <div class="uruu-item">Күлкіқожақ</div>
-                                        <div class="uruu-item">Жарымбет</div>
-                                        <div class="uruu-item">Қызылаяқ</div>
-                                        <div class="uruu-item">Қарасирақ</div>
-                                        <div class="uruu-item">Желқараған</div>
-                                        <div class="uruu-item">Үлкенбөрік</div>
-                                        <div class="uruu-item">Шылжуыт</div>
-                                        <div class="uruu-item">Жаманауыл</div>
-                                        <div class="uruu-item">Қалмақ <div class="tiyre-list">Әділ, Ереке</div></div>
-                                        <div class="uruu-item">Жаманқоңырат</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Қостамғалы', type:'Үлкен уруу', tamga:'⧉', uran:'Тоқсоба!'})">
-                                    <div class="ulken-title">⧉ Қостамғалы</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Жангелді</div>
-                                        <div class="uruu-item">Шіржеген</div>
-                                        <div class="uruu-item">Ағабеглі</div>
-                                        <div class="uruu-item">Қарынжуан</div>
-                                        <div class="uruu-item">Қостамбалы</div>
-                                        <div class="uruu-item">Қарақұрсақ</div>
-                                        <div class="uruu-item">Қазақы</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Балғалы', type:'Үлкен уруу', uran:'Шаңырақ!'})">
-                                    <div class="ulken-title">Балғали</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Ақбалғалы</div>
-                                        <div class="uruu-item">Нұрбалғалы</div>
-                                        <div class="uruu-item">Түркімен</div>
-                                        <div class="uruu-item">Жаманауыл</div>
-                                        <div class="uruu-item">Шөмішті</div>
-                                        <div class="uruu-item">Тоқымбет</div>
-                                        <div class="uruu-item">Тазбалғалы</div>
-                                        <div class="uruu-item">Қостамбалы балғалы</div>
-                                        <div class="uruu-item">Қараталшы</div>
-                                        <div class="ruu-item">Асан</div>
-                                        <div class="uruu-item">Арзықұл</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Қәндеклі', type:'Үлкен уруу', tamga:'&', uran:'Ақбалпан!', desc:'Ханского происхождения'})">
-                                    <div class="ulken-title">& Қәндеклі</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Киікші</div>
-                                        <div class="uruu-item">Тоқболат</div>
-                                        <div class="uruu-item">Қырыксадақ</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Қарамойын', type:'Үлкен уруу', desc:'Аул Бөгежейли'})">
-                                    <div class="ulken-title">Қарамойын</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Аннахожа (Аннақожа)</div>
-                                        <div class="uruu-item">Сабалақ</div>
-                                        <div class="uruu-item">Көтелек</div>
-                                        <div class="uruu-item">Қарлымарал (Қареке)</div>
-                                        <div class="uruu-item">Бүлкілдек</div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Жауыңыр -->
-                    <div class="bolim-section jaungir">
-                        <div class="bolim-header" onclick="toggle('jh-content', this)">
-                            <span>⚔️ Жауыңыр бөлімі</span>
-                            <span class="toggle-icon">▼</span>
-                        </div>
-                        <div id="jh-content" class="hidden">
-                            <div class="ulken-grid">
-                                
-                                <div class="ulken-card" onclick="showDetail({name:'Теристамғалы', type:'Үлкен уруу', desc:'Аул из 15 домов. Караузякский район.', location:'Караузяк'})">
-                                    <div class="ulken-title">Теристамғалы</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Шомақ</div>
-                                        <div class="uruu-item">Хангелді</div>
-                                        <div class="uruu-item">Байқараған</div>
-                                        <div class="uruu-item">Елшібай</div>
-                                        <div class="uruu-item">Құрбан</div>
-                                        <div class="uruu-item">Тоңай</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Бақаналы-Шәужейлі', type:'Үлкен уруу'})">
-                                    <div class="ulken-title">Бақаналы-Шәужейлі</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Жүмағұл</div>
-                                        <div class="uruu-item">Айдарбек</div>
-                                        <div class="uruu-item">Қанжар</div>
-                                        <div class="uruu-item">Сарыкемпір</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Тийеклі', type:'Үлкен уруу'})">
-                                    <div class="ulken-title">Тийеклі</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Атанай</div>
-                                        <div class="uruu-item">Ешкілі</div>
-                                        <div class="uruu-item">Байбура</div>
-                                        <div class="uruu-item">Сарытан</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Ырғақты', type:'Үлкен уруу', desc:'Уникальный род! Есть в обоих арысах. Легенда об изгнании.', legend:'Молодые из разных арысов основали новый род'})">
-                                    <div class="ulken-title">Ырғақты</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Саспақ</div>
-                                        <div class="uruu-item">Үйес</div>
-                                        <div class="uruu-item">Таңмайыл</div>
-                                        <div class="uruu-item">Жақанай</div>
-                                        <div class="uruu-item">Найман</div>
-                                        <div class="uruu-item">Айыс</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Баймақлы', type:'Үлкен уруу'})">
-                                    <div class="ulken-title">Баймақлы</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Әнетай</div>
-                                        <div class="uruu-item">Жәрімбет</div>
-                                        <div class="uruu-item">Жүнді</div>
-                                        <div class="uruu-item">Садақ</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Қазаяқты', type:'Үлкен уруу'})">
-                                    <div class="ulken-title">Қазаяқты</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Шиші</div>
-                                        <div class="uruu-item">Туманай</div>
-                                        <div class="uruu-item">Мәулік</div>
-                                        <div class="uruu-item">Байрам</div>
-                                        <div class="uruu-item">Сабалақ</div>
-                                        <div class="uruu-item">Сырғалы</div>
-                                    </div>
-                                </div>
-
-                                <div class="ulken-card" onclick="showDetail({name:'Уйғыр', type:'Үлкен уруу'})">
-                                    <div class="ulken-title">Уйғыр</div>
-                                    <div class="uruu-list">
-                                        <div class="uruu-item">Шиші</div>
-                                        <div class="uruu-item">Туманай</div>
-                                        <div class="uruu-item">Мәулік</div>
-                                        <div class="uruu-item">Байрам</div>
-                                        <div class="uruu-item">Сабалақ</div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+    <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchNode()"></div>
+    <div class="stats" id="statsBox"><div><strong>Statistika:</strong></div><div>Arıs: 2</div><div>Bólim: 2</div><div>Uriw: 50+</div><div>tiyre/ko'she: 300+</div></div>
+    
+    <div class="container">
+        <div class="list-panel" id="listPanel">
+            <h1 style="margin-top: 10px;">QARAQALPAQ URUWLARI</h1>
+            <div class="subtitle">Tizim formatında / В виде списка</div>
+            
+            <div class="controls">
+                <button class="control-btn" onclick="expandAll()">📂 Barlıgın ashıw</button>
+                <button class="control-btn" onclick="collapseAll()">📁 Barlıgın jabıw</button>
             </div>
 
-            <!-- Арыс Он төрт уруу -->
-            <div class="arys-card ontort">
-                <div class="arys-header" onclick="toggle('ot-content', this)">
-                    <div>⧜ Арыс Он төрт уруу <small>(180+ родов)</small></div>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div id="ot-content" class="hidden" style="padding:1rem;">
-                    
-                    <div class="ulken-grid">
-                        
-                        <!-- Қытай -->
-                        <div class="ulken-card" style="background:rgba(52,152,219,0.15);border-color:#3498db;" onclick="showDetail({name:'Қытай', type:'Үлкен уруу', tamga:'14', uran:'Ұлли тау!', pair:'Қыпшақ', desc:'Гунно-кытайские племена'})">
-                            <div class="ulken-title" style="color:#85c1e9;">14 Қытай</div>
-                            <div style="font-size:0.8rem;color:#74b9ff;margin-bottom:0.5rem;">🔗 Парный: Қыпшақ</div>
-                            <div class="uruu-list">
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Бессары <div class="tiyre-list">Жүнли, Қойлы</div></div>
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Бексыық <div class="tiyre-list">Зергер, Масай, Шығыршы</div></div>
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Қазаяқты <div class="tiyre-list">Калсен, Күйік, Мырзай</div></div>
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Қайшылы <div class="tiyre-list">Ақымбет, Жуўансан</div></div>
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Әйтеке <div class="tiyre-list">Жәдик, Ырсымбек</div></div>
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Аралбай</div>
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Мәнжуўли <div class="tiyre-list">Екі шыйық, Қараманжуўли</div></div>
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Боқтықытай</div>
-                                <div class="uruu-item" style="background:rgba(52,152,219,0.2);border-color:#3498db;">Қырық <div class="tiyre-list">Қылышлы, Баўырқараған</div></div>
-                            </div>
-                        </div>
-
-                        <!-- Қыпшақ -->
-                        <div class="ulken-card" style="background:rgba(41,128,185,0.15);border-color:#2980b9;" onclick="showDetail({name:'Қыпшақ', type:'Үлкен уруу', tamga:'⁄', uran:'Тоқсаба!', pair:'Қытай', desc:'Крупнейший кыпчакский род'})">
-                            <div class="ulken-title" style="color:#aed6f1;">⁄ Қыпшақ</div>
-                            <div class="uruu-list">
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Қаңлы <div class="tiyre-list">Трам, Қатқаңлы, Ырғақты, Ашамайлы, Тарақты</div></div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Саңмұрын <div class="tiyre-list">Көнши, Тубай, Ешкілі</div></div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Естек <div class="tiyre-list">Маңқанай, Қайыпназар</div></div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Қанжығалы <div class="tiyre-list">Потомки Құлжан</div></div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Шұнақ</div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Басар</div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Ябы (Жабы)</div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Арық</div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Жағалтай <div class="tiyre-list">Шанышпай, Самбет</div></div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Бағаналы</div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Майлыбалта <div class="tiyre-list">Көпсоқыр, Сүмбил</div></div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Жәдік</div>
-                                <div class="uruu-item" style="background:rgba(41,128,185,0.2);">Салтыр <div class="tiyre-list">Байбише, Сарт, Оразымбет</div></div>
-                            </div>
-                        </div>
-
-                        <!-- Кенегес -->
-                        <div class="ulken-card" style="background:rgba(155,89,182,0.15);border-color:#9b59b6;" onclick="showDetail({name:'Кенегес', type:'Үлкен уруу', tamga:'+', uran:'Естерек!', pair:'Маңғыт'})">
-                            <div class="ulken-title" style="color:#d7bde2;">+ Кенегес</div>
-                            <div class="uruu-list">
-                                <div class="uruu-item" style="background:rgba(155,89,182,0.2);">Араншы <div class="tiyre-list">Аннақұл, Абас (Сейтимбет), Сүйін, Құлман</div></div>
-                                <div class="uruu-item" style="background:rgba(155,89,182,0.2);">Ақтоғын <div class="tiyre-list">Нанжемес, Көшер</div></div>
-                                <div class="uruu-item" style="background:rgba(155,89,182,0.2);">Өмір <div class="tiyre-list">Ақпышақ, Ұсақ, Жел, Мынжыр</div></div>
-                                <div class="uruu-item" style="background:rgba(155,89,182,0.2);">Тарақты</div>
-                                <div class="uruu-item" style="background:rgba(155,89,182,0.2);">Добал <div class="tiyre-list">Жетіқарақазақы</div></div>
-                                <div class="uruu-item" style="background:rgba(155,89,182,0.2);">Оймаўыт <div class="tiyre-list">Қара, Сары (Жийдели)</div></div>
-                                <div class="uruu-item" style="background:rgba(155,89,182,0.2);">Домбазақ</div>
-                                <div class="uruu-item" style="background:rgba(231,76,60,0.2);border-color:#e74c3c;">🌟 Нөкіс <div class="tiyre-list" style="border-color:#e74c3c;">Жаманжақ, Бозақ, Алтынпышақ. <br><small>Дал название столице!</small></div></div>
-                            </div>
-                        </div>
-
-                        <!-- Маңғыт -->
-                        <div class="ulken-card" style="background:rgba(142,68,173,0.15);border-color:#8e44ad;" onclick="showDetail({name:'Маңғыт', type:'Үлкен уруу', tamga:'⨍', uran:'Шәулі-Шауқай!', pair:'Кенегес', desc:'Монгольского происхождения'})">
-                            <div class="ulken-title" style="color:#d2b4de;">⨍ Маңғыт</div>
-                            <div class="uruu-list">
-                                <div class="uruu-item" style="background:rgba(142,68,173,0.2);">📦 Қаратай тобы
-                                    <div class="tiyre-list">
-                                        Қарамаңғыт (Үшбас),<br>
-                                        Қарасирақ (алан-асс),<br>
-                                        Ақмаңғыт (потомки Едиге),<br>
-                                        Мамықшы (Жетіқұрт),<br>
-                                        Қосар (Гүбидин),<br>
-                                        Қылқалы <em style="color:#f1c40f">— шуба от Чингисхана</em>
-                                    </div>
-                                </div>
-                                <div class="uruu-item" style="background:rgba(142,68,173,0.2);">📦 Сарытай тобы
-                                    <div class="tiyre-list">
-                                        Аршын, Жандық, Тоқмаңғыт,<br>
-                                        Арсары, Тазжанлық, Шүйт,<br>
-                                        Жаманша, Есебий (Есеби),<br>
-                                        Тамғалы, Тоқмойын
-                                    </div>
-                                </div>
-                                <div class="uruu-item" style="background:rgba(142,68,173,0.2);">Бозтай</div>
-                                <div class="uruu-item" style="background:rgba(142,68,173,0.2);">📦 Жетімтай тобы
-                                    <div class="tiyre-list">Ешбуға (өспеген ел)</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div class="breadcrumb" id="breadcrumb">
+                <span class="breadcrumb-item active">Barlıq ruwlar / Все русы</span>
             </div>
 
+            <div class="hierarchical-list" id="hierarchicalList"></div>
         </div>
-
-        <!-- Detail Panel -->
-        <aside class="detail-panel" id="detailPanel">
-            <div class="detail-header">
-                <div class="detail-icon" id="dIcon">🏛️</div>
-                <div class="detail-title" id="dTitle">Выберите род</div>
+        <div class="info-panel" id="infoPanel">
+            <button class="close-panel-btn" id="closePanelBtn" title="Закрыть панель">×</button>
+            <div id="infoContent">
+                <div class="info-header"><div class="info-title">Elementti tańlań/Выберите элемент</div><div class="info-type">Tańba, uran hám tariyx haqqında maǵlıwmat alıw ushın basıń/Нажмите для информации о тамге, уране, истории</div></div>
             </div>
-            <div id="dContent">
-                <div class="info-block">
-                    <div class="info-label">Информация</div>
-                    Кликните на карточку для деталей. Здесь отобразится тамга, уран, история и подгруппы.
-                </div>
-            </div>
-        </aside>
-    </main>
+        </div>
+    </div>
+    
+    <!-- Кнопка открытия панели -->
+    <button class="open-panel-btn" id="openPanelBtn" title="Открыть информационную панель">ℹ️</button>
+    
+    <div class="legend">
+        <div><strong>Иерархия:</strong></div>
+        <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Xalıq</div>
+        <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Arıs</div>
+        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Bólim</div>
+        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Úlken urıw</div>
+        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Urıw</div>
+        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Tiyre</div>
+        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Ko'she</div>
+    </div>
 
     <script>
-        function toggle(id, el) {
-            const content = document.getElementById(id);
-            const icon = el.querySelector('.toggle-icon');
-            if (content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.classList.add('rotated');
-            } else {
-                content.classList.add('hidden');
-                icon.classList.remove('rotated');
-            }
-        }
+const levelsMap = ['Xalıq / Народ', 'Arıs', 'Bólim', 'Úlken urıw', 'Tiyre', 'Ko\'she'];
 
-        function showDetail(data) {
-            document.getElementById('dIcon').textContent = data.tamga || '🏹';
-            document.getElementById('dTitle').textContent = data.name;
-            
-            let html = '';
-            
-            if (data.type) html += `<div class="info-block"><div class="info-label">Тип</div>${data.type}</div>`;
-            if (data.tamga) html += `<div class="info-block" style="border-color:#3498db"><div class="info-label">Тамга</div><div style="font-size:1.5rem">${data.tamga}</div></div>`;
-            if (data.uran) html += `<div class="info-block" style="border-color:#e74c3c"><div class="info-label">Уран</div><div style="color:#ff8a80;font-weight:bold">${data.uran}</div></div>`;
-            if (data.desc) html += `<div class="info-block"><div class="info-label">Описание</div>${data.desc}</div>`;
-            if (data.legend) html += `<div class="info-block" style="border-color:#f39c12;background:rgba(243,156,18,0.1)"><div class="info-label">📜 Легенда</div><em>${data.legend}</em></div>`;
-            if (data.pair) html += `<div class="info-block" style="border-color:#9b59b6"><div class="info-label">🔗 Парный род</div>${data.pair}</div>`;
-            if (data.cemetery) html += `<div class="info-block" style="border-color:#27ae60"><div class="info-label">⚰️ Кладбище</div>${data.cemetery}</div>`;
-            if (data.location) html += `<div class="info-block"><div class="info-label">📍 Локация</div>${data.location}</div>`;
-            
-            document.getElementById('dContent').innerHTML = html;
-        }
+// Флаг состояния панели
+let isPanelOpen = false;
+let currentSelectedNode = null;
+let currentExpandedNodes = new Set();
 
-        // Auto open first
-        window.onload = () => {
-            document.querySelector('.arys-header').click();
+const treeData = {
+    id: "root", name: "QARAQALPAQLAR", level: 0, type: "Xalıq",
+    info: {
+        history: "Қарақалпақтар - Орта Азиядағы түркі тілдес халық. XVI-XVIII ғасырларда қалыптасқан.",
+        origin: "Негізі Ноғай ордасы, Қыпшақ, Қарлұқ тайпаларынан.",
+        legend: "Аңызға сәйкес, алғашқы көшпенділері Ұлы тау өңірінен Арал маңына көшіп келген.",
+        tamga: "Әр рудың өз тамғасы",
+        uran: "Әр рудың өз ұраны",
+        population: "800 мың адам",
+        language: "Қарақалпақ тілі - түркі тілдерінің қыпшақ тармағы"
+    },
+    children: [
+        {
+            id: "conyrat", name: "АРЫС ҚОҢЫРАТ", level: 1, type: "арыс", tamga: "П (босаға)", urан: "Қақпа",
+            info: {
+                history: "Қоңырат - екі ірі арысының бірі. Ноғай ордасынан.",
+                origin: "Ноғайлық, Қыпшақ тайпаларының қосындысы.",
+                legend: "Қоңырат - 'қанды қарақалпақ' мағынасында.",
+                tamga: "П әрпі - босаға (есік)",
+                urан: "Қақпа - қорған",
+                population: "9520 кибиток (40%)",
+                structure: "Шулык (8 ру) және Жауынгыр (7 ру)"
+            },
+            children: [
+                {
+                    id: "shulyk", name: "ШУЛЛЫЛ БӨЛИМИ", level: 2, type: "бөлим",
+                    info: { history: "Шулык - 8 рудан тұрады.", origin: "Шулык жерінің атауынан.", population: "5860 кибиток" },
+                    children: [
+                        {
+                            id: "kyat", name: "ҚЫЯТ", level: 3, type: "үлкен уруу",
+                            info: { history: "Қыят - Шулыктың ең ірі руы.", origin: "Қыят батырдан.", legend: "Үш ұлы: Үштаңбалы, Тарақты, Балғалы.", population: "870 кибиток", tamga: "Үш таңба", urан: "Алатау" },
+                            children: [
+                                {
+                                    id: "ush-tambaly", name: "Үштаңбалы", level: 4, type: "тийре",
+                                    info: { history: "Үш таңбалы - үш белгі.", tamga: "Үш сызық", urан: "Алатау!", population: "350-400 отбасы" },
+                                    children: [
+                                        { id: "sanmurun-k", name: "Саңмұрын", level: 5, type: "көше", info: { tamga: "СМ", urан: "Алатау!", history: "Саң мұрындық малдан" } },
+                                        { id: "aryq-kyat", name: "Арыққият", level: 5, type: "көше", info: { tamga: "АҚ", urан: "Алатау!", history: "Арық денелі" } },
+                                        { id: "tartuly", name: "Тартулы", level: 5, type: "көше", info: { tamga: "ТР", urан: "Алатау!", history: "Тартымды, қайсар" } },
+                                        { id: "qanzhygaly-k", name: "Қанжығалы", level: 5, type: "көше", info: { tamga: "ҚЖ", urан: "Алатау!", history: "Жебе саптығы" } },
+                                        { id: "qatagan", name: "Қатаған", level: 5, type: "көше", info: { tamga: "ҚТ", urан: "Алатау!", history: "Солтүстік Жетісу" } },
+                                        { id: "qara-kyat", name: "Қарақият", level: 5, type: "көше", info: { tamga: "ҚҚ", urан: "Алатау!", history: "Қараңғы түсті" } }
+                                    ]
+                                },
+                                {
+                                    id: "taraqty", name: "Тарақты", level: 4, type: "тийре",
+                                    info: { history: "Шашақты, өрнекті", tamga: "ТБ", urан: "Алатау!" },
+                                    children: [
+                                        { id: "togyzaq", name: "Тоғызақ", level: 5, type: "көше", info: { tamga: "Т9", urан: "Тоғысқан!", history: "Тоғыз ұрпақтан кейін" } },
+                                        { id: "abas-kyat", name: "Абас", level: 5, type: "көше", info: { tamga: "АБ", urан: "Алатау!", history: "Абас батыр" } },
+                                        { id: "jaltyrshy", name: "Жалтыршы", level: 5, type: "көше", info: { tamga: "ЖЛ", urан: "Алатау!", history: "Жарқын" } },
+                                        { id: "aqunqaragan", name: "Ақұнқараған", level: 5, type: "көше", info: { tamga: "АҚҚ", urан: "Алатау!", history: "Ақ құндықты" } },
+                                        { id: "taqay", name: "Тақай", level: 5, type: "көше", info: { tamga: "ТҚ", urан: "Алатау!" } },
+                                        { id: "qarzhaubaras", name: "Қаржаубарас", level: 5, type: "көше", info: { tamga: "ҚЖБ", urан: "Алатау!" } }
+                                    ]
+                                },
+                                {
+                                    id: "balgaly-kyat", name: "Балғалы Қият", level: 4, type: "тийре",
+                                    info: { history: "Балға ұстаған", tamga: "Б", urан: "Алатау!", legend: "Теміршілер' термині" },
+                                    children: [
+                                        { id: "bespishaq", name: "Беспышақ", level: 5, type: "көше", info: { tamga: "Б5", urан: "Алатау!", history: "Бес пышақ" } },
+                                        { id: "etekshi", name: "Етекші", level: 5, type: "көше", info: { tamga: "ЕТ", urан: "Алатау!", history: "Етек - қолтырауын" } },
+                                        { id: "sanmurun-bk", name: "Саңмұрын", level: 5, type: "көше", info: { tamga: "СМБ", urан: "Алатау!" } },
+                                        { id: "qozhaqaragan", name: "Қожақараған", level: 5, type: "көше", info: { tamga: "ҚЖҚ", urан: "Алатау!", history: "Қожа ата" } }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: "ashamayly", name: "АШАМАЙЛЫ", level: 3, type: "үлкен уруу",
+                            info: { history: "Ашамай - көзі нашар көретін.", tamga: "АШ", urан: "Шулык!", population: "870 кибиток" },
+                            children: [
+                                { id: "saqu", name: "Сақу", level: 4, type: "тийре", info: { tamga: "СҚ", urан: "Шулык!", history: "Сақшылар" } },
+                                { id: "qaraqoja", name: "Қарақожа", level: 4, type: "тийре", info: { tamga: "ҚҚ", urан: "Шулык!", history: "Қара қожа" } },
+                                { id: "jalangayaq", name: "Жалаңаяқ", level: 4, type: "тийре", info: { tamga: "ЖА", urан: "Шулык!", history: "Тез жүгіруші" } },
+                                { id: "ajyldy", name: "Айылды", level: 4, type: "тийре", info: { tamga: "АЙ", urан: "Шулык!", history: "Айыл - отар" } },
+                                {
+                                    id: "qobasan", name: "Қобасан", level: 4, type: "тийре",
+                                    info: { tamga: "ҚБС", urан: "Шулык!", history: "Қоба - құз" },
+                                    children: [
+                                        { id: "aqnazar", name: "Ақназар", level: 5, type: "көше", info: { tamga: "АН", urан: "Шулык!" } },
+                                        { id: "jansary", name: "Жансары", level: 5, type: "көше", info: { tamga: "ЖС", urан: "Шулык!" } },
+                                        { id: "otemis-q", name: "Өтеміс", level: 5, type: "көше", info: { tamga: "ӨТ", urан: "Шулык!" } },
+                                        { id: "esen", name: "Есен", level: 5, type: "көше", info: { tamga: "ЕС", urан: "Шулык!" } },
+                                        { id: "tampysh", name: "Тампыш", level: 5, type: "көше", info: { tamga: "ТМ", urан: "Шулык!" } }
+                                    ]
+                                },
+                                { id: "turkmenqara", name: "Түркіменқара", level: 4, type: "тийре", info: { tamga: "ТҚ", urан: "Шулык!", history: "Түрікмендермен араласқан" } },
+                                { id: "jappar", name: "Жаппар", level: 4, type: "тийре", info: { tamga: "ЖП", urан: "Шулык!" } },
+                                { id: "sary-ash", name: "Сары", level: 4, type: "тийре", info: { tamga: "СР", urан: "Шулык!" } },
+                                { id: "abyz-ash", name: "Абыз", level: 4, type: "тийре", info: { tamga: "АБ", urан: "Шулык!" } },
+                                { id: "aqay", name: "Ақай", level: 4, type: "тийре", info: { tamga: "АҚ", urан: "Шулык!" } },
+                                { id: "pangqara", name: "Паңқара", level: 4, type: "тийре", info: { tamga: "ПҒ", urан: "Шулык!" } },
+                                {
+                                    id: "ush-bas", name: "Үш бас", level: 4, type: "тийре",
+                                    info: { tamga: "ҮБ", urан: "Шулык!", history: "Үш басты тоқыған" },
+                                    children: [{ id: "jaman-ub", name: "Жаман", level: 5, type: "көше", info: { tamga: "ЖМ", urан: "Шулык!" } }]
+                                },
+                                { id: "qurama", name: "Құрама", level: 4, type: "тийре", info: { tamga: "ҚР", urан: "Шулык!" } }
+                            ]
+                        },
+                        {
+                            id: "koldauli", name: "ҚОЛДАУЛЫ", level: 3, type: "үлкен уруу",
+                            info: { history: "Қолдау - опора.", tamga: "ҚЛД", urан: "Қолдау!", population: "1140 кибиток" },
+                            children: [
+                                { id: "beskempir", name: "Бескемпір", level: 4, type: "тийре", info: { tamga: "Б5", urан: "Қолдау!", history: "Бес кемпір" } },
+                                { id: "maishyshaly", name: "Майшышалы", level: 4, type: "тийре", info: { tamga: "МШ", urан: "Қолдау!", history: "Майлы шыша" } },
+                                { id: "qalqaman", name: "Қалқаман", level: 4, type: "тийре", info: { tamga: "ҚЛҚ", urан: "Қолдау!" } },
+                                { id: "ghajypqaragan", name: "Ғайыпқараған", level: 4, type: "тийре", info: { tamga: "ҒҚ", urан: "Қолдау!", history: "Ғайып болған ата" } },
+                                { id: "sarytan-k", name: "Сарытан", level: 4, type: "тийре", info: { tamga: "СРТ", urан: "Қолдау!" } },
+                                { id: "kulkiqozhaq", name: "Күлкіқожақ", level: 4, type: "тийре", info: { tamga: "КҚ", urан: "Қолдау!" } },
+                                { id: "jarymbet", name: "Жарымбет", level: 4, type: "тийре", info: { tamga: "ЖБ", urан: "Қолдау!" } },
+                                { id: "qyzylayaq", name: "Қызылаяқ", level: 4, type: "тийре", info: { tamga: "ҚЗ", urан: "Қолдау!" } },
+                                { id: "karasiraq-k", name: "Қарасирақ", level: 4, type: "тийре", info: { tamga: "ҚСР", urан: "Қолдау!" } },
+                                { id: "jelqaragan", name: "Желқараған", level: 4, type: "тийре", info: { tamga: "ЖҚ", urан: "Қолдау!" } },
+                                { id: "ulkenborik", name: "Үлкенбөрік", level: 4, type: "тийре", info: { tamga: "ҮБ", urан: "Қолдау!" } },
+                                { id: "shylzhuyt", name: "Шылжуыт", level: 4, type: "тийре", info: { tamga: "ШЖ", urан: "Қолдау!" } },
+                                { id: "jamanqonyrat", name: "Жаманқоңырат", level: 4, type: "тийре", info: { tamga: "ЖҚ", urан: "Қолдау!" } },
+                                {
+                                    id: "kalmaq", name: "Қалмақ", level: 4, type: "тийре",
+                                    info: { tamga: "ҚМ", urан: "Қолдау!", history: "Калмақтармен араласқан" },
+                                    children: [
+                                        { id: "adil", name: "Әділ", level: 5, type: "көше", info: { tamga: "ӘД", urан: "Қолдау!" } },
+                                        { id: "ereke", name: "Ереке", level: 5, type: "көше", info: { tamga: "ЕР", urан: "Қолдау!" } }
+                                    ]
+                                },
+                                { id: "jaman-aul", name: "Жаман ауыл", level: 4, type: "тийре", info: { tamga: "ЖА", urан: "Қолдау!" } }
+                            ]
+                        },
+                        {
+                            id: "kostambali", name: "ҚОСТАҢБАЛЫ", level: 3, type: "үлкен уруу", tamga: "II",
+                            info: { history: "Екі тамғалы.", tamga: "II", urан: "Қосқа!", population: "590 кибиток" },
+                            children: [
+                                { id: "jangildi-k", name: "Жангелді", level: 4, type: "тийре", info: { tamga: "ЖГ", urан: "Қосқа!" } },
+                                { id: "shirzhegen", name: "Шіржеген", level: 4, type: "тийре", info: { tamga: "ШЖ", urан: "Қосқа!" } },
+                                { id: "aghabegli", name: "Ағабеглі", level: 4, type: "тийре", info: { tamga: "АБ", urан: "Қосқа!" } },
+                                { id: "qarynzhuan", name: "Қарынжуан", level: 4, type: "тийре", info: { tamga: "ҚЖ", urан: "Қосқа!" } },
+                                { id: "kostambali-k", name: "Қостаңбалы", level: 4, type: "тийре", info: { tamga: "ҚТ", urан: "Қосқа!" } },
+                                { id: "qaraqursaq-k", name: "Қарақұрсақ", level: 4, type: "тийре", info: { tamga: "ҚҚ", urан: "Қосқа!" } },
+                                { id: "qazaqy-k", name: "Қазақы", level: 4, type: "тийре", info: { tamga: "ҚЗ", urан: "Қосқа!" } }
+                            ]
+                        },
+                        {
+                            id: "balgali", name: "БАЛҒАЛЫ", level: 3, type: "үлкен уруу",
+                            info: { history: "Балға ұстаған. Теміршілер.", tamga: "Б", urан: "Балға!", legend: "Теміршілер ұрпағы", population: "560 кибиток" },
+                            children: [
+                                { id: "aqbalgali", name: "Ақбалғалы", level: 4, type: "тийре", info: { tamga: "АБ", urан: "Балға!" } },
+                                { id: "nurbalgali", name: "Нұрбалғалы", level: 4, type: "тийре", info: { tamga: "НБ", urан: "Балға!" } },
+                                { id: "turkmen-b", name: "Түркімен", level: 4, type: "тийре", info: { tamga: "ТБ", urан: "Балға!" } },
+                                { id: "jamanaul-b", name: "Жаманауыл", level: 4, type: "тийре", info: { tamga: "ЖА", urан: "Балға!" } },
+                                { id: "shomishti", name: "Шөмішті", level: 4, type: "тийре", info: { tamga: "ШМ", urан: "Балға!" } },
+                                { id: "toqymbet", name: "Тоқымбет", level: 4, type: "тийре", info: { tamga: "ТҚ", urан: "Балға!" } },
+                                { id: "tazbalgali", name: "Тазбалғалы", level: 4, type: "тийре", info: { tamga: "ТБ", urан: "Балға!" } },
+                                { id: "kostamgali-b", name: "Қостамғалы", level: 4, type: "тийре", info: { tamga: "ҚС", urан: "Балға!" } },
+                                { id: "qaratalshy", name: "Қараталшы", level: 4, type: "тийре", info: { tamga: "ҚТ", urан: "Балға!" } },
+                                { id: "asan", name: "Асан", level: 4, type: "тийре", info: { tamga: "АС", urан: "Балға!" } },
+                                { id: "arzyqul", name: "Арзықұл", level: 4, type: "тийре", info: { tamga: "АР", urан: "Балға!" } }
+                            ]
+                        },
+                        {
+                            id: "kandekli", name: "ҚӘНДЕКЛІ", level: 3, type: "үлкен уруу", tamga: "Г",
+                            info: { history: "Көндек - қора.", tamga: "Г", urан: "Көндек!", population: "730 кибиток" },
+                            children: [
+                                { id: "qarama-kan", name: "Қарама", level: 4, type: "тийре", info: { tamga: "ҚР", urан: "Көндек!" } },
+                                { id: "kiikshi", name: "Киікші", level: 4, type: "тийре", info: { tamga: "КШ", urан: "Көндек!", history: "Киік сақшы" } },
+                                { id: "toqbolat-kan", name: "Тоқболат", level: 4, type: "тийре", info: { tamga: "ТБ", urан: "Көндек!" } },
+                                { id: "qyryqsadaq", name: "Қырықсадақ", level: 4, type: "тийре", info: { tamga: "ҚС", urан: "Көндек!", history: "40 садақ" } }
+                            ]
+                        },
+                        {
+                            id: "karamoiyn", name: "ҚАРАМОЙЫН", level: 3, type: "үлкен уруу", tamga: "ТМ",
+                            info: { history: "Қара мойын.", tamga: "ТМ", urан: "Мойын!", population: "560 кибиток" },
+                            children: [
+                                { id: "annakhoja", name: "Аннахожа", level: 4, type: "тийре", info: { tamga: "АН", urан: "Мойын!", history: "Анна әулие" } },
+                                { id: "sabalaq", name: "Сабалақ", level: 4, type: "тийре", info: { tamga: "СБ", urан: "Мойын!", history: "Саба - бала" } },
+                                { id: "kotelek", name: "Көтелек", level: 4, type: "тийре", info: { tamga: "КТ", urан: "Мойын!", history: "Торлау" } },
+                                { id: "qarlymaral", name: "Қарлымарал", level: 4, type: "тийре", info: { tamga: "ҚМ", urан: "Мойын!" } },
+                                { id: "bulkildek", name: "Бүлкілдек", level: 4, type: "тийре", info: { tamga: "БҮ", urан: "Мойын!", history: "Күлу" } }
+                            ]
+                        },
+                        {
+                            id: "muyten", name: "МҮЙТЕН", level: 3, type: "үлкен уруу", tamga: "Үш шанышқы", urан: "Ақшолпан",
+                            info: { history: "Мұйын - мойын.", origin: "Мүйтен батыр", tamga: "Үш шанышқы", urан: "Ақшолпан", population: "540 кибиток", legend: "Мүйтеннің үш ұлы: Самат, Тели, Абыз" },
+                            children: [
+                                {
+                                    id: "samat", name: "Самат (5)", level: 4, type: "тийре",
+                                    info: { tamga: "СМ", urан: "Ақшолпан!" },
+                                    children: [
+                                        { id: "baibishe", name: "Бәйбіше", level: 5, type: "көше", info: { tamga: "ББ", urан: "Ақшолпан!" } },
+                                        { id: "toqqaragan", name: "Тоқалқараған", level: 5, type: "көше", info: { tamga: "ТҚ", urан: "Ақшолпан!" } },
+                                        { id: "baimurat", name: "Баймұрат", level: 5, type: "көше", info: { tamga: "БМ", urан: "Ақшолпан!" } },
+                                        { id: "jolan", name: "Жолан", level: 5, type: "көше", info: { tamga: "ЖЛ", urан: "Ақшолпан!" } },
+                                        { id: "bekau", name: "Бекау", level: 5, type: "көше", info: { tamga: "БК", urан: "Ақшолпан!" } }
+                                    ]
+                                },
+                                {
+                                    id: "teli", name: "Тели (5)", level: 4, type: "тийре",
+                                    info: { tamga: "ТЛ", urан: "Ақшолпан!" },
+                                    children: [
+                                        { id: "tileuberdi", name: "Тілеуберді", level: 5, type: "көше", info: { tamga: "ТБ", urан: "Ақшолпан!" } },
+                                        { id: "allaberdi", name: "Аллаберді", level: 5, type: "көше", info: { tamga: "АБ", urан: "Ақшолпан!" } },
+                                        { id: "tangirberdi", name: "Тəңірберді", level: 5, type: "көше", info: { tamga: "ТБ", urан: "Ақшолпан!" } },
+                                        { id: "mantyqaragan", name: "Мантыққараған", level: 5, type: "көше", info: { tamga: "МҚ", urан: "Ақшолпан!" } },
+                                        { id: "molloqaragan", name: "Моллақараған", level: 5, type: "көше", info: { tamga: "МҚ", urан: "Ақшолпан!" } }
+                                    ]
+                                },
+                                {
+                                    id: "abyz-m", name: "Абыз", level: 4, type: "тийре",
+                                    info: { tamga: "АБ", urан: "Ақшолпан!", history: "Ақсақал, әулие" },
+                                    children: [{ id: "ady", name: "Ады", level: 5, type: "көше", info: { tamga: "АД", urан: "Ақшолпан!" } }]
+                                },
+                                {
+                                    id: "kentanau", name: "Кеңтанаў (3)", level: 4, type: "тийре",
+                                    info: { tamga: "КТ", urан: "Ақшолпан!" },
+                                    children: [
+                                        { id: "barn", name: "Барн", level: 5, type: "көше", info: { tamga: "БР", urан: "Ақшолпан!" } },
+                                        { id: "itaq", name: "Итақ", level: 5, type: "көше", info: { tamga: "ИТ", urан: "Ақшолпан!" } },
+                                        { id: "jekensal", name: "Жекенсал", level: 5, type: "көше", info: { tamga: "ЖС", urан: "Ақшолпан!" } }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "jauyngyr", name: "ЖАУЫНГЫР БӨЛИМИ", level: 2, type: "бөлим",
+                    info: { history: "Жауынгыр - 7 ру.", population: "3660 кибиток" },
+                    children: [
+                        { id: "teristambaly", name: "ТЕРIСТАҢБАЛЫ", level: 3, type: "уруу", children: [{id:"shomak",name:"Шомақ",level:4,type:"тийре"},{id:"hangildi",name:"Хангелді",level:4,type:"тийре"},{id:"baiqaragan",name:"Байқараған",level:4,type:"тийре"},{id:"elshibai",name:"Елшібай",level:4,type:"тийре"},{id:"qurban-t",name:"Құрбан",level:4,type:"тийре"},{id:"togai",name:"Тоғыз",level:4,type:"тийре"},{id:"tyle",name:"Тіле",level:4,type:"тийре"},{id:"tebegen",name:"Тебеген",level:4,type:"тийре"},{id:"tum",name:"Тум",level:4,type:"тийре"},{id:"tyrk",name:"Түркістан",level:4,type:"тийре"}] },
+                        { id: "bakanly", name: "БАҚАНЛЫ", level: 3, type: "уруу", children: [{id:"tanmail-b",name:"Таңмайыл",level:4,type:"тийре"},{id:"zhananai",name:"Жақанай",level:4,type:"тийре"},{id:"naiman-b",name:"Найман",level:4,type:"тийре"},{id:"aiys-b",name:"Айыс",level:4,type:"тийре"}] },
+                        { id: "tyekli", name: "ТIЕКТI", level: 3, type: "уруу", children: [{id:"shishi-t",name:"Шиші",level:4,type:"тийре",children:[{id:"shishi-kosh",name:"Шиші",level:5,type:"көше"}]},{id:"tumanai-t",name:"Туманай",level:4,type:"тийре",children:[{id:"tumanai-kosh",name:"Туманай",level:5,type:"көше"}]},{id:"maulik-t",name:"Мәулик",level:4,type:"тийре",children:[{id:"maulik-kosh",name:"Мәулик",level:5,type:"көше"}]},{id:"bairam-t",name:"Байрам",level:4,type:"тийре",children:[{id:"bairam-kosh",name:"Байрам",level:5,type:"көше"}]}] },
+                        { id: "yrgaqty", name: "ЫРҒАҚТЫ", level: 3, type: "уруу", children: [{id:"atanai-y",name:"Атанай",level:4,type:"тийре",children:[{id:"atanai-kosh",name:"Атанай",level:5,type:"көше"}]},{id:"eshkili-y",name:"Ешкілі",level:4,type:"тийре",children:[{id:"eshkili-kosh",name:"Ешкілі",level:5,type:"көше"}]},{id:"baibura-y",name:"Байбура",level:4,type:"тийре",children:[{id:"baibura-kosh",name:"Байбура",level:5,type:"көше"}]},{id:"sarytan-y",name:"Сарытан",level:4,type:"тийре",children:[{id:"sarytan-kosh",name:"Сарытан",level:5,type:"көше"}]}] },
+                        { id: "baimaqty", name: "БАЙМАҚТЫ", level: 3, type: "уруу", children: [{id:"saspaq",name:"Саспақ",level:4,type:"тийре"},{id:"uies",name:"Үйес",level:4,type:"тийре"},{id:"tanmail-bm",name:"Таңмайыл",level:4,type:"тийре"},{id:"zhananai-bm",name:"Жақанай",level:4,type:"тийре"},{id:"naiman-bm",name:"Найман",level:4,type:"тийре"},{id:"aiys-bm",name:"Айыс",level:4,type:"тийре"}] },
+                        { id: "kazayakty", name: "ҚАЗАЯҚТЫ", level: 3, type: "уруу", children: [{id:"anetai",name:"Әнетай",level:4,type:"тийре"},{id:"zharimbet-k",name:"Жәрімбет",level:4,type:"тийре"},{id:"zhundi",name:"Жүнді",level:4,type:"тийре"},{id:"sadaq",name:"Садақ",level:4,type:"тийре"}] },
+                        { id: "uygyr", name: "ҰЙҒЫР", level: 3, type: "уруу", children: [{id:"shishi-u",name:"Шиші",level:4,type:"тийре"},{id:"tumanai-u",name:"Туманай",level:4,type:"тийре"},{id:"sabalaq-u",name:"Сабалақ",level:4,type:"тийре"},{id:"maulik-u",name:"Мәулик",level:4,type:"тийре"},{id:"bairam-u",name:"Байрам",level:4,type:"тийре"},{id:"syrgaly",name:"Сырғалы",level:4,type:"тийре"}] }
+                    ]
+                }
+            ]
+        },
+        {
+            id: "onTort", name: "АРЫС ОН ТӨРТ РУУ", level: 1, type: "арыс",
+            info: { history: "Он төрт руу - 14 ру.", population: "10260 кибиток (60%)" },
+            children: [
+                {
+                    id: "kytaı", name: "ҚЫТАЙ", level: 2, type: "үлкен уруу", tamga: "Q", уран: "Уллы таў",
+                    
+                    info: { history: "Ең ірі ру.", tamga: "Q", уран: "Уллы таў", population: "4320 кибиток" },
+                    children: [
+                        { id: "bessary", name: "БЕССАРЫ", level: 3, type: "уруу", children: [{id:"zhunli",name:"Жүнли",level:4,type:"тийре"},{id:"qoyly",name:"Қойлы",level:4,type:"тийре"}] },
+                        { id: "beksyyk", name: "БЕКСЫЙЫҚ", level: 3, type: "уруу", children: [{id:"zherger",name:"Зергер",level:4,type:"тийре"},{id:"masai",name:"Масай",level:4,type:"тийре"},{id:"shyghyrshy",name:"Шығыршы",level:4,type:"тийре"},{id:"malay",name: "Малай",level:4,type:"тийре"}] },
+                        { id: "kazayakly-k", name: "ҚАЗАЯҚЛЫ", level: 3, type: "уруу", children: [{id:"kalsen",name:"Кәлсен",level:4,type:"тийре"},{id:"kuyik",name:"Күйік",level:4,type:"тийре"},{id:"myrzai",name:"Мырзай",level:4,type:"тийре"},{id:"qylymoiyn",name:"Қылмойын",level:4,type:"тийре"},{id:"zhylkybai",name:"Жылқбай",level:4,type:"тийре"},{id:"baibishe-kz",name:"Бәйбіше",level:4,type:"тийре",children:[{id:"baibishe-kosh",name:"Бәйбіше",level:5,type:"көше"}]}] },
+                        { id: "kaishyly", name: "ҚАЙШЫЛЫ", level: 3, type: "уруу", children: [{id:"aqymbet",name:"Ақымбет",level:4,type:"тийре"},{id:"zhuansan",name:"Жувансан",level:4,type:"тийре"},{id:"koterehoja",name:"Көтерехожа",level:4,type:"тийре"},{id:"tanamyrza",name:"Танамырза",level:4,type:"тийре"},{id:"baqy",name:"Бақи",level:4,type:"тийре"},{id:"sybyl",name:"Сыбыл",level:4,type:"тийре"},{id:"basar",name:"Басар",level:4,type:"тийре"},{id:"tolyq",name:"Толық",level:4,type:"тийре"},{id:"yaby",name:"Ябы",level:4,type:"тийре"}] },
+                        { id: "aitereke", name: "ӘЙТЕКЕ", level: 3, type: "уруу", children: [{id:"zhadyq",name:"Жәдік",level:4,type:"тийре"},{id:"yrsymbek",name:"Ырсымбек",level:4,type:"тийре"},{id:"orazymbet",name:"Оразымбет",level:4,type:"тийре"},{id:"tangirkul",name:"Тəңірқұл",level:4,type:"тийре"},{id:"bektes",name:"Бектес",level:4,type:"тийре",children:[{id:"bektes-kosh",name:"Бектес",level:5,type:"көше"}]},{id:"nauriz",name:"Наурыз",level:4,type:"тийре",children:[{id:"nauriz-kosh",name:"Наурыз",level:5,type:"көше"}]},{id:"maniuwli-a",name:"Мәнжүўлі",level:4,type:"тийре",children:[{id:"maniuwli-kosh",name:"Мәнжүўлі",level:5,type:"көше"}]},{id:"tazshylyq",name:"Тазшылық",level:4,type:"тийре",children:[{id:"tazshylyq-kosh",name:"Тазшылық",level:5,type:"көше"}]}] },
+                        { id: "manjuwli-k", name: "МАҢЖҮУЛI", level: 3, type: "уруу", children: [{id:"eki-shyiq",name:"Екі шыйық",level:4,type:"тийре"},{id:"qaramanjuwli",name:"Қараманжүўлі",level:4,type:"тийре"},{id:"aiiereke",name:"Әйереке",level:4,type:"тийре"}] },
+                        { id: "aralbai", name: "АРАЛБАЙ", level: 3, type: "уруу", children: [{id:"aqqala",name:"Аққала",level:4,type:"тийре"},{id:"qalmuart-ar",name:"Қалмурат",level:4,type:"тийре"},{id:"ogizbaishy",name:"Өгизбайшы",level:4,type:"тийре"},{id:"baibishe-ar",name:"Бәйбіше",level:4,type:"тийре"},{id:"tile-qusshy",name:"Тілеу қусшы",level:4,type:"тийре"}] }
+                    ]
+                },
+                {
+                    id: "kypshak", name: "ҚЫПШАҚ", level: 2, type: "үлкен уруу", tamga: "I", уран: "Тоқсаба",
+                    info: { history: "Көне ру.", tamga: "I", уран: "Тоқсаба", population: "2240 кибиток" },
+                    children: [
+                        { id: "kangly", name: "ҚАҢЛЫ", level: 3, type: "уруу", children: [{id:"tram",name:"Трам",level:4,type:"тийре"},{id:"qatqangly",name:"Қатқаңлы",level:4,type:"тийре"},{id:"yrghaqly",name:"Ырғақлы",level:4,type:"тийре"},{id:"ashamaily-k",name:"Ашамайлы",level:4,type:"тийре"},{id:"taraqty-k",name:"Тарақты",level:4,type:"тийре"},{id:"baspak",name:"Баспақ",level:4,type:"тийре"},{id:"aiat",name:"Айят",level:4,type:"тийре"},{id:"bosyn",name:"Босын",level:4,type:"тийре"},{id:"basapat",name:"Баспат",level:4,type:"тийре"},{id:"konyrqazy",name:"Қоңырқазы",level:4,type:"тийре"},{id:"kenes",name:"Кенес",level:4,type:"тийре"},{id:"tashkent",name:"Ташкент",level:4,type:"тийре"}] },
+                        { id: "sanmuryn", name: "САҢМҰРЫН", level: 3, type: "уруу", children: [{id:"konshi",name:"Көнші",level:4,type:"тийре"},{id:"tubai",name:"Тұбай",level:4,type:"тийре"},{id:"eshkili",name:"Ешкілі",level:4,type:"тийре"},{id:"zhaipaq-shek",name:"Жалпақ шек",level:4,type:"тийре"},{id:"tolebai",name:"Төлебай",level:4,type:"тийре"},{id:"zhabashy",name:"Жабашы",level:4,type:"тийре"}] },
+                        { id: "estek", name: "ЕСТЕК", level: 3, type: "уруу", children: [{id:"manqanai",name:"Маңқанай",level:4,type:"тийре"},{id:"qaiypnazar",name:"Қайыпназар",level:4,type:"тийре"},{id:"karaterenshi",name:"Қаратереңші",level:4,type:"тийре"},{id:"qalmuart-es",name:"Қалмурат",level:4,type:"тийре"}] },
+                        { id: "qanzhygaly", name: "ҚАНЖЫҒАЛЫ", level: 3, type: "уруу", children: [{id:"shanyshpai",name:"Шанышпай",level:4,type:"тийре"},{id:"sambet-q",name:"Самбет",level:4,type:"тийре"},{id:"zhaghaltai",name:"Жағалтай",level:4,type:"тийре"},{id:"baibishe-q",name:"Бәйбіше",level:4,type:"тийре",children:[{id:"baibishe-q-kosh",name:"Бәйбіше",level:5,type:"көше"}]}] },
+                        { id: "saltyr", name: "САЛТЫР", level: 3, type: "уруу", children: [{id:"baibishe-s",name:"Бәйбіше",level:4,type:"тийре"},{id:"sart",name:"Сарт",level:4,type:"тийре"},{id:"orazymbet-s",name:"Оразымбет",level:4,type:"тийре"},{id:"shuyghan",name:"Шуылған",level:4,type:"тийре"}] }
+                    ]
+                },
+                {
+                    id: "keneges", name: "КЕНЕГЕС", level: 2, type: "үлкен уруу", tamga: "Х", уран: "Шаўлы-Шаўхай",
+                    info: { history: "Кеңгес.", tamga: "Х", уран: "Шаўлы-Шаўхай", population: "1480 кибиток" },
+                    children: [
+                        { id: "aranshy", name: "АРАНШЫ", level: 3, type: "уруу", children: [{id:"annaqul",name:"Аннақұл",level:4,type:"тийре"},{id:"abas-k",name:"Абас",level:4,type:"тийре",children:[{id:"seitimbet",name:"Сейтімбет",level:5,type:"көше"}]},{id:"suiin",name:"Сүйін",level:4,type:"тийре"},{id:"zhuas",name:"Жуас",level:4,type:"тийре"},{id:"dauletqargha",name:"Дәулетқарға",level:4,type:"тийре"},{id:"qaipbergen",name:"Қайыпберген",level:4,type:"тийре"}] },
+                        { id: "aktogyn", name: "АҚТОҒЫН", level: 3, type: "уруу", children: [{id:"nanzhemes",name:"Нанжемес",level:4,type:"тийре"},{id:"kosher",name:"Көшер",level:4,type:"тийре"}] },
+                        { id: "omir", name: "ӨМIР", level: 3, type: "уруу", children: [{id:"aqpyshaq",name:"Ақпышақ",level:4,type:"тийре"},{id:"usaq",name:"Усақ",level:4,type:"тийре"},{id:"zhel",name:"Жел",level:4,type:"тийре"},{id:"mynzhyr",name:"Мынжыр",level:4,type:"тийре"},{id:"otemis-o",name:"Өтеміс",level:4,type:"тийре"}] },
+                        { id: "taraqly-ken", name: "ТАРАҚЛЫ", level: 3, type: "уруу", children: [{id:"zhetiqaraghaz",name:"Жетіқарақазақы",level:4,type:"тийре",children:[{id:"zheti-kosh",name:"Жетіқара",level:5,type:"көше"}]}] },
+                        { id: "dobal", name: "ДОБАЛ", level: 3, type: "уруу" },
+                        { id: "oymauyt", name: "ОЙМАЎЫТ", level: 3, type: "уруу", children: [{id:"qara-o",name:"Қара",level:4,type:"тийре"},{id:"sary-o",name:"Сары",level:4,type:"тийре",children:[{id:"zhiydeli",name:"Жийдели",level:5,type:"көше"}]},{id:"aq-o",name:"Ақ",level:4,type:"тийре"}] },
+                        { id: "dombazqaq", name: "ДОМБАЗҚАҚ", level: 3, type: "уруу" },
+                        { id: "nokis", name: "НӨКИС", level: 3, type: "уруу", children: [{id:"zhamanzhak",name:"Жаманжақ",level:4,type:"тийре"},{id:"bozaq",name:"Бозақ",level:4,type:"тийре"},{id:"altynpyshaq",name:"Алтынпышақ",level:4,type:"тийре"},{id:"ghobdir",name:"Гобдир",level:4,type:"тийре"}] }
+                    ]
+                },
+                {
+                    id: "mangyt", name: "МАҢҒЫТ", level: 2, type: "үлкен уруу", tamga: "f", уран: "Шаўлы-Шаўхай",
+                    info: { history: "Соғысқор ру.", tamga: "f", уран: "Шаўлы-Шаўхай", population: "2220 кибиток" },
+                    children: [
+                        { id: "qaratay", name: "ҚАРАТАЙ (Қара)", level: 3, type: "топар", children: [{id:"qaramangyt",name:"Қараманғыт",level:4,type:"тийре",children:[{id:"ushbas",name:"Үшбас",level:5,type:"көше"},{id:"karasiraq-m",name:"Қарасыйрақ",level:5,type:"көше"},{id:"aqmangyt",name:"Ақманғыт",level:5,type:"көше"}]},{id:"mamyqshy",name:"Мамықшы",level:4,type:"уруу",children:[{id:"zhetiqurt",name:"Жетіқурт",level:5,type:"көше"}]},{id:"kosar-m",name:"Қосар",level:4,type:"уруу",children:[{id:"gubidin",name:"Гүбидин",level:5,type:"көше"}]},{id:"qylqaly",name:"Қылқалы",level:4,type:"тийре"}] },
+                        { id: "sarytay", name: "САРЫТАЙ (Сары)", level: 3, type: "топар", children: [{id:"arshyn",name:"Аршын",level:4,type:"тийре"},{id:"zhailyk",name:"Жайлық",level:4,type:"тийре"},{id:"toqmangyt",name:"Тоқманғыт",level:4,type:"тийре"},{id:"arsary",name:"Арсары",level:4,type:"тийре"},{id:"tazhzhanlyk",name:"Тазжанлық",level:4,type:"тийре"},{id:"shuyt",name:"Шүйт",level:4,type:"тийре"},{id:"zhamansha",name:"Жаманша",level:4,type:"тийре"},{id:"esebii",name:"Есебий",level:4,type:"тийре"},{id:"tamgaly-m",name:"Тамғалы",level:4,type:"тийре"},{id:"toqmoiyin",name:"Тоқмойын",level:4,type:"тийре"},{id:"temirhoja",name:"Темирхожа",level:4,type:"тийре"}] },
+                        { id: "boztay", name: "БОЗТАЙ (Боз)", level: 3, type: "топар", children: [{id:"bozta",name:"Бозта",level:4,type:"тийре",children:[{id:"bozta-kosh",name:"Бозта",level:5,type:"көше"}]}] },
+                        { id: "jetimtay", name: "ЖЕТИМТАЙ (Жетим)", level: 3, type: "топар", children: [{id:"eshbuga",name:"Ешбуға",level:4,type:"тийре",children:[{id:"eshbuga-kosh",name:"Ешбуға",level:5,type:"көше"}]}] }
+                    ]
+                }
+            ]
+        }
+    ]
+};
+
+// Найти узел по ID в дереве
+function findNodeById(node, id) {
+    if (node.id === id) return node;
+    if (node.children) {
+        for (let child of node.children) {
+            const found = findNodeById(child, id);
+            if (found) return found;
+        }
+    }
+    return null;
+}
+
+// Получить полную цепочку родителей до корня
+function getParentChain(node, current = treeData, chain = []) {
+    if (current.id === node.id) {
+        return [current, ...chain];
+    }
+    if (current.children) {
+        for (let child of current.children) {
+            const result = getParentChain(node, child, [current, ...chain]);
+            if (result) return result;
+        }
+    }
+    return null;
+}
+
+// Получить всех потомков узла
+function getAllDescendants(node) {
+    const descendants = [];
+    if (node.children) {
+        for (let child of node.children) {
+            descendants.push(child);
+            descendants.push(...getAllDescendants(child));
+        }
+    }
+    return descendants;
+}
+
+// Построить дерево группировки потомков по родителям
+function buildDescendantsTree(node) {
+    if (!node.children || node.children.length === 0) return null;
+    
+    const result = [];
+    for (let child of node.children) {
+        const item = {
+            node: child,
+            children: child.children || []
         };
+        result.push(item);
+    }
+    return result;
+}
+
+// Управление панелью
+function openPanel() {
+    const panel = document.getElementById('infoPanel');
+    const openBtn = document.getElementById('openPanelBtn');
+    const statsBox = document.getElementById('statsBox');
+    
+    panel.classList.remove('collapsed');
+    panel.classList.add('active');
+    openBtn.classList.remove('visible');
+    isPanelOpen = true;
+    
+    // На десктопе сдвигаем статистику
+    if (window.innerWidth > 968) {
+        statsBox.style.right = '470px';
+    }
+}
+
+function closePanel() {
+    const panel = document.getElementById('infoPanel');
+    const openBtn = document.getElementById('openPanelBtn');
+    const statsBox = document.getElementById('statsBox');
+    
+    panel.classList.add('collapsed');
+    panel.classList.remove('active');
+    openBtn.classList.add('visible');
+    isPanelOpen = false;
+    
+    // На десктопе возвращаем статистику
+    if (window.innerWidth > 968) {
+        statsBox.style.right = '10px';
+    }
+}
+
+function togglePanel() {
+    if (isPanelOpen) {
+        closePanel();
+    } else {
+        openPanel();
+    }
+}
+
+// Бургер меню
+function toggleBurgerMenu() {
+    const burger = document.getElementById('burgerMenu');
+    const viewSwitch = document.getElementById('viewSwitch');
+    
+    burger.classList.toggle('active');
+    viewSwitch.classList.toggle('active');
+}
+
+// Развернуть/свернуть элемент списка
+function toggleListItem(id) {
+    const childrenContainer = document.getElementById('children-' + id);
+    const expandBtn = document.getElementById('expand-' + id);
+    
+    if (childrenContainer) {
+        const isExpanded = childrenContainer.classList.contains('expanded');
+        
+        if (isExpanded) {
+            childrenContainer.classList.remove('expanded');
+            expandBtn.classList.remove('expanded');
+            currentExpandedNodes.delete(id);
+        } else {
+            childrenContainer.classList.add('expanded');
+            expandBtn.classList.add('expanded');
+            currentExpandedNodes.add(id);
+        }
+    }
+}
+
+// Выбрать элемент (показать информацию)
+function selectNode(node) {
+    currentSelectedNode = node;
+    
+    // Убрать выделение со всех элементов
+    document.querySelectorAll('.list-header').forEach(el => el.classList.remove('active'));
+    
+    // Выделить текущий элемент
+    const currentEl = document.getElementById('header-' + node.id);
+    if (currentEl) currentEl.classList.add('active');
+    
+    // Показать информацию
+    showInfo(node);
+    
+    // Обновить хлебные крошки
+    updateBreadcrumb(node);
+}
+
+// Обновить хлебные крошки
+function updateBreadcrumb(node) {
+    const chain = getParentChain(node);
+    const breadcrumb = document.getElementById('breadcrumb');
+    
+    if (!chain) return;
+    
+    let html = '';
+    chain.reverse().forEach((item, index) => {
+        const isLast = index === chain.length - 1;
+        if (!isLast) {
+            html += `<span class="breadcrumb-item" onclick="navigateToNode('${item.id}')">${item.name}</span>`;
+            html += `<span class="breadcrumb-separator">➜</span>`;
+        } else {
+            html += `<span class="breadcrumb-item active">${item.name}</span>`;
+        }
+    });
+    
+    breadcrumb.innerHTML = html;
+}
+
+// Навигация к узлу
+function navigateToNode(id) {
+    const node = findNodeById(treeData, id);
+    if (node) {
+        selectNode(node);
+        // Развернуть все родителей
+        const chain = getParentChain(node);
+        if (chain) {
+            chain.forEach(parent => {
+                if (parent.id !== id) {
+                    const childrenContainer = document.getElementById('children-' + parent.id);
+                    const expandBtn = document.getElementById('expand-' + parent.id);
+                    if (childrenContainer && !childrenContainer.classList.contains('expanded')) {
+                        childrenContainer.classList.add('expanded');
+                        expandBtn.classList.add('expanded');
+                        currentExpandedNodes.add(parent.id);
+                    }
+                }
+            });
+        }
+        // Прокрутить к элементу
+        const element = document.getElementById('item-' + id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+}
+
+// Построить иерархический список
+function buildList(node, container) {
+    const item = document.createElement('div');
+    item.className = 'list-item level-' + node.level;
+    item.id = 'item-' + node.id;
+    
+    const hasChildren = node.children && node.children.length > 0;
+    const childCount = hasChildren ? node.children.length : 0;
+    const descendantCount = hasChildren ? getAllDescendants(node).length : 0;
+    
+    let html = '<div class="list-header" id="header-' + node.id + '" onclick="handleItemClick(\'' + node.id + '\', event)">';
+    
+    // Кнопка разворачивания (если есть дети)
+    if (hasChildren) {
+        html += '<span class="expand-btn" id="expand-' + node.id + '">▶</span>';
+    } else {
+        html += '<span class="expand-btn" style="visibility: hidden;">▶</span>';
+    }
+    
+    // Контент
+    html += '<div class="list-content">';
+    html += '<span class="list-title">' + node.name + '</span>';
+    if (node.type) {
+        html += '<span class="list-subtitle">' + node.type + '</span>';
+    }
+    html += '</div>';
+    
+    // Мета-информация
+    html += '<div class="list-meta">';
+    if (node.tamga) html += '<span>🏷️ ' + node.tamga + '</span>';
+    if (node.уран) html += '<span>📢 ' + node.уран + '</span>';
+    if (hasChildren) {
+        html += '<span>👇 ' + childCount + '/' + descendantCount + '</span>';
+    }
+    html += '</div>';
+    
+    html += '</div>';
+    
+    // Контейнер для детей
+    if (hasChildren) {
+        html += '<div class="children-container" id="children-' + node.id + '">';
+    }
+    
+    item.innerHTML = html;
+    container.appendChild(item);
+    
+    // Рекурсивно добавляем детей
+    if (hasChildren) {
+        const childrenContainer = item.querySelector('.children-container');
+        node.children.forEach(child => {
+            buildList(child, childrenContainer);
+        });
+    }
+}
+
+// Обработчик клика по элементу
+function handleItemClick(id, event) {
+    // Если кликнули на кнопку разворачивания - только развернуть/свернуть
+    if (event.target.classList.contains('expand-btn')) {
+        toggleListItem(id);
+    } else {
+        // Иначе - выбрать элемент и развернуть/свернуть
+        const node = findNodeById(treeData, id);
+        if (node) {
+            selectNode(node);
+            toggleListItem(id);
+        }
+    }
+}
+
+// Развернуть все
+function expandAll() {
+    document.querySelectorAll('.children-container').forEach(el => {
+        el.classList.add('expanded');
+    });
+    document.querySelectorAll('.expand-btn').forEach(el => {
+        if (el.style.visibility !== 'hidden') {
+            el.classList.add('expanded');
+        }
+    });
+}
+
+// Свернуть все
+function collapseAll() {
+    document.querySelectorAll('.children-container').forEach(el => {
+        el.classList.remove('expanded');
+    });
+    document.querySelectorAll('.expand-btn').forEach(el => {
+        el.classList.remove('expanded');
+    });
+}
+
+function showInfo(node) {
+    const panel = document.getElementById('infoPanel');
+    const content = document.getElementById('infoContent');
+    
+    // Открываем панель при клике на элемент
+    openPanel();
+    
+    let html = '<div class="info-header"><div class="info-title">' + node.name + '</div><div class="info-type">' + (node.type || 'Род') + '</div></div>';
+    
+    // Иерархическая цепочка
+    const chain = getParentChain(node);
+    if (chain && chain.length > 0) {
+        html += '<div class="info-section"><h3>🔗Tolıq shejire / Полная цепочка</h3><div class="hierarchy-chain">';
+        chain.reverse().forEach((item, index) => {
+            const isLast = index === chain.length - 1;
+            html += '<div class="hierarchy-item ' + (isLast ? 'current' : '') + '">';
+            html += '<span class="hierarchy-level">' + levelsMap[item.level] + '</span>';
+            html += '<span>' + item.name + '</span>';
+            if (!isLast) html += '<span class="hierarchy-arrow">⬇</span>';
+            html += '</div>';
+        });
+        html += '</div></div>';
+    }
+    
+    const tamga = node.tamga || (node.info && node.info.tamga);
+    if (tamga) {
+        html += '<div class="tamga-box"><div class="tamga-symbol">' + tamga + '</div><div class="tamga-label">ТАМГА (Родовой знак)</div></div>';
+    }
+    
+    const уран = node.уран || (node.info && node.info.уран);
+    if (уран) {
+        html += '<div class="uran-box"><div class="uran-text">' + уран + '</div><div class="uran-label">УРАН (Боевой клич)</div></div>';
+    }
+    
+    if (node.info) {
+        const fields = [
+            { key: 'history', icon: '📜', title: 'Tariyxı / История' },
+            { key: 'origin', icon: '🧬', title: 'Kelip shıǵıwı / Происхождение' },
+            { key: 'legend', icon: '🌟', title: 'Ańız / Легенда' },
+            { key: 'population', icon: '👥', title: 'Sanı / Численность' },
+            { key: 'structure', icon: '🏗️', title: 'Qurilimi / Структура' },
+            { key: 'warrior', icon: '⚔️', title: 'Batırları / Воины' },
+            { key: 'region', icon: '🌍', title: 'Jeri / Регион' },
+            { key: 'language', icon: '🗣️', title: 'Til / Язык' }
+        ];
+        
+        fields.forEach(field => {
+            if (node.info[field.key]) {
+                html += '<div class="info-section"><h3>' + field.icon + ' ' + field.title + '</h3><p>' + node.info[field.key] + '</p></div>';
+            }
+        });
+    }
+    
+    // Список всех потомков
+    if (node.children && node.children.length > 0) {
+        const descendantsTree = buildDescendantsTree(node);
+        html += '<div class="stats-box"><div class="stats-number">' + getAllDescendants(node).length + '</div><div> Весь род / Barlıq áwladlar</div></div>';
+        
+        html += '<div class="info-section"><h3>👇Tómen toparlar / Подчиненные группы</h3>';
+        html += '<div class="descendants-list">';
+        
+        descendantsTree.forEach(group => {
+            html += '<div class="descendant-group">';
+            html += '<div class="descendant-parent">';
+            html += '<span style="color: var(--accent-yellow);">' + group.node.name + '</span>';
+            html += ' <span style="font-size: 0.8em; opacity: 0.7;">(' + levelsMap[group.node.level] + ')</span>';
+            html += '</div>';
+            
+            if (group.children.length > 0) {
+                html += '<div class="descendant-children">';
+                group.children.forEach(child => {
+                    html += '<div class="descendant-child">';
+                    html += '<span class="descendant-bullet"></span>';
+                    html += '<span>' + child.name + '</span>';
+                    if (child.children && child.children.length > 0) {
+                        html += ' <span style="font-size: 0.75em; color: var(--accent-orange);">+' + getAllDescendants(child).length + '</span>';
+                    }
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+            html += '</div>';
+        });
+        
+        html += '</div></div>';
+    }
+    
+    html += '<div class="info-section"><h3>📊 Dáreje / Уровень</h3><p>' + levelsMap[node.level] + ' (' + node.level + ')</p></div>';
+    
+    content.innerHTML = html;
+}
+
+function searchNode() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const headers = document.querySelectorAll('.list-header');
+    
+    headers.forEach(header => {
+        const text = header.textContent.toLowerCase();
+        const item = header.closest('.list-item');
+        
+        if (text.includes(input) && input.length > 0) {
+            header.classList.add('highlight');
+            // Развернуть родителей
+            let parent = item.parentElement;
+            while (parent) {
+                if (parent.classList.contains('children-container')) {
+                    parent.classList.add('expanded');
+                    const parentId = parent.id.replace('children-', '');
+                    const expandBtn = document.getElementById('expand-' + parentId);
+                    if (expandBtn) expandBtn.classList.add('expanded');
+                }
+                parent = parent.parentElement;
+            }
+            // Прокрутить к первому найденному
+            if (!window.searchScrolled) {
+                header.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                window.searchScrolled = true;
+                setTimeout(() => window.searchScrolled = false, 1000);
+            }
+        } else {
+            header.classList.remove('highlight');
+        }
+    });
+}
+
+// Обработчики событий
+document.addEventListener('DOMContentLoaded', function() {
+    buildList(treeData, document.getElementById('hierarchicalList'));
+    
+    // Кнопка закрытия панели
+    document.getElementById('closePanelBtn').addEventListener('click', closePanel);
+    
+    // Кнопка открытия панели
+    document.getElementById('openPanelBtn').addEventListener('click', function() {
+        if (currentSelectedNode) {
+            openPanel();
+        } else {
+            alert(' Aldın\' menen tuwdı tan\'lan\' / Сначала выберите род');
+        }
+    });
+    
+    // Бургер меню
+    document.getElementById('burgerMenu').addEventListener('click', toggleBurgerMenu);
+    
+    // Закрытие бургер меню при клике на ссылку
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                toggleBurgerMenu();
+            }
+        });
+    });
+    
+    // Обработка изменения размера окна
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 968) {
+            if (!isPanelOpen) {
+                document.getElementById('openPanelBtn').classList.add('visible');
+            }
+        } else {
+            document.getElementById('openPanelBtn').classList.remove('visible');
+        }
+    });
+});
     </script>
 </body>
 </html>

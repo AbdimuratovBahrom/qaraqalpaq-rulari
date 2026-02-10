@@ -1,0 +1,1670 @@
+                        
+                        
+    <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qaraqalpaq tuwrlar - Spisok</title>
+    <style>
+        :root {
+            --primary-bg: #0f1419;
+            --secondary-bg: #1a1f2e;
+            --accent-red: #e74c3c;
+            --accent-orange: #e67e22;
+            --accent-yellow: #f1c40f;
+            --gold: #f1c40f;
+            --accent-green: #2ecc71;
+            --accent-blue: #3498db;
+            --accent-purple: #9b59b6;
+            --accent-cyan: #1abc9c;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --border-color: #34495e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10,12,16,0.95);
+            border-bottom: 2px solid var(--gold);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            height: 70px;
+        }
+
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        
+        .logo a { 
+            font-family: 'Cormorant Garamond', serif; 
+            color: var(--gold); 
+            font-size: 1.8rem; 
+            margin: 0;
+            text-decoration: none;
+        }
+        
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        
+        .burger-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        .view-switch {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .burger-menu { display: flex; }
+            
+            .view-switch {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10,12,16,0.98);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 2px solid var(--gold);
+                border-radius: 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+            }
+            
+            .view-switch.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .view-btn { width: 100%; text-align: center; padding: 1rem; }
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 16px;
+            border: none;
+            background: transparent;
+            color: #8892b0;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .view-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .view-btn.active {
+            background: var(--gold);
+            color: #000;
+            font-weight: 600;
+            max-width: 170px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .container { 
+            display: flex; 
+            height: calc(100vh - 80px);
+            overflow: hidden; 
+            position: relative;
+        }
+        
+        .list-panel { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 20px; 
+            background: rgba(15, 20, 25, 0.98);
+        }
+        
+        .info-panel {
+            width: 450px; 
+            background: var(--secondary-bg); 
+            border-left: 3px solid var(--accent-orange);
+            padding: 20px; 
+            overflow-y: auto; 
+            box-shadow: -5px 0 25px rgba(0,0,0,0.4);
+            position: relative;
+            transition: transform 0.3s ease, width 0.3s ease;
+            transform: translateX(0);
+        }
+        
+        .info-panel.collapsed {
+            transform: translateX(100%);
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+            border-left: none;
+        }
+        
+        .close-panel-btn {
+            position: sticky;
+            top: 10px;
+            left: 400px;
+            background: var(--accent-red);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        .close-panel-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+        
+        .open-panel-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 100px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .open-panel-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.6);
+        }
+        
+        .open-panel-btn.visible { display: flex; }
+        
+        h1 { text-align: center; color: var(--accent-yellow); margin-bottom: 5px; font-size: 1.8em; }
+        .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 20px; font-size: 0.9em; }
+
+        /* Аккордеон стили */
+        .accordion { max-width: 800px; margin: 0 auto; }
+        
+        .accordion-item {
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+        }
+        
+        .accordion-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .accordion-header:hover { background: rgba(255,255,255,0.05); }
+        
+        .accordion-icon {
+            transition: transform 0.3s;
+            font-size: 1.2em;
+            color: var(--gold);
+        }
+        
+        .accordion-item.active .accordion-icon { transform: rotate(180deg); }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: rgba(0,0,0,0.2);
+        }
+        
+        .accordion-item.active .accordion-content { max-height: 2000px; transition: max-height 0.5s ease-in; }
+        
+        .accordion-inner { padding: 15px 20px; }
+        
+        /* Уровни цветов */
+        .level-0 { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .level-1 { background: linear-gradient(135deg, #e67e22, #d35400); color: white; }
+        .level-2 { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; }
+        .level-3 { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; }
+        .level-4 { background: linear-gradient(135deg, #3498db, #2980b9); color: white; }
+        .level-5 { background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; }
+        .level-6 { background: linear-gradient(135deg, #1abc9c, #16a085); color: white; }
+
+        .sub-item {
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid transparent;
+        }
+        
+        .sub-item:hover {
+            background: rgba(255,255,255,0.1);
+            border-left-color: var(--gold);
+            transform: translateX(5px);
+        }
+        
+        .sub-item .name { font-weight: 500; }
+        .sub-item .type { font-size: 0.8em; opacity: 0.8; font-style: italic; }
+        
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin-left: 10px;
+        }
+
+        .info-header { border-bottom: 2px solid var(--accent-orange); padding-bottom: 10px; margin-bottom: 12px; }
+        .info-title { font-size: 1.4em; color: var(--accent-yellow); margin-bottom: 5px; }
+        .info-type { color: var(--accent-orange); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
+        .info-section { margin-bottom: 12px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 5px; border-left: 3px solid var(--accent-blue); }
+        .info-section h3 { color: var(--accent-cyan); margin-bottom: 8px; font-size: 0.9em; display: flex; align-items: center; gap: 8px; }
+        .info-section p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9em; text-align: justify; }
+        .tamga-box { background: rgba(231, 76, 60, 0.15); border: 2px solid var(--accent-red); border-radius: 8px; padding: 15px; text-align: center; margin: 12px 0; }
+        .tamga-symbol { font-size: 2em; color: var(--accent-yellow); font-weight: bold; margin-bottom: 5px; }
+        .tamga-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; }
+        .uran-box { background: rgba(46, 204, 113, 0.15); border: 2px solid var(--accent-green); border-radius: 8px; padding: 15px; text-align: center; margin: 12px 0; }
+        .uran-text { font-size: 1.4em; color: var(--accent-green); font-weight: bold; font-style: italic; margin-bottom: 5px; }
+        .uran-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; }
+        .stats-box { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--accent-blue); border-radius: 6px; padding: 10px; margin: 10px 0; text-align: center; }
+        .stats-number { font-size: 1.3em; color: var(--accent-yellow); font-weight: bold; }
+        
+        .hierarchy-chain {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.1), rgba(230, 126, 34, 0.1));
+            border: 2px solid var(--accent-yellow);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+        }
+        .hierarchy-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(241, 196, 15, 0.3);
+        }
+        .hierarchy-item:last-child { border-bottom: none; font-weight: bold; color: var(--accent-yellow); }
+        .hierarchy-arrow { margin: 0 10px; color: var(--accent-orange); }
+        .hierarchy-level {
+            background: var(--accent-yellow);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .search-box { position: fixed; top: 90px; left: 10px; z-index: 100; }
+        .search-box input { padding: 6px 10px; border-radius: 15px; border: 1px solid var(--accent-blue); background: rgba(0,0,0,0.9); color: white; width: 180px; font-size: 0.85em; }
+        
+        .highlight { animation: pulse 1.5s infinite; border: 2px solid var(--accent-yellow) !important; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); } 70% { box-shadow: 0 0 0 12px rgba(241, 196, 15, 0); } 100% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); } }
+        
+        @media (max-width: 1024px) {
+            .search-box { top: 80px; }
+        }
+        
+        @media (max-width: 968px) { 
+            .search-box { top: 80px; }
+            
+            .info-panel { 
+                width: 100%; 
+                position: fixed; 
+                bottom: 0; 
+                left: 0; 
+                height: 60vh; 
+                transform: translateY(100%); 
+                transition: transform 0.3s ease;
+                z-index: 1000;
+                border-left: none;
+                border-top: 3px solid var(--accent-orange);
+            } 
+            
+            .info-panel.active { transform: translateY(0); }
+            .info-panel.collapsed { transform: translateY(100%); }
+            
+            header { padding: 0.5rem 1rem; }
+            body { padding-top: 70px; }
+            .container { height: calc(100vh - 70px); }
+            .open-panel-btn { bottom: 20px; right: 20px; }
+        }
+
+        @media (max-width: 765px) {
+            .search-box { width: 150px; }
+            .search-box input { width: 100%; }
+        }
+        
+        .descendants-list { max-height: 300px; overflow-y: auto; margin-top: 10px; }
+        .descendant-group { margin-bottom: 10px; background: rgba(255,255,255,0.05); border-radius: 5px; padding: 8px; }
+        .descendant-parent { font-weight: bold; color: var(--accent-cyan); margin-bottom: 5px; font-size: 0.85em; }
+        .descendant-children { padding-left: 15px; font-size: 0.8em; color: var(--text-secondary); }
+        .descendant-child { padding: 2px 0; display: flex; align-items: center; }
+        .descendant-bullet { width: 6px; height: 6px; background: var(--accent-green); border-radius: 50%; margin-right: 8px; }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span style="font-size: 2rem;">📋</span>
+            <a target="_blank" href="./images/uru.jpg">URIW</a>
+        </div>
+        
+        <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+        
+        <div class="view-switch" id="viewSwitch">
+            <a href="index.html" class="view-btn" target="_self">🏠 Главное</a>
+            <a href="lists.html" class="view-btn active" target="_self">📋 Списки</a>
+            <a href="scheme.html" class="view-btn" target="_self">🌳 Схема</a>
+            <a href="exogamy.html" class="view-btn" target="_self">💑 Ekzogamiya</a>
+        </div>
+    </header>
+
+    <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchAccordion()"></div>
+    
+    <div class="container">
+        <div class="list-panel" id="listPanel">
+            <h1 style="margin-top: 10px;">QARAQALPAQ URUWLARI</h1>
+            <div class="subtitle">Tuwalar dizimi / Список родов</div>
+            <div class="accordion" id="accordion"></div>
+        </div>
+        <div class="info-panel collapsed" id="infoPanel">
+            <button class="close-panel-btn" id="closePanelBtn" title="Закрыть панель">×</button>
+            <div id="infoContent">
+                <div class="info-header">
+                    <div class="info-title">Elementti tańlań</div>
+                    <div class="info-type">Maǵlıwmat alıw ushın tuwdı basıń</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button class="open-panel-btn visible" id="openPanelBtn" title="Открыть информационную панель">ℹ️</button>
+
+    <script>
+const levelsMap = ['Халық / Xalıq', 'Арыс', 'Бөлім / Bólim', 'Үлкен уруу / U\'lken uruw', 'Ру / Уруу', 'Тийре', 'Көше'];
+
+let isPanelOpen = false;
+let currentSelectedNode = null;
+
+// Полная структура данных с дополненной информацией
+const treeData = {
+    id: "root", name: "QARAQALPAQLAR", level: 0, type: "Xalıq",
+    info: {
+        history: "Қарақалпақтар - Орта Азиядағы түркі тілдес халық. XVI-XVIII ғасырларда қалыптасқан. Негізі Ноғай ордасы, Қыпшақ, Қарлұқ тайпаларынан тұрады.",
+        origin: "Ұлы дала көшпенділерінің ұрпағы. Ноғайлық, Қыпшақ, Қарлұқ тайпаларының қосындысынан құрылған.",
+        legend: "Аңызға сәйкес, қарақалпақтар алғашқыда Ұлы тау (Алтай) өңірінде өмір сүрген. Кейін Арал маңына, Сырдария бойына көшіп келген. 'Қарақалпақ' атауы 'қара қалпақ' (қара тақия) киген халық деген мағынада.",
+        tamga: "Әр рудың өзіндік тамғасы бар. Қоңыраттар - П (босаға), Он төрт ру - әртүрлі тамғалар.",
+        uran: "Әр рудың өзіндік ұраны бар. Қоңыраттар - 'Қақпа!', Он төрт ру - 'Уллы таў!', 'Тоқсаба!'",
+        population: "Қазіргі уақытта 800 мыңға жуық адам.",
+        language: "Қарақалпақ тілі - түркі тілдерінің қыпшақ тобына жатады.",
+        region: "Өзбекстанның Қарақалпақстан Республикасы, Қазақстанның оңтүстік-батыс облыстары."
+    },
+    children: [
+        {
+            id: "conyrat", name: "АРЫС ҚОҢЫРАТ", level: 1, type: "Арыс", tamga: "П (босаға)", uran: "Қақпа!",
+            info: {
+                history: "Қоңырат арысы - қарақалпақтардың екі негізгі арысының бірі. Ноғай ордасының құрамында болған. XVI-XVIII ғасырларда қалыптасқан.",
+                origin: "Ногай, Қыпшақ, Алшын тайпаларынан. 'Қоңырат' атауы 'қанды қарақалпақ' немесе 'қоңыр ата' деген мағынада болуы мүмкін.",
+                legend: "Аңыз бойынша, Қоңырат батыр Ноғай ордасындағы ең қырғын соғыста ерлігімен көзге түскен. Оның ұрпақтары қоңырат руын құрды.",
+                tamga: "П әрпі - босаға (есік) белгісі. Бұл - Ноғай ордасының символы.",
+                uran: "Қақпа! - қорған, бекініс деген мағынада. Шайқас кезінде айтылған ұран.",
+                population: "9520 кибиток (40%). Қарақалпақтардың едәуір бөлігін құрайды.",
+                structure: "Екі бөлімнен тұрады: Шулык (8 ру) және Жауынгыр (7 ру).",
+                region: "Қарақалпақстанның солтүстік аймақтары, Қазақстанның Атырау, Маңғыстау облыстары."
+            },
+            children: [
+                {
+                    id: "shulyk", name: "ШУЛЫҚ БӨЛIМI", level: 2, type: "Бөлім",
+                    info: {
+                        history: "Шулык бөлімі - Қоңырат арысының екі бөлімінің бірі. 8 рудан тұрады. XVI ғасырда қалыптасқан.",
+                        origin: "Шулык - батыр атыңнан. Сырдарияның Шулық жерінде қоныстанған.",
+                        legend: "Шулык батыр Сыр бойында өмір сүрген. Оның ұрпақтары 8 руға бөлінген.",
+                        population: "5860 кибиток.",
+                        structure: "8 үлкен ру: Қыят, Ашамайлы, Қолдаулы, Қостаңбалы, Балғалы, Көндеклі, Қарамойын, Мүйтен.",
+                        region: "Сырдарияның төменгі ағысын, Арал маңын мекендеген."
+                    },
+                    children: [
+                        {
+                            id: "kyat", name: "ҚЫЯТ", level: 3, type: "Үлкен уруу",
+                            info: {
+                                history: "Қыят - Шулык бөлімінің ең ірі руы. Батырлар руы ретінде белгілі.",
+                                origin: "Қыят батырдан тарайды. Үш ұлы болған: Үштаңбалы, Тарақты, Балғалы.",
+                                legend: "Қыят батыр соғыста үш жаудан да қашпай, үш таңба көтерген. Сол үшін ұрпақтары осылай аталды.",
+                                tamga: "Үш таңба - үш сызық (|||)",
+                                uran: "Алатау!",
+                                population: "870 кибиток.",
+                                warrior: "Қыят батыр, Тарақты батыр, Балғалы батыр."
+                            },
+                            children: [
+                                {
+                                    id: "ush-tambaly", name: "Үштаңбалы", level: 4, type: "Уруу",
+                                    info: {
+                                        history: "Қыяттың үлкен ұлы Үштаңбалыдан тараған ру.",
+                                        origin: "Үш таңбалы - үш белгі, үш ту.",
+                                        tamga: "Үш сызық",
+                                        uran: "Алатау!",
+                                        population: "350-400 отбасы",
+                                        legend: "Үш таңбалы атасы үш ту көтеріп, үш руға бөлінген."
+                                    },
+                                    children: [
+                                        { id: "sanmurun-k", name: "Саңмұрын", level: 5, type: "Тийре", info: { tamga: "СМ", uran: "Алатау!", history: "Саң мұрындық малдан", origin: "Саңқыраған мұрынды атadan тараған" } },
+                                        { id: "aryq-kyat", name: "Арыққият", level: 5, type: "Тийре", info: { tamga: "АҚ", uran: "Алатау!", history: "Арық денелі атасы бар", origin: "Арық, жіңішке денелі батырдан" } },
+                                        { id: "tartuly", name: "Тартулы", level: 5, type: "Тийре", info: { tamga: "ТР", urан: "Алатау!", history: "Тартымды, қайсар", origin: "Тарту - тартымды, күшті деген мағынада" } },
+                                        { id: "qanzhygaly-k", name: "Қанжығалы", level: 5, type: "Тийре", info: { tamga: "ҚЖ", urан: "Алатау!", history: "Жебе саптығымен белгілі", origin: "Қанжыға - жебе саптығы, мергендік белгісі" } },
+                                        { id: "qatagan", name: "Қатаған", level: 5, type: "Тийре", info: { tamga: "ҚТ", urан: "Алатау!", history: "Солтүстік Жетісу жерінен", origin: "Қатаған тайпасынан келген" } },
+                                        { id: "qara-kyat", name: "Қарақият", level: 5, type: "Тийре", info: { tamga: "ҚҚ", urан: "Алатау!", history: "Қараңғы түсті атасы бар", origin: "Қара қыят - негізгі қыяттың тармағы" } }
+                                    ]
+                                },
+                                {
+                                    id: "taraqty", name: "Тарақты", level: 4, type: "Уруу",
+                                    info: {
+                                        history: "Қыяттың екінші ұлы Тарақтыдан тараған.",
+                                        origin: "Шашақты, өрнекті деген мағынада.",
+                                        tamga: "ТБ - Тарақты белгісі",
+                                        uran: "Алатау!",
+                                        legend: "Тарақты батыр шашақты ту көтерген."
+                                    },
+                                    children: [
+                                        { id: "togyzaq", name: "Тоғызақ", level: 5, type: "Тийре", info: { tamga: "Т9", urан: "Тоғысқан!", history: "Тоғыз ұрпақтан кейін біріскен", legend: "Тоғыз рудың бірігуінен", origin: "Тоғыз - саны көп" } },
+                                        { id: "abas-kyat", name: "Абас", level: 5, type: "Тийре", info: { tamga: "АБ", urан: "Алатау!", history: "Абас батырдың ұрпағы", warrior: "Абас батыр", legend: "Абас батыр ерлігімен атақты" } },
+                                        { id: "jaltyrshy", name: "Жалтыршы", level: 5, type: "Тийре", info: { tamga: "ЖЛ", urан: "Алатау!", history: "Жарқын мінезді", origin: "Жалтыр - жарқын, нұрлы" } },
+                                        { id: "aqunqaragan", name: "Ақұнқараған", level: 5, type: "Тийре", info: { tamga: "АҚҚ", urан: "Алатау!", history: "Ақ құндықты атасы бар", origin: "Ақ құндық - байлық белгісі" } },
+                                        { id: "taqay", name: "Тақай", level: 5, type: "Тийре", info: { tamga: "ТҚ", urан: "Алатау!", history: "Тақай - батыл", warrior: "Тақай батыр" } },
+                                        { id: "qarzhaubaras", name: "Қаржаубарас", level: 5, type: "Тийре", info: { tamga: "ҚЖБ", urан: "Алатау!", history: "Қаржаубарас - қарсы шабуыл", warrior: "Қаржаубарас батыр" } }
+                                    ]
+                                },
+                                {
+                                    id: "balgaly-kyat", name: "Балғалы Қият", level: 4, type: "Уруу",
+                                    info: {
+                                        history: "Қыяттың үшінші ұлы Балғалыдан тараған. Теміршілер руы.",
+                                        origin: "Балға ұстаған, темірші деген мағынада.",
+                                        tamga: "Б - Балға белгісі",
+                                        uran: "Алатау!",
+                                        legend: "Балғалы батыр темірден соққан құралдарымен атақты болған.",
+                                        warrior: "Балғалы батыр"
+                                    },
+                                    children: [
+                                        { id: "bespishaq", name: "Беспышақ", level: 5, type: "Тийре", info: { tamga: "Б5", urан: "Алатау!", history: "Бес пышақ иесі", warrior: "Беспышақ батыр" } },
+                                        { id: "etekshi", name: "Етекші", level: 5, type: "Тийре", info: { tamga: "ЕТ", urан: "Алатау!", history: "Етек - қолтырауын иесі", origin: "Етек - малдың етігі, қолтырауын" } },
+                                        { id: "sanmurun-bk", name: "Саңмұрын", level: 5, type: "Тийре", info: { tamga: "СМБ", urан: "Алатау!", history: "Саңмұрын тармағы", origin: "Балғалы Қыяттың Санмұрын аталығынан" } },
+                                        { id: "qozhaqaragan", name: "Қожақараған", level: 5, type: "Тийре", info: { tamga: "ҚЖҚ", urан: "Алатау!", history: "Қожа атадан тарайды", origin: "Қожа - сопы, білімді", legend: "Қожақараған әулие болған" } }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: "ashamayly", name: "АШАМАЙЛЫ", level: 3, type: "Үлкен уруу",
+                            info: {
+                                history: "Ашамайлы руы - көзінің нашарлығымен емес, көздігімен белгілі ру.",
+                                origin: "Ашамай - батыр атынан.",
+                                tamga: "АШ",
+                                uran: "Шулык!",
+                                population: "870 кибиток",
+                                legend: "Ашамай батыр дұшпанның көзін ойып, өзі аман қалған."
+                            },
+                            children: [
+                                { id: "saqu", name: "Сақу", level: 4, type: "Уруу", info: { tamga: "СҚ", urан: "Шулык!", history: "Сақшылардан", origin: "Сақ - сақшылар, күзетші", legend: "Сақу батыр сақшыларды басқарған" } },
+                                { id: "qaraqoja", name: "Қарақожа", level: 4, type: "Уруу", info: { tamga: "ҚҚ", urан: "Шулык!", history: "Қара қожа", origin: "Қара түсті қожа, әулие", legend: "Қарақожа әулие болған" } },
+                                { id: "jalangayaq", name: "Жалаңаяқ", level: 4, type: "Уруу", info: { tamga: "ЖА", urан: "Шулык!", history: "Жалпақ аяқты, тез жүгіретін", origin: "Жалаңаяқ - тез жүгіретін, ат үстіндегі батыр", warrior: "Жалаңаяқ батыр" } },
+                                { id: "ajyldy", name: "Айылды", level: 4, type: "Уруу", info: { tamga: "АЙ", urан: "Шулык!", history: "Айыл - отар иесі", origin: "Айыл - отар, мал шаруашылығы", legend: "Айылды малға бай болған" } },
+                                {
+                                    id: "qobasan", name: "Қобасан", level: 4, type: "Уруу",
+                                    info: { tamga: "ҚБС", urан: "Шулык!", history: "Қоба - құзда мекендеген", origin: "Қоба - құз, биік жер", legend: "Қобасан батыр құзда бекінген" },
+                                    children: [
+                                        { id: "aqnazar", name: "Ақназар", level: 5, type: "Көше", info: { tamga: "АН", urан: "Шулык!", history: "Ақ назар - жақсы көз", origin: "Ақназар батыр", warrior: "Ақназар батыр" } },
+                                        { id: "jansary", name: "Жансары", level: 5, type: "Көше", info: { tamga: "ЖС", urан: "Шулык!", history: "Жан сары - жан серігі", origin: "Жансары - серік, дос", legend: "Жансары батыр серік болған" } },
+                                        { id: "otemis-q", name: "Өтеміс", level: 5, type: "Көше", info: { tamga: "ӨТ", urан: "Шулык!", history: "Өтеміс - өткір", warrior: "Өтеміс батыр" } },
+                                        { id: "esen", name: "Есен", level: 5, type: "Көше", info: { tamga: "ЕС", urан: "Шулык!", history: "Есен - аман", origin: "Есен - амандық, бейбітшілік", legend: "Есен батыр амандық әкелген" } },
+                                        { id: "tampysh", name: "Тампыш", level: 5, type: "Көше", info: { tamga: "ТМ", urан: "Шулык!", history: "Тампыш - тамырлы", origin: "Тампыш - терең тамырлы ру" } }
+                                    ]
+                                },
+                                { id: "turkmenqara", name: "Түркіменқара", level: 4, type: "Уруу", info: { tamga: "ТҚ", urан: "Шулык!", history: "Түрікмендермен араласқан", origin: "Түркімен тайпасымен некелесу", legend: "Түркіменқара түркімен қызынан туған" } },
+                                { id: "jappar", name: "Жаппар", level: 4, type: "Уруу", info: { tamga: "ЖП", urан: "Шулык!", history: "Жаппар - жарылқаушы", origin: "Жаппар - жомарт, жарылқаушы", legend: "Жаппар батыр жомарт болған" } },
+                                { id: "sary-ash", name: "Сары", level: 4, type: "Уруу", info: { tamga: "СР", urан: "Шулык!", history: "Сары түсті", origin: "Сары - сары шашты, сары түсті", legend: "Сары батыр сары мүйізді атпен соғысқан" } },
+                                { id: "abyz-ash", name: "Абыз", level: 4, type: "Уруу", info: { tamga: "АБ", urан: "Шулык!", history: "Ақсақал, білімді", origin: "Абыз - ақылшы, білімді", legend: "Абыз ақылшы, емші болған" } },
+                                { id: "aqay", name: "Ақай", level: 4, type: "Уруу", info: { tamga: "АҚ", urан: "Шулык!", history: "Ақ ай - ақ шын", origin: "Ақай - ақкөңіл, ақ ниетті", legend: "Ақай батыр адал болған" } },
+                                { id: "pangqara", name: "Паңқара", level: 4, type: "Уруу", info: { tamga: "ПҒ", urан: "Шулык!", history: "Паңқара - қорған", origin: "Паңқара - биік жер, бекініс", legend: "Паңқара бекінісінде тұрған" } },
+                                {
+                                    id: "ush-bas", name: "Үш бас", level: 4, type: "Уруу",
+                                    info: { tamga: "ҮБ", urан: "Шулык!", history: "Үш басты тоқыған", origin: "Үш бас - үш мойын, үш басып", legend: "Үш бас батыр үш жауды басқан" },
+                                    children: [{ id: "jaman-ub", name: "Жаман", level: 5, type: "Көше", info: { tamga: "ЖМ", urан: "Шулык!", history: "Жаман емес, қарсы ат", origin: "Жаман - жамандықты жеңген", warrior: "Жаман батыр" } }]
+                                },
+                                { id: "qurama", name: "Құрама", level: 4, type: "Уруу", info: { tamga: "ҚР", urан: "Шулык!", history: "Бірнеше рудан құралған", origin: "Құрама - қоспа, жиынтық", legend: "Құрама әртүрлі рудан біріккен" } }
+                            ]
+                        },
+                        {
+                            id: "koldauli", name: "ҚОЛДАУЛЫ", level: 3, type: "Үлкен уруу",
+                            info: {
+                                history: "Қолдаулы - қолдау, тірек деген мағынада. Ер жүрек батырлардың руы.",
+                                origin: "Қолдау батыр атынан.",
+                                tamga: "ҚЛД",
+                                uran: "Қолдау!",
+                                population: "1140 кибиток",
+                                legend: "Қолдау батыр елінің тірегі болған."
+                            },
+                            children: [
+                                { id: "beskempir", name: "Бескемпір", level: 4, type: "Уруу", info: { tamga: "Б5", urан: "Қолдау!", history: "Бес кемпір - бес әйелді құтқарған", legend: "Бескемпір батыр бес әйелді дұшпан қолынан алған", warrior: "Бескемпір батыр" } },
+                                { id: "maishyshaly", name: "Майшышалы", level: 4, type: "Уруу", info: { tamga: "МШ", urан: "Қолдау!", history: "Майлы шыша иесі", origin: "Майшышалы - малға бай, майлы", legend: "Майшышалы малға аса бай болған" } },
+                                { id: "qalqaman", name: "Қалқаман", level: 4, type: "Уруу", info: { tamga: "ҚЛҚ", urан: "Қолдау!", history: "Қалқан жасаушы", warrior: "Қалқаман батыр", legend: "Қалқаман батыр қалқанмен дұшпанды тойтарған" } },
+                                { id: "ghajypqaragan", name: "Ғайыпқараған", level: 4, type: "Уруу", info: { tamga: "ҒҚ", urан: "Қолдау!", history: "Ғайып болған атадан тараған", legend: "Ғайыпқараған бабасы ғайып болып, кейін табылған" } },
+                                { id: "sarytan-k", name: "Сарытан", level: 4, type: "Уруу", info: { tamga: "СРТ", urан: "Қолдау!", history: "Сары денелі мықты батыр", warrior: "Сарытан батыр", origin: "Сары - дене түсі, тан - дене" } },
+                                { id: "kulkiqozhaq", name: "Күлкіқожақ", level: 4, type: "Уруу", info: { tamga: "КҚ", urан: "Қолдау!", history: "Күлкілі, әзілқой", legend: "Күлкіқожақ батыр шайқас кезінде де күлкі сақтаған" } },
+                                { id: "jarymbet", name: "Жарымбет", level: 4, type: "Уруу", info: { tamga: "ЖБ", urан: "Қолдау!", history: "Жарым орда иесі", origin: "Жарым - жарты, бөліс", legend: "Жарымбет батыр жарым орданы иемденген" } },
+                                { id: "qyzylayaq", name: "Қызылаяқ", level: 4, type: "Уруу", info: { tamga: "ҚЗ", urан: "Қолдау!", history: "Қызыл аяқты ат иесі", origin: "Қызыл аяқ - аттың ерекшелігі", warrior: "Қызылаяқ батыр" } },
+                                { id: "karasiraq-k", name: "Қарасирақ", level: 4, type: "Уруу", info: { tamga: "ҚСР", urан: "Қолдау!", history: "Қара шашты", origin: "Қара сирақ - қара шашты", legend: "Қарасирақ батыр сұлу болған" } },
+                                { id: "jelqaragan", name: "Желқараған", level: 4, type: "Уруу", info: { tamga: "ЖҚ", urан: "Қолдау!", history: "Желге қарсы жүзген", warrior: "Желқараған батыр", legend: "Желқараған батыр желді бағындырған" } },
+                                { id: "ulkenborik", name: "Үлкенбөрік", level: 4, type: "Уруу", info: { tamga: "ҮБ", urан: "Қолдау!", history: "Үлкен бөрік иесі", origin: "Үлкен бөрік - ақсақалдық белгісі", legend: "Үлкенбөрік баба ақсақал болған" } },
+                                { id: "shylzhuyt", name: "Шылжуыт", level: 4, type: "Уруу", info: { tamga: "ШЖ", urан: "Қолдау!", history: "Шылжиған, тез қозғалатын", warrior: "Шылжуыт батыр", legend: "Шылжуыт батыр шылжиып, тез шабқан" } },
+                                { id: "jamanqonyrat", name: "Жаманқоңырат", level: 4, type: "Уруу", info: { tamga: "ЖҚ", urан: "Қолдау!", history: "Жаман емес, қарсы ат", origin: "Жаман - қарсы, жамандықты жеңген", warrior: "Жаманқоңырат батыр" } },
+                                {
+                                    id: "kalmaq", name: "Қалмақ", level: 4, type: "Уруу",
+                                    info: { tamga: "ҚМ", urан: "Қолдау!", history: "Калмақтармен туыстас", origin: "Калмақ тайпасымен некелесу", legend: "Қалмақ бабасы калмақ қызынан туған" },
+                                    children: [
+                                        { id: "adil", name: "Әділ", level: 5, type: "Көше", info: { tamga: "ӘД", urан: "Қолдау!", history: "Әділетті", origin: "Әділ - әділетті, тең", warrior: "Әділ батыр" } },
+                                        { id: "ereke", name: "Ереке", level: 5, type: "Көше", info: { tamga: "ЕР", urан: "Қолдау!", history: "Еркек, батыр", warrior: "Ереке батыр" } }
+                                    ]
+                                },
+                                { id: "jaman-aul", name: "Жаман ауыл", level: 4, type: "Уруу", info: { tamga: "ЖА", urан: "Қолдау!", history: "Жаман ауылдан қашқан", legend: "Жаман ауыл батыр басқа ауылдан қоныс аударған", origin: "Жаман - қарсы, жамандықтан қашқан" } }
+                            ]
+                        },
+                        {
+                            id: "kostambali", name: "ҚОСТАҢБАЛЫ", level: 3, type: "Үлкен уруу",
+                            info: {
+                                history: "Қостаңбалы - екі тамғалы деген мағынада.",
+                                origin: "Екі рудың бірігуінен.",
+                                tamga: "II - екі сызық",
+                                uran: "Қосқа!",
+                                population: "590 кибиток",
+                                legend: "Екі ру бірігіп, қостаңбалы болған."
+                            },
+                            children: [
+                                { id: "jangildi-k", name: "Жангелді", level: 4, type: "Уруу", info: { tamga: "ЖГ", urан: "Қосқа!", history: "Жаңа гелді", origin: "Жаңа келген, қоныс аударған", legend: "Жангелді баба жаңа жерге көшіп келген" } },
+                                { id: "shirzhegen", name: "Шіржеген", level: 4, type: "Уруу", info: { tamga: "ШЖ", urан: "Қосқа!", history: "Шірік, батыл", origin: "Шіржеген - шырылдаған, батыл", warrior: "Шіржеген батыр" } },
+                                { id: "aghabegli", name: "Ағабеглі", level: 4, type: "Уруу", info: { tamga: "АБ", urан: "Қосқа!", history: "Аға бег иесі", origin: "Аға бег - үлкен бек", legend: "Ағабеглі баба аға бек болған" } },
+                                { id: "qarynzhuan", name: "Қарынжуан", level: 4, type: "Уруу", info: { tamga: "ҚЖ", urан: "Қосқа!", history: "Қарын жуан - асықпайтын", origin: "Қарын жуан - асықпайтын, сабырлы", legend: "Қарынжуан батыр сабырлы болған" } },
+                                { id: "kostambali-k", name: "Қостаңбалы", level: 4, type: "Уруу", info: { tamga: "ҚТ", urан: "Қосқа!", history: "Қостаңбалы негізгі", origin: "Негізгі қостаңбалы тармақ" } },
+                                { id: "qaraqursaq-k", name: "Қарақұрсақ", level: 4, type: "Уруу", info: { tamga: "ҚҚ", urан: "Қосқа!", history: "Қара құрсақты", origin: "Қара құрсақ - дене белгісі", legend: "Қарақұрсақ бабада туған кезде қара белгі болған" } },
+                                { id: "qazaqy-k", name: "Қазақы", level: 4, type: "Уруу", info: { tamga: "ҚЗ", urан: "Қосқа!", history: "Қазақтармен туыстас", origin: "Қазақ тайпасымен аралас", legend: "Қазақы баба қазақ қызынан туған" } }
+                            ]
+                        },
+                        {
+                            id: "balgali", name: "БАЛҒАЛЫ", level: 3, type: "Үлкен уруу",
+                            info: {
+                                history: "Балғалы - балға ұстаған, темірші руы.",
+                                origin: "Теміршілер руы.",
+                                tamga: "Б - Балға",
+                                uran: "Балға!",
+                                population: "560 кибиток",
+                                legend: "Балғалы батыр темірді балғамен соғып, қару жасаған.",
+                                warrior: "Балғалы батыр"
+                            },
+                            children: [
+                                { id: "aqbalgali", name: "Ақбалғалы", level: 4, type: "Уруу", info: { tamga: "АБ", urан: "Балға!", history: "Ақ балғалы - аққұбал", origin: "Ақ балға - ақ темір, сапалы", legend: "Ақбалғалы батыр сапалы қару жасаған" } },
+                                { id: "nurbalgali", name: "Нұрбалғалы", level: 4, type: "Уруу", info: { tamga: "НБ", urан: "Балға!", history: "Нұрлы, зерек", origin: "Нұр - жарық, зерек", legend: "Нұрбалғалы батыр зерек болған" } },
+                                { id: "turkmen-b", name: "Түркімен", level: 4, type: "Уруу", info: { tamga: "ТБ", urан: "Балға!", history: "Түрікмендермен араласқан", origin: "Түркімен тайпасымен аралас", legend: "Түркімен баба түрікмен қызынан туған" } },
+                                { id: "jamanaul-b", name: "Жаманауыл", level: 4, type: "Уруу", info: { tamga: "ЖА", urан: "Балға!", history: "Жаман емес, қарсы ауыл", origin: "Жаман - қарсы, жамандықтан қашқан", legend: "Жаманауыл баба жаман ауылдан кеткен" } },
+                                { id: "shomishti", name: "Шөмішті", level: 4, type: "Уруу", info: { tamga: "ШМ", urан: "Балға!", history: "Шөміш - аспап иесі", origin: "Шөміш - шөміш, ыдыс", legend: "Шөмішті баба шебер болған" } },
+                                { id: "toqymbet", name: "Тоқымбет", level: 4, type: "Уруу", info: { tamga: "ТҚ", urан: "Балға!", history: "Тоқым - ер тоқымы", warrior: "Тоқымбет батыр", legend: "Тоқымбет батыр атқа мінгенде тоқымын тексерген" } },
+                                { id: "tazbalgali", name: "Тазбалғалы", level: 4, type: "Уруу", info: { tamga: "ТБ", urан: "Балға!", history: "Таза, таза қанлы", origin: "Таз - таза, таза қан", legend: "Тазбалғалы таза қанлы боп саналған" } },
+                                { id: "kostamgali-b", name: "Қостамғалы", level: 4, type: "Уруу", info: { tamga: "ҚС", urан: "Балға!", history: "Қос тамғалы", origin: "Қос тамға - екі белгі", legend: "Қостамғалы екі рудан біріккен" } },
+                                { id: "qaratalshy", name: "Қараталшы", level: 4, type: "Уруу", info: { tamga: "ҚТ", urан: "Балға!", history: "Қара талда тұрған", origin: "Қара тал - қара терек", legend: "Қараталшы баба қара талда туған" } },
+                                { id: "asan", name: "Асан", level: 4, type: "Уруу", info: { tamga: "АС", urан: "Балға!", history: "Асан әулиеден", legend: "Асан әулие болған", origin: "Асан - асыл, қасиетті" } },
+                                { id: "arzyqul", name: "Арзықұл", level: 4, type: "Уруу", info: { tamga: "АР", urан: "Балға!", history: "Арзыған құл емес, батыр", origin: "Арзықұл - арзыған құлдан азат болған", warrior: "Арзықұл батыр", legend: "Арзықұл батыр құлдықтан азат болған" } }
+                            ]
+                        },
+                        {
+                            id: "kandekli", name: "ҚӘНДЕКЛІ", level: 3, type: "Үлкен уруу",
+                            info: {
+                                history: "Көндеклі - көндек (қора) иесі руы.",
+                                origin: "Мал шаруашылығымен айналысқан.",
+                                tamga: "Г - көндек белгісі",
+                                uran: "Көндек!",
+                                population: "730 кибиток",
+                                legend: "Көндеклі руының аталары малға бай болған."
+                            },
+                            children: [
+                                { id: "qarama-kan", name: "Қарама", level: 4, type: "Уруу", info: { tamga: "ҚР", urан: "Көндек!", history: "Қарама - қара мал иесі", origin: "Қарама - қара малға бай", legend: "Қарама баба малға аса бай болған" } },
+                                { id: "kiikshi", name: "Киікші", level: 4, type: "Уруу", info: { tamga: "КШ", urан: "Көндек!", history: "Киік сақшы, аңшы", warrior: "Киікші батыр", origin: "Киік - аң, киікші - аңшы", legend: "Киікші батыр аңға алдырмас мерген болған" } },
+                                { id: "toqbolat-kan", name: "Тоқболат", level: 4, type: "Уруу", info: { tamga: "ТБ", urан: "Көндек!", history: "Тоқ болат - қатты темір", origin: "Тоқ - қатты, болат - темір", warrior: "Тоқболат батыр", legend: "Тоқболат батыр қатты темірдей болған" } },
+                                { id: "qyryqsadaq", name: "Қырықсадақ", level: 4, type: "Уруу", info: { tamga: "ҚС", urан: "Көндек!", history: "40 садақ иесі - күшті ру", warrior: "Қырықсадақ батыр", origin: "Қырық - 40, садақ - қаруы", legend: "Қырықсадақ батыр 40 садақты бірге асынып соғысқан" } }
+                            ]
+                        },
+                        {
+                            id: "karamoiyn", name: "ҚАРАМОЙЫН", level: 3, type: "Үлкен уруу",
+                            info: {
+                                history: "Қарамойын - қара мойын деген мағынада.",
+                                origin: "Мойынның түсінен.",
+                                tamga: "ТМ - тік мойын",
+                                uran: "Мойын!",
+                                population: "560 кибиток",
+                                legend: "Қара мойынды батыр дұшпанды мойнынан алып жыққан."
+                            },
+                            children: [
+                                { id: "annakhoja", name: "Аннахожа", level: 4, type: "Уруу", info: { tamga: "АН", urан: "Мойын!", history: "Анна әулие - қасиетті", legend: "Аннахожа әулие болған", origin: "Анна - ана, қасиетті" } },
+                                { id: "sabalaq", name: "Сабалақ", level: 4, type: "Уруу", info: { tamga: "СБ", urан: "Мойын!", history: "Саба - бала, балағожа", origin: "Сабалақ - жас бала кезінде", legend: "Сабалақ баба жасынан батырлық көрсеткен" } },
+                                { id: "kotelek", name: "Көтелек", level: 4, type: "Уруу", info: { tamga: "КТ", urан: "Мойын!", history: "Көтелек - торлау, тор", origin: "Көтелек - тор, торлау", warrior: "Көтелек батыр", legend: "Көтелек батыр дұшпанды торлап алған" } },
+                                { id: "qarlymaral", name: "Қарлымарал", level: 4, type: "Уруу", info: { tamga: "ҚМ", urан: "Мойын!", history: "Қарлы марал иесі", origin: "Қарлы марал - ақ бөден", legend: "Қарлымарал баба маралға бай болған" } },
+                                { id: "bulkildek", name: "Бүлкілдек", level: 4, type: "Уруу", info: { tamga: "БҮ", urан: "Мойын!", history: "Бүлкілдеп күлетін", origin: "Бүлкілдек - күлкілі, жайдары", legend: "Бүлкілдек баба әрқашан күлкі сақтаған" } }
+                            ]
+                        },
+                        {
+                            id: "muyten", name: "МҮЙТЕН", level: 3, type: "Үлкен уруу",
+                            info: {
+                                history: "Мүйтен - мұйын, мойын деген мағынада. Үш ұлдан тарайды: Самат, Тели, Абыз.",
+                                origin: "Мүйтен батырдан.",
+                                tamga: "Үш шанышқы",
+                                uran: "Ақшолпан!",
+                                population: "540 кибиток",
+                                legend: "Мүйтеннің үш ұлы - Самат, Тели, Абыз. Кеңтанаў - Телиден тарайды.",
+                                warrior: "Мүйтен батыр"
+                            },
+                            children: [
+                                {
+                                    id: "samat", name: "Самат (5 көше)", level: 4, type: "Уруу",
+                                    info: { tamga: "СМ", urан: "Ақшолпан!", history: "Мүйтеннің үлкен ұлы", legend: "Самат батыр болған" },
+                                    children: [
+                                        { id: "baibishe", name: "Бәйбіше", level: 5, type: "Көше", info: { tamga: "ББ", urан: "Ақшолпан!", history: "Бәйбіше - басты әйел", origin: "Бәйбіше - бірінші әйел", legend: "Бәйбіше көшесі басты ру саналған" } },
+                                        { id: "toqqaragan", name: "Тоқалқараған", level: 5, type: "Көше", info: { tamga: "ТҚ", urан: "Ақшолпан!", history: "Тоқал қараған", origin: "Тоқал - екінші әйел", legend: "Тоқалқараған тоқалдан туған" } },
+                                        { id: "baimurat", name: "Баймұрат", level: 5, type: "Көше", info: { tamga: "БМ", urан: "Ақшолпан!", history: "Бай Мұрат", warrior: "Баймұрат батыр", origin: "Бай - байлық, Мұрат - есім" } },
+                                        { id: "jolan", name: "Жолан", level: 5, type: "Көше", info: { tamga: "ЖЛ", urан: "Ақшолпан!", history: "Жол ашық", warrior: "Жолан батыр", origin: "Жол - жол, ан - ашық", legend: "Жолан батыр жол ашқан" } },
+                                        { id: "bekau", name: "Бекау", level: 5, type: "Көше", info: { tamga: "БК", urан: "Ақшолпан!", history: "Бек ау - берік ауыл", origin: "Бек - берік, ау - ауыл", legend: "Бекау берік ауыл болған" } }
+                                    ]
+                                },
+                                {
+                                    id: "teli", name: "Тели (5 көше)", level: 4, type: "Уруу",
+                                    info: { tamga: "ТЛ", urан: "Ақшолпан!", history: "Мүйтеннің екінші ұлы", legend: "Тели батыр болған" },
+                                    children: [
+                                        { id: "tileuberdi", name: "Тілеуберді", level: 5, type: "Көше", info: { tamga: "ТБ", urан: "Ақшолпан!", history: "Тілеу берді - тілегі орындалды", origin: "Тілеу - тілек, берді - берді", legend: "Тілеуберді тілегі орындалған" } },
+                                        { id: "allaberdi", name: "Аллаберді", level: 5, type: "Көше", info: { tamga: "АБ", urан: "Ақшолпан!", history: "Алла берді", origin: "Алла - тәңір, берді - берді", legend: "Аллаберді Алланың бергені" } },
+                                        { id: "tangirberdi", name: "Тəңірберді", level: 5, type: "Көше", info: { tamga: "ТБ", urан: "Ақшолпан!", history: "Тәңір берді", origin: "Тәңір - күн, берді - берді", legend: "Тәңірберді кұдай берген" } },
+                                        { id: "mantyqaragan", name: "Мантыққараған", level: 5, type: "Көше", info: { tamga: "МҚ", urан: "Ақшолпан!", history: "Мантық қараған", origin: "Мантық - мәнті, қараған - қараған" } },
+                                        { id: "molloqaragan", name: "Моллақараған", level: 5, type: "Көше", info: { tamga: "МҚ", urан: "Ақшолпан!", history: "Молла қараған", origin: "Молла - сопы, қараған - қараған", legend: "Моллақараған молладан туған" } }
+                                    ]
+                                },
+                                {
+                                    id: "abyz-m", name: "Абыз (1 көше)", level: 4, type: "Уруу",
+                                    info: { tamga: "АБ", urан: "Ақшолпан!", history: "Мүйтеннің үшінші ұлы - ақсақал, білімді", legend: "Абыз баба ақылшы болған" },
+                                    children: [{ id: "ady", name: "Ады", level: 5, type: "Көше", info: { tamga: "АД", urан: "Ақшолпан!", history: "Ады - әділ", origin: "Ады - әділ, тең", legend: "Ады батыр әділ болған" } }]
+                                },
+                                {
+                                    id: "kentanau", name: "Кеңтанаў (3 көше)", level: 4, type: "Уруу",
+                                    info: { tamga: "КТ", urан: "Ақшолпан!", history: "Кең танау - кең көкірек", origin: "Кең - кең, танау - мойын", legend: "Кеңтанаў батыр кең мойынды болған" },
+                                    children: [
+                                        { id: "barn", name: "Барн", level: 5, type: "Көше", info: { tamga: "БР", urан: "Ақшолпан!", history: "Барн - бар, бай", origin: "Барн - бар, болат", legend: "Барн көшесі малға бай болған" } },
+                                        { id: "itaq", name: "Итақ", level: 5, type: "Көше", info: { tamga: "ИТ", urан: "Ақшолпан!", history: "Ит ақ - ит сияқты адал", origin: "Ит - ит, ақ - ақ", legend: "Итақ ит сияқты адал болған" } },
+                                        { id: "jekensal", name: "Жекенсал", level: 5, type: "Көше", info: { tamga: "ЖС", urан: "Ақшолпан!", history: "Жеке нан салған - мейірімді", origin: "Жекенсал - мейірімді, жомарт", legend: "Жекенсал жомарт болған" } }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+
+
+
+
+
+
+
+
+                {
+                    id: "jauyngyr", name: "ЖАУЫНГЫР БӨЛIМI", level: 2, type: "Бөлім",
+                    info: {
+                        history: "Жауынгыр бөлімі - Қоңырат арысының екінші бөлімі. 7 рудан тұрады.",
+                        origin: "Жауынгыр батыр атынан.",
+                        legend: "Жауынгыр батыр жаудың ең көп жерінде соғысқан.",
+                        population: "3660 кибиток",
+                        structure: "7 ру: Терістаңбалы, Бақанлы, Тіекті, Ырғақты, Баймақты, Қазаяқты, Ұйғыр.",
+                        region: "Жауынгырдың ұрпақтары Арал маңында қоныстанған."
+                    },
+                    children: [
+                        { id: "teristambaly", name: "ТЕРIСТАҢБАЛЫ", level: 3, type: "Үлкен уруу", info: { tamga: "ТТ", urан: "Жауынгыр!", history: "Теріс таңба - өзгешелік", legend: "Терістаңбалы басқа рулардан өзгеше белгі алған" }, children: [{id:"shomak",name:"Шомақ",level:4,type:"Уруу",info:{tamga:"ШМ",uran:"Жауынгыр!",history:"Шомақ - шомылған"}},{id:"hangildi",name:"Хангелді",level:4,type:"Уруу",info:{tamga:"ХГ",uran:"Жауынгыр!",history:"Хан гелді"}},{id:"baiqaragan",name:"Байқараған",level:4,type:"Уруу",info:{tamga:"БҚ",uran:"Жауынгыр!",history:"Бай қараған"}},{id:"elshibai",name:"Елшібай",level:4,type:"Уруу",info:{tamga:"ЕБ",uran:"Жауынгыр!",history:"Елші бай"}},{id:"qurban-t",name:"Құрбан",level:4,type:"Уруу",info:{tamga:"ҚР",uran:"Жауынгыр!",history:"Құрбан болған"}},{id:"togai",name:"Тоғыз",level:4,type:"Уруу",info:{tamga:"Т9",uran:"Жауынгыр!",history:"Тоғыз ұрпақ"}},{id:"tyle",name:"Тіле",level:4,type:"Уруу",info:{tamga:"ТЛ",uran:"Жауынгыр!",history:"Тілеу"}},{id:"tebegen",name:"Тебеген",level:4,type:"Уруу",info:{tamga:"ТБ",uran:"Жауынгыр!",history:"Тебеген - төбе"}},{id:"tum",name:"Тум",level:4,type:"Уруу",info:{tamga:"ТМ",uran:"Жауынгыр!",history:"Тұм - байырғы"}},{id:"tyrk",name:"Түркістан",level:4,type:"Уруу",info:{tamga:"ТР",uran:"Жауынгыр!",history:"Түркістаннан келген"}}] },
+                        { id: "bakanly", name: "БАҚАНЛЫ", level: 3, type: "Үлкен уруу", info: { tamga: "БҚ", urан: "Жауынгыр!", history: "Бақан - құрал", legend: "Бақанлы батыр бақанмен соғысқан" }, children: [{id:"tanmail-b",name:"Таңмайыл",level:4,type:"Уруу",info:{tamga:"ТМ",uran:"Жауынгыр!",history:"Таң мағил"}},{id:"zhananai",name:"Жақанай",level:4,type:"Уруу",info:{tamga:"ЖҚ",uran:"Жауынгыр!",history:"Жақа найза"}},{id:"naiman-b",name:"Найман",level:4,type:"Уруу",info:{tamga:"НМ",uran:"Жауынгыр!",history:"Найман тайпасынан"}},{id:"aiys-b",name:"Айыс",level:4,type:"Уруу",info:{tamga:"АЙ",uran:"Жауынгыр!",history:"Айыс - ағыс"}}] },
+                        { id: "tyekli", name: "ТIЕКТI", level: 3, type: "Үлкен уруу", info: { tamga: "ТТ", urан: "Жауынгыр!", history: "Тіек - тірек", legend: "Тіекті руы тірек болған" }, children: [{id:"shishi-t",name:"Шиші",level:4,type:"Уруу",info:{tamga:"ШШ",uran:"Жауынгыр!",history:"Шиші - батыр"},children:[{id:"shishi-kosh",name:"Шиші",level:5,type:"Көше",info:{tamga:"ШШ",uran:"Жауынгыр!"}}]},{id:"tumanai-t",name:"Туманай",level:4,type:"Уруу",info:{tamga:"ТМ",uran:"Жауынгыр!",history:"Тұман ай"},children:[{id:"tumanai-kosh",name:"Туманай",level:5,type:"Көше",info:{tamga:"ТМ",uran:"Жауынгыр!"}}]},{id:"maulik-t",name:"Мәулик",level:4,type:"Уруу",info:{tamga:"МЛ",uran:"Жауынгыр!",history:"Мәулік - саулық"},children:[{id:"maulik-kosh",name:"Мәулик",level:5,type:"Көше",info:{tamga:"МЛ",uran:"Жауынгыр!"}}]},{id:"bairam-t",name:"Байрам",level:4,type:"Уруу",info:{tamga:"БР",uran:"Жауынгыр!",history:"Байрам - той"},children:[{id:"bairam-kosh",name:"Байрам",level:5,type:"Көше",info:{tamga:"БР",uran:"Жауынгыр!"}}]}] },
+                        { id: "yrgaqty", name: "ЫРҒАҚТЫ", level: 3, type: "Үлкен уруу", info: { tamga: "ЫР", urан: "Жауынгыр!", history: "Ырғақты - өрнекті", legend: "Ырғақты руы өрнекті тумен белгілі" }, children: [{id:"atanai-y",name:"Атанай",level:4,type:"Уруу",info:{tamga:"АТ",uran:"Жауынгыр!",history:"Ата найза"},children:[{id:"atanai-kosh",name:"Атанай",level:5,type:"Көше",info:{tamga:"АТ",uran:"Жауынгыр!"}}]},{id:"eshkili-y",name:"Ешкілі",level:4,type:"Уруу",info:{tamga:"ЕШ",uran:"Жауынгыр!",history:"Ешкі иесі"},children:[{id:"eshkili-kosh",name:"Ешкілі",level:5,type:"Көше",info:{tamga:"ЕШ",uran:"Жауынгыр!"}}]},{id:"baibura-y",name:"Байбура",level:4,type:"Уруу",info:{tamga:"ББ",uran:"Жауынгыр!",history:"Бай бұра"},children:[{id:"baibura-kosh",name:"Байбура",level:5,type:"Көше",info:{tamga:"ББ",uran:"Жауынгыр!"}}]},{id:"sarytan-y",name:"Сарытан",level:4,type:"Уруу",info:{tamga:"СР",uran:"Жауынгыр!",history:"Сары тан"},children:[{id:"sarytan-kosh",name:"Сарытан",level:5,type:"Көше",info:{tamga:"СР",uran:"Жауынгыр!"}}]}] },
+                        { id: "baimaqty", name: "БАЙМАҚТЫ", level: 3, type: "Үлкен уруу", info: { tamga: "БМ", urан: "Жауынгыр!", history: "Бай мақты - байлық", legend: "Баймақты руы бай болған" }, children: [{id:"saspaq",name:"Саспақ",level:4,type:"Уруу",info:{tamga:"СС",uran:"Жауынгыр!",history:"Саспақ - сасқан"}},{id:"uies",name:"Үйес",level:4,type:"Уруу",info:{tamga:"ҮЙ",uran:"Жауынгыр!",history:"Үйес - үй"}},{id:"tanmail-bm",name:"Таңмайыл",level:4,type:"Уруу",info:{tamga:"ТМ",uran:"Жауынгыр!",history:"Таң мағил"}},{id:"zhananai-bm",name:"Жақанай",level:4,type:"Уруу",info:{tamga:"ЖҚ",uran:"Жауынгыр!",history:"Жақа найза"}},{id:"naiman-bm",name:"Найман",level:4,type:"Уруу",info:{tamga:"НМ",uran:"Жауынгыр!",history:"Найман тайпасынан"}},{id:"aiys-bm",name:"Айыс",level:4,type:"Уруу",info:{tamga:"АЙ",uran:"Жауынгыр!",history:"Айыс - ағыс"}}] },     
+                        
+                        { id: "kazayakty", name: "ҚАЗАЯҚТЫ", level: 3, type: "Үлкен уруу", info: { tamga: "ҚЗ", urан: "Жауынгыр!", history: "Қазақпен туыстас", legend: "Қазақпен араласқан" }, children: [{id:"anetai",name:"Әнетай",level:4,type:"Уруу",info:{tamga:"ӘН",uran:"Жауынгыр!",history:"Әне тай"}},{id:"zharimbet-k",name:"Жәрімбет",level:4,type:"Уруу",info:{tamga:"ЖБ",uran:"Жауынгыр!",history:"Жәрім беt"}},{id:"zhundi",name:"Жүнді",level:4,type:"Уруу",info:{tamga:"ЖҢ",uran:"Жауынгыр!",history:"Жүнді - жүн иесі"}},{id:"sadaq",name:"Садақ",level:4,type:"Уруу",info:{tamga:"СД",uran:"Жауынгыр!",history:"Садақ - мерген"}}] },
+                        { id: "uygyr", name: "ҰЙҒЫР", level: 3, type: "Үлкен уруу", info: { tamga: "ҰЙ", urан: "Жауынгыр!", history: "Ұйғырлармен туыстас", legend: "Ұйғырлармен араласқан" }, children: [{id:"shishi-u",name:"Шиші",level:4,type:"Уруу",info:{tamga:"ШШ",uran:"Жауынгыр!",history:"Шиші - батыр"}},{id:"tumanai-u",name:"Туманай",level:4,type:"Уруу",info:{tamga:"ТМ",uran:"Жауынгыр!",history:"Тұман ай"}},{id:"sabalaq-u",name:"Сабалақ",level:4,type:"Уруу",info:{tamga:"СБ",uran:"Жауынгыр!",history:"Сабалақ - бала"}},{id:"maulik-u",name:"Мәулик",level:4,type:"Уруу",info:{tamga:"МЛ",uran:"Жауынгыр!",history:"Мәулік - саулық"}},{id:"bairam-u",name:"Байрам",level:4,type:"Уруу",info:{tamga:"БР",uran:"Жауынгыр!",history:"Байрам - той"}},{id:"syrgaly",name:"Сырғалы",level:4,type:"Уруу",info:{tamga:"СР",uran:"Жауынгыр!",history:"Сырға - әшекей"}}] }
+                    ]
+                }
+            ]
+        },
+
+
+
+
+
+        
+        {
+            id: "onTort", name: "АРЫС ОН ТӨРТ РУУ", level: 1, type: "Арыс", tamga: "Әртүрлі", uran: "Уллы таў!",
+            info: {
+                history: "Он төрт руу - қарақалпақтардың екінші ірі арысы. 14 рудан тұрады. Ноғай ордасынан кейін қалыптасқан.",
+                origin: "Найман, Қыпшақ, Керей, Уақ тайпаларынан.",
+                legend: "Он төрт рудың негізін Он төрт батыр қалаған. Әр батыр бір руға негіз болған.",
+                tamga: "Әр рудың өз тамғасы: Қытай - Q, Қыпшақ - I, Кенегес - X, Маңғыт - f",
+                uran: "Уллы таў! (Ұлы тау!) - Алатауға деген құрмет",
+                population: "10260 кибиток (60%). Қарақалпақтардың басым көпшілігі.",
+                structure: "4 үлкен ру: Қытай, Қыпшақ, Кенегес, Маңғыт.",
+                region: "Қарақалпақстанның оңтүстік және орталық аймақтары, Хорезм."
+            },
+            children: [
+                {
+                    id: "kytaı", name: "ҚЫТАЙ", level: 2, type: "Үлкен уруу", tamga: "Q", uran: "Уллы таў!",
+                    info: {
+                        history: "Қытай - Он төрт рудың ең ірі руы. 7 рудан тұрады.",
+                        origin: "Қытай тайпасынан. Қытаймен шекаралас жерде өмір сүрген.",
+                        legend: "Қытай батыр шекарада қызмет еткен. Оның ұрпақтары қытай руын құрды.",
+                        tamga: "Q - Қытай белгісі",
+                        uran: "Уллы таў!",
+                        population: "4320 кибиток",
+                        warrior: "Қытай батыр, Бессары батыр, Бексыйық батыр",
+                        structure: "7 ру: Бессары, Бексыйық, Қазаяқты, Қайшылы, Әйтеке, Мәнжүўлі, Аралбай."
+                    },
+                    children: [
+                        {
+                            id: "bessary", name: "БЕССАРЫ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Бессары - бес сары деген мағынада. Бес сары ат иесі.",
+                                origin: "Бес сары аттан.",
+                                tamga: "Б5",
+                                uran: "Уллы таў!",
+                                legend: "Бессары батыр бес сары атпен соғысқа шыққан."
+                            },
+                            children: [
+                                { id: "zhunli", name: "Жүнлі", level: 4, type: "Тийре", info: { tamga: "ЖҢ", urан: "Уллы таў!", history: "Жүн иесі", origin: "Жүн - жүн, мақта", legend: "Жүнлі баба жүннен тоқыма тоқыған" } },
+                                { id: "qoyly", name: "Қойлы", level: 4, type: "Тийре", info: { tamga: "ҚЙ", urан: "Уллы таў!", history: "Қой иесі", origin: "Қой - қой, мал", legend: "Қойлы баба қойға бай болған" } }
+                            ]
+                        },
+                        {
+                            id: "beksyyk", name: "БЕКСЫЙЫҚ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Бексыйық - бек сыйық, берік сыйық деген мағынада.",
+                                origin: "Бексыйық батыр атынан.",
+                                tamga: "БС",
+                                uran: "Уллы таў!",
+                                legend: "Бексыйық батыр берік сыйықпен белгілі болған."
+                            },
+                            children: [
+                                { id: "zherger", name: "Зергер", level: 4, type: "Тийре", info: { tamga: "ЗР", urан: "Уллы таў!", history: "Зергер - әшекейші", origin: "Зергер - зергерлік өнер", legend: "Зергер баба зергер болған" } },
+                                { id: "masai", name: "Масай", level: 4, type: "Тийре", info: { tamga: "МС", urан: "Уллы таў!", history: "Масай - маса", origin: "Масай - маса, тез қозғалатын", warrior: "Масай батыр" } },
+                                { id: "shyghyrshy", name: "Шығыршы", level: 4, type: "Тийре", info: { tamga: "ШҒ", urан: "Уллы таў!", history: "Шығыршы - шығырлау", origin: "Шығыр - шығырлау, ән салу", legend: "Шығыршы баба әнші болған" } },
+                                { id: "malay", name: "Малай", level: 4, type: "Тийре", info: { tamga: "МЛ", urан: "Уллы таў!", history: "Малай - мал иесі", origin: "Малай - малға бай", legend: "Малай баба малға аса бай болған" } }
+                            ]
+                        },
+                        {
+                            id: "kazayakly-k", name: "ҚАЗАЯҚЛЫ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Қазаяқты - қазақпен туыстас, қазақтың жақындары.",
+                                origin: "Қазақ тайпаларымен араласқан.",
+                                tamga: "ҚЗ",
+                                uran: "Уллы таў!",
+                                legend: "Қазаяқты баба қазақ қызынан туған."
+                            },
+                            children: [
+                                { id: "kalsen", name: "Кәлсен", level: 4, type: "Тийре", info: { tamga: "КЛ", urан: "Уллы таў!", history: "Кәлсен - сақ", origin: "Кәлсен - сақ, сақшылар" } },
+                                { id: "kuyik", name: "Күйік", level: 4, type: "Тийре", info: { tamga: "КЙ", urан: "Уллы таў!", history: "Күйік - күйік", origin: "Күйік - күйік, тез", warrior: "Күйік батыр" } },
+                                { id: "myrzai", name: "Мырзай", level: 4, type: "Тийре", info: { tamga: "МР", urан: "Уллы таў!", history: "Мырзай - мырза", origin: "Мырзай - мырзадан", legend: "Мырзай баба мырза болған" } },
+                                { id: "qylymoiyn", name: "Қылмойын", level: 4, type: "Тийре", info: { tamga: "ҚМ", urан: "Уллы таў!", history: "Қыл мойын", origin: "Қыл мойын - икемді", warrior: "Қылмойын батыр" } },
+                                { id: "zhylkybai", name: "Жылқбай", level: 4, type: "Тийре", info: { tamga: "ЖЛ", urан: "Уллы таў!", history: "Жылқы бай", origin: "Жылқы - ат, бай - бай", legend: "Жылқбай баба атқа бай болған" } },
+                                {
+                                    id: "baibishe-kz", name: "Бәйбіше", level: 4, type: "Тийре",
+                                    info: { tamga: "ББ", urан: "Уллы таў!", history: "Бәйбіше - басты әйел", origin: "Бәйбіше - бірінші әйел" },
+                                    children: [{ id: "baibishe-kosh", name: "Бәйбіше", level: 5, type: "Көше", info: { tamga: "ББ", urан: "Уллы таў!", history: "Бәйбіше көшесі" } }]
+                                }
+                            ]
+                        },
+                        {
+                            id: "kaishyly", name: "ҚАЙШЫЛЫ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Қайшылы - қайшы иесі, саудагер руы.",
+                                origin: "Қайшы - сауда құралы.",
+                                tamga: "ҚШ",
+                                uran: "Уллы таў!",
+                                legend: "Қайшылы баба саудамен айналысқан."
+                            },
+                            children: [
+                                { id: "aqymbet", name: "Ақымбет", level: 4, type: "Тийре", info: { tamga: "АҚ", urан: "Уллы таў!", history: "Ақымбет - ақ ниет", origin: "Ақымбет - ақ ниетті", legend: "Ақымбет баба ақ ниетті болған" } },
+                                { id: "zhuansan", name: "Жувансан", level: 4, type: "Тийре", info: { tamga: "ЖС", urан: "Уллы таў!", history: "Жувансан - жас сан", origin: "Жуван - жас, сан - сан", warrior: "Жувансан батыр" } },
+                                { id: "koterehoja", name: "Көтерехожа", level: 4, type: "Тийре", info: { tamga: "КХ", urан: "Уллы таў!", history: "Көтере хожа", origin: "Көтере - көтеру, хожа - қожа", legend: "Көтерехожа баба қожа болған" } },
+                                { id: "tanamyrza", name: "Танамырза", level: 4, type: "Тийре", info: { tamga: "ТМ", urан: "Уллы таў!", history: "Тана мырза", origin: "Тана - тана, мырза - мырза", legend: "Танамырза баба мырза болған" } },
+                                { id: "baqy", name: "Бақи", level: 4, type: "Тийре", info: { tamga: "БҚ", urан: "Уллы таў!", history: "Бақи - мәңгі", origin: "Бақи - мәңгілік", legend: "Бақи баба ұзақ жасаған" } },
+                                { id: "sybyl", name: "Сыбыл", level: 4, type: "Тийре", info: { tamga: "СБ", urан: "Уллы таў!", history: "Сыбыл - сыпы", origin: "Сыбыл - сыпы, таза", legend: "Сыбыл баба таза жүрген" } },
+                                { id: "basar", name: "Басар", level: 4, type: "Тийре", info: { tamga: "БС", urан: "Уллы таў!", history: "Басар - бас", origin: "Басар - бас, басқарушы", warrior: "Басар батыр" } },
+                                { id: "tolyq", name: "Толық", level: 4, type: "Тийре", info: { tamga: "ТЛ", urан: "Уллы таў!", history: "Толық - толық", origin: "Толық - толық, бай", legend: "Толық баба толық өмір сүрген" } },
+                                { id: "yaby", name: "Ябы", level: 4, type: "Тийре", info: { tamga: "ЯБ", urан: "Уллы таў!", history: "Ябы - яп", origin: "Ябы - яп, тез", warrior: "Ябы батыр" } }
+                            ]
+                        },
+                        {
+                            id: "aitereke", name: "ӘЙТЕКЕ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Әйтеке - Әйтеке батыр атынан.",
+                                origin: "Әйтеке батыр.",
+                                tamga: "ӘТ",
+                                urан: "Уллы таў!",
+                                legend: "Әйтеке батыр елін қорғаған.",
+                                warrior: "Әйтеке батыр"
+                            },
+                            children: [
+                                { id: "zhadyq", name: "Жәдік", level: 4, type: "Тийре", info: { tamga: "ЖД", urан: "Уллы таў!", history: "Жәдік - жад", origin: "Жәдік - жад, есте сақтау", legend: "Жәдік баба зерек болған" } },
+                                { id: "yrsymbek", name: "Ырсымбек", level: 4, type: "Тийре", info: { tamga: "ЫР", urан: "Уллы таў!", history: "Ырсым бек", origin: "Ырсым - ырсым, бек - бек", warrior: "Ырсымбек батыр" } },
+                                { id: "orazymbet", name: "Оразымбет", level: 4, type: "Тийре", info: { tamga: "ОР", urан: "Уллы таў!", history: "Оразым беt", origin: "Оразым - ораза, беt - беt", legend: "Оразымбет баба ораза ұстаған" } },
+                                { id: "tangirkul", name: "Тəңірқұл", level: 4, type: "Тийре", info: { tamga: "ТҚ", urан: "Уллы таў!", history: "Тəңір құл", origin: "Тəңір - күн, құл - құл", legend: "Тəңірқұл баба тәңірге құл болған" } },
+                                {
+                                    id: "bektes", name: "Бектес", level: 4, type: "Тийре",
+                                    info: { tamga: "БТ", urан: "Уллы таў!", history: "Бек тес", origin: "Бек - бек, тес - тес", warrior: "Бектес батыр" },
+                                    children: [{ id: "bektes-kosh", name: "Бектес", level: 5, type: "Көше", info: { tamga: "БТ", urан: "Уллы таў!", history: "Бектес көшесі" } }]
+                                },
+                                {
+                                    id: "nauriz", name: "Наурыз", level: 4, type: "Тийре",
+                                    info: { tamga: "НР", urан: "Уллы таў!", history: "Наурыз - жаңа жыл", origin: "Наурыз - наурыз мейрамы", legend: "Наурыз баба наурызда туған" },
+                                    children: [{ id: "nauriz-kosh", name: "Наурыз", level: 5, type: "Көше", info: { tamga: "НР", urан: "Уллы таў!", history: "Наурыз көшесі" } }]
+                                },
+                                {
+                                    id: "maniuwli-a", name: "Мәнжүўлі", level: 4, type: "Тийре",
+                                    info: { tamga: "МҢ", urан: "Уллы таў!", history: "Мәнжүўлі - мәнгі", origin: "Мәнжүўлі - мәңгілік", legend: "Мәнжүўлі баба ұзақ жасаған" },
+                                    children: [{ id: "maniuwli-kosh", name: "Мәнжүўлі", level: 5, type: "Көше", info: { tamga: "МҢ", urан: "Уллы таў!", history: "Мәнжүўлі көшесі" } }]
+                                },
+                                {
+                                    id: "tazshylyq", name: "Тазшылық", level: 4, type: "Тийре",
+                                    info: { tamga: "ТЗ", urан: "Уллы таў!", history: "Таз шылық", origin: "Таз - таза, шылық - шылық", legend: "Тазшылық баба таза жүрген" },
+                                    children: [{ id: "tazshylyq-kosh", name: "Тазшылық", level: 5, type: "Көше", info: { tamga: "ТЗ", urан: "Уллы таў!", history: "Тазшылық көшесі" } }]
+                                }
+                            ]
+                        },
+                        {
+                            id: "manjuwli-k", name: "МАҢЖҮУЛI", level: 3, type: "Уруу",
+                            info: {
+                                history: "Мәнжүўлі - мәңгілік деген мағынада.",
+                                origin: "Мәнжүўлі батыр.",
+                                tamga: "МҢ",
+                                urан: "Уллы таў!",
+                                legend: "Мәнжүўлі баба ұзақ жасаған."
+                            },
+                            children: [
+                                { id: "eki-shyiq", name: "Екі шыйық", level: 4, type: "Тийре", info: { tamga: "ЕШ", urан: "Уллы таў!", history: "Екі шыйық", origin: "Екі шыйық - екі ағыс", legend: "Екі шыйық екі өзен бойында тұрған" } },
+                                { id: "qaramanjuwli", name: "Қараманжүўлі", level: 4, type: "Тийре", info: { tamga: "ҚМ", urан: "Уллы таў!", history: "Қара мәнжүўлі", origin: "Қара - қара, мәнжүўлі - мәңгі", legend: "Қараманжүўлі баба қараңғыда да мәңгілік іздеген" } },
+                                { id: "aiiereke", name: "Әйереке", level: 4, type: "Тийре", info: { tamga: "ӘЙ", urан: "Уллы таў!", history: "Әйереке - әйел ереке", origin: "Әйереке - әйел ереке", legend: "Әйереке баба әйел ереке болған" } }
+                            ]
+                        },
+                        {
+                            id: "aralbai", name: "АРАЛБАЙ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Аралбай - Арал бойындағы бай деген мағынада.",
+                                origin: "Арал теңізі маңында өмір сүрген.",
+                                tamga: "АР",
+                                urан: "Уллы таў!",
+                                legend: "Аралбай баба Арал маңында мал өсірген."
+                            },
+                            children: [
+                                { id: "aqqala", name: "Аққала", level: 4, type: "Тийре", info: { tamga: "АҚ", urан: "Уллы таў!", history: "Ақ қала", origin: "Ақ - ақ, қала - қала", legend: "Аққала баба ақ қаласында тұрған" } },
+                                { id: "qalmuart-ar", name: "Қалмурат", level: 4, type: "Тийре", info: { tamga: "ҚМ", urан: "Уллы таў!", history: "Қалмурат - қалмақ мұрын", origin: "Қалмурат - қалмақпен туыстас", warrior: "Қалмурат батыр" } },
+                                { id: "ogizbaishy", name: "Өгизбайшы", level: 4, type: "Тийре", info: { tamga: "ӨБ", urан: "Уллы таў!", history: "Өгіз байшы", origin: "Өгіз - өгіз, байшы - бай", legend: "Өгизбайшы баба өгізге бай болған" } },
+                                { id: "baibishe-ar", name: "Бәйбіше", level: 4, type: "Тийре", info: { tamga: "ББ", urан: "Уллы таў!", history: "Бәйбіше - басты әйел", origin: "Бәйбіше - бірінші әйел" } },
+                                { id: "tile-qusshy", name: "Тілеу қусшы", level: 4, type: "Тийре", info: { tamga: "ТҚ", urан: "Уллы таў!", history: "Тілеу қусшы", origin: "Тілеу - тілеу, қусшы - қусшы", warrior: "Тілеу қусшы батыр", legend: "Тілеу қусшы батыр сұңқар ұстаған" } }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "kypshak", name: "ҚЫПШАҚ", level: 2, type: "Үлкен уруу", tamga: "I", uran: "Тоқсаба!",
+                    info: {
+                        history: "Қыпшақ - көне түркі тайпасынан. Қыпшақ даласының ұрпағы.",
+                        origin: "Қыпшақ тайпасынан.",
+                        legend: "Қыпшақ баба Қыпшақ даласынан келген.",
+                        tamga: "I - бір сызық",
+                        uran: "Тоқсаба!",
+                        population: "2240 кибиток",
+                        warrior: "Қыпшақ батыр, Қаңлы батыр",
+                        structure: "5 ру: Қаңлы, Саңмұрын, Естек, Қанжығалы, Салтыр."
+                    },
+                    children: [
+                        {
+                            id: "kangly", name: "ҚАҢЛЫ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Қаңлы - қаңға иесі деген мағынада.",
+                                origin: "Қаң - қаң, мал белгісі.",
+                                tamga: "ҚҢ",
+                                urан: "Тоқсаба!",
+                                legend: "Қаңлы баба қаңға бай болған."
+                            },
+                            children: [
+                                { id: "tram", name: "Трам", level: 4, type: "Тийре", info: { tamga: "ТР", urан: "Тоқсаба!", history: "Трам - трамвай", origin: "Трам - тез, трам", warrior: "Трам батыр" } },
+                                { id: "qatqangly", name: "Қатқаңлы", level: 4, type: "Тийре", info: { tamga: "ҚҚ", urан: "Тоқсаба!", history: "Қат қаңлы", origin: "Қат - қат, қаңлы - қаңлы", legend: "Қатқаңлы баба қатты қаңға ие болған" } },
+                                { id: "yrghaqly", name: "Ырғақлы", level: 4, type: "Тийре", info: { tamga: "ЫР", urан: "Тоқсаба!", history: "Ырғақлы - өрнекті", origin: "Ырғақ - өрнек", legend: "Ырғақлы баба өрнекті ту көтерген" } },
+                                { id: "ashamaily-k", name: "Ашамайлы", level: 4, type: "Тийре", info: { tamga: "АШ", urан: "Тоқсаба!", history: "Ашамайлы - көзді", origin: "Ашамай - көз", warrior: "Ашамайлы батыр" } },
+                                { id: "taraqty-k", name: "Тарақты", level: 4, type: "Тийре", info: { tamga: "ТР", urан: "Тоқсаба!", history: "Тарақты - шашақты", origin: "Тарақ - шашақ", legend: "Тарақты баба шашақты ту көтерген" } },
+                                { id: "baspak", name: "Баспақ", level: 4, type: "Тийре", info: { tamga: "БС", urан: "Тоқсаба!", history: "Баспақ - бас", origin: "Баспақ - бас, басқарушы", warrior: "Баспақ батыр" } },
+                                { id: "aiat", name: "Айят", level: 4, type: "Тийре", info: { tamga: "АЙ", urан: "Тоқсаба!", history: "Айят - аят", origin: "Айят - аят, белгі", legend: "Айят баба аятты сақтаған" } },
+                                { id: "bosyn", name: "Босын", level: 4, type: "Тийре", info: { tamga: "БС", urан: "Тоқсаба!", history: "Босын - бос", origin: "Босын - бос, еркін", legend: "Босын баба еркін жүрген" } },
+                                { id: "basapat", name: "Баспат", level: 4, type: "Тийре", info: { tamga: "БП", urан: "Тоқсаба!", history: "Бас пат", origin: "Бас - бас, пат - патша", warrior: "Баспат батыр" } },
+                                { id: "konyrqazy", name: "Қоңырқазы", level: 4, type: "Тийре", info: { tamga: "ҚҚ", urан: "Тоқсаба!", history: "Қоңыр қазы", origin: "Қоңыр - қоңыр, қазы - қазы", legend: "Қоңырқазы баба қоңыр қазыға бай болған" } },
+                                { id: "kenes", name: "Кенес", level: 4, type: "Тийре", info: { tamga: "КН", urан: "Тоқсаба!", history: "Кенес - кеңес", origin: "Кенес - кеңес, ақыл", legend: "Кенес баба ақылшы болған" } },
+                                { id: "tashkent", name: "Ташкент", level: 4, type: "Тийре", info: { tamga: "ТШ", urан: "Тоқсаба!", history: "Ташкенттен келген", origin: "Ташкент - Ташкент қаласы", legend: "Ташкент баба Ташкенттен көшіп келген" } }
+                            ]
+                        },
+                        {
+                            id: "sanmuryn", name: "САҢМҰРЫН", level: 3, type: "Уруу",
+                            info: {
+                                history: "Саңмұрын - саңқыраған мұрын деген мағынада.",
+                                origin: "Мұрынның пішінінен.",
+                                tamga: "СМ",
+                                urан: "Тоқсаба!",
+                                legend: "Саңмұрын баба саңқыраған мұрынды болған."
+                            },
+                            children: [
+                                { id: "konshi", name: "Көнші", level: 4, type: "Тийре", info: { tamga: "КШ", urан: "Тоқсаба!", history: "Көнші - көн", origin: "Көн - көн, көншіл", legend: "Көнші баба көншіл болған" } },
+                                { id: "tubai", name: "Тұбай", level: 4, type: "Тийре", info: { tamga: "ТБ", urан: "Тоқсаба!", history: "Тұбай - тұй", origin: "Тұбай - тұй, бекініс", warrior: "Тұбай батыр" } },
+                                { id: "eshkili", name: "Ешкілі", level: 4, type: "Тийре", info: { tamga: "ЕШ", urан: "Тоқсаба!", history: "Ешкілі - ешкі иесі", origin: "Ешкі - ешкі", legend: "Ешкілі баба ешкіге бай болған" } },
+                                { id: "zhaipaq-shek", name: "Жалпақ шек", level: 4, type: "Тийре", info: { tamga: "ЖШ", urан: "Тоқсаба!", history: "Жалпақ шек", origin: "Жалпақ - жалпақ, шек - шек", warrior: "Жалпақ шек батыр" } },
+                                { id: "tolebai", name: "Төлебай", level: 4, type: "Тийре", info: { tamga: "ТБ", urан: "Тоқсаба!", history: "Төле бай", origin: "Төле - төле, бай - бай", legend: "Төлебай баба төлеуші болған" } },
+                                { id: "zhabashy", name: "Жабашы", level: 4, type: "Тийре", info: { tamga: "ЖБ", urан: "Тоқсаба!", history: "Жабашы - жаба", origin: "Жабашы - жаба, жабушы", warrior: "Жабашы батыр" } }
+                            ]
+                        },
+                        {
+                            id: "estek", name: "ЕСТЕК", level: 3, type: "Уруу",
+                            info: {
+                                history: "Естек - есте сақтау, есті деген мағынада.",
+                                origin: "Естек батыр.",
+                                tamga: "ЕС",
+                                urан: "Тоқсаба!",
+                                legend: "Естек баба есті, зерек болған."
+                            },
+                            children: [
+                                { id: "manqanai", name: "Маңқанай", level: 4, type: "Тийре", info: { tamga: "МҚ", urан: "Тоқсаба!", history: "Маңқанай", origin: "Маңқанай - манқа", legend: "Маңқанай баба манқа жасаған" } },
+                                { id: "qaiypnazar", name: "Қайыпназар", level: 4, type: "Тийре", info: { tamga: "ҚН", urан: "Тоқсаба!", history: "Қайып назар", origin: "Қайып - қайып, назар - назар", warrior: "Қайыпназар батыр" } },
+                                { id: "karaterenshi", name: "Қаратереңші", level: 4, type: "Тийре", info: { tamga: "ҚТ", urан: "Тоқсаба!", history: "Қара тереңші", origin: "Қара - қара, тереңші - терең", legend: "Қаратереңші баба қара терең жерде тұрған" } },
+                                { id: "qalmuart-es", name: "Қалмурат", level: 4, type: "Тийре", info: { tamga: "ҚМ", urан: "Тоқсаба!", history: "Қалмурат", origin: "Қалмурат - қалмақ мұрын", warrior: "Қалмурат батыр" } }
+                            ]
+                        },
+                        {
+                            id: "qanzhygaly", name: "ҚАНЖЫҒАЛЫ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Қанжығалы - қанжыға иесі, мерген руы.",
+                                origin: "Қанжыға - жебе саптығы.",
+                                tamga: "ҚЖ",
+                                urан: "Тоқсаба!",
+                                legend: "Қанжығалы баба мерген болған.",
+                                warrior: "Қанжығалы батыр"
+                            },
+                            children: [
+                                { id: "shanyshpai", name: "Шанышпай", level: 4, type: "Тийре", info: { tamga: "ШШ", urан: "Тоқсаба!", history: "Шанышпай", origin: "Шанышпай - шанышқы", warrior: "Шанышпай батыр" } },
+                                { id: "sambet-q", name: "Самбет", level: 4, type: "Тийре", info: { tamga: "СМ", urан: "Тоқсаба!", history: "Самбет", origin: "Самбет - сambo", legend: "Самбет баба самбо күресін үйреткен" } },
+                                { id: "zhaghaltai", name: "Жағалтай", level: 4, type: "Тийре", info: { tamga: "ЖТ", urан: "Тоқсаба!", history: "Жағалтай", origin: "Жағалтай - жағалау", warrior: "Жағалтай батыр" } },
+                                {
+                                    id: "baibishe-q", name: "Бәйбіше", level: 4, type: "Тийре",
+                                    info: { tamga: "ББ", urан: "Тоқсаба!", history: "Бәйбіше", origin: "Бәйбіше - басты әйел" },
+                                    children: [{ id: "baibishe-q-kosh", name: "Бәйбіше", level: 5, type: "Көше", info: { tamga: "ББ", urан: "Тоқсаба!", history: "Бәйбіше көшесі" } }]
+                                }
+                            ]
+                        },
+                        {
+                            id: "saltyr", name: "САЛТЫР", level: 3, type: "Уруу",
+                            info: {
+                                history: "Салтыр - салт иесі, дәстүрші руы.",
+                                origin: "Салт - дәстүр.",
+                                tamga: "СЛ",
+                                urан: "Тоқсаба!",
+                                legend: "Салтыр баба салт-дәстүрді сақтаған."
+                            },
+                            children: [
+                                { id: "baibishe-s", name: "Бәйбіше", level: 4, type: "Тийре", info: { tamga: "ББ", urан: "Тоқсаба!", history: "Бәйбіше", origin: "Бәйбіше - басты әйел" } },
+                                { id: "sart", name: "Сарт", level: 4, type: "Тийре", info: { tamga: "СР", urан: "Тоқсаба!", history: "Сарт", origin: "Сарт - сарт, саудагер", legend: "Сарт баба саудамен айналысқан" } },
+                                { id: "orazymbet-s", name: "Оразымбет", level: 4, type: "Тийре", info: { tamga: "ОР", urан: "Тоқсаба!", history: "Оразымбет", origin: "Оразым - ораза, беt - беt", legend: "Оразымбет баба ораза ұстаған" } },
+                                { id: "shuyghan", name: "Шуылған", level: 4, type: "Тийре", info: { tamga: "ШЛ", urан: "Тоқсаба!", history: "Шуылған", origin: "Шуылған - шуылдаған", warrior: "Шуылған батыр" } }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "keneges", name: "КЕНЕГЕС", level: 2, type: "Үлкен уруу", tamga: "X", uran: "Шаўлы-Шаўхай!",
+                    info: {
+                        history: "Кенегес - кеңес, ақыл деген мағынада. Ақылшы ру.",
+                        origin: "Кенегес батыр.",
+                        legend: "Кенегес баба кеңесші, ақылшы болған.",
+                        tamga: "X - крест белгісі",
+                        uran: "Шаўлы-Шаўхай!",
+                        population: "1480 кибиток",
+                        warrior: "Кенегес батыр, Араншы батыр",
+                        structure: "8 ру: Араншы, Ақтоғын, Өмір, Тарақты, Добал, Оймауыт, Домбазқақ, Нөкіс."
+                    },
+                    children: [
+                        {
+                            id: "aranshy", name: "АРАНШЫ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Араншы - аран иесі, таза ру.",
+                                origin: "Аран - таза, пәк.",
+                                tamga: "АР",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Араншы баба аранды сақтаған."
+                            },
+                            children: [
+                                { id: "annaqul", name: "Аннақұл", level: 4, type: "Тийре", info: { tamga: "АҚ", urан: "Шаўлы-Шаўхай!", history: "Анна құл", origin: "Анна - ана, құл - құл", legend: "Аннақұл баба ананың құлы болған" } },
+                                {
+                                    id: "abas-k", name: "Абас", level: 4, type: "Тийре",
+                                    info: { tamga: "АБ", urан: "Шаўлы-Шаўхай!", history: "Абас", origin: "Абас - абас", warrior: "Абас батыр" },
+                                    children: [{ id: "seitimbet", name: "Сейтімбет", level: 5, type: "Көше", info: { tamga: "СБ", urан: "Шаўлы-Шаўхай!", history: "Сейтім беt", origin: "Сейтім - сейіт, беt - беt" } }]
+                                },
+                                { id: "suiin", name: "Сүйін", level: 4, type: "Тийре", info: { tamga: "СЙ", urан: "Шаўлы-Шаўхай!", history: "Сүйін", origin: "Сүйін - сүйін", legend: "Сүйін баба сүйінішті болған" } },
+                                { id: "zhuas", name: "Жуас", level: 4, type: "Тийре", info: { tamga: "ЖС", urан: "Шаўлы-Шаўхай!", history: "Жуас", origin: "Жуас - жуас, жұмсақ", warrior: "Жуас батыр" } },
+                                { id: "dauletqargha", name: "Дәулетқарға", level: 4, type: "Тийре", info: { tamga: "ДҚ", urан: "Шаўлы-Шаўхай!", history: "Дәулет қарға", origin: "Дәулет - дәулет, қарға - қарға", legend: "Дәулетқарға баба дәулетті болған" } },
+                                { id: "qaipbergen", name: "Қайыпберген", level: 4, type: "Тийре", info: { tamga: "ҚБ", urан: "Шаўлы-Шаўхай!", history: "Қайып берген", origin: "Қайып - қайып, берген - берген", legend: "Қайыпберген баба қайыпты берген" } }
+                            ]
+                        },
+                        {
+                            id: "aktogyn", name: "АҚТОҒЫН", level: 3, type: "Уруу",
+                            info: {
+                                history: "Ақтоғын - ақ тоғын, ақ ту.",
+                                origin: "Ақ тоғын иесі.",
+                                tamga: "АТ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Ақтоғын баба ақ ту көтерген."
+                            },
+                            children: [
+                                { id: "nanzhemes", name: "Нанжемес", level: 4, type: "Тийре", info: { tamga: "НЖ", urан: "Шаўлы-Шаўхай!", history: "Нан жемес", origin: "Нан - нан, жемес - жемес", legend: "Нанжемес баба нан жемей соғысқан" } },
+                                { id: "kosher", name: "Көшер", level: 4, type: "Тийре", info: { tamga: "КШ", urан: "Шаўлы-Шаўхай!", history: "Көшер", origin: "Көшер - көш", warrior: "Көшер батыр" } }
+                            ]
+                        },
+                        {
+                            id: "omir", name: "ӨМIР", level: 3, type: "Уруу",
+                            info: {
+                                history: "Өмір - өмір, тұмыс деген мағынада.",
+                                origin: "Өмір батыр.",
+                                tamga: "ӨМ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Өмір баба ұзақ өмір сүрген."
+                            },
+                            children: [
+                                { id: "aqpyshaq", name: "Ақпышақ", level: 4, type: "Тийре", info: { tamga: "АП", urан: "Шаўлы-Шаўхай!", history: "Ақ пышақ", origin: "Ақ - ақ, пышақ - пышақ", warrior: "Ақпышақ батыр" } },
+                                { id: "usaq", name: "Усақ", level: 4, type: "Тийре", info: { tamga: "УС", urан: "Шаўлы-Шаўхай!", history: "Усақ", origin: "Усақ - ұсақ, кіші", legend: "Усақ баба кіші болған" } },
+                                { id: "zhel", name: "Жел", level: 4, type: "Тийре", info: { tamga: "ЖЛ", urан: "Шаўлы-Шаўхай!", history: "Жел", origin: "Жел - жел, тез", warrior: "Жел батыр" } },
+                                { id: "mynzhyr", name: "Мынжыр", level: 4, type: "Тийре", info: { tamga: "МЖ", urан: "Шаўлы-Шаўхай!", history: "Мынжыр", origin: "Мынжыр - мың", legend: "Мынжыр баба мыңдаған жауды жеңген" } },
+                                { id: "otemis-o", name: "Өтеміс", level: 4, type: "Тийре", info: { tamga: "ӨТ", urан: "Шаўлы-Шаўхай!", history: "Өтеміс", origin: "Өтеміс - өткір", warrior: "Өтеміс батыр" } }
+                            ]
+                        },
+                        {
+                            id: "taraqly-ken", name: "ТАРАҚЛЫ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Тарақты - шашақты, өрнекті.",
+                                origin: "Тарақ - шашақ.",
+                                tamga: "ТР",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Тарақты баба шашақты ту көтерген."
+                            },
+                            children: [
+                                {
+                                    id: "zhetiqaraghaz", name: "Жетіқарақазақы", level: 4, type: "Тийре",
+                                    info: { tamga: "ЖҚ", urан: "Шаўлы-Шаўхай!", history: "Жеті қара қазақ", origin: "Жеті - жеті, қара - қара, қазақ - қазақ", legend: "Жетіқарақазақы баба жеті қазақты басқарған" },
+                                    children: [{ id: "zheti-kosh", name: "Жетіқара", level: 5, type: "Көше", info: { tamga: "ЖҚ", urан: "Шаўлы-Шаўхай!", history: "Жеті қара көшесі" } }]
+                                }
+                            ]
+                        },
+                        {
+                            id: "dobal", name: "ДОБАЛ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Добал - добал, қорған.",
+                                origin: "Добал - қорған, бекініс.",
+                                tamga: "ДБ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Добал баба добалда тұрған."
+                            }
+                        },
+                        {
+                            id: "oymauyt", name: "ОЙМАЎЫТ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Оймауыт - оймауыт, ойылған.",
+                                origin: "Оймауыт - ойылған жер.",
+                                tamga: "ОЙ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Оймауыт баба оймауыт жерде тұрған."
+                            },
+                            children: [
+                                { id: "qara-o", name: "Қара", level: 4, type: "Тийре", info: { tamga: "ҚР", urан: "Шаўлы-Шаўхай!", history: "Қара", origin: "Қара - қара", legend: "Қара баба қара түсті" } },
+                                {
+                                    id: "sary-o", name: "Сары", level: 4, type: "Тийре",
+                                    info: { tamga: "СР", urан: "Шаўлы-Шаўхай!", history: "Сары", origin: "Сары - сары", legend: "Сары баба сары түсті" },
+                                    children: [{ id: "zhiydeli", name: "Жийдели", level: 5, type: "Көше", info: { tamga: "ЖД", urан: "Шаўлы-Шаўхай!", history: "Жийдели", origin: "Жийде - жиде" } }]
+                                },
+                                { id: "aq-o", name: "Ақ", level: 4, type: "Тийре", info: { tamga: "АҚ", urан: "Шаўлы-Шаўхай!", history: "Ақ", origin: "Ақ - ақ", legend: "Ақ баба ақ түсті" } }
+                            ]
+                        },
+                        {
+                            id: "dombazqaq", name: "ДОМБАЗҚАҚ", level: 3, type: "Уруу",
+                            info: {
+                                history: "Домбазқақ - домбырашы, әнші руы.",
+                                origin: "Домбыра - музыкалық аспап.",
+                                tamga: "ДМ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Домбазқақ баба домбырашы болған."
+                            }
+                        },
+                        {
+                            id: "nokis", name: "НӨКIС", level: 3, type: "Уруу",
+                            info: {
+                                history: "Нөкіс - Нөкіс қаласынан.",
+                                origin: "Нөкіс - қала атауы.",
+                                tamga: "НК",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Нөкіс баба Нөкісте тұрған."
+                            },
+                            children: [
+                                { id: "zhamanzhak", name: "Жаманжақ", level: 4, type: "Тийре", info: { tamga: "ЖЖ", urан: "Шаўлы-Шаўхай!", history: "Жаман жақ", origin: "Жаман - жаман, жақ - жақ", legend: "Жаманжақ баба жаман жақтан қашқан" } },
+                                { id: "bozaq", name: "Бозақ", level: 4, type: "Тийре", info: { tamga: "БЗ", urан: "Шаўлы-Шаўхай!", history: "Бозақ", origin: "Бозақ - боз", warrior: "Бозақ батыр" } },
+                                { id: "altynpyshaq", name: "Алтынпышақ", level: 4, type: "Тийре", info: { tamga: "АП", urан: "Шаўлы-Шаўхай!", history: "Алтын пышақ", origin: "Алтын - алтын, пышақ - пышақ", warrior: "Алтынпышақ батыр" } },
+                                { id: "ghobdir", name: "Гобдир", level: 4, type: "Тийре", info: { tamga: "ГБ", urан: "Шаўлы-Шаўхай!", history: "Гобдир", origin: "Гобдир - гөбдір", legend: "Гобдир баба гөбдір жерде тұрған" } }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "mangyt", name: "МАҢҒЫТ", level: 2, type: "Үлкен уруу", tamga: "f", uran: "Шаўлы-Шаўхай!",
+                    info: {
+                        history: "Маңғыт - соғысқор, батыр руы. Маңғыттар белгілі батырлар.",
+                        origin: "Маңғыт тайпасынан.",
+                        legend: "Маңғыт бабар соғыста ерлік көрсеткен.",
+                        tamga: "f - мысық белгісі",
+                        uran: "Шаўлы-Шаўхай!",
+                        population: "2220 кибиток",
+                        warrior: "Маңғыт батыр, Қаратай батыр, Сарытай батыр",
+                        structure: "4 топар: Қаратай (Қара), Сарытай (Сары), Бозтай (Боз), Жетімтай (Жетім)."
+                    },
+                    children: [
+                        {
+                            id: "qaratay", name: "ҚАРАТАЙ (Қара)", level: 3, type: "Топар",
+                            info: {
+                                history: "Қаратай - қара түсті, қара тамырлы.",
+                                origin: "Қаратай батыр.",
+                                tamga: "ҚТ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Қаратай батыр қара ту көтерген."
+                            },
+                            children: [
+                                {
+                                    id: "qaramangyt", name: "Қараманғыт", level: 4, type: "Уруу",
+                                    info: { tamga: "ҚМ", urан: "Шаўлы-Шаўхай!", history: "Қара маңғыт", origin: "Қара - қара, маңғыт - маңғыт", warrior: "Қараманғыт батыр" },
+                                    children: [
+                                        { id: "ushbas", name: "Үшбас", level: 5, type: "Көше", info: { tamga: "ҮБ", urан: "Шаўлы-Шаўхай!", history: "Үш бас", origin: "Үш - үш, бас - бас", legend: "Үшбас баба үш басқан" } },
+                                        { id: "karasiraq-m", name: "Қарасыйрақ", level: 5, type: "Көше", info: { tamga: "ҚС", urан: "Шаўлы-Шаўхай!", history: "Қара сийрақ", origin: "Қара - қара, сийрақ - сийрақ" } },
+                                        { id: "aqmangyt", name: "Ақманғыт", level: 5, type: "Көше", info: { tamga: "АМ", urан: "Шаўлы-Шаўхай!", history: "Ақ маңғыт", origin: "Ақ - ақ, маңғыт - маңғыт" } }
+                                    ]
+                                },
+                                {
+                                    id: "mamyqshy", name: "Мамықшы", level: 4, type: "Уруу",
+                                    info: { tamga: "ММ", urан: "Шаўлы-Шаўхай!", history: "Мамықшы", origin: "Мамық - мамық", legend: "Мамықшы баба мамық жинаған" },
+                                    children: [{ id: "zhetiqurt", name: "Жетіқурт", level: 5, type: "Көше", info: { tamga: "ЖҚ", urан: "Шаўлы-Шаўхай!", history: "Жеті құрт", origin: "Жеті - жеті, құрт - құрт" } }]
+                                },
+                                {
+                                    id: "kosar-m", name: "Қосар", level: 4, type: "Уруу",
+                                    info: { tamga: "ҚС", urан: "Шаўлы-Шаўхай!", history: "Қосар", origin: "Қосар - қос", warrior: "Қосар батыр" },
+                                    children: [{ id: "gubidin", name: "Гүбидин", level: 5, type: "Көше", info: { tamga: "ГБ", urан: "Шаўлы-Шаўхай!", history: "Гүбидин", origin: "Гүбидин - гүби" } }]
+                                },
+                                { id: "qylqaly", name: "Қылқалы", level: 4, type: "Тийре", info: { tamga: "ҚҚ", urан: "Шаўлы-Шаўхай!", history: "Қылқалы", origin: "Қыл - қыл, қалы - қалы", warrior: "Қылқалы батыр" } }
+                            ]
+                        },
+                        {
+                            id: "sarytay", name: "САРЫТАЙ (Сары)", level: 3, type: "Топар",
+                            info: {
+                                history: "Сарытай - сары түсті, сары шашты.",
+                                origin: "Сарытай батыр.",
+                                tamga: "СТ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Сарытай батыр сары ту көтерген."
+                            },
+                            children: [
+                                { id: "arshyn", name: "Аршын", level: 4, type: "Тийре", info: { tamga: "АР", urан: "Шаўлы-Шаўхай!", history: "Аршын", origin: "Аршын - аршын", warrior: "Аршын батыр" } },
+                                { id: "zhailyk", name: "Жайлық", level: 4, type: "Тийре", info: { tamga: "ЖЛ", urан: "Шаўлы-Шаўхай!", history: "Жайлық", origin: "Жайлық - жай", legend: "Жайлық баба жайлы жерде тұрған" } },
+                                { id: "toqmangyt", name: "Тоқманғыт", level: 4, type: "Тийре", info: { tamga: "ТМ", urан: "Шаўлы-Шаўхай!", history: "Тоқ маңғыт", origin: "Тоқ - тоқ, маңғыт - маңғыт", warrior: "Тоқманғыт батыр" } },
+                                { id: "arsary", name: "Арсары", level: 4, type: "Тийре", info: { tamga: "АС", urан: "Шаўлы-Шаўхай!", history: "Арсары", origin: "Арсары - арсары", legend: "Арсары баба арсары малға бай болған" } },
+                                { id: "tazhzhanlyk", name: "Тазжанлық", level: 4, type: "Тийре", info: { tamga: "ТЖ", urан: "Шаўлы-Шаўхай!", history: "Таз жандық", origin: "Таз - таза, жандық - жан", legend: "Тазжанлық баба таза жан болған" } },
+                                { id: "shuyt", name: "Шүйт", level: 4, type: "Тийре", info: { tamga: "ШЙ", urан: "Шаўлы-Шаўхай!", history: "Шүйт", origin: "Шүйт - шүйт", warrior: "Шүйт батыр" } },
+                                { id: "zhamansha", name: "Жаманша", level: 4, type: "Тийре", info: { tamga: "ЖМ", urан: "Шаўлы-Шаўхай!", history: "Жаманша", origin: "Жаман - жаман, ша - ша", legend: "Жаманша баба жаманшылықты жеңген" } },
+                                { id: "esebii", name: "Есебий", level: 4, type: "Тийре", info: { tamga: "ЕС", urан: "Шаўлы-Шаўхай!", history: "Есебий", origin: "Есебий - есеп", legend: "Есебий баба есепші болған" } },
+                                { id: "tamgaly-m", name: "Тамғалы", level: 4, type: "Тийре", info: { tamga: "ТМ", urан: "Шаўлы-Шаўхай!", history: "Тамғалы", origin: "Тамға - тамға", legend: "Тамғалы баба тамғалы ту көтерген" } },
+                                { id: "toqmoiyin", name: "Тоқмойын", level: 4, type: "Тийре", info: { tamga: "ТМ", urан: "Шаўлы-Шаўхай!", history: "Тоқ мойын", origin: "Тоқ - тоқ, мойын - мойын", warrior: "Тоқмойын батыр" } },
+                                { id: "temirhoja", name: "Темирхожа", level: 4, type: "Тийре", info: { tamga: "ТХ", urан: "Шаўлы-Шаўхай!", history: "Темір хожа", origin: "Темір - темір, хожа - қожа", legend: "Темирхожа баба темірші болған" } }
+                            ]
+                        },
+                        {
+                            id: "boztay", name: "БОЗТАЙ (Боз)", level: 3, type: "Топар",
+                            info: {
+                                history: "Бозтай - боз түсті, боз ат иесі.",
+                                origin: "Бозтай батыр.",
+                                tamga: "БТ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Бозтай батыр боз атпен соғысқан."
+                            },
+                            children: [
+                                {
+                                    id: "bozta", name: "Бозта", level: 4, type: "Тийре",
+                                    info: { tamga: "БЗ", urан: "Шаўлы-Шаўхай!", history: "Бозта", origin: "Бозта - боз", legend: "Бозта баба боз атқа мінген" },
+                                    children: [{ id: "bozta-kosh", name: "Бозта", level: 5, type: "Көше", info: { tamga: "БЗ", urан: "Шаўлы-Шаўхай!", history: "Бозта көшесі" } }]
+                                }
+                            ]
+                        },
+                        {
+                            id: "jetimtay", name: "ЖЕТIМТАЙ (Жетім)", level: 3, type: "Топар",
+                            info: {
+                                history: "Жетімтай - жетім, жалғыз.",
+                                origin: "Жетімтай батыр.",
+                                tamga: "ЖТ",
+                                urан: "Шаўлы-Шаўхай!",
+                                legend: "Жетімтай батыр жетім қалған, бірақ ерлік көрсеткен."
+                            },
+                            children: [
+                                {
+                                    id: "eshbuga", name: "Ешбуға", level: 4, type: "Тийре",
+                                    info: { tamga: "ЕБ", urан: "Шаўлы-Шаўхай!", history: "Ешбуға", origin: "Еш - еш, буға - буға", warrior: "Ешбуға батыр" },
+                                    children: [{ id: "eshbuga-kosh", name: "Ешбуға", level: 5, type: "Көше", info: { tamga: "ЕБ", urан: "Шаўлы-Шаўхай!", history: "Ешбуға көшесі" } }]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
+
+// Найти узел по ID в дереве
+function findNodeById(node, id) {
+    if (node.id === id) return node;
+    if (node.children) {
+        for (let child of node.children) {
+            const found = findNodeById(child, id);
+            if (found) return found;
+        }
+    }
+    return null;
+}
+
+// Получить полную цепочку родителей до корня
+function getParentChain(node, current = treeData, chain = []) {
+    if (current.id === node.id) {
+        return [current, ...chain];
+    }
+    if (current.children) {
+        for (let child of current.children) {
+            const result = getParentChain(node, child, [current, ...chain]);
+            if (result) return result;
+        }
+    }
+    return null;
+}
+
+// Получить всех потомков узла
+function getAllDescendants(node) {
+    const descendants = [];
+    if (node.children) {
+        for (let child of node.children) {
+            descendants.push(child);
+            descendants.push(...getAllDescendants(child));
+        }
+    }
+    return descendants;
+}
+
+// Построить дерево группировки потомков по родителям
+function buildDescendantsTree(node) {
+    if (!node.children || node.children.length === 0) return null;
+    
+    const result = [];
+    for (let child of node.children) {
+        const item = {
+            node: child,
+            children: child.children || []
+        };
+        result.push(item);
+    }
+    return result;
+}
+
+// Управление панелью
+function openPanel() {
+    const panel = document.getElementById('infoPanel');
+    const openBtn = document.getElementById('openPanelBtn');
+    
+    panel.classList.remove('collapsed');
+    panel.classList.add('active');
+    openBtn.classList.remove('visible');
+    isPanelOpen = true;
+}
+
+function closePanel() {
+    const panel = document.getElementById('infoPanel');
+    const openBtn = document.getElementById('openPanelBtn');
+    
+    panel.classList.add('collapsed');
+    panel.classList.remove('active');
+    openBtn.classList.add('visible');
+    isPanelOpen = false;
+}
+
+// Построить аккордеон
+function buildAccordion(node, container, level = 0) {
+    const item = document.createElement('div');
+    item.className = 'accordion-item';
+    item.id = 'accordion-' + node.id;
+    
+    const header = document.createElement('div');
+    header.className = 'accordion-header level-' + level;
+    header.innerHTML = `
+        <span>${node.name} <span class="badge">${node.type || 'Ру'}</span></span>
+        <span class="accordion-icon">▼</span>
+    `;
+    
+    const content = document.createElement('div');
+    content.className = 'accordion-content';
+    
+    const inner = document.createElement('div');
+    inner.className = 'accordion-inner';
+    
+    // Добавляем обработчик клика на заголовок
+    header.onclick = function(e) {
+        e.stopPropagation();
+        item.classList.toggle('active');
+        showInfo(node);
+    };
+    
+    // Если есть дети, добавляем их
+    if (node.children && node.children.length > 0) {
+        node.children.forEach(child => {
+            if (child.children && child.children.length > 0) {
+                // Рекурсивно добавляем вложенный аккордеон
+                buildAccordion(child, inner, level + 1);
+            } else {
+                // Добавляем как простой элемент
+                const subItem = document.createElement('div');
+                subItem.className = 'sub-item level-' + (level + 1);
+                subItem.innerHTML = `
+                    <span class="name">${child.name}</span>
+                    <span class="type">${child.type || 'Ру'}</span>
+                `;
+                subItem.onclick = function(e) {
+                    e.stopPropagation();
+                    showInfo(child);
+                };
+                subItem.id = 'item-' + child.id;
+                inner.appendChild(subItem);
+            }
+        });
+    }
+    
+    content.appendChild(inner);
+    item.appendChild(header);
+    item.appendChild(content);
+    container.appendChild(item);
+}
+
+function showInfo(node) {
+    currentSelectedNode = node;
+    
+    // Подсветка активного элемента
+    document.querySelectorAll('.sub-item').forEach(el => el.classList.remove('highlight'));
+    document.querySelectorAll('.accordion-header').forEach(el => el.style.border = 'none');
+    
+    const activeItem = document.getElementById('item-' + node.id);
+    if (activeItem) activeItem.classList.add('highlight');
+    
+    const activeHeader = document.getElementById('accordion-' + node.id);
+    if (activeHeader) activeHeader.querySelector('.accordion-header').style.border = '2px solid var(--gold)';
+    
+    openPanel();
+    
+    const content = document.getElementById('infoContent');
+    let html = '<div class="info-header"><div class="info-title">' + node.name + '</div><div class="info-type">' + (node.type || 'Род') + '</div></div>';
+    
+    // Иерархическая цепочка
+    const chain = getParentChain(node);
+    if (chain && chain.length > 0) {
+        html += '<div class="info-section"><h3>🔗 Tolıq shejire / Полная цепочка</h3><div class="hierarchy-chain">';
+        chain.reverse().forEach((item, index) => {
+            const isLast = index === chain.length - 1;
+            html += '<div class="hierarchy-item ' + (isLast ? 'current' : '') + '">';
+            html += '<span class="hierarchy-level">' + levelsMap[item.level] + '</span>';
+            html += '<span>' + item.name + '</span>';
+            if (!isLast) html += '<span class="hierarchy-arrow">⬇</span>';
+            html += '</div>';
+        });
+        html += '</div></div>';
+    }
+    
+    // Тамга
+    const tamga = node.tamga || (node.info && node.info.tamga);
+    if (tamga) {
+        html += '<div class="tamga-box"><div class="tamga-symbol">' + tamga + '</div><div class="tamga-label">ТАМГА (Родовой знак)</div></div>';
+    }
+    
+    // Уран
+    const uran = node.uran || (node.info && node.info.uran);
+    if (uran) {
+        html += '<div class="uran-box"><div class="uran-text">' + uran + '</div><div class="uran-label">УРАН (Боевой клич)</div></div>';
+    }
+    
+    // Информация
+    if (node.info) {
+        const fields = [
+            { key: 'history', icon: '📜', title: 'Tariyxı / История' },
+            { key: 'origin', icon: '🧬', title: 'Kelip shıǵıwı / Происхождение' },
+            { key: 'legend', icon: '🌟', title: 'Ańız / Легенда' },
+            { key: 'population', icon: '👥', title: 'Sanı / Численность' },
+            { key: 'structure', icon: '🏗️', title: 'Qurilimi / Структура' },
+            { key: 'warrior', icon: '⚔️', title: 'Batırları / Воины' },
+            { key: 'region', icon: '🌍', title: 'Jeri / Регион' },
+            { key: 'language', icon: '🗣️', title: 'Til / Язык' }
+        ];
+        
+        fields.forEach(field => {
+            if (node.info[field.key]) {
+                html += '<div class="info-section"><h3>' + field.icon + ' ' + field.title + '</h3><p>' + node.info[field.key] + '</p></div>';
+            }
+        });
+    }
+    
+    // Потомки
+    if (node.children && node.children.length > 0) {
+        const descendantsTree = buildDescendantsTree(node);
+        html += '<div class="stats-box"><div class="stats-number">' + getAllDescendants(node).length + '</div><div>Барлық ұрпақтары / Barlıq áwladlar</div></div>';
+        
+        html += '<div class="info-section"><h3>👇 Tómen toparlar / Подчиненные группы</h3>';
+        html += '<div class="descendants-list">';
+        
+        descendantsTree.forEach(group => {
+            html += '<div class="descendant-group">';
+            html += '<div class="descendant-parent">';
+            html += '<span style="color: var(--accent-yellow);">' + group.node.name + '</span>';
+            html += ' <span style="font-size: 0.8em; opacity: 0.7;">(' + levelsMap[group.node.level] + ')</span>';
+            html += '</div>';
+            
+            if (group.children.length > 0) {
+                html += '<div class="descendant-children">';
+                group.children.forEach(child => {
+                    html += '<div class="descendant-child">';
+                    html += '<span class="descendant-bullet"></span>';
+                    html += '<span>' + child.name + '</span>';
+                    if (child.children && child.children.length > 0) {
+                        html += ' <span style="font-size: 0.75em; color: var(--accent-orange);">+' + getAllDescendants(child).length + '</span>';
+                    }
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+            html += '</div>';
+        });
+        
+        html += '</div></div>';
+    }
+    
+    html += '<div class="info-section"><h3>📊 Dáreje / Уровень</h3><p>' + levelsMap[node.level] + ' (' + node.level + ')</p></div>';
+    
+    content.innerHTML = html;
+}
+
+function searchAccordion() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    
+    // Сбросить все подсветки
+    document.querySelectorAll('.sub-item').forEach(el => el.classList.remove('highlight'));
+    document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+    
+    if (input.length === 0) return;
+    
+    // Найти все элементы
+    function searchInNode(node) {
+        let found = false;
+        
+        // Проверить текущий узел
+        if (node.name.toLowerCase().includes(input)) {
+            found = true;
+            // Подсветить элемент
+            const item = document.getElementById('item-' + node.id);
+            if (item) {
+                item.classList.add('highlight');
+                item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            // Раскрыть родительские аккордеоны
+            const parent = document.getElementById('accordion-' + node.id);
+            if (parent) {
+                parent.classList.add('active');
+            }
+        }
+        
+        // Поиск в детях
+        if (node.children) {
+            node.children.forEach(child => {
+                if (searchInNode(child)) {
+                    found = true;
+                    // Раскрыть текущий аккордеон
+                    const current = document.getElementById('accordion-' + node.id);
+                    if (current) {
+                        current.classList.add('active');
+                    }
+                }
+            });
+        }
+        
+        return found;
+    }
+    
+    searchInNode(treeData);
+}
+
+// Бургер меню
+function toggleBurgerMenu() {
+    const burger = document.getElementById('burgerMenu');
+    const viewSwitch = document.getElementById('viewSwitch');
+    
+    burger.classList.toggle('active');
+    viewSwitch.classList.toggle('active');
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', function() {
+    const accordionContainer = document.getElementById('accordion');
+    
+    // Строим аккордеон для каждого ребенка корня
+    treeData.children.forEach(child => {
+        buildAccordion(child, accordionContainer, 1);
+    });
+    
+    // Обработчики кнопок панели
+    document.getElementById('closePanelBtn').addEventListener('click', closePanel);
+    document.getElementById('openPanelBtn').addEventListener('click', function() {
+        if (currentSelectedNode) {
+            openPanel();
+        } else {
+            alert('Aldın\' menen tuwdı tan\'lan\' / Сначала выберите род');
+        }
+    });
+    
+    // Бургер меню
+    document.getElementById('burgerMenu').addEventListener('click', toggleBurgerMenu);
+    
+    // Закрытие меню при клике на ссылку
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                toggleBurgerMenu();
+            }
+        });
+    });
+});
+    </script>
+</body>
+</html>
