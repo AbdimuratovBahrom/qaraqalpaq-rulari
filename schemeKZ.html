@@ -203,11 +203,53 @@
         .legend-item { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
         .legend-color { width: 12px; height: 12px; border-radius: 3px; }
 
+        .lang-switch {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 1px solid rgba(212,175,55,0.3);
+}
+
+.lang-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--gold);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.lang-btn:hover {
+    background: rgba(212,175,55,0.1);
+}
+
+.lang-btn.active {
+    background: var(--gold);
+    color: #000;
+}
+
         @media (max-width: 1200px) {
             main { grid-template-columns: 1fr; }
             .detail-panel { display: none; position: fixed; right: 0; top: 70px; bottom: 0; width: 100%; max-width: 400px; z-index: 100; }
             .detail-panel.active { display: block; }
         }
+
+        @media (max-width: 768px) {
+    .lang-switch {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(212,175,55,0.3);
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+        justify-content: center;
+    }
+}
     </style>
 </head>
 <body>
@@ -217,13 +259,15 @@
             <h1>УРУУ</h1>
         </div>
         <div class="view-switch">
-            <a href="index.html" class="view-btn" target="_self">🏠 Главное</a>
-            <a href="index1.html" class="view-btn " target="_self">🏠 Bas bet</a>
-            <a href="listsQQ.html" class="view-btn" target="_self">📋 Списки</a>
-            <a href="lists.html" class="view-btn " target="_self">📋 Тізімдер</a>
-            <a href="scheme.html" class="view-btn active" target="_self">🌳 Схема</a>
-            <a href="exogamy.html" class="view-btn" target="_self">💑 Ekzogamiya</a>
+            <a href="indexKZ.html" class="view-btn" target="_self">🏠 Басты бет</a>
+            <a href="listsKZ.html" class="view-btn" target="_self">📋 Тізімдер</a>
+            <a href="schemeKZ.html" class="view-btn active" target="_self">🌳 Схема</a>
+            <a href="exogamyKZ.html" class="view-btn" target="_self">💑 Экзогамия</a>
         </div>
+        <div class="lang-switch">
+    <a href="index.html" class="lang-btn">QQ</a>
+    <a href="indexKZ.html" class="lang-btn active">KZ</a>
+</div>
     </header>
 
     <main>

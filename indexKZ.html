@@ -1,9 +1,14 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Қарақалпақ рулары - Списки</title>
+    <title>Қарақалпақ рулары - Толық шежіре</title>
     <style>
         :root {
             --primary-bg: #0f1419;
@@ -170,7 +175,7 @@
             position: relative;
         }
         
-        .list-panel { 
+        .tree-panel { 
             flex: 1; 
             overflow-y: auto; 
             padding: 15px; 
@@ -254,119 +259,29 @@
         .open-panel-btn.visible {
             display: flex;
         }
-
-        /* Стили списков */
-        .hierarchical-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .list-item {
-            margin: 4px 0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .list-header {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-            border-radius: 8px;
-            position: relative;
-        }
-
-        .list-header:hover {
-            transform: translateX(5px);
-            border-color: var(--accent-yellow);
-        }
-
-        .list-header.active {
-            border-color: var(--accent-yellow);
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
-        }
-
-        .expand-btn {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-            font-size: 0.8em;
-            color: var(--accent-yellow);
-            transition: transform 0.3s;
-            flex-shrink: 0;
-        }
-
-        .expand-btn.expanded {
-            transform: rotate(90deg);
-        }
-
-        .list-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .list-title {
-            font-weight: bold;
-            font-size: 0.95em;
-        }
-
-        .list-subtitle {
-            font-size: 0.75em;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .list-meta {
-            display: flex;
-            gap: 10px;
-            margin-left: auto;
-            font-size: 0.75em;
-            opacity: 0.7;
-        }
-
-        .children-container {
-            margin-left: 20px;
-            padding-left: 15px;
-            border-left: 2px solid var(--border-color);
-            display: none;
-        }
-
-        .children-container.expanded {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Цветовые уровни */
-        .level-0 .list-header { background: linear-gradient(135deg, #e74c3c, #c0392b); }
-        .level-1 .list-header { background: linear-gradient(135deg, #e67e22, #d35400); }
-        .level-2 .list-header { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; }
-        .level-3 .list-header { background: linear-gradient(135deg, #2ecc71, #27ae60); }
-        .level-4 .list-header { background: linear-gradient(135deg, #3498db, #2980b9); }
-        .level-5 .list-header { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
-        .level-6 .list-header { background: linear-gradient(135deg, #1abc9c, #16a085); }
-
+        
         h1 { text-align: center; color: var(--accent-yellow); margin-bottom: 5px; font-size: 1.8em; }
         .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 15px; font-size: 0.8em; }
-        
+        .tree { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .branch { display: flex; flex-direction: column; align-items: center; margin: 3px; }
+        .node {
+            background: var(--secondary-bg); border: 2px solid var(--border-color); border-radius: 6px;
+            padding: 6px 10px; cursor: pointer; transition: all 0.3s;
+            min-width: 80px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 0.8em;
+        }
+        .node:hover { transform: translateY(-2px); border-color: var(--accent-yellow); }
+        .node.active { border-color: var(--accent-yellow); box-shadow: 0 0 10px rgba(241, 196, 15, 0.4); }
+        .level-0 .node { background: linear-gradient(135deg, #e74c3c, #c0392b); font-size: 1.1em; font-weight: bold; padding: 10px 18px; }
+        .level-1 .node { background: linear-gradient(135deg, #e67e22, #d35400); font-size: 0.95em; font-weight: bold; }
+        .level-2 .node { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #2c3e50; font-weight: bold; }
+        .level-3 .node { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .level-4 .node { background: linear-gradient(135deg, #3498db, #2980b9); font-size: 0.75em; }
+        .level-5 .node { background: linear-gradient(135deg, #9b59b6, #8e44ad); font-size: 0.7em; min-width: 70px; }
+        .level-6 .node { background: linear-gradient(135deg, #1abc9c, #16a085); font-size: 0.65em; min-width: 60px; }
+        .node-title { font-weight: bold; font-size: 0.9em; }
+        .node-subtitle { font-size: 0.7em; opacity: 0.9; }
+        .connector { width: 2px; height: 12px; background: var(--accent-orange); margin: -2px auto; }
+        .children { display: flex; gap: 4px; margin-top: 10px; flex-wrap: wrap; justify-content: center; }
         .info-header { border-bottom: 2px solid var(--accent-orange); padding-bottom: 10px; margin-bottom: 12px; }
         .info-title { font-size: 1.4em; color: var(--accent-yellow); margin-bottom: 5px; }
         .info-type { color: var(--accent-orange); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
@@ -400,6 +315,7 @@
                 max-width: 150px;
             } 
             
+            
             .info-panel { 
                 width: 100%; 
                 position: fixed; 
@@ -432,11 +348,6 @@
                 bottom: 20px;
                 right: 20px;
             }
-
-            .children-container {
-                margin-left: 10px;
-                padding-left: 10px;
-            }
         }
 
         @media (max-width: 765px) {
@@ -448,7 +359,7 @@
         .highlight { 
             animation: pulse 1.5s infinite;
             border-color: var(--accent-yellow) !important;
-            border: solid 3px var(--accent-yellow) !important;
+            border: solid 5px var(--accent-yellow) !important;
         }
 
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); } 70% { box-shadow: 0 0 0 12px rgba(241, 196, 15, 0); } 100% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); } }
@@ -521,75 +432,93 @@
             margin-right: 8px;
         }
 
-        /* Путь навигации (хлебные крошки) */
-        .breadcrumb {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            font-size: 0.8em;
-        }
+        .lang-switch {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 1px solid rgba(212,175,55,0.3);
+}
 
-        .breadcrumb-item {
-            color: var(--accent-yellow);
-            cursor: pointer;
-            padding: 2px 8px;
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
+.lang-btn {
+    /* padding: 0.1rem 0.1rem; */
+    border-radius: 10px;
+    /* border: 1px solid var(--gold); */
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.65rem;
+    font-weight: 400;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+.lang-btn1 {
+    padding: 0.4rem 0.4rem;
+    border-radius: 8px;
+    /* border: 1px solid var(--gold); */
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+.lang-btn img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.lang-btn1 img {
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
 
-        .breadcrumb-item:hover {
-            background: rgba(241, 196, 15, 0.2);
-        }
 
-        .breadcrumb-separator {
-            color: var(--text-secondary);
-        }
 
-        .breadcrumb-item.active {
-            color: var(--text-secondary);
-            cursor: default;
-        }
+.lang-btn:hover {
+    border: 1px solid var(--gold);
+   
+}
 
-        .breadcrumb-item.active:hover {
-            background: none;
-        }
+.lang-btn1:hover {
+    background: rgba(197, 212, 210, 0.1);
+}
 
-        /* Кнопка "Развернуть все" */
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            justify-content: center;
-        }
+.lang-btn1.active {
+    background: #000;
+    color: #000;
+    border: 1px solid var(--accent-orange);
+}
+.lang-btn1 {
+    margin-bottom: 8px;
+}
 
-        .control-btn {
-            padding: 8px 16px;
-            background: var(--secondary-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8em;
-            transition: all 0.3s;
-        }
+@media (max-width: 768px) {
+    .lang-switch {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(212,175,55,0.3);
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+        justify-content: center;
+    }
+    
 
-        .control-btn:hover {
-            background: var(--accent-yellow);
-            color: #000;
-            border-color: var(--accent-yellow);
-        }
+}
     </style>
 <base target="_blank">
 </head>
 <body>
     <header>
         <div class="logo">
-            <span style="font-size: 2rem;">📋</span>
-            <a target="_blank" href="./images/uru.jpg">URIW</a>
+            <span style="font-size: 2rem;">🌳</span>
+            <a target="_blank" href="./images/uru.jpg">УРУУ</a>
         </div>
         
         <!-- Бургер меню кнопка -->
@@ -600,38 +529,31 @@
         </button>
         
         <div class="view-switch" id="viewSwitch">
-            <a href="index.html" class="view-btn" target="_self">🏠 Главное</a>
-            <a href="index1.html" class="view-btn " target="_self">🏠 Bas bet</a>
-            <a href="listsQQ.html" class="view-btn" target="_self">📋 Tizimler</a>
-            <a href="lists.html" class="view-btn active" target="_self">📋 Тізімдер</a>
-            <a href="scheme.html" class="view-btn" target="_self">🌳 Sxema</a>
-            <a href="exogamy.html" class="view-btn" target="_self">💑 Ekzogamiya</a>
+            <a href="indexKZ.html" class="view-btn active" target="_self">🏠 Басты бет</a>
+            <a href="listsKZ.html" class="view-btn" target="_self">📋 Тізімдер</a>
+            <a href="schemeKZ.html" class="view-btn" target="_self">🌳 Схема</a>
+            <a href="exogamyKZ.html" class="view-btn" target="_self">💑 Экзогамия</a>
         </div>
+
+        <div class="lang-switch">
+    <a target="_self" href="index.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
+    <a target="_self" href="indexKZ.html" class="lang-btn1 active"><img src="./images/KZ.webp" alt="KZ"></a>
+</div>
     </header>
 
-    <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchNode()"></div>
-    <div class="stats" id="statsBox"><div><strong>Statistika:</strong></div><div>Arıs: 2</div><div>Bólim: 2</div><div>Uriw: 50+</div><div>tiyre/ko'she: 300+</div></div>
+    <div class="search-box"><input type="text" id="searchInput" placeholder="Іздеу..." onkeyup="searchNode()"></div>
+    <div class="stats" id="statsBox"><div><strong>Статистика:</strong></div><div>Арис: 2</div><div>Бөлім: 2</div><div>Уруу: 50+</div><div>тире/коше: 300+</div></div>
     
     <div class="container">
-        <div class="list-panel" id="listPanel">
-            <h1 style="margin-top: 10px;">QARAQALPAQ URUWLARI</h1>
-            <div class="subtitle">Tizim formatında / В виде списка</div>
-            
-            <div class="controls">
-                <button class="control-btn" onclick="expandAll()">📂 Barlıgın ashıw</button>
-                <button class="control-btn" onclick="collapseAll()">📁 Barlıgın jabıw</button>
-            </div>
-
-            <div class="breadcrumb" id="breadcrumb">
-                <span class="breadcrumb-item active">Barlıq ruwlar / Все русы</span>
-            </div>
-
-            <div class="hierarchical-list" id="hierarchicalList"></div>
+        <div class="tree-panel" id="treePanel">
+            <h1 style="margin-top: 10px;">Қарақалпақ рулары</h1>
+            <div class="subtitle"></div>
+            <div class="tree" id="tree"></div>
         </div>
         <div class="info-panel" id="infoPanel">
             <button class="close-panel-btn" id="closePanelBtn" title="Закрыть панель">×</button>
             <div id="infoContent">
-                <div class="info-header"><div class="info-title">Elementti tańlań/Выберите элемент</div><div class="info-type">Tańba, uran hám tariyx haqqında maǵlıwmat alıw ushın basıń/Нажмите для информации о тамге, уране, истории</div></div>
+                <div class="info-header"><div class="info-title">Элементті таңдаңыз/Выберите элемент</div><div class="info-type">Тамга, уран, тарих туралы ақпаратты басыңыз/Нажмите для информации о тамге, уране, истории</div></div>
             </div>
         </div>
     </div>
@@ -641,25 +563,24 @@
     
     <div class="legend">
         <div><strong>Иерархия:</strong></div>
-        <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Xalıq</div>
-        <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Arıs</div>
-        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Bólim</div>
-        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Úlken urıw</div>
-        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Urıw</div>
-        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Tiyre</div>
-        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Ko'she</div>
+        <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Халық</div>
+        <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Арис</div>
+        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Бөлім</div>
+        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Үлкен уруу</div>
+        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Уруу</div>
+        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Тіре</div>
+        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Коше</div>
     </div>
 
     <script>
-const levelsMap = ['Xalıq / Народ', 'Arıs', 'Bólim', 'Úlken urıw', 'Tiyre', 'Ko\'she'];
+const levelsMap = ['Халық / Народ', 'Арís', 'Бөлім', 'Үлкен уруу', 'Тіре', 'Коше'];
 
 // Флаг состояния панели
 let isPanelOpen = false;
 let currentSelectedNode = null;
-let currentExpandedNodes = new Set();
 
 const treeData = {
-    id: "root", name: "QARAQALPAQLAR", level: 0, type: "Xalıq",
+    id: "root", name: "Қарақалпақтар", level: 0, type: "Халық",
     info: {
         history: "Қарақалпақтар - Орта Азиядағы түркі тілдес халық. XVI-XVIII ғасырларда қалыптасқан.",
         origin: "Негізі Ноғай ордасы, Қыпшақ, Қарлұқ тайпаларынан.",
@@ -1058,186 +979,38 @@ function toggleBurgerMenu() {
     viewSwitch.classList.toggle('active');
 }
 
-// Развернуть/свернуть элемент списка
-function toggleListItem(id) {
-    const childrenContainer = document.getElementById('children-' + id);
-    const expandBtn = document.getElementById('expand-' + id);
-    
-    if (childrenContainer) {
-        const isExpanded = childrenContainer.classList.contains('expanded');
-        
-        if (isExpanded) {
-            childrenContainer.classList.remove('expanded');
-            expandBtn.classList.remove('expanded');
-            currentExpandedNodes.delete(id);
-        } else {
-            childrenContainer.classList.add('expanded');
-            expandBtn.classList.add('expanded');
-            currentExpandedNodes.add(id);
+function buildTree(node, container) {
+    const branch = document.createElement('div');
+    branch.className = 'branch';
+    const nodeEl = document.createElement('div');
+    nodeEl.className = 'node level-' + node.level;
+    let htmlContent = '<div class="node-title">' + node.name + '</div>';
+    if (node.type) htmlContent += '<div class="node-subtitle">' + node.type + '</div>';
+    nodeEl.innerHTML = htmlContent;
+    nodeEl.onclick = function() { showInfo(node); };
+    nodeEl.id = 'node-' + node.id;
+    branch.appendChild(nodeEl);
+    if (node.children && node.children.length > 0) {
+        const connector = document.createElement('div');
+        connector.className = 'connector';
+        branch.appendChild(connector);
+        const children = document.createElement('div');
+        children.className = 'children level-' + (node.level + 1);
+        for (let i = 0; i < node.children.length; i++) {
+            buildTree(node.children[i], children);
         }
+        branch.appendChild(children);
     }
-}
-
-// Выбрать элемент (показать информацию)
-function selectNode(node) {
-    currentSelectedNode = node;
-    
-    // Убрать выделение со всех элементов
-    document.querySelectorAll('.list-header').forEach(el => el.classList.remove('active'));
-    
-    // Выделить текущий элемент
-    const currentEl = document.getElementById('header-' + node.id);
-    if (currentEl) currentEl.classList.add('active');
-    
-    // Показать информацию
-    showInfo(node);
-    
-    // Обновить хлебные крошки
-    updateBreadcrumb(node);
-}
-
-// Обновить хлебные крошки
-function updateBreadcrumb(node) {
-    const chain = getParentChain(node);
-    const breadcrumb = document.getElementById('breadcrumb');
-    
-    if (!chain) return;
-    
-    let html = '';
-    chain.reverse().forEach((item, index) => {
-        const isLast = index === chain.length - 1;
-        if (!isLast) {
-            html += `<span class="breadcrumb-item" onclick="navigateToNode('${item.id}')">${item.name}</span>`;
-            html += `<span class="breadcrumb-separator">➜</span>`;
-        } else {
-            html += `<span class="breadcrumb-item active">${item.name}</span>`;
-        }
-    });
-    
-    breadcrumb.innerHTML = html;
-}
-
-// Навигация к узлу
-function navigateToNode(id) {
-    const node = findNodeById(treeData, id);
-    if (node) {
-        selectNode(node);
-        // Развернуть все родителей
-        const chain = getParentChain(node);
-        if (chain) {
-            chain.forEach(parent => {
-                if (parent.id !== id) {
-                    const childrenContainer = document.getElementById('children-' + parent.id);
-                    const expandBtn = document.getElementById('expand-' + parent.id);
-                    if (childrenContainer && !childrenContainer.classList.contains('expanded')) {
-                        childrenContainer.classList.add('expanded');
-                        expandBtn.classList.add('expanded');
-                        currentExpandedNodes.add(parent.id);
-                    }
-                }
-            });
-        }
-        // Прокрутить к элементу
-        const element = document.getElementById('item-' + id);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }
-}
-
-// Построить иерархический список
-function buildList(node, container) {
-    const item = document.createElement('div');
-    item.className = 'list-item level-' + node.level;
-    item.id = 'item-' + node.id;
-    
-    const hasChildren = node.children && node.children.length > 0;
-    const childCount = hasChildren ? node.children.length : 0;
-    const descendantCount = hasChildren ? getAllDescendants(node).length : 0;
-    
-    let html = '<div class="list-header" id="header-' + node.id + '" onclick="handleItemClick(\'' + node.id + '\', event)">';
-    
-    // Кнопка разворачивания (если есть дети)
-    if (hasChildren) {
-        html += '<span class="expand-btn" id="expand-' + node.id + '">▶</span>';
-    } else {
-        html += '<span class="expand-btn" style="visibility: hidden;">▶</span>';
-    }
-    
-    // Контент
-    html += '<div class="list-content">';
-    html += '<span class="list-title">' + node.name + '</span>';
-    if (node.type) {
-        html += '<span class="list-subtitle">' + node.type + '</span>';
-    }
-    html += '</div>';
-    
-    // Мета-информация
-    html += '<div class="list-meta">';
-    if (node.tamga) html += '<span>🏷️ ' + node.tamga + '</span>';
-    if (node.уран) html += '<span>📢 ' + node.уран + '</span>';
-    if (hasChildren) {
-        html += '<span>👇 ' + childCount + '/' + descendantCount + '</span>';
-    }
-    html += '</div>';
-    
-    html += '</div>';
-    
-    // Контейнер для детей
-    if (hasChildren) {
-        html += '<div class="children-container" id="children-' + node.id + '">';
-    }
-    
-    item.innerHTML = html;
-    container.appendChild(item);
-    
-    // Рекурсивно добавляем детей
-    if (hasChildren) {
-        const childrenContainer = item.querySelector('.children-container');
-        node.children.forEach(child => {
-            buildList(child, childrenContainer);
-        });
-    }
-}
-
-// Обработчик клика по элементу
-function handleItemClick(id, event) {
-    // Если кликнули на кнопку разворачивания - только развернуть/свернуть
-    if (event.target.classList.contains('expand-btn')) {
-        toggleListItem(id);
-    } else {
-        // Иначе - выбрать элемент и развернуть/свернуть
-        const node = findNodeById(treeData, id);
-        if (node) {
-            selectNode(node);
-            toggleListItem(id);
-        }
-    }
-}
-
-// Развернуть все
-function expandAll() {
-    document.querySelectorAll('.children-container').forEach(el => {
-        el.classList.add('expanded');
-    });
-    document.querySelectorAll('.expand-btn').forEach(el => {
-        if (el.style.visibility !== 'hidden') {
-            el.classList.add('expanded');
-        }
-    });
-}
-
-// Свернуть все
-function collapseAll() {
-    document.querySelectorAll('.children-container').forEach(el => {
-        el.classList.remove('expanded');
-    });
-    document.querySelectorAll('.expand-btn').forEach(el => {
-        el.classList.remove('expanded');
-    });
+    container.appendChild(branch);
 }
 
 function showInfo(node) {
+    currentSelectedNode = node;
+    
+    document.querySelectorAll('.node').forEach(n => n.classList.remove('active'));
+    const currentNode = document.getElementById('node-' + node.id);
+    if (currentNode) currentNode.classList.add('active');
+    
     const panel = document.getElementById('infoPanel');
     const content = document.getElementById('infoContent');
     
@@ -1249,7 +1022,7 @@ function showInfo(node) {
     // Иерархическая цепочка
     const chain = getParentChain(node);
     if (chain && chain.length > 0) {
-        html += '<div class="info-section"><h3>🔗Tolıq shejire / Полная цепочка</h3><div class="hierarchy-chain">';
+        html += '<div class="info-section"><h3>🔗Толық шежіре / Полная цепочка</h3><div class="hierarchy-chain">';
         chain.reverse().forEach((item, index) => {
             const isLast = index === chain.length - 1;
             html += '<div class="hierarchy-item ' + (isLast ? 'current' : '') + '">';
@@ -1273,14 +1046,14 @@ function showInfo(node) {
     
     if (node.info) {
         const fields = [
-            { key: 'history', icon: '📜', title: 'Tariyxı / История' },
-            { key: 'origin', icon: '🧬', title: 'Kelip shıǵıwı / Происхождение' },
-            { key: 'legend', icon: '🌟', title: 'Ańız / Легенда' },
-            { key: 'population', icon: '👥', title: 'Sanı / Численность' },
-            { key: 'structure', icon: '🏗️', title: 'Qurilimi / Структура' },
-            { key: 'warrior', icon: '⚔️', title: 'Batırları / Воины' },
-            { key: 'region', icon: '🌍', title: 'Jeri / Регион' },
-            { key: 'language', icon: '🗣️', title: 'Til / Язык' }
+            { key: 'history', icon: '📜', title: 'Тарих / История' },
+            { key: 'origin', icon: '🧬', title: 'Келіп шығыуы / Происхождение' },
+            { key: 'legend', icon: '🌟', title: 'Аңыз / Легенда' },
+            { key: 'population', icon: '👥', title: 'Саны / Численность' },
+            { key: 'structure', icon: '🏗️', title: 'Құрылымы / Структура' },
+            { key: 'warrior', icon: '⚔️', title: 'Батырлары / Воины' },
+            { key: 'region', icon: '🌍', title: 'Жері / Регион' },
+            { key: 'language', icon: '🗣️', title: 'Тілі / Язык' }
         ];
         
         fields.forEach(field => {
@@ -1293,9 +1066,9 @@ function showInfo(node) {
     // Список всех потомков
     if (node.children && node.children.length > 0) {
         const descendantsTree = buildDescendantsTree(node);
-        html += '<div class="stats-box"><div class="stats-number">' + getAllDescendants(node).length + '</div><div> Весь род / Barlıq áwladlar</div></div>';
+        html += '<div class="stats-box"><div class="stats-number">' + getAllDescendants(node).length + '</div><div> Бүкіл тұқым/Весь род';
         
-        html += '<div class="info-section"><h3>👇Tómen toparlar / Подчиненные группы</h3>';
+        html += '<div class="info-section"><h3>👇Бағынышты топтар / Подчиненные группы</h3>';
         html += '<div class="descendants-list">';
         
         descendantsTree.forEach(group => {
@@ -1324,47 +1097,27 @@ function showInfo(node) {
         html += '</div></div>';
     }
     
-    html += '<div class="info-section"><h3>📊 Dáreje / Уровень</h3><p>' + levelsMap[node.level] + ' (' + node.level + ')</p></div>';
+    html += '<div class="info-section"><h3>📊 Дәреже / Уровень</h3><p>' + levelsMap[node.level] + ' (' + node.level + ')</p></div>';
     
     content.innerHTML = html;
 }
 
 function searchNode() {
     const input = document.getElementById('searchInput').value.toLowerCase();
-    const headers = document.querySelectorAll('.list-header');
-    
-    headers.forEach(header => {
-        const text = header.textContent.toLowerCase();
-        const item = header.closest('.list-item');
-        
-        if (text.includes(input) && input.length > 0) {
-            header.classList.add('highlight');
-            // Развернуть родителей
-            let parent = item.parentElement;
-            while (parent) {
-                if (parent.classList.contains('children-container')) {
-                    parent.classList.add('expanded');
-                    const parentId = parent.id.replace('children-', '');
-                    const expandBtn = document.getElementById('expand-' + parentId);
-                    if (expandBtn) expandBtn.classList.add('expanded');
-                }
-                parent = parent.parentElement;
-            }
-            // Прокрутить к первому найденному
-            if (!window.searchScrolled) {
-                header.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                window.searchScrolled = true;
-                setTimeout(() => window.searchScrolled = false, 1000);
-            }
+    const nodes = document.querySelectorAll('.node');
+    nodes.forEach(node => {
+        if (node.textContent.toLowerCase().includes(input) && input.length > 0) {
+            node.classList.add('highlight');
+            node.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
-            header.classList.remove('highlight');
+            node.classList.remove('highlight');
         }
     });
 }
 
 // Обработчики событий
 document.addEventListener('DOMContentLoaded', function() {
-    buildList(treeData, document.getElementById('hierarchicalList'));
+    buildTree(treeData, document.getElementById('tree'));
     
     // Кнопка закрытия панели
     document.getElementById('closePanelBtn').addEventListener('click', closePanel);
@@ -1374,7 +1127,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentSelectedNode) {
             openPanel();
         } else {
-            alert(' Aldın\' menen tuwdı tan\'lan\' / Сначала выберите род');
+            // Если ничего не выбрано, показываем сообщение
+            alert(' Алдымен тұқымды таңдаңыз / Сначала выберите род');
         }
     });
     
@@ -1393,10 +1147,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Обработка изменения размера окна
     window.addEventListener('resize', function() {
         if (window.innerWidth > 968) {
+            // На десктопе показываем кнопку открытия панели, если она закрыта
             if (!isPanelOpen) {
                 document.getElementById('openPanelBtn').classList.add('visible');
             }
         } else {
+            // На мобильном скрываем кнопку открытия панели
             document.getElementById('openPanelBtn').classList.remove('visible');
         }
     });
