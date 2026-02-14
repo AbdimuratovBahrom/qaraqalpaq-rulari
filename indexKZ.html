@@ -434,6 +434,7 @@
 
         .lang-switch {
     display: flex;
+    align-items: center;
     gap: 0.5rem;
     margin-left: 1rem;
     padding-left: 1rem;
@@ -443,7 +444,9 @@
 .lang-btn {
     /* padding: 0.1rem 0.1rem; */
     border-radius: 10px;
-    /* border: 1px solid var(--gold); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: transparent;
     color: var(--gold);
     cursor: pointer;
@@ -453,9 +456,11 @@
     text-decoration: none;
 }
 .lang-btn1 {
-    padding: 0.4rem 0.4rem;
+    /* padding: 0.4rem 0.4rem; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 8px;
-    /* border: 1px solid var(--gold); */
     background: transparent;
     color: var(--gold);
     cursor: pointer;
@@ -465,15 +470,15 @@
     text-decoration: none;
 }
 .lang-btn img {
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
+    margin-bottom: 3px;
     border-radius: 50%;
     vertical-align: middle;
 }
 .lang-btn1 img {
-    width: 40px;
-    height: 40px;
-    margin-top: 5px;
+    width: 43px;
+    height: 43px;
     border-radius: 50%;
     vertical-align: middle;
 }
@@ -482,7 +487,10 @@
 
 .lang-btn:hover {
     border: 1px solid var(--gold);
-   
+    width: 53px;
+    height: 53px;
+    
+    
 }
 
 .lang-btn1:hover {
@@ -490,13 +498,12 @@
 }
 
 .lang-btn1.active {
-    background: #000;
-    color: #000;
+    width: 53px;
+    height: 53px;
+    
     border: 1px solid var(--accent-orange);
 }
-.lang-btn1 {
-    margin-bottom: 8px;
-}
+
 
 @media (max-width: 768px) {
     .lang-switch {
@@ -504,13 +511,18 @@
         padding-left: 0;
         border-left: none;
         border-top: 1px solid rgba(212,175,55,0.3);
-        padding-top: 0.5rem;
-        margin-top: 0.5rem;
+        /* padding-top: 0.5rem;
+        margin-top: 0.5rem; */
+        display: flex;
+        align-items: center;
         justify-content: center;
     }
+
+    
+}
     
 
-}
+
     </style>
 <base target="_blank">
 </head>

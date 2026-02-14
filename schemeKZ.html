@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>УРУУ | Древовидная схема</title>
+    <title>URUW | Схема</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -12,6 +12,31 @@
             --bg: #0a0c10;
             --bg-card: #151923;
             --text: #ffffff;
+
+            --primary-bg: #0f1419;
+            --secondary-bg: #1a1f2e;
+            --primary-bg: #0f1419;
+            --secondary-bg: #1a1f2e;
+            --accent-red: #e74c3c;
+            --accent-orange: #e67e22;
+            --accent-yellow: #f1c40f;
+            --gold: #f1c40f;
+            --accent-green: #2ecc71;
+            --accent-blue: #3498db;
+            --accent-purple: #9b59b6;
+            --accent-cyan: #1abc9c;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --border-color: #34495e;
+            
+            /* Дәреже түстері */
+            --tust-xaliq: #e74c3c;
+            --tust-aris: #e67e22;
+            --tust-bolim: #f1c40f;
+            --tust-ulken: #2ecc71;
+            --tust-uruw: #3498db;
+            --tust-tiyre: #9b59b6;
+            --tust-koshe: #1abc9c;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
@@ -26,12 +51,57 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             backdrop-filter: blur(10px);
+            height: 70px;
         }
 
-        .logo { display: flex; align-items: center; gap: 10px; }
-        .logo h1 { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.8rem; }
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        
+        .logo a { 
+            font-family: 'Cormorant Garamond', serif; 
+            color: var(--gold); 
+            font-size: 1.8rem; 
+            margin: 0;
+            text-decoration: none;
+        }
+        
+        /* Burger меню */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        
+        .burger-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
         
         .view-switch {
             display: flex;
@@ -39,9 +109,46 @@
             background: rgba(255,255,255,0.1);
             padding: 0.25rem;
             border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: flex;
+            }
+            
+            .view-switch {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10,12,16,0.98);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                border-bottom: 2px solid var(--gold);
+                border-radius: 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+            }
+            
+            .view-switch.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .view-btn {
+                /* max-width: 150px; */
+                text-align: center;
+                padding: 1rem;
+            }
         }
         
         .view-btn {
+            /* width: 53px;
+            height: 53px; */
             padding: 0.5rem 1.5rem;
             border-radius: 16px;
             border: none;
@@ -59,11 +166,12 @@
         main {
             margin-top: 70px;
             height: calc(100vh - 70px);
-            display: grid;
-            grid-template-columns: 1fr 400px;
+            display: flex;
+            position: relative;
         }
 
         #treeArea {
+            flex: 1;
             overflow: hidden;
             position: relative;
             background: radial-gradient(circle at center, rgba(212,175,55,0.05) 0%, transparent 70%);
@@ -106,12 +214,83 @@
             opacity: 0.6;
         }
 
+        /* Оң панель */
         .detail-panel {
             background: var(--bg-card);
             border-left: 1px solid #2d3548;
             padding: 2rem;
             overflow-y: auto;
             box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            position: relative;
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s, width 0.3s ease;
+            width: 400px;
+            flex-shrink: 0;
+            will-change: transform, opacity, visibility;
+        }
+        
+        .detail-panel.collapsed {
+            transform: translateX(100%);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            width: 0;
+            padding: 0;
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s, width 0.3s ease, padding 0.3s ease;
+        }
+        
+        .close-panel-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--tust-xaliq);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        .close-panel-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+        
+        .open-panel-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 100px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .open-panel-btn.visible {
+            display: flex;
+        }
+        
+        .open-panel-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.6);
         }
 
         .detail-header {
@@ -152,16 +331,22 @@
         .info-label { font-size: 0.75rem; color: #8892b0; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: bold; letter-spacing: 0.5px; }
         .info-content { color: #e2e8f0; line-height: 1.5; font-size: 0.95rem; }
         
-        /* Node colors by type */
-        .node-root rect { fill: #8e44ad; stroke: #9b59b6; }
-        .node-arys rect { fill: #e74c3c; stroke: #c0392b; }
-        .node-bolum rect { fill: #9b59b6; stroke: #8e44ad; }
-        .node-ulken rect { fill: #e67e22; stroke: #d35400; }
-        .node-uruu rect { fill: #27ae60; stroke: #229954; }
-        .node-tiyre rect { fill: #f1c40f; stroke: #f39c12; }
-        .node-tiyre text { fill: #000; text-shadow: none; font-weight: 700; }
-        .node-koshe rect { fill: #1abc9c; stroke: #16a085; }
-        .node-koshe text { fill: #000; text-shadow: none; }
+        /* Дәреже бойынша түстер - негізгі түстер */
+        .node-xaliq rect { fill: var(--tust-xaliq); stroke: #c0392b; }
+        .node-aris rect { fill: var(--tust-aris); stroke: #d35400; }
+        .node-bolim rect { fill: var(--tust-bolim); stroke: #f39c12; }
+        .node-ulken rect { fill: var(--tust-ulken); stroke: #27ae60; }
+        .node-uruw rect { fill: var(--tust-uruw); stroke: #2980b9; }
+        .node-tiyre rect { fill: var(--tust-tiyre); stroke: #8e44ad; }
+        .node-koshe rect { fill: var(--tust-koshe); stroke: #16a085; }
+        
+        /* Бөлім және Көше үшін қара текст */
+        .node-bolim text,
+        .node-koshe text { 
+            fill: #000; 
+            text-shadow: none; 
+            font-weight: 700; 
+        }
         
         .controls {
             position: absolute;
@@ -198,76 +383,210 @@
             border-radius: 8px;
             border: 1px solid #333;
             font-size: 0.8rem;
+            max-height: 200px;
+            overflow-y: auto;
         }
         
         .legend-item { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
         .legend-color { width: 12px; height: 12px; border-radius: 3px; }
 
         .lang-switch {
-    display: flex;
-    gap: 0.5rem;
-    margin-left: 1rem;
-    padding-left: 1rem;
-    border-left: 1px solid rgba(212,175,55,0.3);
-}
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(212,175,55,0.3);
+        }
 
-.lang-btn {
-    padding: 0.4rem 0.8rem;
-    border-radius: 8px;
-    border: 1px solid var(--gold);
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s;
-    text-decoration: none;
-}
+        /* Иерархия тізімі */
+        .hierarchy-chain {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.1), rgba(230, 126, 34, 0.1));
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+        }
+        .hierarchy-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(241, 196, 15, 0.3);
+        }
+        .hierarchy-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .hierarchy-arrow {
+            margin: 0 10px;
+            color: var(--tust-aris);
+        }
+        .hierarchy-level {
+            background: var(--gold);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            min-width: 80px;
+            text-align: center;
+        }
 
-.lang-btn:hover {
-    background: rgba(212,175,55,0.1);
-}
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 53px;
+            height: 53px;
+            border-radius: 10px;
+            
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.65rem;
+            font-weight: 400;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .lang-btn1 {
+            /* padding: 0.4rem 0.4rem; */
+            width: 53px;
+            height: 53px;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid var(--accent-orange);
+            color: var(--gold);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lang-btn img {
+            width: 65px;
+            height: 65px;
+            margin-bottom: 4px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        .lang-btn1 img {
+            width: 43px;
+            height: 43px; 
+            border-radius: 50%;
+            vertical-align: middle;
+        }
 
-.lang-btn.active {
-    background: var(--gold);
-    color: #000;
-}
+        .lang-btn:hover {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid var(--gold);
+        }
+
+        /* .lang-btn.active {
+            width: 53px;
+            height: 53px;
+            
+        } */
+
+        /* .lang-btn1:hover {
+            border: 1px solid var(--gold);
+            width: 53px;
+            height: 53px;
+        } */
 
         @media (max-width: 1200px) {
-            main { grid-template-columns: 1fr; }
-            .detail-panel { display: none; position: fixed; right: 0; top: 70px; bottom: 0; width: 100%; max-width: 400px; z-index: 100; }
-            .detail-panel.active { display: block; }
+            main { display: block; }
+            
+            .detail-panel { 
+                display: block;
+                opacity: 0;
+                visibility: hidden;
+                position: fixed; 
+                left: 0;
+                right: 0;
+                bottom: 0; 
+                top: auto;
+                width: 100%; 
+                max-width: 100%;
+                height: 70vh;
+                max-height: 500px;
+                z-index: 100; 
+                transform: translateY(100%);
+                transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+                padding: 2rem;
+                border-left: none;
+                border-top: 2px solid var(--gold);
+                border-radius: 20px 20px 0 0;
+            }
+            
+            .detail-panel.active { 
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            
+            .detail-panel.collapsed {
+                transform: translateY(100%);
+                width: 100%;
+                padding: 2rem;
+            }
+            
+            .open-panel-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .close-panel-btn {
+                top: 10px;
+                right: 10px;
+            }
         }
 
         @media (max-width: 768px) {
-    .lang-switch {
-        margin-left: 0;
-        padding-left: 0;
-        border-left: none;
-        border-top: 1px solid rgba(212,175,55,0.3);
-        padding-top: 0.5rem;
-        margin-top: 0.5rem;
-        justify-content: center;
-    }
-}
+            .lang-switch {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                border-top: 1px solid rgba(212,175,55,0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .lang-btn1:hover {
+                border: 0px solid var(--gold);
+            }
+
+            .legend-tree {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">
             <span style="font-size: 2rem;">🌳</span>
-            <h1>УРУУ</h1>
+            <a target="_blank" href="./images/uru.jpg">УРУУ</a>
         </div>
-        <div class="view-switch">
+        
+        <!-- Бургер меню кнопка -->
+        <button class="burger-menu" id="burgerMenu" aria-label="Менюді ашу">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+        
+        <div class="view-switch" id="viewSwitch">
             <a href="indexKZ.html" class="view-btn" target="_self">🏠 Басты бет</a>
             <a href="listsKZ.html" class="view-btn" target="_self">📋 Тізімдер</a>
             <a href="schemeKZ.html" class="view-btn active" target="_self">🌳 Схема</a>
             <a href="exogamyKZ.html" class="view-btn" target="_self">💑 Экзогамия</a>
         </div>
+
         <div class="lang-switch">
-    <a href="index.html" class="lang-btn">QQ</a>
-    <a href="indexKZ.html" class="lang-btn active">KZ</a>
-</div>
+            <a target="_self" href="schemeQQ.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
+            <a target="_self" href="schemeKZ.html" class="lang-btn1 active"><img src="./images/KZ.webp" alt="KZ"></a>
+        </div>
     </header>
 
     <main>
@@ -275,305 +594,304 @@
             <svg id="treeSvg"></svg>
             <div class="legend-tree">
                 <div style="color: var(--gold); margin-bottom: 8px; font-weight: bold;">Легенда:</div>
-                <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Арыс (КонЫрат/ОнТорт)</div>
-                <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Бөлім (раздел)</div>
-                <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Үлкен уруу</div>
-                <div class="legend-item"><div class="legend-color" style="background: #27ae60;"></div> Уруу (род)</div>
-                <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Тийре (подрод)</div>
-                <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Көше (ветвь)</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-xaliq);"></div> Халық</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-aris);"></div> Арыс (Қоңырат/Он төрт)</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-bolim);"></div> Бөлім</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-ulken);"></div> Үлкен ру/Ру</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-uruw);"></div> Тире</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-tiyre);"></div> Көше</div>             
             </div>
             <div class="controls">
-                <button onclick="zoomIn()" title="Приблизить">+</button>
-                <button onclick="resetZoom()" title="Сбросить">⟲</button>
-                <button onclick="zoomOut()" title="Отдалить">-</button>
+                <button onclick="ulıwlastırıw()" title="Жақындау">+</button>
+                <button onclick="qaıtaOrnatıw()" title="Қайта орнату">⟲</button>
+                <button onclick="alqıstırıw()" title="Алыстату">-</button>
             </div>
         </div>
 
-        <aside class="detail-panel" id="details">
+        <aside class="detail-panel collapsed" id="details">
+            <button class="close-panel-btn" id="closePanelBtn" title="Панельді жабу">×</button>
             <div class="detail-header">
                 <div class="detail-tamga" id="dTamga">🏛️</div>
-                <div class="detail-title" id="dName">Каракалпаки</div>
-                <div class="detail-subtitle" id="dSubtitle">Тюркский народ Средней Азии</div>
+                <div class="detail-title" id="dName">Қарақалпақтар</div>
+                <div class="detail-subtitle" id="dSubtitle">Орта Азиядағы түрік халық</div>
             </div>
             <div id="dContent">
                 <div class="info-block">
                     <div class="info-label">Навигация</div>
                     <div class="info-content">
-                        🖱️ <strong>Колесо мыши</strong> — масштаб<br>
-                        ✋ <strong>Перетаскивание</strong> — перемещение<br>
-                        👆 <strong>Клик на род</strong> — информация<br>
+                        🖱️ <strong>Сырғыту</strong> — масштаб<br>
+                        ✋ <strong>Тарту</strong> — жылжыту<br>
+                        👆 <strong>Руға басу</strong> — мәлімет<br>
                     </div>
                 </div>
             </div>
         </aside>
     </main>
+    
+    <button class="open-panel-btn" id="openPanelBtn" title="Мәлімет панелін ашу">ℹ️</button>
 
     <script>
-        // ПОЛНАЯ СТРУКТУРА ДАННЫХ КАРАКАЛПАКСКИХ РОДОВ
-        const treeData = {
-            name: "Қарақалпақлар",
-            type: "root",
+        // ТОЛЫҚ ҚАРАҚАЛПАҚ РУЛАРЫ МӘЛІМЕТТЕРІ
+        const terekMaǵlıwmatları = {
+            at: "Қарақалпақтар",
+            túri: "xaliq",
             tamga: "🏛️",
-            info: {
-                history: "Каракалпаки — тюркоязычный народ Средней Азии, сформировавшийся в XVI-XVIII веках на основе распавшейся Ногайской орды.",
-                origin: "Происходят от ногайских, кыпчакских и карлукских племен.",
-                population: "Около 800 тыс. человек",
-                language: "Каракалпакский язык (кипчакская группа тюркских языков)"
+            maǵlıwmat: {
+                tariyx: "Қарақалпақтар - Орта Азиядағы түрік тілдес халық. XVI-XIII ғасырларда қалыптасқан.",
+                túbegi: "Негізі Ноғай ордасы, Қыпшақ, Қарлық тайпаларынан.",
+                qalaqı: "800 мың адам",
+                tili: "Қарақалпақ тілі - түрік тілдерінің қыпшақ тармағы"
             },
-            children: [
+            ballar: [
                 {
-                    name: "Арыс Қоңырат",
-                    type: "arys",
-                    tamga: "П",
+                    at: "Арыс Қоңырат",
+                    túri: "aris",
+                    tamga: "P",
                     uran: "Қақпа!",
-                    info: {
-                        history: "Один из двух крупных арусов (племенных объединений). Происходит от Ногайской орды.",
-                        origin: "Смешение ногайских и кыпчакских племен",
-                        population: "9520 кибиток (40% населения)",
-                        structure: "Два подразделения: Шулык (8 руов) и Жауыңыр (7 руов)"
+                    maǵlıwmat: {
+                        tariyx: "Екі ірі арыстың бірі. Ноғай ордасынан.",
+                        túbegi: "Ноғайлық, Қыпшақ тайпаларының қосындысы.",
+                        qalaqı: "9520 кибиток (40%)",
+                        qurilimi: "Шұлық (8 ру) және Жауыңгыр (7 ру)"
                     },
-                    children: [
+                    ballar: [
                         {
-                            name: "Шулык бөлімі",
-                            type: "bolum",
-                            tamga: "Ш",
-                            info: {
-                                history: "Группа родов, сформировавшаяся в районе реки Шу.",
-                                population: "5860 кибиток"
-                            },
-                            children: [
+                            at: "Шұлық бөлімі",
+                            túri: "bolim",
+                            tamga: "Sh",
+                            maǵlıwmat: { tariyx: "Шұлық - 8 рудан тұрады.", qalaqı: "5860 кибиток" },
+                            ballar: [
                                 {
-                                    name: "Қыят",
-                                    type: "ulken",
+                                    at: "Қият",
+                                    túri: "ulken",
                                     tamga: "Ψ",
                                     uran: "Алатау!",
-                                    info: {
-                                        history: "Крупнейший ру Шулыка. Происходит от батыра Кыята.",
-                                        legend: "У Кыята было три сына: Үштаңбалы, Тарақты и Балғалы",
-                                        population: "870 кибиток"
+                                    maǵlıwmat: {
+                                        tariyx: "Қият - Шұлықтың ең ірі руы.",
+                                        anız: "Үш ұл: Үштаңбалы, Тарақты, Балғалы.",
+                                        qalaqı: "870 кибиток"
                                     },
-                                    children: [
+                                    ballar: [
                                         {
-                                            name: "Үштаңбалы",
-                                            type: "uruu",
+                                            at: "Үштаңбалы",
+                                            túri: "uruw",
                                             tamga: "|||",
-                                            info: { history: "Потомки старшего сына Кыята. Название означает 'три знака/тамги'" },
-                                            children: [
-                                                { name: "Саңмұрын", type: "tiyre", info: { history: "От ranch с бурым носом" } },
-                                                { name: "Арыққият", type: "tiyre", info: { history: "Худородные Кыяты" } },
-                                                { name: "Тартулы", type: "tiyre" },
-                                                { name: "Қанжығалы", type: "tiyre" },
-                                                { name: "Қатаған", type: "tiyre" },
+                                            maǵlıwmat: { tariyx: "Үш таңбалы - үш белгі." },
+                                            ballar: [
+                                                { at: "Саңмұрын", túri: "tiyre", maǵlıwmat: { tariyx: "Саң мұрындық малдан" } },
+                                                { at: "Арыққият", túri: "tiyre", maǵlıwmat: { tariyx: "Арық денелі" } },
+                                                { at: "Тартулы", túri: "tiyre" },
+                                                { at: "Қанжығалы", túri: "tiyre" },
+                                                { at: "Қатаған", túri: "tiyre" },
                                                 { 
-                                                    name: "Қарақият", 
-                                                    type: "tiyre",
-                                                    children: [
-                                                        { name: "Болат", type: "koshe" },
-                                                        { name: "Қараб抽象", type: "koshe" }
+                                                    at: "Қарақият", 
+                                                    túri: "tiyre",
+                                                    ballar: [
+                                                        { at: "Болат", túri: "koshe" },
+                                                        { at: "Қарабас", túri: "koshe" }
                                                     ]
                                                 }
                                             ]
                                         },
                                         {
-                                            name: "Тарақты",
-                                            type: "uruu",
-                                            info: { history: "От второго сына Кыята. 'Тарақ' — гребень, украшение" },
-                                            children: [
-                                                { name: "Тоғызақ", type: "tiyre", info: { history: "После девяти поколений" } },
-                                                { name: "Абас", type: "tiyre" },
-                                                { name: "Жалтыршы", type: "tiyre" },
-                                                { name: "Ақұнқараған", type: "tiyre" },
-                                                { name: "Тақай", type: "tiyre" },
-                                                { name: "Қаржаубарас", type: "tiyre" }
+                                            at: "Тарақты",
+                                            túri: "uruw",
+                                            maǵlıwmat: { tariyx: "Шашақты, өрнекті" },
+                                            ballar: [
+                                                { at: "Тоғызақ", túri: "tiyre", maǵlıwmat: { tariyx: "Тоғыз ұрпақтан кейін" } },
+                                                { at: "Абас", túri: "tiyre" },
+                                                { at: "Жалтыршы", túri: "tiyre" },
+                                                { at: "Ақұнқараған", túri: "tiyre" },
+                                                { at: "Тақай", túri: "tiyre" },
+                                                { at: "Қаржаубарас", túri: "tiyre" }
                                             ]
                                         },
                                         {
-                                            name: "Балғалы Қият",
-                                            type: "uruu",
-                                            tamga: "Б",
-                                            info: { history: "Кузнецы-оружейники. От третьего сына Кыята" },
-                                            children: [
-                                                { name: "Беспышақ", type: "tiyre" },
-                                                { name: "Етекші", type: "tiyre" },
-                                                { name: "Саңмұрын", type: "tiyre" },
-                                                { name: "Қожақараған", type: "tiyre" }
+                                            at: "Балғалы Қият",
+                                            túri: "uruw",
+                                            tamga: "B",
+                                            maǵlıwmat: { tariyx: "Балға ұстаған. Теміршілер." },
+                                            ballar: [
+                                                { at: "Беспышақ", túri: "tiyre" },
+                                                { at: "Етекші", túri: "tiyre" },
+                                                { at: "Саңмұрын", túri: "tiyre" },
+                                                { at: "Қожақараған", túri: "tiyre" }
                                             ]
                                         }
                                     ]
                                 },
                                 {
-                                    name: "Ашамайлы",
-                                    type: "ulken",
+                                    at: "Ашамайлы",
+                                    túri: "ulken",
                                     tamga: "✕",
-                                    uran: "Шулык!",
-                                    info: { history: "Название от 'ашамай' — тусклый, слабовидящий", population: "870 кибиток" },
-                                    children: [
-                                        { name: "Сақыу", type: "uruу", info: { history: "От слова 'сақ' — страж, охрана" } },
-                                        { name: "Қарақожа", type: "uruу" },
-                                        { name: "Жалаңаяқ", type: "uruу", info: { history: "Быстроногие, бегуны" } },
+                                    uran: "Шұлық!",
+                                    maǵlıwmat: { tariyx: "Ашамай - көзі нашар көретін.", qalaqı: "870 кибиток" },
+                                    ballar: [
+                                        { at: "Сақу", túri: "uruw", maǵlıwmat: { tariyx: "Сақшылар" } },
+                                        { at: "Қарақожа", túri: "uruw" },
+                                        { at: "Жалаңаяқ", túri: "uruw", maǵlıwmat: { tariyx: "Тез жүгіргіш" } },
                                         { 
-                                            name: "Қобасан", 
-                                            type: "uruу",
-                                            children: [
-                                                { name: "Ақназар", type: "tiyre" },
-                                                { name: "Жансары", type: "tiyre" },
-                                                { name: "Өтеміс", type: "tiyre" },
-                                                { name: "Есен", type: "tiyre" },
-                                                { name: "Тампыш", type: "tiyre" }
+                                            at: "Қобасан", 
+                                            túri: "uruw",
+                                            ballar: [
+                                                { at: "Ақназар", túri: "tiyre" },
+                                                { at: "Жансары", túri: "tiyre" },
+                                                { at: "Өтеміс", túri: "tiyre" },
+                                                { at: "Есен", túri: "tiyre" },
+                                                { at: "Тампыш", túri: "tiyre" }
                                             ]
                                         },
-                                        { name: "Түркіменқара", type: "uruу", info: { history: "Смешение с туркменами" } },
-                                        { name: "Жаппар", type: "uruу" },
-                                        { name: "Сары", type: "uruу" },
-                                        { name: "Абыз", type: "uruу" },
-                                        { name: "Ақай", type: "uruу" },
-                                        { name: "Паңқара", type: "uruу" },
-                                        { name: "Үшбас", type: "uruу" },
-                                        { name: "Құрама", type: "uruу" }
+                                        { at: "Түркіменқара", túri: "uruw", maǵlıwmat: { tariyx: "Түркімендермен араласыққан" } },
+                                        { at: "Жаппар", túri: "uruw" },
+                                        { at: "Сары", túri: "uruw" },
+                                        { at: "Абыз", túri: "uruw" },
+                                        { at: "Ақай", túri: "uruw" },
+                                        { at: "Паңқара", túri: "uruw" },
+                                        { at: "Үш бас", túri: "uruw" },
+                                        { at: "Құрама", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Қолдаулы",
-                                    type: "ulken",
-                                    tamga: "Қ",
+                                    at: "Қолдаулы",
+                                    túri: "ulken",
+                                    tamga: "Q",
                                     uran: "Қолдау!",
-                                    info: { history: "'Қолдау' — опора, поддержка", population: "1140 кибиток" },
-                                    children: [
-                                        { name: "Бескемпір", type: "uruу", info: { history: "Пять старух-кемпир" } },
-                                        { name: "Майшышалы", type: "uruу" },
-                                        { name: "Қалқаман", type: "uruу" },
-                                        { name: "Ғайыпқараған", type: "uruу", info: { history: "Исчезнувший предок" } },
-                                        { name: "Сарытан", type: "uruу" },
-                                        { name: "Күлкіқожақ", type: "uruу" },
-                                        { name: "Жарымбет", type: "uruу" },
-                                        { name: "Қызылаяқ", type: "uruу" },
-                                        { name: "Қарасирақ", type: "uruу" },
-                                        { name: "Желқараған", type: "uruу" },
-                                        { name: "Үлкенбөрік", type: "uruу" },
-                                        { name: "Шылжуыт", type: "uruу" },
-                                        { name: "Жаманқоңырат", type: "uruу" },
+                                    maǵlıwmat: { tariyx: "Қолдау - тірек.", qalaqı: "1140 кибиток" },
+                                    ballar: [
+                                        { at: "Бескемпір", túri: "uruw", maǵlıwmat: { tariyx: "Бес кемпір" } },
+                                        { at: "Майшышалы", túri: "uruw" },
+                                        { at: "Қалқаман", túri: "uruw" },
+                                        { at: "Ғайыпқараған", túri: "uruw", maǵlıwmat: { tariyx: "Ғайып болған ата" } },
+                                        { at: "Сарытан", túri: "uruw" },
+                                        { at: "Күлкіқожақ", túri: "uruw" },
+                                        { at: "Жарымбет", túri: "uruw" },
+                                        { at: "Қызылаяқ", túri: "uruw" },
+                                        { at: "Қарасирақ", túri: "uruw" },
+                                        { at: "Желқараған", túri: "uruw" },
+                                        { at: "Үлкенбөрі", túri: "uruw" },
+                                        { at: "Шылжуыт", túri: "uruw" },
+                                        { at: "Жаманқоңырат", túri: "uruw" },
                                         { 
-                                            name: "Қалмақ", 
-                                            type: "uruу",
-                                            children: [
-                                                { name: "Әділ", type: "tiyre" },
-                                                { name: "Ереке", type: "tiyre" }
+                                            at: "Қалмақ", 
+                                            túri: "uruw",
+                                            ballar: [
+                                                { at: "Әділ", túri: "tiyre" },
+                                                { at: "Ереке", túri: "tiyre" }
                                             ]
                                         }
                                     ]
                                 },
                                 {
-                                    name: "Қостаңбалы",
-                                    type: "ulken",
+                                    at: "Қостаңбалы",
+                                    túri: "ulken",
                                     tamga: "⧉",
                                     uran: "Қосқа!",
-                                    info: { history: "'Двойная тамга', две черты" },
-                                    children: [
-                                        { name: "Жангелді", type: "uruу" },
-                                        { name: "Шіржеген", type: "uruу" },
-                                        { name: "Ағабеглі", type: "uruу" },
-                                        { name: "Қарынжуан", type: "uruу" },
-                                        { name: "Қостаңбалы", type: "uruу" },
-                                        { name: "Қарақұрсақ", type: "uruу" },
-                                        { name: "Қазақы", type: "uruу" }
+                                    maǵlıwmat: { tariyx: "Екі тамғалы." },
+                                    ballar: [
+                                        { at: "Жангелді", túri: "uruw" },
+                                        { at: "Шіржеген", túri: "uruw" },
+                                        { at: "Ағабеглі", túri: "uruw" },
+                                        { at: "Қарынжуан", túri: "uruw" },
+                                        { at: "Қостаңбалы", túri: "uruw" },
+                                        { at: "Қарақұрсақ", túri: "uruw" },
+                                        { at: "Қазақы", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Балғалы",
-                                    type: "ulken",
-                                    tamga: "Б",
+                                    at: "Балғалы",
+                                    túri: "ulken",
+                                    tamga: "B",
                                     uran: "Балға!",
-                                    info: { history: "Кузнецы, мастера балта (топоров)", population: "560 кибиток" },
-                                    children: [
-                                        { name: "Ақбалғалы", type: "uruу" },
-                                        { name: "Нұрбалғалы", type: "uruу" },
-                                        { name: "Түркімен", type: "uruу" },
-                                        { name: "Жаманауыл", type: "uruу" },
-                                        { name: "Шөмішті", type: "uruу" },
-                                        { name: "Тоқымбет", type: "uruу" },
-                                        { name: "Тазбалғалы", type: "uruу" },
-                                        { name: "Қостамғалы", type: "uruу" },
-                                        { name: "Қараталшы", type: "uruу" },
-                                        { name: "Асан", type: "uruу" },
-                                        { name: "Арзықұл", type: "uruу" }
+                                    maǵlıwmat: { tariyx: "Теміршілер.", qalaqı: "560 кибиток" },
+                                    ballar: [
+                                        { at: "Ақбалғалы", túri: "uruw" },
+                                        { at: "Нұрбалғалы", túri: "uruw" },
+                                        { at: "Түркімен", túri: "uruw" },
+                                        { at: "Жаман ауыл", túri: "uruw" },
+                                        { at: "Шөмішті", túri: "uruw" },
+                                        { at: "Тоқымбет", túri: "uruw" },
+                                        { at: "Тазбалғалы", túri: "uruw" },
+                                        { at: "Қостамғалы", túri: "uruw" },
+                                        { at: "Қараталшы", túri: "uruw" },
+                                        { at: "Асан", túri: "uruw" },
+                                        { at: "Арзықұл", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Қәндеклі",
-                                    type: "ulken",
-                                    tamga: "Г",
+                                    at: "Көндеклі",
+                                    túri: "ulken",
+                                    tamga: "G",
                                     uran: "Көндек!",
-                                    info: { history: "'Көндек' — загон для скота", population: "730 кибиток" },
-                                    children: [
-                                        { name: "Қарама", type: "uruу" },
-                                        { name: "Киікші", type: "uruу", info: { history: "Охотники на сайгаков" } },
-                                        { name: "Тоқболат", type: "uruу" },
-                                        { name: "Қырықсадақ", type: "uruу", info: { history: "40 стрел (садак)" } }
+                                    maǵlıwmat: { tariyx: "Көндек - қора.", qalaqı: "730 кибиток" },
+                                    ballar: [
+                                        { at: "Қарама", túri: "uruw" },
+                                        { at: "Киікші", túri: "uruw", maǵlıwmat: { tariyx: "Киік сақшы" } },
+                                        { at: "Тоқболат", túri: "uruw" },
+                                        { at: "Қырықсадақ", túri: "uruw", maǵlıwmat: { tariyx: "40 садақ" } }
                                     ]
                                 },
                                 {
-                                    name: "Қарамойын",
-                                    type: "ulken",
-                                    tamga: "ТМ",
+                                    at: "Қарамойын",
+                                    túri: "ulken",
+                                    tamga: "TM",
                                     uran: "Мойын!",
-                                    info: { history: "'Черная шея'", population: "560 кибиток" },
-                                    children: [
-                                        { name: "Аннахожа", type: "uruу", info: { history: "Святая Анна" } },
-                                        { name: "Сабалақ", type: "uruу", info: { history: "Ребенок в люльке" } },
-                                        { name: "Көтелек", type: "uruу" },
-                                        { name: "Қарлымарал", type: "uruу" },
-                                        { name: "Бүлкілдек", type: "uruу", info: { history: "Смеющиеся, веселые" } }
+                                    maǵlıwmat: { tariyx: "Қара мойын.", qalaqı: "560 кибиток" },
+                                    ballar: [
+                                        { at: "Аннахожа", túri: "uruw", maǵlıwmat: { tariyx: "Анна әулие" } },
+                                        { at: "Сабалақ", túri: "uruw", maǵlıwmat: { tariyx: "Саба - бала" } },
+                                        { at: "Көтелек", túri: "uruw" },
+                                        { at: "Қарлымарал", túri: "uruw" },
+                                        { at: "Бүлкілдек", túri: "uruw", maǵlıwmat: { tariyx: "Күлкі" } }
                                     ]
                                 },
                                 {
-                                    name: "Мүйтен",
-                                    type: "ulken",
+                                    at: "Мүйтен",
+                                    túri: "ulken",
                                     tamga: "ψ",
                                     uran: "Ақшолпан!",
-                                    info: { 
-                                        history: "От 'мойын' — шея. Древний род", 
-                                        legend: "У Мүйтена было три сына: Самат, Тели и Абыз",
-                                        population: "540 кибиток",
-                                        cemetery: "Қабақлы ата"
+                                    maǵlıwmat: { 
+                                        tariyx: "Мойын - мойын.", 
+                                        anız: "Мүйтеннің үш ұлы: Самат, Тели, Абыз",
+                                        qalaqı: "540 кибиток"
                                     },
-                                    children: [
+                                    ballar: [
                                         { 
-                                            name: "Самат", 
-                                            type: "uruу",
-                                            children: [
-                                                { name: "Бәйбіше", type: "tiyre" },
-                                                { name: "Тоқалқараған", type: "tiyre" },
-                                                { name: "Баймұрат", type: "tiyre" },
-                                                { name: "Жолан", type: "tiyre" },
-                                                { name: "Бекау", type: "tiyre" }
+                                            at: "Самат", 
+                                            túri: "uruw",
+                                            ballar: [
+                                                { at: "Бәйбіше", túri: "tiyre" },
+                                                { at: "Тоққараған", túri: "tiyre" },
+                                                { at: "Баймұрат", túri: "tiyre" },
+                                                { at: "Жолан", túri: "tiyre" },
+                                                { at: "Бекау", túri: "tiyre" }
                                             ]
                                         },
                                         { 
-                                            name: "Тели", 
-                                            type: "uruу",
-                                            children: [
-                                                { name: "Тілеуберді", type: "tiyre" },
-                                                { name: "Аллаберді", type: "tiyre" },
-                                                { name: "Тəңірберді", type: "tiyre" },
-                                                { name: "Мантыққараған", type: "tiyre" },
-                                                { name: "Моллақараған", type: "tiyre" }
+                                            at: "Тели", 
+                                            túri: "uruw",
+                                            ballar: [
+                                                { at: "Тілеуберді", túri: "tiyre" },
+                                                { at: "Аллаберді", túri: "tiyre" },
+                                                { at: "Тәңірберді", túri: "tiyre" },
+                                                { at: "Мантыққараған", túri: "tiyre" },
+                                                { at: "Моллақараған", túri: "tiyre" }
                                             ]
                                         },
                                         { 
-                                            name: "Абыз", 
-                                            type: "uruу",
-                                            info: { history: "От аксакала, святого" },
-                                            children: [
-                                                { name: "Ады", type: "tiyre" }
+                                            at: "Абыз", 
+                                            túri: "uruw",
+                                            maǵlıwmat: { tariyx: "Ақсақал, әулие" },
+                                            ballar: [
+                                                { at: "Ады", túri: "tiyre" }
                                             ]
                                         },
                                         { 
-                                            name: "Кеңтанау", 
-                                            type: "uruу",
-                                            children: [
-                                                { name: "Барн", type: "tiyre" },
-                                                { name: "Итақ", type: "tiyre" },
-                                                { name: "Жекенсал", type: "tiyre" }
+                                            at: "Кеңтанау", 
+                                            túri: "uruw",
+                                            ballar: [
+                                                { at: "Барн", túri: "tiyre" },
+                                                { at: "Итақ", túri: "tiyre" },
+                                                { at: "Жекенсал", túri: "tiyre" }
                                             ]
                                         }
                                     ]
@@ -581,87 +899,87 @@
                             ]
                         },
                         {
-                            name: "Жауыңыр бөлімі",
-                            type: "bolum",
-                            info: { history: "Второе подразделение Конырата", population: "3660 кибиток" },
-                            children: [
+                            at: "Жауыңгыр бөлімі",
+                            túri: "bolim",
+                            maǵlıwmat: { tariyx: "Жауыңгыр - 7 ру.", qalaqı: "3660 кибиток" },
+                            ballar: [
                                 {
-                                    name: "Терістаңбалы",
-                                    type: "ulken",
-                                    children: [
-                                        { name: "Шомақ", type: "uruу" },
-                                        { name: "Хангелді", type: "uruу" },
-                                        { name: "Байқараған", type: "uruу" },
-                                        { name: "Елшібай", type: "uruу" },
-                                        { name: "Құрбан", type: "uruу" },
-                                        { name: "Тоғыз", type: "uruу" },
-                                        { name: "Тіле", type: "uruу" },
-                                        { name: "Тебеген", type: "uruу" },
-                                        { name: "Тум", type: "uruу" },
-                                        { name: "Түркістан", type: "uruу" }
+                                    at: "Терістаңбалы",
+                                    túri: "ulken",
+                                    ballar: [
+                                        { at: "Шомақ", túri: "uruw" },
+                                        { at: "Хангелді", túri: "uruw" },
+                                        { at: "Байқараған", túri: "uruw" },
+                                        { at: "Елшібай", túri: "uruw" },
+                                        { at: "Құрбан", túri: "uruw" },
+                                        { at: "Тоғыз", túri: "uruw" },
+                                        { at: "Тіле", túri: "uruw" },
+                                        { at: "Тебеген", túri: "uruw" },
+                                        { at: "Тум", túri: "uruw" },
+                                        { at: "Түркістан", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Бақанлы",
-                                    type: "ulken",
-                                    children: [
-                                        { name: "Таңмайыл", type: "uruу" },
-                                        { name: "Жақанай", type: "uruу" },
-                                        { name: "Найман", type: "uruу" },
-                                        { name: "Айыс", type: "uruу" }
+                                    at: "Бақанлы",
+                                    túri: "ulken",
+                                    ballar: [
+                                        { at: "Таңмайыл", túri: "uruw" },
+                                        { at: "Жақанай", túri: "uruw" },
+                                        { at: "Найман", túri: "uruw" },
+                                        { at: "Айыс", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Тіекті",
-                                    type: "ulken",
-                                    children: [
-                                        { name: "Шиші", type: "uruу", children: [{name:"Шиші Арна",type:"tiyre"}] },
-                                        { name: "Туманай", type: "uruу" },
-                                        { name: "Мәулик", type: "uruу" },
-                                        { name: "Байрам", type: "uruу" }
+                                    at: "Тіекті",
+                                    túri: "ulken",
+                                    ballar: [
+                                        { at: "Шиші", túri: "uruw", ballar: [{at:"Шиші Арна",túri:"tiyre"}] },
+                                        { at: "Туманай", túri: "uruw" },
+                                        { at: "Мәулік", túri: "uruw" },
+                                        { at: "Байрам", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Ырғақты",
-                                    type: "ulken",
-                                    info: { note: "Есть в обоих арысах!" },
-                                    children: [
-                                        { name: "Атанай", type: "uruу" },
-                                        { name: "Ешкілі", type: "uruу" },
-                                        { name: "Байбура", type: "uruу" },
-                                        { name: "Сарытан", type: "uruу" }
+                                    at: "Ырғақты",
+                                    túri: "ulken",
+                                    maǵlıwmat: { eskertpe: "Екі арыста да бар!" },
+                                    ballar: [
+                                        { at: "Атанай", túri: "uruw" },
+                                        { at: "Ешкілі", túri: "uruw" },
+                                        { at: "Байбура", túri: "uruw" },
+                                        { at: "Сарытан", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Баймақты",
-                                    type: "ulken",
-                                    children: [
-                                        { name: "Саспақ", type: "uruу" },
-                                        { name: "Үйес", type: "uruу" },
-                                        { name: "Таңмайыл", type: "uruу" },
-                                        { name: "Жақанай", type: "uruу" }
+                                    at: "Баймақты",
+                                    túri: "ulken",
+                                    ballar: [
+                                        { at: "Саспақ", túri: "uruw" },
+                                        { at: "Үйес", túri: "uruw" },
+                                        { at: "Таңмайыл", túri: "uruw" },
+                                        { at: "Жақанай", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Қазаяқты",
-                                    type: "ulken",
-                                    children: [
-                                        { name: "Әнетай", type: "uruу" },
-                                        { name: "Жәрімбет", type: "uruу" },
-                                        { name: "Жүнді", type: "uruу" },
-                                        { name: "Садақ", type: "uruу" }
+                                    at: "Қазаяқты",
+                                    túri: "ulken",
+                                    ballar: [
+                                        { at: "Әнетай", túri: "uruw" },
+                                        { at: "Жарымбет", túri: "uruw" },
+                                        { at: "Жүнді", túri: "uruw" },
+                                        { at: "Садақ", túri: "uruw" }
                                     ]
                                 },
                                 {
-                                    name: "Ұйғыр",
-                                    type: "ulken",
-                                    children: [
-                                        { name: "Шиші", type: "uruу" },
-                                        { name: "Туманай", type: "uruу" },
-                                        { name: "Сабалақ", type: "uruу" },
-                                        { name: "Мәулик", type: "uruу" },
-                                        { name: "Байрам", type: "uruу" },
-                                        { name: "Сырғалы", type: "uruу" }
+                                    at: "Ұйғыр",
+                                    túri: "ulken",
+                                    ballar: [
+                                        { at: "Шиші", túri: "uruw" },
+                                        { at: "Туманай", túri: "uruw" },
+                                        { at: "Сабалақ", túri: "uruw" },
+                                        { at: "Мәулік", túri: "uruw" },
+                                        { at: "Байрам", túri: "uruw" },
+                                        { at: "Сырғалы", túri: "uruw" }
                                     ]
                                 }
                             ]
@@ -669,169 +987,168 @@
                     ]
                 },
                 {
-                    name: "Арыс Он төрт",
-                    type: "arys",
+                    at: "Арыс Он төрт",
+                    túri: "aris",
                     tamga: "14",
                     uran: "Тоқсаба!",
-                    info: {
-                        history: "Второе крупное племенное объединение из 14 родов. Более многочисленное.",
-                        origin: "Смешение различных тюркских племен",
-                        population: "10260 кибиток (60% населения)",
-                        structure: "4 крупных рода (Үлкен уруу): Қытай, Қыпшақ, Кенегес, Маңғыт"
+                    maǵlıwmat: {
+                        tariyx: "14 рудан тұратын ірі арыс. Көп санлы.",
+                        qalaqı: "10260 кибиток (60%)",
+                        qurilimi: "4 үлкен ру: Қытай, Қыпшақ, Кенегес, Маңғыт"
                     },
-                    children: [
+                    ballar: [
                         {
-                            name: "Қытай",
-                            type: "ulken",
+                            at: "Қытай",
+                            túri: "ulken",
                             tamga: "Q",
-                            uran: "Уллы тау!",
-                            pair: "С Кыпшаком",
-                            info: { history: "Самый крупный ру. Не китайцы, а 'свои горцы'", population: "4320 кибиток" },
-                            children: [
-                                { name: "Бессары", type: "uruу", children: [{name:"Жүнли",type:"tiyre"},{name:"Қойлы",type:"tiyre"}] },
-                                { name: "Бексыық", type: "uruу", children: [{name:"Зергер",type:"tiyre"},{name:"Масай",type:"tiyre"},{name:"Шығыршы",type:"tiyre"},{name:"Малай",type:"tiyre"}] },
-                                { name: "Қазаяқты", type: "uruу", children: [{name:"Кәлсен",type:"tiyre"},{name:"Күйік",type:"tiyre"},{name:"Мырзай",type:"tiyre"},{name:"Қылмойын",type:"tiyre"},{name:"Жылқбай",type:"tiyre"}] },
+                            uran: "Ұллы тау!",
+                            jup: "Қыпшақпен",
+                            maǵlıwmat: { tariyx: "Ең ірі ру.", qalaqı: "4320 кибиток" },
+                            ballar: [
+                                { at: "Бессары", túri: "uruw", ballar: [{at:"Жүнлі",túri:"tiyre"},{at:"Қойлы",túri:"tiyre"}] },
+                                { at: "Бексыйық", túri: "uruw", ballar: [{at:"Зергер",túri:"tiyre"},{at:"Масай",túri:"tiyre"},{at:"Шығыршы",túri:"tiyre"},{at:"Малай",túri:"tiyre"}] },
+                                { at: "Қазаяқты", túri: "uruw", ballar: [{at:"Кәлсен",túri:"tiyre"},{at:"Күйік",túri:"tiyre"},{at:"Мырзай",túri:"tiyre"},{at:"Қылмойын",túri:"tiyre"},{at:"Жылқбай",túri:"tiyre"}] },
                                 { 
-                                    name: "Қайшылы", 
-                                    type: "uruу",
-                                    children: [
-                                        {name:"Ақымбет",type:"tiyre"},
-                                        {name:"Жувансан",type:"tiyre"},
-                                        {name:"Көтерехожа",type:"tiyre"},
-                                        {name:"Танамырза",type:"tiyre"},
-                                        {name:"Бақи",type:"tiyre"},
-                                        {name:"Сыбыл",type:"tiyre"},
-                                        {name:"Басар",type:"tiyre"},
-                                        {name:"Толық",type:"tiyre"},
-                                        {name:"Ябы",type:"tiyre"}
+                                    at: "Қайшылы", 
+                                    túri: "uruw",
+                                    ballar: [
+                                        {at:"Ақымбет",túri:"tiyre"},
+                                        {at:"Жувансан",túri:"tiyre"},
+                                        {at:"Көтерехожа",túri:"tiyre"},
+                                        {at:"Танамырза",túri:"tiyre"},
+                                        {at:"Бақи",túri:"tiyre"},
+                                        {at:"Сыбыл",túri:"tiyre"},
+                                        {at:"Басар",túri:"tiyre"},
+                                        {at:"Толық",túri:"tiyre"},
+                                        {at:"Ябы",túri:"tiyre"}
                                     ]
                                 },
                                 { 
-                                    name: "Әйтеке", 
-                                    type: "uruу",
-                                    children: [
-                                        {name:"Жәдік",type:"tiyre"},
-                                        {name:"Ырсымбек",type:"tiyre"},
-                                        {name:"Оразымбет",type:"tiyre"},
-                                        {name:"Тəңірқұл",type:"tiyre"},
-                                        {name:"Бектес",type:"tiyre",children:[{name:"Бектес Төре",type:"koshe"}]},
-                                        {name:"Наурыз",type:"tiyre"},
-                                        {name:"Мәнжүўлі",type:"tiyre"},
-                                        {name:"Тазшылық",type:"tiyre"}
+                                    at: "Әйтеке", 
+                                    túri: "uruw",
+                                    ballar: [
+                                        {at:"Жәдік",túri:"tiyre"},
+                                        {at:"Ырсымбек",túri:"tiyre"},
+                                        {at:"Оразымбет",túri:"tiyre"},
+                                        {at:"Тәңірқұл",túri:"tiyre"},
+                                        {at:"Бектес",túri:"tiyre",ballar:[{at:"Бектес Төре",túri:"koshe"}]},
+                                        {at:"Наурыз",túri:"tiyre"},
+                                        {at:"Мәнжүлі",túri:"tiyre"},
+                                        {at:"Тазшылық",túri:"tiyre"}
                                     ]
                                 },
-                                { name: "Мәнжүўлі", type: "uruу", children: [{name:"Екі шыйық",type:"tiyre"},{name:"Қараманжүўлі",type:"tiyre"},{name:"Әйереке",type:"tiyre"}] },
-                                { name: "Аралбай", type: "uruу", children: [{name:"Аққала",type:"tiyre"},{name:"Қалмурат",type:"tiyre"},{name:"Өгизбайшы",type:"tiyre"},{name:"Бәйбіше",type:"tiyre"},{name:"Тілеу қусшы",type:"tiyre"}] }
+                                { at: "Мәнжүлі", túri: "uruw", ballar: [{at:"Екі шыйық",túri:"tiyre"},{at:"Қараманжүлі",túri:"tiyre"},{at:"Әйереке",túri:"tiyre"}] },
+                                { at: "Аралбай", túri: "uruw", ballar: [{at:"Аққала",túri:"tiyre"},{at:"Қалмурат",túri:"tiyre"},{at:"Өгизбайшы",túri:"tiyre"},{at:"Бәйбіше",túri:"tiyre"},{at:"Тілеу қушы",túri:"tiyre"}] }
                             ]
                         },
                         {
-                            name: "Қыпшақ",
-                            type: "ulken",
+                            at: "Қыпшақ",
+                            túri: "ulken",
                             tamga: "I",
                             uran: "Тоқсаба!",
-                            pair: "С Кытай",
-                            info: { history: "Древний кыпчакский род", population: "2240 кибиток" },
-                            children: [
+                            jup: "Қытаймен",
+                            maǵlıwmat: { tariyx: "Көне қыпшақ руы.", qalaqı: "2240 кибиток" },
+                            ballar: [
                                 { 
-                                    name: "Қаңлы", 
-                                    type: "uruу",
-                                    children: [
-                                        {name:"Трам",type:"tiyre"},
-                                        {name:"Қатқаңлы",type:"tiyre"},
-                                        {name:"Ырғақлы",type:"tiyre"},
-                                        {name:"Ашамайлы",type:"tiyre"},
-                                        {name:"Тарақты",type:"tiyre"},
-                                        {name:"Баспақ",type:"tiyre"},
-                                        {name:"Айят",type:"tiyre"},
-                                        {name:"Босын",type:"tiyre"},
-                                        {name:"Баспат",type:"tiyre"},
-                                        {name:"Қоңырқазы",type:"tiyre"},
-                                        {name:"Кенес",type:"tiyre"},
-                                        {name:"Ташкент",type:"tiyre"}
+                                    at: "Қаңлы", 
+                                    túri: "uruw",
+                                    ballar: [
+                                        {at:"Трам",túri:"tiyre"},
+                                        {at:"Қатқаңлы",túri:"tiyre"},
+                                        {at:"Ырғақты",túri:"tiyre"},
+                                        {at:"Ашамайлы",túri:"tiyre"},
+                                        {at:"Тарақты",túri:"tiyre"},
+                                        {at:"Баспақ",túri:"tiyre"},
+                                        {at:"Айят",túri:"tiyre"},
+                                        {at:"Босын",túri:"tiyre"},
+                                        {at:"Баспат",túri:"tiyre"},
+                                        {at:"Қоңырқазы",túri:"tiyre"},
+                                        {at:"Кенес",túri:"tiyre"},
+                                        {at:"Ташкент",túri:"tiyre"}
                                     ]
                                 },
-                                { name: "Саңмұрын", type: "uruу", children: [{name:"Көнші",type:"tiyre"},{name:"Тұбай",type:"tiyre"},{name:"Ешкілі",type:"tiyre"},{name:"Жалпақ шек",type:"tiyre"},{name:"Төлебай",type:"tiyre"},{name:"Жабашы",type:"tiyre"}] },
-                                { name: "Естек", type: "uruу", children: [{name:"Маңқанай",type:"tiyre"},{name:"Қайыпназар",type:"tiyre"},{name:"Қаратереңші",type:"tiyre"},{name:"Қалмурат",type:"tiyre"}] },
-                                { name: "Қанжығалы", type: "uruу", children: [{name:"Шанышпай",type:"tiyre"},{name:"Самбет",type:"tiyre"},{name:"Жағалтай",type:"tiyre"},{name:"Бәйбіше",type:"tiyre"}] },
-                                { name: "Салтыр", type: "uruу", children: [{name:"Бәйбіше",type:"tiyre"},{name:"Сарт",type:"tiyre"},{name:"Оразымбет",type:"tiyre"},{name:"Шуылған",type:"tiyre"}] }
+                                { at: "Саңмұрын", túri: "uruw", ballar: [{at:"Көнші",túri:"tiyre"},{at:"Тұбай",túri:"tiyre"},{at:"Ешкілі",túri:"tiyre"},{at:"Жалпақ шек",túri:"tiyre"},{at:"Төлебай",túri:"tiyre"},{at:"Жабашы",túri:"tiyre"}] },
+                                { at: "Естек", túri: "uruw", ballar: [{at:"Маңқанай",túri:"tiyre"},{at:"Қайыпназар",túri:"tiyre"},{at:"Қаратереңші",túri:"tiyre"},{at:"Қалмурат",túri:"tiyre"}] },
+                                { at: "Қанжығалы", túri: "uruw", ballar: [{at:"Шанышпай",túri:"tiyre"},{at:"Самбет",túri:"tiyre"},{at:"Жағалтай",túri:"tiyre"},{at:"Бәйбіше",túri:"tiyre"}] },
+                                { at: "Салтыр", túri: "uruw", ballar: [{at:"Бәйбіше",túri:"tiyre"},{at:"Сарт",túri:"tiyre"},{at:"Оразымбет",túri:"tiyre"},{at:"Шуылған",túri:"tiyre"}] }
                             ]
                         },
                         {
-                            name: "Кенегес",
-                            type: "ulken",
-                            tamga: "Х",
-                            uran: "Шаўлы-Шаўхай!",
-                            pair: "С Мангыты",
-                            info: { history: "Кенегес", population: "1480 кибиток" },
-                            children: [
+                            at: "Кенегес",
+                            túri: "ulken",
+                            tamga: "X",
+                            uran: "Шаулы-Шаухай!",
+                            jup: "Маңғытпен",
+                            maǵlıwmat: { tariyx: "Кенегес.", qalaqı: "1480 кибиток" },
+                            ballar: [
                                 { 
-                                    name: "Араншы", 
-                                    type: "uruу",
-                                    children: [
-                                        {name:"Аннақұл",type:"tiyre"},
-                                        {name:"Абас",type:"tiyre",children:[{name:"Сейтімбет",type:"koshe"}]},
-                                        {name:"Сүйін",type:"tiyre"},
-                                        {name:"Жуас",type:"tiyre"},
-                                        {name:"Дəулетқарға",type:"tiyre"},
-                                        {name:"Қайыпберген",type:"tiyre"}
+                                    at: "Араншы", 
+                                    túri: "uruw",
+                                    ballar: [
+                                        {at:"Аннақұл",túri:"tiyre"},
+                                        {at:"Абас",túri:"tiyre",ballar:[{at:"Сейтімбет",túri:"koshe"}]},
+                                        {at:"Сүйін",túri:"tiyre"},
+                                        {at:"Жуас",túri:"tiyre"},
+                                        {at:"Дәулетқарға",túri:"tiyre"},
+                                        {at:"Қайыпберген",túri:"tiyre"}
                                     ]
                                 },
-                                { name: "Ақтоғын", type: "uruу", children: [{name:"Нанжемес",type:"tiyre"},{name:"Көшер",type:"tiyre"}] },
-                                { name: "Өмір", type: "uruу", children: [{name:"Ақпышақ",type:"tiyre"},{name:"Усақ",type:"tiyre"},{name:"Жел",type:"tiyre"},{name:"Мынжыр",type:"tiyre"},{name:"Өтеміс",type:"tiyre"}] },
-                                { name: "Тарақты", type: "uruу", children: [{name:"Жетіқарақазақы",type:"tiyre",children:[{name:"Жетіқара",type:"koshe"}]}] },
-                                { name: "Добал", type: "uruу" },
+                                { at: "Ақтоғын", túri: "uruw", ballar: [{at:"Нанжемес",túri:"tiyre"},{at:"Көшек",túri:"tiyre"}] },
+                                { at: "Өмір", túri: "uruw", ballar: [{at:"Ақпышақ",túri:"tiyre"},{at:"Усақ",túri:"tiyre"},{at:"Жел",túri:"tiyre"},{at:"Мынжыр",túri:"tiyre"},{at:"Өтеміс",túri:"tiyre"}] },
+                                { at: "Тарақты", túri: "uruw", ballar: [{at:"Жетіқараған",túri:"tiyre",ballar:[{at:"Жетіқара",túri:"koshe"}]}] },
+                                { at: "Добал", túri: "uruw" },
                                 { 
-                                    name: "Оймауыт", 
-                                    type: "uruу",
-                                    children: [
-                                        {name:"Қара",type:"tiyre"},
-                                        {name:"Сары",type:"tiyre",children:[{name:"Жийдели",type:"koshe"}]},
-                                        {name:"Ақ",type:"tiyre"}
+                                    at: "Оймауыт", 
+                                    túri: "uruw",
+                                    ballar: [
+                                        {at:"Қара",túri:"tiyre"},
+                                        {at:"Сары",túri:"tiyre",ballar:[{at:"Жийдели",túri:"koshe"}]},
+                                        {at:"Ақ",túri:"tiyre"}
                                     ]
                                 },
-                                { name: "Домбазқақ", type: "uruу" },
-                                { name: "Нөкіс", type: "uruу", info: { note: "Столица Каракалпакстана!" }, children: [{name:"Жаманжақ",type:"tiyre"},{name:"Бозақ",type:"tiyre"},{name:"Алтынпышақ",type:"tiyre"},{name:"Гобдир",type:"tiyre"}] }
+                                { at: "Домбазқақ", túri: "uruw" },
+                                { at: "Нөкіс", túri: "uruw", maǵlıwmat: { eskertpe: "Қарақалпақстан астанасы!" }, ballar: [{at:"Жаманжақ",túri:"tiyre"},{at:"Бозақ",túri:"tiyre"},{at:"Алтынпышақ",túri:"tiyre"},{at:"Гобдир",túri:"tiyre"}] }
                             ]
                         },
                         {
-                            name: "Маңғыт",
-                            type: "ulken",
+                            at: "Маңғыт",
+                            túri: "ulken",
                             tamga: "f",
-                            uran: "Шаўлы-Шаўхай!",
-                            pair: "С Кенегесом",
-                            info: { history: "Воинственный род. Потомки Едиге", population: "2220 кибиток" },
-                            children: [
+                            uran: "Шаулы-Шаухай!",
+                            jup: "Кенегеспен",
+                            maǵlıwmat: { tariyx: "Соғысқор ру. Едіге ұрпақтары.", qalaqı: "2220 кибиток" },
+                            ballar: [
                                 { 
-                                    name: "Қаратай", 
-                                    type: "uruу",
-                                    info: { group: "Қара (Черные)" },
-                                    children: [
-                                        {name:"Қараманғыт",type:"tiyre",children:[{name:"Үшбас",type:"koshe"},{name:"Қарасыйрақ",type:"koshe"},{name:"Ақманғыт",type:"koshe"}]},
-                                        {name:"Мамықшы",type:"tiyre",children:[{name:"Жетіқурт",type:"koshe"}]},
-                                        {name:"Қосар",type:"tiyre",children:[{name:"Гүбидин",type:"koshe"}]},
-                                        {name:"Қылқалы",type:"tiyre"}
+                                    at: "Қаратай", 
+                                    túri: "uruw",
+                                    maǵlıwmat: { topar: "Қара (Қаралар)" },
+                                    ballar: [
+                                        {at:"Қараманғыт",túri:"tiyre",ballar:[{at:"Үшбас",túri:"koshe"},{at:"Қарасирақ",túri:"koshe"},{at:"Ақманғыт",túri:"koshe"}]},
+                                        {at:"Мамықшы",túri:"tiyre",ballar:[{at:"Жетіқұрт",túri:"koshe"}]},
+                                        {at:"Қосар",túri:"tiyre",ballar:[{at:"Гүбидин",túri:"koshe"}]},
+                                        {at:"Қылқалы",túri:"tiyre"}
                                     ]
                                 },
                                 { 
-                                    name: "Сарытай", 
-                                    type: "uruу",
-                                    info: { group: "Сары (Желтые)" },
-                                    children: [
-                                        {name:"Аршын",type:"tiyre"},
-                                        {name:"Жайлық",type:"tiyre"},
-                                        {name:"Тоқманғыт",type:"tiyre"},
-                                        {name:"Арсары",type:"tiyre"},
-                                        {name:"Тазжанлық",type:"tiyre"},
-                                        {name:"Шүйт",type:"tiyre"},
-                                        {name:"Жаманша",type:"tiyre"},
-                                        {name:"Есебий",type:"tiyre"},
-                                        {name:"Тамғалы",type:"tiyre"},
-                                        {name:"Тоқмойын",type:"tiyre"},
-                                        {name:"Темирхожа",type:"tiyre"}
+                                    at: "Сарытай", 
+                                    túri: "uruw",
+                                    maǵlıwmat: { topar: "Сары (Сарылар)" },
+                                    ballar: [
+                                        {at:"Аршын",túri:"tiyre"},
+                                        {at:"Жайлық",túri:"tiyre"},
+                                        {at:"Тоқманғыт",túri:"tiyre"},
+                                        {at:"Арсары",túri:"tiyre"},
+                                        {at:"Тазжанлық",túri:"tiyre"},
+                                        {at:"Шүйт",túri:"tiyre"},
+                                        {at:"Жаманша",túri:"tiyre"},
+                                        {at:"Есебий",túri:"tiyre"},
+                                        {at:"Тамғалы",túri:"tiyre"},
+                                        {at:"Тоқмойын",túri:"tiyre"},
+                                        {at:"Темірхожа",túri:"tiyre"}
                                     ]
                                 },
-                                { name: "Бозтай", type: "uruу", info: { group: "Боз (Серые)" }, children: [{name:"Бозта",type:"tiyre",children:[{name:"Бозта баба",type:"koshe"}]}] },
-                                { name: "Жетімтай", type: "uruу", info: { group: "Жетім (Сироты)" }, children: [{name:"Ешбуға",type:"tiyre",children:[{name:"Еш буға",type:"koshe"}]}] }
+                                { at: "Бозтай", túri: "uruw", maǵlıwmat: { topar: "Боз (Боздар)" }, ballar: [{at:"Бозта",túri:"tiyre",ballar:[{at:"Бозта баба",túri:"koshe"}]}] },
+                                { at: "Жетімтай", túri: "uruw", maǵlıwmat: { topar: "Жетім (Жетімдер)" }, ballar: [{at:"Ешбуға",túri:"tiyre",ballar:[{at:"Еш буға",túri:"koshe"}]}] }
                             ]
                         }
                     ]
@@ -840,81 +1157,122 @@
         };
 
         let svg, g, zoom;
-        let currentZoom = d3.zoomIdentity;
+        let ámeldegiMasshtab = d3.zoomIdentity;
+        let panelAshıq = false;
 
-        function initTree() {
-            const container = document.getElementById('treeArea');
-            const width = container.clientWidth;
-            const height = container.clientHeight;
+        function terektiBaslaw() {
+            const qorap = document.getElementById('treeArea');
+            const keńlik = qorap.clientWidth;
+            const biyiklik = qorap.clientHeight;
 
             svg = d3.select("#treeSvg")
-                .attr("width", width)
-                .attr("height", height);
+                .attr("width", keńlik)
+                .attr("height", biyiklik);
+
+            // Тазалау
+            svg.selectAll("*").remove();
 
             zoom = d3.zoom()
-                .scaleExtent([0.1, 3])
+                .scaleExtent([0.05, 3])
                 .on("zoom", (e) => {
                     g.attr("transform", e.transform);
-                    currentZoom = e.transform;
+                    ámeldegiMasshtab = e.transform;
                 });
 
             svg.call(zoom);
 
-            g = svg.append("g")
-                .attr("transform", `translate(${width/2}, 100) scale(0.8)`);
+            g = svg.append("g");
 
-            const root = d3.hierarchy(treeData);
+            const támır = d3.hierarchy(terekMaǵlıwmatları, d => d.ballar);
             
-            // Настройка размера дерева
-            const treeLayout = d3.tree()
-                .size([width * 2.5, height * 1.5])
-                .separation((a, b) => (a.parent == b.parent ? 1 : 1.5) / a.depth);
+            const japrakSanaqı = támır.leaves().length;
+            const terenlik = támır.height;
+                    
+            // Керек өлшем
+            const eńAzamattıqKeńlik = Math.max(keńlik, japrakSanaqı * 25);
+            const eńAzamattıqBiyiklik = Math.max(biyiklik, (terenlik + 1) * 100);
             
-            treeLayout(root);
+            const terekQurılmı = d3.tree()
+                .size([eńAzamattıqKeńlik, eńAzamattıqBiyiklik])
+                .separation((a, b) => {
+                    if (a.parent === b.parent) return 1;
+                    return 1.2;
+                });
+            
+            terekQurılmı(támır);
 
-            // Линии связей
+            // Бастапқы көрініс - ортада
+            const baslanǵıshMasshtab = Math.min(
+                (keńlik - 100) / eńAzamattıqKeńlik,
+                (biyiklik - 150) / eńAzamattıqBiyiklik,
+                0.9
+            );
+            
+            const baslanǵıshX = (keńlik - eńAzamattıqKeńlik * baslanǵıshMasshtab) / 2;
+            const baslanǵıshY = 50;
+
+            g.attr("transform", `translate(${baslanǵıshX}, ${baslanǵıshY}) scale(${baslanǵıshMasshtab})`);
+            
+            ámeldegiMasshtab = d3.zoomIdentity
+                .translate(baslanǵıshX, baslanǵıshY)
+                .scale(baslanǵıshMasshtab);
+
+            svg.call(zoom.transform, ámeldegiMasshtab);
+
+            // Байланыс сызықтары
             g.selectAll(".link")
-                .data(root.links())
+                .data(támır.links())
                 .enter().append("path")
                 .attr("class", "link")
                 .attr("d", d3.linkVertical()
                     .x(d => d.x)
                     .y(d => d.y));
 
-            // Узлы
-            const node = g.selectAll(".node")
-                .data(root.descendants())
+            // Бөліктер
+            const bólek = g.selectAll(".node")
+                .data(támır.descendants())
                 .enter().append("g")
-                .attr("class", d => `node node-${d.data.type}`)
+                .attr("class", d => `node node-${d.data.túri}`)
                 .attr("transform", d => `translate(${d.x},${d.y})`)
-                .on("click", (e, d) => showDetails(d.data));
+                .on("click", (e, d) => maǵlıwmatKórsetiw(d.data));
 
-            // Прямоугольники узлов с размером в зависимости от длины текста
-            node.append("rect")
-                .attr("width", d => Math.max(d.data.name.length * 7 + 16, 50))
-                .attr("height", 28)
-                .attr("x", d => -(Math.max(d.data.name.length * 7 + 16, 50)) / 2)
-                .attr("y", -14)
+            // Төртбұрыштар - көлемі дәреже бойынша өзгереді
+            bólek.append("rect")
+                .attr("width", d => {
+                    const uzınlıq = Math.max(d.data.at.length * 7 + 16, 50);
+                    return d.data.túri === 'koshe' ? uzınlıq * 0.8 : uzınlıq;
+                })
+                .attr("height", d => d.data.túri === 'koshe' ? 22 : 28)
+                .attr("x", d => {
+                    const uzınlıq = Math.max(d.data.at.length * 7 + 16, 50);
+                    const haqıqıyUzınlıq = d.data.túri === 'koshe' ? uzınlıq * 0.8 : uzınlıq;
+                    return -haqıqıyUzınlıq / 2;
+                })
+                .attr("y", d => d.data.túri === 'koshe' ? -11 : -14)
                 .attr("rx", 6)
-                .attr("stroke-width", 2);
+                .attr("stroke-width", d => d.data.túri === 'xaliq' ? 3 : 2);
 
-            // Текст названия
-            node.append("text")
+            // Атау мәтіні
+            bólek.append("text")
                 .attr("dy", ".35em")
                 .attr("text-anchor", "middle")
-                .style("font-size", d => d.data.type === 'koshe' ? "10px" : "11px")
-                .text(d => d.data.name);
+                .style("font-size", d => {
+                    if (d.data.túri === 'koshe') return "9px";
+                    if (d.data.túri === 'tiyre') return "10px";
+                    return "11px";
+                })
+                .text(d => d.data.at);
 
-            // Тамга над узлом (если есть)
-            node.filter(d => d.data.tamga && d.data.type !== 'koshe')
+            // Тамға (жоғарыда)
+            bólek.filter(d => d.data.tamga && d.data.túri !== 'koshe' && d.data.túri !== 'tiyre')
                 .append("text")
                 .attr("class", "tamga-text")
                 .attr("dy", -22)
                 .attr("text-anchor", "middle")
                 .text(d => d.data.tamga);
                 
-            // Уран под узлом (если есть и это крупный узел)
-            node.filter(d => d.data.uran && (d.data.type === 'arys' || d.data.type === 'ulken'))
+            // Уран (төменде)
+            bólek.filter(d => d.data.uran && (d.data.túri === 'aris' || d.data.túri === 'ulken'))
                 .append("text")
                 .attr("dy", 28)
                 .attr("text-anchor", "middle")
@@ -924,123 +1282,179 @@
                 .text(d => d.data.uran);
         }
 
-        function showDetails(data) {
-            document.getElementById('dTamga').textContent = data.tamga || (data.type === 'arys' ? '🏛️' : '🏹');
-            document.getElementById('dName').textContent = data.name;
+        function maǵlıwmatKórsetiw(maǵlıwmat) {
+            paneldiAshıw();
             
-            let subtitle = "";
-            const types = {
-                'root': 'Народ',
-                'arys': 'Арыс (племенное объединение)',
-                'bolum': 'Бөлім (раздел)',
-                'ulken': 'Үлкен уруу (старший род)',
-                'uruу': 'Уруу (род)',
-                'tiyre': 'Тийре (подрод)',
-                'koshe': 'Көше (ветвь)'
+            document.getElementById('dTamga').textContent = maǵlıwmat.tamga || (maǵlıwmat.túri === 'aris' ? '🏛️' : '🏹');
+            document.getElementById('dName').textContent = maǵlıwmat.at;
+            
+            let qospa = "";
+            const túrler = {
+                'xaliq': 'Халық',
+                'aris': 'Арыс (племенное объединение)',
+                'bolim': 'Бөлім (бөлме)',
+                'ulken': 'Үлкен ру (үлкен ру)',
+                'uruw': 'Ру (ру)',
+                'tiyre': 'Тире (тире)',
+                'koshe': 'Көше (бутик)'
             };
-            subtitle = types[data.type] || 'Родовая единица';
-            if (data.info && data.info.population) subtitle += ` • ${data.info.population}`;
-            document.getElementById('dSubtitle').textContent = subtitle;
+            qospa = túrler[maǵlıwmat.túri] || 'Рулық бірлік';
+            if (maǵlıwmat.maǵlıwmat && maǵlıwmat.maǵlıwmat.qalaqı) qospa += ` • ${maǵlıwmat.maǵlıwmat.qalaqı}`;
+            document.getElementById('dSubtitle').textContent = qospa;
             
             let html = '';
             
-            if (data.uran) {
+            if (maǵlıwmat.uran) {
                 html += `<div class="info-block" style="border-color:#e74c3c; background:rgba(231,76,60,0.1)">
-                    <div class="info-label">Боевой клич (Уран)</div>
-                    <div class="info-content" style="color:#ff8a80; font-size:1.3rem; font-weight:bold; text-align:center">${data.uran}</div>
+                    <div class="info-label">Соғыс ұраны (Уран)</div>
+                    <div class="info-content" style="color:#ff8a80; font-size:1.3rem; font-weight:bold; text-align:center">${maǵlıwmat.uran}</div>
                 </div>`;
             }
             
-            if (data.info) {
-                if (data.info.history) {
+            if (maǵlıwmat.maǵlıwmat) {
+                if (maǵlıwmat.maǵlıwmat.tariyx) {
                     html += `<div class="info-block">
-                        <div class="info-label">История</div>
-                        <div class="info-content">${data.info.history}</div>
+                        <div class="info-label">Тарихы</div>
+                        <div class="info-content">${maǵlıwmat.maǵlıwmat.tariyx}</div>
                     </div>`;
                 }
-                if (data.info.origin) {
+                if (maǵlıwmat.maǵlıwmat.túbegi) {
                     html += `<div class="info-block" style="border-color:#3498db">
-                        <div class="info-label">Происхождение</div>
-                        <div class="info-content">${data.info.origin}</div>
+                        <div class="info-label">Келіп шығуы</div>
+                        <div class="info-content">${maǵlıwmat.maǵlıwmat.túbegi}</div>
                     </div>`;
                 }
-                if (data.info.legend) {
+                if (maǵlıwmat.maǵlıwmat.anız) {
                     html += `<div class="info-block" style="border-color:#f39c12; background:rgba(243,156,18,0.1)">
-                        <div class="info-label">Легенда</div>
-                        <div class="info-content"><em>${data.info.legend}</em></div>
+                        <div class="info-label">Аңыз</div>
+                        <div class="info-content"><em>${maǵlıwmat.maǵlıwmat.anız}</em></div>
                     </div>`;
                 }
-                if (data.info.structure) {
+                if (maǵlıwmat.maǵlıwmat.qurilimi) {
                     html += `<div class="info-block" style="border-color:#27ae60">
-                        <div class="info-label">Структура</div>
-                        <div class="info-content">${data.info.structure}</div>
+                        <div class="info-label">Құрылымы</div>
+                        <div class="info-content">${maǵlıwmat.maǵlıwmat.qurilimi}</div>
                     </div>`;
                 }
-                if (data.info.cemetery) {
-                    html += `<div class="info-block" style="border-color:#1abc9c">
-                        <div class="info-label">Кладбище предков</div>
-                        <div class="info-content">⛺ ${data.info.cemetery}</div>
-                    </div>`;
-                }
-                if (data.info.region) {
+                if (maǵlıwmat.maǵlıwmat.qalaqı) {
                     html += `<div class="info-block" style="border-color:#9b59b6">
-                        <div class="info-label">Регион</div>
-                        <div class="info-content">${data.info.region}</div>
+                        <div class="info-label">Қалағы</div>
+                        <div class="info-content">${maǵlıwmat.maǵlıwmat.qalaqı}</div>
                     </div>`;
                 }
-                if (data.info.language) {
+                if (maǵlıwmat.maǵlıwmat.tili) {
                     html += `<div class="info-block">
-                        <div class="info-label">Язык</div>
-                        <div class="info-content">${data.info.language}</div>
+                        <div class="info-label">Тілі</div>
+                        <div class="info-content">${maǵlıwmat.maǵlıwmat.tili}</div>
                     </div>`;
                 }
-                if (data.info.note) {
+                if (maǵlıwmat.maǵlıwmat.eskertpe) {
                     html += `<div class="info-block" style="border-color:#e67e22">
-                        <div class="info-label">Примечание</div>
-                        <div class="info-content">${data.info.note}</div>
+                        <div class="info-label">Ескерту</div>
+                        <div class="info-content">${maǵlıwmat.maǵlıwmat.eskertpe}</div>
                     </div>`;
                 }
             }
             
-            if (data.children && data.children.length > 0) {
+            if (maǵlıwmat.ballar && maǵlıwmat.ballar.length > 0) {
                 html += `<div class="info-block" style="border-color:#d4af37; text-align:center">
-                    <div class="info-label">Подгрупп</div>
-                    <div class="info-content" style="font-size:1.5rem; color:var(--gold); font-weight:bold">${data.children.length}</div>
+                    <div class="info-label">Топтар саны</div>
+                    <div class="info-content" style="font-size:1.5rem; color:var(--gold); font-weight:bold">${maǵlıwmat.ballar.length}</div>
                 </div>`;
             }
             
-            if (data.pair) {
+            if (maǵlıwmat.jup) {
                 html += `<div class="info-block" style="border-color:#3498db; background:rgba(52,152,219,0.1)">
-                    <div class="info-label">Парный род</div>
-                    <div class="info-content">${data.pair}</div>
+                    <div class="info-label">Жұпар ру</div>
+                    <div class="info-content">${maǵlıwmat.jup}</div>
                 </div>`;
             }
             
-            document.getElementById('dContent').innerHTML = html || '<div class="info-block"><div class="info-label">Информация</div><div class="info-content">Нажмите на другие узлы для просмотра деталей</div></div>';
+            document.getElementById('dContent').innerHTML = html || '<div class="info-block"><div class="info-label">Мәлімет</div><div class="info-content">Басқа бөліктерді көру үшін басыңыз</div></div>';
         }
 
-        function zoomIn() {
+        function paneldiAshıw() {
+            const panel = document.getElementById('details');
+            const ashıwKnopkası = document.getElementById('openPanelBtn');
+            
+            if (window.innerWidth <= 1200) {
+                panel.style.display = 'block';
+                setTimeout(() => {
+                    panel.classList.remove('collapsed');
+                    panel.classList.add('active');
+                }, 10);
+            } else {
+                panel.classList.remove('collapsed');
+                panel.classList.add('active');
+            }
+            
+            ashıwKnopkası.classList.remove('visible');
+            panelAshıq = true;
+        }
+
+        function paneldiJabıw() {
+            const panel = document.getElementById('details');
+            const ashıwKnopkası = document.getElementById('openPanelBtn');
+            
+            panel.classList.add('collapsed');
+            panel.classList.remove('active');
+            ashıwKnopkası.classList.add('visible');
+            panelAshıq = false;
+            
+            if (window.innerWidth <= 1200) {
+                setTimeout(() => {
+                    if (!panelAshıq) {
+                        panel.style.display = 'none';
+                    }
+                }, 300);
+            }
+        }
+
+        function ulıwlastırıw() {
             svg.transition().duration(300).call(zoom.scaleBy, 1.3);
         }
 
-        function zoomOut() {
+        function alqıstırıw() {
             svg.transition().duration(300).call(zoom.scaleBy, 0.7);
         }
 
-        function resetZoom() {
-            const container = document.getElementById('treeArea');
-            const width = container.clientWidth;
-            svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity.translate(width/2, 100).scale(0.8));
+        function qaıtaOrnatıw() {
+            terektiBaslaw();
         }
 
-        // Адаптивность
-        window.addEventListener('resize', () => {
-            d3.select("#treeSvg").selectAll("*").remove();
-            initTree();
-        });
+        function burgerMenyunıAynalıstırıw() {
+            const burger = document.getElementById('burgerMenu');
+            const kórinisAlmastırǵısh = document.getElementById('viewSwitch');
+            
+            burger.classList.toggle('active');
+            kórinisAlmastırǵısh.classList.toggle('active');
+        }
 
-        // Инициализация
-        window.onload = initTree;
+        window.onload = function() {
+            terektiBaslaw();
+            
+            document.getElementById('burgerMenu').addEventListener('click', burgerMenyunıAynalıstırıw);
+            
+            document.querySelectorAll('.view-btn').forEach(knopka => {
+                knopka.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        burgerMenyunıAynalıstırıw();
+                    }
+                });
+            });
+            
+            document.getElementById('closePanelBtn').addEventListener('click', paneldiJabıw);
+            
+            document.getElementById('openPanelBtn').addEventListener('click', paneldiAshıw);
+            
+            let keń = window.innerWidth;
+            window.addEventListener('resize', function() {
+                if (window.innerWidth !== keń) {
+                    keń = window.innerWidth;
+                    setTimeout(terektiBaslaw, 100);
+                }
+            });
+        };
     </script>
 </body>
 </html>

@@ -592,9 +592,9 @@
 }
 
 .lang-btn {
-    padding: 0.4rem 0.8rem;
+    /* padding: 0.4rem 0.4rem; */
     border-radius: 8px;
-    border: 1px solid var(--gold);
+    /* border: 1px solid var(--gold); */
     background: transparent;
     color: var(--gold);
     cursor: pointer;
@@ -604,14 +604,68 @@
     text-decoration: none;
 }
 
-.lang-btn:hover {
-    background: rgba(212,175,55,0.1);
+.lang-btn img {
+    width: 65px;
+    height: 65px;
+   margin-bottom: 5px;
+    border-radius: 50%;
+    vertical-align: middle;
 }
 
-.lang-btn.active {
-    background: var(--gold);
-    color: #000;
+
+
+.lang-btn:hover {
+    background: rgba(212,175,55,0.1);
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 53px;
+    height: 53px;
 }
+
+.lang-btn {
+    width: 53px;
+    height: 53px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lang-btn1.active {
+    padding: 0.4rem 0.4rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent-orange);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lang-btn1 img {
+    width: 40px;
+    height: 40px;
+    margin-top: 0px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+
+
+.lang-btn1:hover {
+    background: rgba(212,175,55,0.1);
+    border: 1px solid var(--gold);
+    
+
+}
+
+
 
 @media (max-width: 768px) {
     .lang-switch {
@@ -623,7 +677,26 @@
         margin-top: 0.5rem;
         justify-content: center;
     }
-}
+    
+    .lang-btn {
+        margin-bottom: 13px;
+    }
+
+     
+
+    
+    .lang-btn:hover {
+        border: 0px solid var(--gold);
+    }
+
+    .lang-btn1 {
+      width: 53px;
+    height: 53px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+}     
     </style>
 <base target="_blank">
 </head>
@@ -648,10 +721,10 @@
             <a href="exogamyKZ.html" class="view-btn" target="_self">💑 Экзогамия</a>
         </div>
 
-        <div class="lang-switch">
-    <a href="index.html" class="lang-btn">QQ</a>
-    <a href="indexKZ.html" class="lang-btn active">KZ</a>
-</div>
+    <div class="lang-switch">
+        <a target="_self" href="listsQQ.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
+        <a target="_self" href="listsKZ.html" class="lang-btn1 active"><img src="./images/KZ.webp" alt="KZ"></a>
+    </div>
     </header>
 
     <div class="search-box"><input type="text" id="searchInput" placeholder="Іздеу..." onkeyup="searchNode()"></div>

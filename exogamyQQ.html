@@ -56,14 +56,51 @@
             gap: 10px;
         }
         
-        .logo h1 { 
+        .logo a { 
             font-family: 'Cormorant Garamond', serif; 
             color: var(--gold); 
             font-size: 1.8rem; 
             margin: 0;
+            text-decoration: none;
         }
         
-        .view-switch {
+
+
+        
+       /* Бургер меню кнопка */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.burger-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.burger-menu.active .burger-bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.burger-menu.active .burger-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active .burger-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+.view-switch {
             display: flex;
             gap: 0.5rem;
             background: rgba(255,255,255,0.1);
@@ -95,12 +132,62 @@
             font-weight: 600;
         }
 
-        .container {
-            max-width: 1200px;
+/* .view-switch {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    padding: 0.25rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Мобильное меню */
+@media (max-width: 768px) {
+    .burger-menu {
+        display: flex;
+    }
+    
+    .view-switch {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(10,12,16,0.98);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 2px solid var(--gold);
+        border-radius: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    .view-switch.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .view-btn {
+        width: 160px;
+        text-align: center;
+        padding: 0.6rem;
+        border-radius:50px;
+    }
+} 
+      
+
+        .container { 
+            /* display: flex; 
+            height: calc(100vh - 80px);
+            overflow: hidden; 
+            position: relative; */
+             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-
+        
         .title-section {
             text-align: center;
             margin-bottom: 30px;
@@ -464,62 +551,7 @@
             border-left: 1px solid rgba(212,175,55,0.3);
         }
 
-       .lang-btn {
-    /* padding: 0.1rem 0.1rem; */
-    border-radius: 10px;
-    border: 1px solid var(--gold);
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.65rem;
-    font-weight: 400;
-    transition: all 0.3s;
-    text-decoration: none;
-}
-.lang-btn1 {
-    padding: 0.4rem 0.4rem;
-    border-radius: 8px;
-    /* border: 1px solid var(--gold); */
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s;
-    text-decoration: none;
-}
-.lang-btn img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    vertical-align: middle;
-}
-.lang-btn1 img {
-    width: 40px;
-    height: 40px;
-    margin-top: 5px;
-    border-radius: 50%;
-    vertical-align: middle;
-}
-
-.lang-btn:hover {
-    background: rgba(212,175,55,0.1);
-}
-
-.lang-btn.active {
-    background: #000000;
-    color: #000;
-    border: 1px solid var(--accent-orange);
-}
-
-.lang-btn1:hover {
-    border: 1px solid var(--gold);
    
-}
-.lang-btn1.active {
-    background: #000;
-    color: #000;
-}
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
@@ -530,36 +562,107 @@
             animation: pulse 1s infinite;
         }
 
+        
+.lang-btn {
+    width: 53px;
+    height: 53px;
+    border-radius: 10px;
+    border: 1px solid var(--accent-orange);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.65rem;
+    font-weight: 400;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lang-btn1 {
+    padding: 0.4rem 0.4rem;
+    border-radius: 8px;
+    width: 53px;
+    height: 53px;
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lang-btn img {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 4px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.lang-btn1 img {
+    width: 43px;
+    height: 43px; 
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.lang-btn1:hover {
+    
+    border: 1px solid var(--gold);
+}
+
+
+
+
+
         @media (max-width: 768px) {
-            .lang-switch {
-                margin-left: 0;
-                padding-left: 0;
-                border-left: none;
-                border-top: 1px solid rgba(212,175,55,0.3);
-                padding-top: 0.5rem;
-                margin-top: 0.5rem;
-                justify-content: center;
-            }
-        }
+    .lang-switch {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(212,175,55,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+.lang-btn1:hover {
+    border: 0px solid var(--gold);
+    }
+    }
     </style>
 </head>
 <body>
-    <header>
+   <header>
         <div class="logo">
             <span style="font-size: 2rem;">💑</span>
-            <h1>Ekzogamiya</h1>
+            <a target="_blank" href="./images/uru.jpg">URIW</a>
         </div>
-        <div class="view-switch">
+        
+        <!-- Бургер меню кнопка -->
+        <button class="burger-menu" id="burgerMenu" aria-label="Menúdi ashıw">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+
+        
+        
+        <div class="view-switch" id="viewSwitch">
+            
             <a href="index.html" class="view-btn" target="_self">🏠 Bas bet</a>
             <a href="listsQQ.html" class="view-btn" target="_self">📋 Tizimler</a>
-            <a href="schemeQQ.html" class="view-btn" target="_self">🌳 Shema</a>
+            <a href="schemeQQ.html" class="view-btn" target="_self">🌳 Sxema</a>
             <a href="exogamyQQ.html" class="view-btn active" target="_self">💑 Ekzogamiya</a>
         </div>
 
         <div class="lang-switch">
-            <a target="_self" href="index.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
-            <a target="_self" href="indexKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
-        </div>
+    <a target="_self" href="exogamyQQ.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
+    <a target="_self" href="exogamyKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
+</div>
     </header>
 
     <div class="container">
@@ -1223,6 +1326,33 @@
             expandAll('groom');
             expandAll('bride');
         });
+
+
+        // Бургер меню функционал
+function burgerMenyunıAynalıstırıw() {
+    const burger = document.getElementById('burgerMenu');
+    const kórinisAlmastırǵısh = document.getElementById('viewSwitch');
+    
+    burger.classList.toggle('active');
+    kórinisAlmastırǵısh.classList.toggle('active');
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    // ... ваш существующий код ...
+    
+    // Добавляем обработчик для бургер меню
+    document.getElementById('burgerMenu').addEventListener('click', burgerMenyunıAynalıstırıw);
+    
+    // Закрываем меню при клике на ссылку (мобильные)
+    document.querySelectorAll('.view-btn').forEach(knopka => {
+        knopka.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                burgerMenyunıAynalıstırıw();
+            }
+        });
+    });
+});
     </script>
 </body>
 </html>

@@ -53,20 +53,55 @@
         }
         
 
-        .logo { 
+         .logo { 
             display: flex; 
             align-items: center; 
             gap: 10px;
         }
         
-        .logo h1 { 
+        .logo a { 
             font-family: 'Cormorant Garamond', serif; 
             color: var(--gold); 
             font-size: 1.8rem; 
             margin: 0;
+            text-decoration: none;
         }
         
-        .view-switch {
+        /* Бургер меню кнопка */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.burger-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.burger-menu.active .burger-bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.burger-menu.active .burger-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active .burger-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.view-switch {
             display: flex;
             gap: 0.5rem;
             background: rgba(255,255,255,0.1);
@@ -97,6 +132,42 @@
             color: #000;
             font-weight: 600;
         }
+
+/* Мобильное меню */
+@media (max-width: 768px) {
+    .burger-menu {
+        display: flex;
+    }
+    
+    .view-switch {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(10,12,16,0.98);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 2px solid var(--gold);
+        border-radius: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    .view-switch.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .view-btn {
+        width: 160px;
+        text-align: center;
+        padding: 0.6rem;
+        border-radius:50px;
+    }
+} 
 
         /* MAIN CONTAINER */
         .container {
@@ -478,8 +549,12 @@
 
 .lang-btn {
     /* padding: 0.1rem 0.1rem; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 10px;
-    /* border: 1px solid var(--gold); */
+    width: 53px;
+    height: 53px;
     background: transparent;
     color: var(--gold);
     cursor: pointer;
@@ -489,9 +564,14 @@
     text-decoration: none;
 }
 .lang-btn1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 53px;
+    height: 53px;
     padding: 0.4rem 0.4rem;
     border-radius: 8px;
-    /* border: 1px solid var(--gold); */
+    border: 1px solid var(--accent-orange);
     background: transparent;
     color: var(--gold);
     cursor: pointer;
@@ -501,15 +581,15 @@
     text-decoration: none;
 }
 .lang-btn img {
-    width: 60px;
-    height: 60px;
+    width: 65px;
+    height: 65px;
     border-radius: 50%;
     vertical-align: middle;
+    margin-bottom: 5px;
 }
 .lang-btn1 img {
     width: 40px;
     height: 40px;
-    margin-top: 5px;
     border-radius: 50%;
     vertical-align: middle;
 }
@@ -525,23 +605,17 @@
     background: rgba(197, 212, 210, 0.1);
 }
 
-.lang-btn1.active {
-    background: #000;
-    color: #000;
-    border: 1px solid var(--accent-orange);
-}
-.lang-btn1 {
-    margin-bottom: 8px;
-}
+
+
         /* ANIMATION */
-        @keyframes pulse {
+        /* @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
 
         .checking {
             animation: pulse 1s infinite;
-        }
+        } */
 
         @media (max-width: 768px) {
     .lang-switch {
@@ -557,13 +631,20 @@
     </style>
 </head>
 <body>
-    <header>
+   <header>
         <div class="logo">
             <span style="font-size: 2rem;">💑</span>
-            <h1>Экзогамия</h1>
+            <a target="_blank" href="./images/uru.jpg">УРУУ</a>
         </div>
-        <div class="view-switch">
         
+        <!-- Бургер меню кнопка -->
+        <button class="burger-menu" id="burgerMenu" aria-label="Menúdi ashıw">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+        
+        <div class="view-switch" id="viewSwitch">
             
             <a href="indexKZ.html" class="view-btn" target="_self">🏠 Басты бет</a>
             <a href="listsKZ.html" class="view-btn" target="_self">📋 Тізімдер</a>
@@ -572,8 +653,8 @@
         </div>
 
         <div class="lang-switch">
-     <a target="_self" href="index.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
-    <a target="_self" href="indexKZ.html" class="lang-btn1 active"><img src="./images/KZ.webp" alt="KZ"></a>
+    <a target="_self" href="exogamyQQ.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
+    <a target="_self" href="exogamyKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
 </div>
     </header>
 
@@ -1306,6 +1387,32 @@
             expandAll('groom');
             expandAll('bride');
         });
+
+        // Бургер меню функционал
+function burgerMenyunıAynalıstırıw() {
+    const burger = document.getElementById('burgerMenu');
+    const kórinisAlmastırǵısh = document.getElementById('viewSwitch');
+    
+    burger.classList.toggle('active');
+    kórinisAlmastırǵısh.classList.toggle('active');
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    // ... ваш существующий код ...
+    
+    // Добавляем обработчик для бургер меню
+    document.getElementById('burgerMenu').addEventListener('click', burgerMenyunıAynalıstırıw);
+    
+    // Закрываем меню при клике на ссылку (мобильные)
+    document.querySelectorAll('.view-btn').forEach(knopka => {
+        knopka.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                burgerMenyunıAynalıstırıw();
+            }
+        });
+    });
+});
 
 
 
