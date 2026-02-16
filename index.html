@@ -103,7 +103,7 @@
         }
         
         /* Мобильное меню */
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .burger-menu {
                 display: flex;
             }
@@ -291,7 +291,20 @@
         .uran-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; }
         .stats-box { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--accent-blue); border-radius: 6px; padding: 10px; margin: 10px 0; text-align: center; }
         .stats-number { font-size: 1.3em; color: var(--accent-yellow); font-weight: bold; }
-        .legend { position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.75em; z-index: 100; }
+        /* .legend { position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.75em; z-index: 100; } */
+        .legend { 
+    position: sticky; 
+    bottom: 10px; 
+    left: 10px; 
+    background: rgba(0,0,0,0.9); 
+    padding: 10px; 
+    border-radius: 6px; 
+    font-size: 0.75em; 
+    z-index: 100; 
+    align-self: flex-start;
+    width: fit-content;
+    margin-top: auto;
+}
         .legend-item { display: flex; align-items: center; gap: 5px; margin: 2px 0; }
         .legend-color { width: 12px; height: 12px; border-radius: 2px; }
         .stats { position: fixed; top: 90px; right: 475px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.8em; z-index: 100; transition: right 0.3s ease; }
@@ -309,6 +322,10 @@
                 font-size: 0.65em;
                 max-width: 150px;
             } 
+
+            .legend {
+                display: none;
+            }
             
             
             .info-panel { 
@@ -342,6 +359,10 @@
             .open-panel-btn {
                 bottom: 20px;
                 right: 20px;
+            }
+            .search-box input {
+                position: absolute;
+                top: 47px;
             }
         }
 
@@ -549,6 +570,92 @@
 </div>
     </header>
 
+
+        <!-- Бегущая строка для мобильных устройств -->
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Бегущая строка - только для мобильных */
+        .mobile-warning-marquee {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee-scroll 20s linear infinite;
+        }
+
+        .marquee-content span {
+            padding-right: 50px;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-25%);
+            }
+        }
+
+        /* Показываем на экранах меньше 967px */
+        @media (max-width: 967px) {
+            .mobile-warning-marquee {
+                display: block;
+            }
+            
+            body {
+                padding-top: 115px !important;
+            }
+
+            
+        }
+
+        @media (max-width: 480px) {
+            .marquee-content {
+                animation-duration: 15s;
+            }
+            
+            .mobile-warning-marquee {
+                font-size: 0.8em;
+                padding: 6px 0;
+            }
+        }
+    </style>
+
     <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchNode()"></div>
     <div class="stats" id="statsBox"><div><strong>Statistika:</strong></div><div>Arıs: 2</div><div>Bólim: 2</div><div>Uriw: 50+</div><div>tiyre/ko'she: 300+</div></div>
     
@@ -570,14 +677,14 @@
     <button class="open-panel-btn" id="openPanelBtn" title="Maǵlıwmat panelin ashıw">ℹ️</button>
     
     <div class="legend">
-        <div><strong>Ierarkhiya:</strong></div>
+        <div><strong>Ierarxiya:</strong></div>
         <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Xalıq</div>
         <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Arıs</div>
-        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Bólim</div>
-        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Úlken urıw</div>
-        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Urıw</div>
-        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Tiyre</div>
-        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Ko'she</div>
+        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Bólim/Úlken urıw</div>
+        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Urıw</div>
+        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Tiyre</div>
+        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Ko'she</div>
+        
     </div>
 
     <script>
@@ -1175,5 +1282,138 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
     </script>
+
+
+
+<!-- Глоссарий -->
+<div class="info-section" style="margin-top: 40px;">
+    <h3 style="color: var(--accent-yellow); margin-bottom: 20px;">📚 Glosariy</h3>
+    
+    <div class="glossary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+        
+        <div class="rule-card">
+            <h4>Arıs</h4>
+            <p>Ullı urıwlıq birlespe (plemya). Qaraqalpaqtlarda eki tiykarǵı arıs bar: Qońırat hám On tórt ruu.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Bólim</h4>
+            <p>Arıstıń ishindegi úlken top. Mısalı, Shulıq hám Jauıńǵır — Qońırat arısınıń bólimleri.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Úlken urıw</h4>
+            <p>Bólimdiń ishindegi birneshe urıwdı birlestiriwshi top. Mısallar: Qıyat, Ashamaylı.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Uruw</h4>
+            <p>Tiykarǵı tuwıslıq birlik. Ortaq atadan taraqan adamlar tobı.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Tiyre</h4>
+            <p>Uruwdıń ishindegi kishi bolinis. Ádetle urıwdıń belgili bir butaǵı.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Kóshe</h4>
+            <p>Eń kishi tuwıslıq birlik. Tiyreniń ishindegi top yamasa óyler tobı.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Tamga</h4>
+            <p>Uruwlıq belgi, mór. Ádetle janıwarlar yamasa jatlar beynesinde boladı.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Uran</h4>
+            <p>Soyıs urawı, urıwdıń shapqınshılıq waqtındagı ayqayı. Uruwdı birlestiriwshi belgi.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Ekzogamiya</h4>
+            <p>Óz urıwanan tıs nekelew erejesi. Qaraqalpaq dástúrinde qataq saqtaladı.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Qarımsaq</h4>
+            <p>Uruw ishindegi neke, incest. Qaraqalpaq qogamında qataq tiyım salınǵan.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Shejire</h4>
+            <p>Uruwlıq tegi, ata-babalardıń tizimi. Awızsha da, jazbasha da jetkiziledi.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Qasiyet</h4>
+            <p>Qaraqalpaq ádetlik quqıǵı, dástúrli normalar júyesi.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Источники и литература -->
+<div class="info-section" style="margin-top: 40px;">
+    <h3 style="color: var(--accent-yellow); margin-bottom: 20px;">📖 Paydalanılǵan derekler</h3>
+    
+    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+        <h4 style="color: var(--accent-cyan); margin-bottom: 15px;">Tiykarǵı ádebiyatlar</h4>
+        <ul style="list-style: none; padding: 0; line-height: 1.8; color: var(--text-secondary);">
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Aqınov Ǵ. <em>Qaraqalpaq etnografiyası</em>. — Nókis: Bilim, 1995.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Jolımbetov Á. <em>Qaraqalpaq shejiresi</em>. — Nókis: Qaraqalpaqstan, 2003.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Muratov S. <em>Qońırat arısı</em>. — Tashkent: Fan, 1982.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Tilewmuratova R. <em>Qaraqalpaq urıwlıq qurılımı</em>. — Nókis: 2010.
+            </li>
+        </ul>
+        
+        <h4 style="color: var(--accent-cyan); margin: 20px 0 15px 0;">Arxivlik derekler</h4>
+        <ul style="list-style: none; padding: 0; line-height: 1.8; color: var(--text-secondary);">
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Orınbar qazaq dalası jónindegi jarlıqlar jımaǵı (1844-1868)
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Túrkistan ólkelıq statistikalıq komiteti maǵlıwmatları (1887-1917)
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Qaraqalpaq ASSR xalıq sharuwashılığı esebi (1926-1939)
+            </li>
+        </ul>
+        
+        <h4 style="color: var(--accent-cyan); margin: 20px 0 15px 0;">Izertlew jumısları</h4>
+        <ul style="list-style: none; padding: 0; line-height: 1.8; color: var(--text-secondary);">
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Basilov V.N. <em>Kult svyatyh v islame</em>. — M.: 1970.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Troytskaya A.L. <em>K voprosu o rodo-plemennom sostave karakalpakow</em> // SE. — 1937. — №4.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Jdanko T.A. <em>Karakalpakskie rodo-plemennye traditsii</em>. — M.: 1950.
+            </li>
+        </ul>
+        
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); font-size: 0.9em; color: var(--text-secondary);">
+            <p><strong>Eskertpe:</strong> Bul joba akademiyalıq hám mádeniy-agartıw maqsatında jasalǵan. Uruwlıq tegdi naqtı anıqlaw ushın arnawlı shejireshi-genealoglarga júginiw usınıs etiledi.</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>

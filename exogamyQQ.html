@@ -142,7 +142,7 @@
 }
 
 /* Мобильное меню */
-@media (max-width: 768px) {
+@media (max-width: 968px) {
     .burger-menu {
         display: flex;
     }
@@ -665,6 +665,89 @@
 </div>
     </header>
 
+      <!-- Бегущая строка для мобильных устройств -->
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Бегущая строка - только для мобильных */
+        .mobile-warning-marquee {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee-scroll 20s linear infinite;
+        }
+
+        .marquee-content span {
+            padding-right: 50px;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-25%);
+            }
+        }
+
+        /* Показываем на экранах меньше 967px */
+        @media (max-width: 967px) {
+            .mobile-warning-marquee {
+                display: block;
+            }
+            
+            body {
+                padding-top: 115px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .marquee-content {
+                animation-duration: 15s;
+            }
+            
+            .mobile-warning-marquee {
+                font-size: 0.8em;
+                padding: 6px 0;
+            }
+        }
+    </style>
+
     <div class="container">
         <div class="title-section">
             <h2>Qaraqalpaq urıwlıq ekzogamiyası</h2>
@@ -1113,9 +1196,9 @@
                     desc: 'Bul urıqlar arasında nekelew qadaǵan! (incest)'
                 },
                 warning: {
-                    icon: '⚠️',
-                    title: 'DIQQAT',
-                    desc: 'Neke múmkin, biraq usınıs etilmeydi'
+                    icon: '✅',
+                    title: 'NEKEGE RUQSAT',
+                    desc: 'Bul urıqlar arasında nekelew múmkin!'
                 }
             };
 
@@ -1181,7 +1264,7 @@
                         detailsHTML += '<li>❌ Bul neke islam hám dástúr boyınsha qadaǵan</li>';
                         detailsHTML += '<li>⚠️ Basqa urıqtan jup izlew kerek</li>';
                     } else if (status === 'warning') {
-                        detailsHTML += '<li>⚠️ Neke múmkin, biraq dástúrge qaray usınıs etilmeydi</li>';
+                        detailsHTML += '<li>✅  Neke múmkin.</li>';
                         detailsHTML += '<li>💭 Hár qıylı arıslardan yamasa úlken urıwlardan tańlaǵan jaqsıraq</li>';
                     }
                 }
@@ -1354,5 +1437,204 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
     </script>
+
+
+    <!-- Информационный блок об экзогамии -->
+    <div class="info-section" style="margin-top: 40px; background: linear-gradient(135deg, rgba(26,31,46,0.9) 0%, rgba(15,20,29,0.95) 100%); border: 2px solid var(--accent-cyan);">
+        <h3 style="color: var(--accent-cyan); font-size: 1.4em; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+            <span>📖</span> 
+            <span id="exogamyInfoTitle">Неге ру ішінде некеге болмайды?</span>
+        </h3>
+        
+        <div style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05em;">
+            <p style="margin-bottom: 15px;">
+                <span id="exogamyIntro">Бұл дәстүрлі рулық экзогамиямен байланысты — қарақалпақ этникалық мәдениеті мен әлеуметтік ұйымдастыруының маңызды элементтерінің бірі.</span>
+            </p>
+            
+            <h4 style="color: var(--accent-yellow); margin: 20px 0 10px 0; font-size: 1.1em;">
+                <span id="reason1Title">1. Инцест және генетикалық қауіптерді болдырмау</span>
+            </h4>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li id="reason1Item1">Бір рудың ішіндегі неке инцест (қарымсақ) деп есептелді</li>
+                <li id="reason1Item2">Бұл ұрпақ үшін биологиялық қауіптер тудырды</li>
+                <li id="reason1Item3">Тіпті 7 буын қашықтықта туысқандар арасында неке тыйым салынды</li>
+            </ul>
+            
+            <h4 style="color: var(--accent-yellow); margin: 20px 0 10px 0; font-size: 1.1em;">
+                <span id="reason2Title">2. Әлеуметтік-саяси құрылым</span>
+            </h4>
+            <div style="overflow-x: auto; margin-bottom: 15px;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.95em; background: rgba(0,0,0,0.2); border-radius: 8px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: var(--accent-blue); color: white;">
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid var(--border-color);" id="tableLevel">Деңгей</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 2px solid var(--border-color);" id="tableName">Атауы</th>
+                            <th style="padding: 10px; text-align: center; border-bottom: 2px solid var(--border-color);" id="tableMarriage">Неке ішінде</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 8px 10px;">1</td>
+                            <td style="padding: 8px 10px;">Ko'she </td>
+                            <td style="padding: 8px 10px; text-align: center; color: var(--accent-red); font-weight: bold;">❌ Qadaǵan</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 8px 10px;">2</td>
+                            <td style="padding: 8px 10px;">Tiyre</td>
+                            <td style="padding: 8px 10px; text-align: center; color: var(--accent-red); font-weight: bold;">❌ Qadaǵan</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 8px 10px;">3</td>
+                            <td style="padding: 8px 10px;">Uruw (Úlken urıw)</td>
+                            <td style="padding: 8px 10px; text-align: center; color: var(--accent-red); font-weight: bold;">❌ Qadaǵan</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 8px 10px;">4</td>
+                            <td style="padding: 8px 10px;">Arıs</td>
+                            <td style="padding: 8px 10px; text-align: center; color: var(--accent-green);font-weight: bold;">✅ Ruqsat</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 8px 10px;">5</td>
+                            <td style="padding: 8px 10px;">Bólim</td>
+                            <td style="padding: 8px 10px; text-align: center; color: var(--accent-green); font-weight: bold;">✅ Ruqsat</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h4 style="color: var(--accent-yellow); margin: 20px 0 10px 0; font-size: 1.1em;">
+                <span id="reason3Title">3. Әлеуметтік байланыстарды сақтау</span>
+            </h4>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li id="reason3Item1">Экзогамия <strong>әлеуметтік желіні кеңейтті</strong> — рулар арасында одақтар құрды</li>
+                <li id="reason3Item2">Некелік альянстар арқылы ру ішіндегі бітімді нығайтты</li>
+                <li id="reason3Item3">Бір ру ішіндегі ресурстар үшін дауларды болдырмады</li>
+            </ul>
+            
+            <!-- <h4 style="color: var(--accent-yellow); margin: 20px 0 10px 0; font-size: 1.1em;">
+                <span id="reason4Title">4. Ерекше жағдай: Мүйтен руы</span>
+            </h4>
+            <div style="background: rgba(52, 152, 219, 0.15); border-left: 4px solid var(--accent-blue); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <p style="margin-bottom: 10px;" id="exceptionText">
+                    Бірегей ерекше жағдай — <strong>арыс Қоңырат ішіндегі Мүйтен руы</strong>:
+                </p>
+                <ul style="margin-left: 20px;">
+                    <li id="exceptionItem1"><strong>Кеңтанау, Тели, Самат, Абыз</strong> тийрелері бір-бірімен некелесе алады</li>
+                    <li id="exceptionItem2">Бұл олардың тарихи шығу тегі және санына байланысты</li>
+                    <li id="exceptionItem3">Бірақ <strong>бір тийре ішінде</strong> (мысалы, Самат-Самат) неке әлі де <span style="color: var(--accent-red);">тыйым салынған</span></li>
+                </ul>
+            </div> -->
+            
+            <h4 style="color: var(--accent-yellow); margin: 20px 0 10px 0; font-size: 1.1em;">
+                <span id="reason5Title">4. Діни-құқықтық нормалар</span>
+            </h4>
+            <ul style="margin-left: 20px; margin-bottom: 15px;">
+                <li id="reason5Item1">Ислам да жақын туысқандармен некені тыйым салады</li>
+                <li id="reason5Item2">Қарақалпақ әдеттік құқығы (<em>қасиет</em>) бұл нормаларды бекітті</li>
+                <li id="reason5Item3">Бұзушылық әлеуметтік жылауға (өшірілуге) әкелді</li>
+            </ul>
+            
+            <div style="background: rgba(241, 196, 15, 0.1); border: 1px solid var(--accent-yellow); border-radius: 10px; padding: 15px; margin-top: 20px;">
+                <h4 style="color: var(--accent-yellow); margin-bottom: 10px; font-size: 1.05em;">
+                    <span id="modernTitle">Қазіргі заманғы маңызы</span>
+                </h4>
+                <p id="modernText">
+                    Қазіргі қарақалпақтар жиі осы сайт сияқты құралдарды қолданады:
+                </p>
+                <ul style="margin-left: 20px; margin-top: 8px;">
+                    <li id="modernItem1">Потенциалды серіктестің рулық тегін тексеру үшін</li>
+                    <li id="modernItem2">Қасақана инцестті болдырмау үшін</li>
+                    <li id="modernItem3">Мәдени идентитетті сақтау үшін</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Переводы для разных языковых версий
+        const exogamyTranslations = {
+            kz: {
+                exogamyInfoTitle: "Неге ру ішінде некеге болмайды?",
+                exogamyIntro: "Бұл дәстүрлі рулық экзогамиямен байланысты — қарақалпақ этникалық мәдениеті мен әлеуметтік ұйымдастыруының маңызды элементтерінің бірі.",
+                reason1Title: "1. Инцест және генетикалық қауіптерді болдырмау",
+                reason1Item1: "Бір рудың ішіндегі неке инцест (қарымсақ) деп есептелді",
+                reason1Item2: "Бұл ұрпақ үшін биологиялық қауіптер тудырды",
+                reason1Item3: "Тіпті 7 буын қашықтықта туысқандар арасында неке тыйым салынды",
+                reason2Title: "2. Әлеуметтік-саяси құрылым",
+                tableLevel: "Деңгей",
+                tableName: "Атауы",
+                tableMarriage: "Неке ішінде",
+                reason3Title: "3. Әлеуметтік байланыстарды сақтау",
+                reason3Item1: "Экзогамия <strong>әлеуметтік желіні кеңейтті</strong> — рулар арасында одақтар құрды",
+                reason3Item2: "Некелік альянстар арқылы ру ішіндегі бітімді нығайтты",
+                reason3Item3: "Бір ру ішіндегі ресурстар үшін дауларды болдырмады",
+                reason4Title: "4. Ерекше жағдай: Мүйтен руы",
+                exceptionText: "Бірегей ерекше жағдай — <strong>арыс Қоңырат ішіндегі Мүйтен руы</strong>:",
+                exceptionItem1: "<strong>Кеңтанау, Тели, Самат, Абыз</strong> тийрелері бір-бірімен некелесе алады",
+                exceptionItem2: "Бұл олардың тарихи шығу тегі және санына байланысты",
+                exceptionItem3: "Бірақ <strong>бір тийре ішінде</strong> (мысалы, Самат-Самат) неке әлі де <span style=\"color: var(--accent-red);\">тыйым салынған</span>",
+                reason5Title: "4. Діни-құқықтық нормалар",
+                reason5Item1: "Ислам да жақын туысқандармен некені тыйым салады",
+                reason5Item2: "Қарақалпақ әдеттік құқығы (<em>қасиет</em>) бұл нормаларды бекітті",
+                reason5Item3: "Бұзушылық әлеуметтік жылауға (өшірілуге) әкелді",
+                modernTitle: "Қазіргі заманғы маңызы",
+                modernText: "Қазіргі қарақалпақтар жиі осы сайт сияқты құралдарды қолданады:",
+                modernItem1: "Потенциалды серіктестің рулық тегін тексеру үшін",
+                modernItem2: "Қасақана инцестті болдырмау үшін",
+                modernItem3: "Мәдени идентитетті сақтау үшін"
+            },
+            qq: {
+                exogamyInfoTitle: "Negе urıw ishinde nekege bolmaydı?",
+                exogamyIntro: "Bul dástúrli urıwlıq ekzogamiyamen baylanıslı — qaraqalpaq etnikalıq mádeniyati hám áleumettik uıymdastırıwınıń mańızlı elementleriniń biri.",
+                reason1Title: "1. Incest hám genetikalıq qáwiptlerdi bolıdırıw",
+                reason1Item1: "Bir urıwnıń ishindegi neke incest (qarımsaq) dep esaplandı",
+                reason1Item2: "Bul urpaq ushın biologiyalıq qáwiptler tuıdırdı",
+                reason1Item3: "Tiykim 7 buın qashıqtıqta tuısqandar arasında neke tiyım salındı",
+                reason2Title: "2. Áleumettik-sayasi qurlım",
+                tableLevel: "Deńgey",
+                tableName: "Atawı",
+                tableMarriage: "Neke ishinde",
+                reason3Title: "3. Áleumettik baylanıslardı saqtaw",
+                reason3Item1: "Ekzogamiya <strong>áleumettik jelinı keńeytti</strong> — urıwlar arasında odaqtar qurdı",
+                reason3Item2: "Nekelek alıyanslar arqalı urıw ishindegi bitimdi nıǵayttı",
+                reason3Item3: "Bir urıw ishindegi resurslar ushın dawılardı bolıdırmaq",
+                reason4Title: "4. Ayriqsha jaǵday: Múyten urıwı",
+                exceptionText: "Biregey ayriqsha jaǵday — <strong>arıs Qońırat ishindegi Múyten urıwı</strong>:",
+                exceptionItem1: "<strong>Keńtańaw, Teli, Samat, Abız</strong> tiyreleri bir-biri menen nekelese aladı",
+                exceptionItem2: "Bul olardıń tarıxı shıǵuw tegi hám sanına baylanıslı",
+                exceptionItem3: "Biraq <strong>bir tiyre ishinde</strong> (mısalı, Samat-Samat) neke áli de <span style=\"color: var(--accent-red);\">tiyım salınǵan</span>",
+                reason5Title: "5. Dini-ququqtıq normalar",
+                reason5Item1: "Islam da jaqın tuısqandar menen nekeni tiyım saladı",
+                reason5Item2: "Qaraqalpaq ádetlik quqıǵı (<em>qasiyet</em>) bul normalardi bekittti",
+                reason5Item3: "Buzuwshılıq áleumettik jılawǵa (óshirilwge) ákeldi",
+                modernTitle: "Qazirgi zamanǵı mańızı",
+                modernText: "Qazirgi qaraqalpaqtar jiyne usı sayt siyaqtı quralardı qoldanadı:",
+                modernItem1: "Potencialdı seriktestiń urıwlıq tegin tekseriw ushın",
+                modernItem2: "Qasqana incestti bolıdırmaq ushın",
+                modernItem3: "Mádeniy identitetti saqtaw ushın"
+            }
+        };
+
+        // Определяем язык по URL и применяем перевод
+        function applyExogamyTranslations() {
+            const currentUrl = window.location.href;
+            const lang = currentUrl.includes('QQ') ? 'qq' : 'kz';
+            const texts = exogamyTranslations[lang];
+            
+            if (texts) {
+                Object.keys(texts).forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.innerHTML = texts[id];
+                    }
+                });
+            }
+        }
+
+        // Применяем переводы при загрузке
+        document.addEventListener('DOMContentLoaded', applyExogamyTranslations);
+    </script>
+</body>
+</html>
 </body>
 </html>

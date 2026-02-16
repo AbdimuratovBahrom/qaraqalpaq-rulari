@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қарақалпақ экзогамиясы-ауылдағы некелерді тексеру</title>
+    <style>
+        :root {
+            --primary-bg: #0f1419;
+            --secondary-bg: #1a1f2e;
+            --accent-red: #e74c3c;
+            --accent-orange: #e67e22;
+            --accent-yellow: #f1c40f;
+            --gold: #f1c40f;
+            --accent-green: #2ecc71;
+            --accent-blue: #3498db;
+            --accent-purple: #9b59b6;
+            --accent-cyan: #1abc9c;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --border-color: #34495e;
+            --success: #27ae60;
+            --danger: #c0392b;
+            --warning: #f39c12;
+            --info: #3498db;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10,12,16,0.95);
+            border-bottom: 2px solid var(--gold);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            backdrop-filter: blur(10px);
+            
+        }
+        
+
+         .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        
+        .logo a { 
+            font-family: 'Cormorant Garamond', serif; 
+            color: var(--gold); 
+            font-size: 1.8rem; 
+            margin: 0;
+            text-decoration: none;
+        }
+        
+        /* Бургер меню кнопка */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.burger-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.burger-menu.active .burger-bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.burger-menu.active .burger-bar:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active .burger-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.view-switch {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem;
+            border-radius: 20px;
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 16px;
+            border: none;
+            background: transparent;
+            color: #8892b0;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .view-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .view-btn.active {
+            background: var(--gold);
+            color: #000;
+            font-weight: 600;
+        }
+
+/* Мобильное меню */
+@media (max-width: 968px) {
+    .burger-menu {
+        display: flex;
+    }
+    
+    .view-switch {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(10,12,16,0.98);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 2px solid var(--gold);
+        border-radius: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    .view-switch.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .view-btn {
+        width: 160px;
+        text-align: center;
+        padding: 0.6rem;
+        border-radius:50px;
+    }
+} 
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .title-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .title-section h2 {
+            color: var(--accent-yellow);
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .title-section p {
+            color: var(--text-secondary);
+            font-size: 1.1em;
+        }
+
+        /* EXOGAMY CHECKER */
+        .exogamy-checker {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .exogamy-checker {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .selector-panel {
+            background: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .selector-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-yellow));
+        }
+
+        .panel-title {
+            font-size: 1.3em;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .selected-display {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid var(--accent-blue);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: var(--accent-yellow);
+            transition: all 0.3s;
+        }
+
+        .selected-display.empty {
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+            font-style: italic;
+        }
+
+        .clear-btn {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            display: none;
+        }
+
+        .clear-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .clear-btn.visible {
+            display: inline-block;
+        }
+
+        /* TREE SELECTOR */
+        .tree-selector {
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .tree-node {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .tree-item {
+            padding: 8px 12px;
+            margin: 3px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid transparent;
+            
+        }
+
+        .tree-item:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--accent-blue);
+        }
+
+        .tree-item.selected {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .tree-item.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .tree-toggle {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--accent-yellow);
+            font-size: 0.8em;
+        }
+
+        .node-level-0 { margin-left: 0; }
+        .node-level-1 { margin-left: 15px; }
+        .node-level-2 { margin-left: 30px; }
+        .node-level-3 { margin-left: 45px; }
+        .node-level-4 { margin-left: 60px; }
+        .node-level-5 { margin-left: 75px; }
+
+        .level-badge {
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        /* RESULT PANEL */
+        .result-panel {
+            background: var(--secondary-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+
+        .result-panel.allowed::before {
+            background: linear-gradient(90deg, var(--accent-green), #2ecc71);
+        }
+
+        .result-panel.forbidden::before {
+            background: linear-gradient(90deg, var(--accent-red), #e74c3c);
+        }
+
+        .result-panel.pending::before {
+            background: linear-gradient(90deg, var(--warning), #f1c40f);
+        }
+
+        .result-panel.exception::before {
+            background: linear-gradient(90deg, var(--info), #3498db);
+        }
+
+        .result-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 2em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .result-description {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .result-details {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .result-details h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+        }
+
+        .result-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .result-details li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .result-details li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-yellow);
+        }
+
+        .exception-note {
+            background: rgba(52, 152, 219, 0.15);
+            border: 2px solid var(--accent-blue);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .exception-note h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+        }
+
+        .allowed .result-icon { color: var(--accent-green); }
+        .allowed .result-title { color: var(--accent-green); }
+        
+        .forbidden .result-icon { color: var(--accent-red); }
+        .forbidden .result-title { color: var(--accent-red); }
+        
+        .pending .result-icon { color: var(--warning); }
+        .pending .result-title { color: var(--warning); }
+
+        .exception .result-icon { color: var(--info); }
+        .exception .result-title { color: var(--info); }
+
+        /* INFO SECTION */
+        .info-section {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-section h3 {
+            color: var(--accent-yellow);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .rule-card {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        .rule-card h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        .rule-card p {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .rule-card.allowed { border-left-color: var(--accent-green); }
+        .rule-card.forbidden { border-left-color: var(--accent-red); }
+        .rule-card.warning { border-left-color: var(--warning); }
+        .rule-card.exception { border-left-color: var(--info); }
+
+        /* COLLAPSE BUTTONS */
+        .collapse-all, .expand-all {
+            background: var(--accent-purple);
+            color: white;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8em;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+
+        .collapse-all:hover, .expand-all:hover {
+            background: #8e44ad;
+        }
+
+        /* SCROLLBAR */
+        .tree-selector::-webkit-scrollbar {
+            width: 8px;
+            
+        }
+
+        .tree-selector::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+
+        .tree-selector::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 4px;
+        }
+
+        .lang-switch {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 1px solid rgba(212,175,55,0.3);
+}
+
+.lang-btn {
+    /* padding: 0.1rem 0.1rem; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    width: 53px;
+    height: 53px;
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.65rem;
+    font-weight: 400;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+.lang-btn1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 53px;
+    height: 53px;
+    padding: 0.4rem 0.4rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent-orange);
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+.lang-btn img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-bottom: 5px;
+}
+.lang-btn1 img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+
+
+.lang-btn:hover {
+    border: 1px solid var(--gold);
+   
+}
+
+.lang-btn1:hover {
+    background: rgba(197, 212, 210, 0.1);
+}
+
+
+
+        /* ANIMATION */
+        /* @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .checking {
+            animation: pulse 1s infinite;
+        } */
+
+        @media (max-width: 768px) {
+    .lang-switch {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid rgba(212,175,55,0.3);
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+        justify-content: center;
+    }
+}
+    </style>
+</head>
+<body>
+   <header>
+        <div class="logo">
+            <span style="font-size: 2rem;">💑</span>
+            <a target="_blank" href="./images/uru.jpg">УРУУ</a>
+        </div>
+        
+        <!-- Бургер меню кнопка -->
+        <button class="burger-menu" id="burgerMenu" aria-label="Menúdi ashıw">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+        
+        <div class="view-switch" id="viewSwitch">
+            
+            <a href="indexKZ.html" class="view-btn" target="_self">🏠 Басты бет</a>
+            <a href="listsKZ.html" class="view-btn" target="_self">📋 Тізімдер</a>
+            <a href="schemeKZ.html" class="view-btn" target="_self">🌳 Схема</a>
+            <a href="exogamyKZ.html" class="view-btn active" target="_self">💑 Экзогамия</a>
+        </div>
+
+        <div class="lang-switch">
+    <a target="_self" href="exogamyQQ.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
+    <a target="_self" href="exogamyKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
+</div>
+    </header>
+
+    <div class="container">
+        <div class="title-section">
+            <h2>Qaraqalpaq urıwlıq ekzogamiyası</h2>
+            <p>Neke ushın aqlıq tekseriw / Проверка родовой принадлежности для брака</p>
+        </div>
+
+        <div class="exogamy-checker">
+            <!-- Groom Selection -->
+            <div class="selector-panel">
+                <div class="panel-title">
+                    🤵 Kúyew / Жених
+                    <button class="collapse-all" onclick="collapseAll('groom')">Jıynaw/Свернуть</button>
+                    <button class="expand-all" onclick="expandAll('groom')">Jayıw/Развернуть</button>
+                </div>
+                <div id="groomDisplay" class="selected-display empty">Túrdi tańlań / Выберите род</div>
+                <button class="clear-btn" id="groomClear" onclick="clearSelection('groom')">❌ Tazalaw / Очистить</button>
+                <div id="groomTree" class="tree-selector"></div>
+            </div>
+
+            <!-- Bride Selection -->
+            <div class="selector-panel">
+                <div class="panel-title">
+                    👰 Келін / Невеста
+                    <button class="collapse-all" onclick="collapseAll('bride')">Jıynaw/Свернуть</button>
+                    <button class="expand-all" onclick="expandAll('bride')">Jayıw/Развернуть</button>
+                </div>
+                <div id="brideDisplay" class="selected-display empty">Túrdi tańlań / Выберите род</div>
+                <button class="clear-btn" id="brideClear" onclick="clearSelection('bride')">❌ Tazalaw / Очистить</button>
+                <div id="brideTree" class="tree-selector"></div>
+            </div>
+        </div>
+
+        <!-- Result Panel -->
+        <div id="resultPanel" class="result-panel pending">
+            <div class="result-icon">⏳</div>
+            <div class="result-title">Tańlawdı kútiw / Ожидание выбора</div>
+            <div class="result-description">
+                Eki tárep te tańlaǵannan soń, nekeniń múmkinshiligi tekseriledi<br>
+                После выбора обеих сторон будет проверена возможность брака
+            </div>
+            <div class="result-details" id="resultDetails" style="display: none;"></div>
+        </div>
+
+    
+        <!-- Info Section -->
+        <div class="info-section">
+            <h3>📚 Ekzogamiya qaǵıydaları / Правила экзогамии</h3>
+            <div class="rules-grid">
+                <div class="rule-card forbidden">
+                    <h4>❌ Qadaǵan / Запрещено</h4>
+                    <p>Bir qoshtıń yamasa tiyrenń ishinde nekeleiw incest dep esaplanadı.</p>
+                    <p><em>Брак внутри одного коша или тийре считается инцестом.</em></p>
+                </div>
+                <div class="rule-card exception">
+                    <h4>💡 Ayrıqsha jaǵday/ Исключение</h4>
+                    <p>Múyten urıwı: Keńtańaw, Teli, Samat, Abız tiyreleri arasında neke ruxsat.</p>
+                    <p><em>Уру Мүйтен: брак между тийре Кеңтанаў, Тели, Самат, Абыз разрешён,но не рекомендуется.</em></p>
+                </div>
+                <div class="rule-card warning">
+                    <h4>❌ Qadaǵan / Запрещено</h4>
+                    <p>Basqa ruwlarda: bir urıwdıń ishinde nekelew qadaǵan.</p>
+                    <p><em>В других руах: брак внутри одного уруу запрещён.</em></p>
+                </div>
+                <div class="rule-card allowed">
+                    <h4>✅ Ruxsat etilgen / Разрешено</h4>
+                    <p>Hár qıylı urıwlardan, arıslardan yamasa bólek taypalardan.</p>
+                    <p><em> Из разных уруу, арыс или совершенно разных племён.</em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   
+
+    <script>
+        // Полная структура рулов с родословной
+        const tribeData = {
+            id: "root", name: "ҚАРАҚАЛПАҚЛАР", level: 0, type: "народ",
+            children: [
+                {
+                    id: "conyrat", name: "АРЫС ҚОҢЫРАТ", level: 1, type: "арыс", tamga: "П (босаға)", uran: "Қақпа",
+                    children: [
+                        {
+                            id: "shulyk", name: "ШУЛЫҚ БӨЛIМI", level: 2, type: "бөлiм",
+                            children: [
+                                {
+                                    id: "kyat", name: "ҚЫЯТ", level: 3, type: "үлкен уруу", tamga: "Үш таңба", urан: "Алатау",
+                                    children: [
+                                        {
+                                            id: "ush-tambaly", name: "Үштаңбалы", level: 4, type: "тийре",
+                                            children: [
+                                                { id: "sanmurun-k", name: "Саңмұрын", level: 5, type: "көше" },
+                                                { id: "aryq-kyat", name: "Арыққият", level: 5, type: "көше" },
+                                                { id: "tartuly", name: "Тартулы", level: 5, type: "көше" },
+                                                { id: "qanzhygaly-k", name: "Қанжығалы", level: 5, type: "көше" },
+                                                { id: "qatagan", name: "Қатаған", level: 5, type: "көше" },
+                                                { id: "qara-kyat", name: "Қарақият", level: 5, type: "көше" }
+                                            ]
+                                        },
+                                        {
+                                            id: "taraqty", name: "Тарақты", level: 4, type: "тийре",
+                                            children: [
+                                                { id: "togyzaq", name: "Тоғызақ", level: 5, type: "көше" },
+                                                { id: "abas-kyat", name: "Абас", level: 5, type: "көше" },
+                                                { id: "jaltyrshy", name: "Жалтыршы", level: 5, type: "көше" },
+                                                { id: "aqunqaragan", name: "Ақұнқараған", level: 5, type: "көше" },
+                                                { id: "taqay", name: "Тақай", level: 5, type: "көше" },
+                                                { id: "qarzhaubaras", name: "Қаржаубарас", level: 5, type: "көше" }
+                                            ]
+                                        },
+                                        {
+                                            id: "balgaly-kyat", name: "Балғалы Қият", level: 4, type: "тийре",
+                                            children: [
+                                                { id: "bespishaq", name: "Беспышақ", level: 5, type: "көше" },
+                                                { id: "etekshi", name: "Етекші", level: 5, type: "көше" },
+                                                { id: "sanmurun-bk", name: "Саңмұрын", level: 5, type: "көше" },
+                                                { id: "qozhaqaragan", name: "Қожақараған", level: 5, type: "көше" }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    id: "ashamayly", name: "АШАМАЙЛЫ", level: 3, type: "уруу", tamga: "АШ", urан: "Шулык",
+                                    children: [
+                                        { id: "saqu", name: "Сақу", level: 4, type: "тийре" },
+                                        { id: "qaraqoja", name: "Қарақожа", level: 4, type: "тийре" },
+                                        { id: "jalangayaq", name: "Жалаңаяқ", level: 4, type: "тийре" },
+                                        { id: "ajyldy", name: "Айылды", level: 4, type: "тийре" },
+                                        {
+                                            id: "qobasan", name: "Қобасан", level: 4, type: "тийре",
+                                            children: [
+                                                { id: "aqnazar", name: "Ақназар", level: 5, type: "көше" },
+                                                { id: "jansary", name: "Жансары", level: 5, type: "көше" },
+                                                { id: "otemis-q", name: "Өтеміс", level: 5, type: "көше" },
+                                                { id: "esen", name: "Есен", level: 5, type: "көше" },
+                                                { id: "tampysh", name: "Тампыш", level: 5, type: "көше" }
+                                            ]
+                                        },
+                                        { id: "turkmenqara", name: "Түркіменқара", level: 4, type: "тийре" },
+                                        { id: "jappar", name: "Жаппар", level: 4, type: "тийре" },
+                                        { id: "sary-ash", name: "Сары", level: 4, type: "тийре" },
+                                        { id: "abyz-ash", name: "Абыз", level: 4, type: "тийре" },
+                                        { id: "aqay", name: "Ақай", level: 4, type: "тийре" },
+                                        { id: "pangqara", name: "Паңқара", level: 4, type: "тийре" },
+                                        {
+                                            id: "ush-bas", name: "Үш бас", level: 4, type: "тийре",
+                                            children: [{ id: "jaman-ub", name: "Жаман", level: 5, type: "көше" }]
+                                        },
+                                        { id: "qurama", name: "Құрама", level: 4, type: "тийре" }
+                                    ]
+                                },
+                                {
+                                    id: "koldauli", name: "ҚОЛДАУЛЫ", level: 3, type: "уруу", tamga: "ҚЛД", urан: "Қолдау",
+                                    children: [
+                                        { id: "beskempir", name: "Бескемпір", level: 4, type: "тийре" },
+                                        { id: "maishyshaly", name: "Майшышалы", level: 4, type: "тийре" },
+                                        { id: "qalqaman", name: "Қалқаман", level: 4, type: "тийре" },
+                                        { id: "ghajypqaragan", name: "Ғайыпқараған", level: 4, type: "тийре" },
+                                        { id: "sarytan-k", name: "Сарытан", level: 4, type: "тийре" },
+                                        { id: "kulkiqozhaq", name: "Күлкіқожақ", level: 4, type: "тийре" },
+                                        { id: "jarymbet", name: "Жарымбет", level: 4, type: "тийре" },
+                                        { id: "qyzylayaq", name: "Қызылаяқ", level: 4, type: "тийре" },
+                                        { id: "karasiraq-k", name: "Қарасирақ", level: 4, type: "тийре" },
+                                        { id: "jelqaragan", name: "Желқараған", level: 4, type: "тийре" },
+                                        { id: "ulkenborik", name: "Үлкенбөрік", level: 4, type: "тийре" },
+                                        { id: "shylzhuyt", name: "Шылжуыт", level: 4, type: "тийре" },
+                                        { id: "jamanqonyrat", name: "Жаманқоңырат", level: 4, type: "тийре" },
+                                        {
+                                            id: "kalmaq", name: "Қалмақ", level: 4, type: "тийре",
+                                            children: [
+                                                { id: "adil", name: "Әділ", level: 5, type: "көше" },
+                                                { id: "ereke", name: "Ереке", level: 5, type: "көше" }
+                                            ]
+                                        },
+                                        { id: "jaman-aul", name: "Жаман ауыл", level: 4, type: "тийре" }
+                                    ]
+                                },
+                                {
+                                    id: "kostambali", name: "ҚОСТАҢБАЛЫ", level: 3, type: "уруу", tamga: "II", urан: "Қосқа",
+                                    children: [
+                                        { id: "jangildi-k", name: "Жангелді", level: 4, type: "тийре" },
+                                        { id: "shirzhegen", name: "Шіржеген", level: 4, type: "тийре" },
+                                        { id: "aghabegli", name: "Ағабеглі", level: 4, type: "тийре" },
+                                        { id: "qarynzhuan", name: "Қарынжуан", level: 4, type: "тийре" },
+                                        { id: "kostambali-k", name: "Қостаңбалы", level: 4, type: "тийре" },
+                                        { id: "qaraqursaq-k", name: "Қарақұрсақ", level: 4, type: "тийре" },
+                                        { id: "qazaqy-k", name: "Қазақы", level: 4, type: "тийре" }
+                                    ]
+                                },
+                                {
+                                    id: "balgali", name: "БАЛҒАЛЫ", level: 3, type: "уруу", tamga: "Б", urан: "Балға",
+                                    children: [
+                                        { id: "aqbalgali", name: "Ақбалғалы", level: 4, type: "тийре" },
+                                        { id: "nurbalgali", name: "Нұрбалғалы", level: 4, type: "тийре" },
+                                        { id: "turkmen-b", name: "Түркімен", level: 4, type: "тийре" },
+                                        { id: "jamanaul-b", name: "Жаманауыл", level: 4, type: "тийре" },
+                                        { id: "shomishti", name: "Шөмішті", level: 4, type: "тийре" },
+                                        { id: "toqymbet", name: "Тоқымбет", level: 4, type: "тийре" },
+                                        { id: "tazbalgali", name: "Тазбалғалы", level: 4, type: "тийре" },
+                                        { id: "kostamgali-b", name: "Қостамғалы", level: 4, type: "тийре" },
+                                        { id: "qaratalshy", name: "Қараталшы", level: 4, type: "тийре" },
+                                        { id: "asan", name: "Асан", level: 4, type: "тийре" },
+                                        { id: "arzyqul", name: "Арзықұл", level: 4, type: "тийре" }
+                                    ]
+                                },
+                                {
+                                    id: "kandekli", name: "ҚӘНДЕКЛІ", level: 3, type: "уруу", tamga: "Г", urан: "Көндек",
+                                    children: [
+                                        { id: "qarama-kan", name: "Қарама", level: 4, type: "тийре" },
+                                        { id: "kiikshi", name: "Киікші", level: 4, type: "тийре" },
+                                        { id: "toqbolat-kan", name: "Тоқболат", level: 4, type: "тийре" },
+                                        { id: "qyryqsadaq", name: "Қырықсадақ", level: 4, type: "тийре" }
+                                    ]
+                                },
+                                {
+                                    id: "karamoiyn", name: "ҚАРАМОЙЫН", level: 3, type: "уруу", tamga: "ТМ", urан: "Мойын",
+                                    children: [
+                                        { id: "annakhoja", name: "Аннахожа", level: 4, type: "тийре" },
+                                        { id: "sabalaq", name: "Сабалақ", level: 4, type: "тийре" },
+                                        { id: "kotelek", name: "Көтелек", level: 4, type: "тийре" },
+                                        { id: "qarlymaral", name: "Қарлымарал", level: 4, type: "тийре" },
+                                        { id: "bulkildek", name: "Бүлкілдек", level: 4, type: "тийре" }
+                                    ]
+                                },
+                                {
+                                    id: "muyten", name: "МҮЙТЕН", level: 3, type: "уруу", tamga: "Үш шанышқы", urан: "Ақшолпан",
+                                    children: [
+                                        {
+                                            id: "samat", name: "Самат (5)", level: 4, type: "тийре",
+                                            children: [
+                                                { id: "baibishe", name: "Бәйбіше", level: 5, type: "көше" },
+                                                { id: "toqqaragan", name: "Тоқалқараған", level: 5, type: "көше" },
+                                                { id: "baimurat", name: "Баймұрат", level: 5, type: "көше" },
+                                                { id: "jolan", name: "Жолан", level: 5, type: "көше" },
+                                                { id: "bekau", name: "Бекау", level: 5, type: "көше" }
+                                            ]
+                                        },
+                                        {
+                                            id: "teli", name: "Тели (5)", level: 4, type: "тийре",
+                                            children: [
+                                                { id: "tileuberdi", name: "Тілеуберді", level: 5, type: "көше" },
+                                                { id: "allaberdi", name: "Аллаберді", level: 5, type: "көше" },
+                                                { id: "tangirberdi", name: "Тəңірберді", level: 5, type: "көше" },
+                                                { id: "mantyqaragan", name: "Мантыққараған", level: 5, type: "көше" },
+                                                { id: "molloqaragan", name: "Моллақараған", level: 5, type: "көше" }
+                                            ]
+                                        },
+                                        {
+                                            id: "abyz-m", name: "Абыз", level: 4, type: "тийре",
+                                            children: [{ id: "ady", name: "Ады", level: 5, type: "көше" }]
+                                        },
+                                        {
+                                            id: "kentanau", name: "Кеңтанаў (3)", level: 4, type: "тийре",
+                                            children: [
+                                                { id: "barn", name: "Барн", level: 5, type: "көше" },
+                                                { id: "itaq", name: "Итақ", level: 5, type: "көше" },
+                                                { id: "jekensal", name: "Жекенсал", level: 5, type: "көше" }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            id: "jauyngyr", name: "ЖАУЫНГЫР БӨЛIМI", level: 2, type: "бөлiм",
+                            children: [
+                                { id: "teristambaly", name: "ТЕРIСТАҢБАЛЫ", level: 3, type: "уруу", tamga: "Т", urан: "Жауынгыр", children: [{id:"shomak",name:"Шомақ",level:4,type:"тийре"},{id:"hangildi",name:"Хангелді",level:4,type:"тийре"},{id:"baiqaragan",name:"Байқараған",level:4,type:"тийре"},{id:"elshibai",name:"Елшібай",level:4,type:"тийре"},{id:"qurban-t",name:"Құрбан",level:4,type:"тийре"},{id:"togai",name:"Тоғыз",level:4,type:"тийре"},{id:"tyle",name:"Тіле",level:4,type:"тийре"},{id:"tebegen",name:"Тебеген",level:4,type:"тийре"},{id:"tum",name:"Тум",level:4,type:"тийре"},{id:"tyrk",name:"Түркістан",level:4,type:"тийре"}] },
+                                { id: "bakanly", name: "БАҚАНЛЫ", level: 3, type: "уруу", tamga: "Б", urан: "Жауынгыр", children: [{id:"tanmail-b",name:"Таңмайыл",level:4,type:"тийре"},{id:"zhananai",name:"Жақанай",level:4,type:"тийре"},{id:"naiman-b",name:"Найман",level:4,type:"тийре"},{id:"aiys-b",name:"Айыс",level:4,type:"тийре"}] },
+                                { id: "tyekli", name: "ТIЕКТI", level: 3, type: "уруу", tamga: "ТК", urан: "Жауынгыр", children: [{id:"shishi-t",name:"Шиші",level:4,type:"тийре",children:[{id:"shishi-kosh",name:"Шиші",level:5,type:"көше"}]},{id:"tumanai-t",name:"Туманай",level:4,type:"тийре",children:[{id:"tumanai-kosh",name:"Туманай",level:5,type:"көше"}]},{id:"maulik-t",name:"Мәулик",level:4,type:"тийре",children:[{id:"maulik-kosh",name:"Мәулик",level:5,type:"көше"}]},{id:"bairam-t",name:"Байрам",level:4,type:"тийре",children:[{id:"bairam-kosh",name:"Байрам",level:5,type:"көше"}]}] },
+                                { id: "yrgaqty", name: "ЫРҒАҚТЫ", level: 3, type: "уруу", tamga: "Ы", urан: "Жауынгыр", children: [{id:"atanai-y",name:"Атанай",level:4,type:"тийре",children:[{id:"atanai-kosh",name:"Атанай",level:5,type:"көше"}]},{id:"eshkili-y",name:"Ешкілі",level:4,type:"тийре",children:[{id:"eshkili-kosh",name:"Ешкілі",level:5,type:"көше"}]},{id:"baibura-y",name:"Байбура",level:4,type:"тийре",children:[{id:"baibura-kosh",name:"Байбура",level:5,type:"көше"}]},{id:"sarytan-y",name:"Сарытан",level:4,type:"тийре",children:[{id:"sarytan-kosh",name:"Сарытан",level:5,type:"көше"}]}] },
+                                { id: "baimaqty", name: "БАЙМАҚТЫ", level: 3, type: "уруу", tamga: "БМ", urан: "Жауынгыр", children: [{id:"saspaq",name:"Саспақ",level:4,type:"тийре"},{id:"uies",name:"Үйес",level:4,type:"тийре"},{id:"tanmail-bm",name:"Таңмайыл",level:4,type:"тийре"},{id:"zhananai-bm",name:"Жақанай",level:4,type:"тийре"},{id:"naiman-bm",name:"Найман",level:4,type:"тийре"},{id:"aiys-bm",name:"Айыс",level:4,type:"тийре"}] },
+                                { id: "kazayakty", name: "ҚАЗАЯҚТЫ", level: 3, type: "уруу", tamga: "ҚЗ", urан: "Жауынгыр", children: [{id:"anetai",name:"Әнетай",level:4,type:"тийре"},{id:"zharimbet-k",name:"Жәрімбет",level:4,type:"тийре"},{id:"zhundi",name:"Жүнді",level:4,type:"тийре"},{id:"sadaq",name:"Садақ",level:4,type:"тийре"}] },
+                                { id: "uygyr", name: "ҰЙҒЫР", level: 3, type: "уруу", tamga: "Ұ", urан: "Жауынгыр", children: [{id:"shishi-u",name:"Шиші",level:4,type:"тийре"},{id:"tumanai-u",name:"Туманай",level:4,type:"тийре"},{id:"sabalaq-u",name:"Сабалақ",level:4,type:"тийре"},{id:"maulik-u",name:"Мәулик",level:4,type:"тийре"},{id:"bairam-u",name:"Байрам",level:4,type:"тийре"},{id:"syrgaly",name:"Сырғалы",level:4,type:"тийре"}] }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "onTort", name: "АРЫС ОН ТӨРТ РУУ", level: 1, type: "арыс",
+                    children: [
+                        {
+                            id: "kytaı", name: "ҚЫТАЙ", level: 2, type: "үлкен уруу", tamga: "Q", urан: "Уллы таў",
+                            children: [
+                                { id: "bessary", name: "БЕССАРЫ", level: 3, type: "уруу", tamga: "БС", urан: "Уллы таў", children: [{id:"zhunli",name:"Жүнли",level:4,type:"тийре"},{id:"qoyly",name:"Қойлы",level:4,type:"тийре"}] },
+                                { id: "beksyyk", name: "БЕКСЫЙЫҚ", level: 3, type: "уруу", tamga: "БС", urан: "Уллы таў", children: [{id:"zherger",name:"Зергер",level:4,type:"тийре"},{id:"masai",name:"Масай",level:4,type:"тийре"},{id:"shyghyrshy",name:"Шығыршы",level:4,type:"тийре"},{id:"malay",name: "Малай",level:4,type:"тийре"}] },
+                                { id: "kazayakly-k", name: "ҚАЗАЯҚЛЫ", level: 3, type: "уруу", tamga: "ҚЗ", urан: "Уллы таў", children: [{id:"kalsen",name:"Кәлсен",level:4,type:"тийре"},{id:"kuyik",name:"Күйік",level:4,type:"тийре"},{id:"myrzai",name:"Мырзай",level:4,type:"тийре"},{id:"qylymoiyn",name:"Қылмойын",level:4,type:"тийре"},{id:"zhylkybai",name:"Жылқбай",level:4,type:"тийре"},{id:"baibishe-kz",name:"Бәйбіше",level:4,type:"тийре",children:[{id:"baibishe-kosh",name:"Бәйбіше",level:5,type:"көше"}]}] },
+                                { id: "kaishyly", name: "ҚАЙШЫЛЫ", level: 3, type: "уруу", tamga: "ҚШ", urан: "Уллы таў", children: [{id:"aqymbet",name:"Ақымбет",level:4,type:"тийре"},{id:"zhuansan",name:"Жувансан",level:4,type:"тийре"},{id:"koterehoja",name:"Көтерехожа",level:4,type:"тийре"},{id:"tanamyrza",name:"Танамырза",level:4,type:"тийре"},{id:"baqy",name:"Бақи",level:4,type:"тийре"},{id:"sybyl",name:"Сыбыл",level:4,type:"тийре"},{id:"basar",name:"Басар",level:4,type:"тийре"},{id:"tolyq",name:"Толық",level:4,type:"тийре"},{id:"yaby",name:"Ябы",level:4,type:"тийре"}] },
+                                { id: "aitereke", name: "ӘЙТЕКЕ", level: 3, type: "уруу", tamga: "ӘТ", urан: "Уллы таў", children: [{id:"zhadyq",name:"Жәдік",level:4,type:"тийре"},{id:"yrsymbek",name:"Ырсымбек",level:4,type:"тийре"},{id:"orazymbet",name:"Оразымбет",level:4,type:"тийре"},{id:"tangirkul",name:"Тəңірқұл",level:4,type:"тийре"},{id:"bektes",name:"Бектес",level:4,type:"тийре",children:[{id:"bektes-kosh",name:"Бектес",level:5,type:"көше"}]},{id:"nauriz",name:"Наурыз",level:4,type:"тийре",children:[{id:"nauriz-kosh",name:"Наурыз",level:5,type:"көше"}]},{id:"maniuwli-a",name:"Мәнжүўлі",level:4,type:"тийре",children:[{id:"maniuwli-kosh",name:"Мәнжүўлі",level:5,type:"көше"}]},{id:"tazshylyq",name:"Тазшылық",level:4,type:"тийре",children:[{id:"tazshylyq-kosh",name:"Тазшылық",level:5,type:"көше"}]}] },
+                                { id: "manjuwli-k", name: "МАҢЖҮУЛI", level: 3, type: "уруу", tamga: "МҢ", urан: "Уллы таў", children: [{id:"eki-shyiq",name:"Екі шыйық",level:4,type:"тийре"},{id:"qaramanjuwli",name:"Қараманжүўлі",level:4,type:"тийре"},{id:"aiiereke",name:"Әйереке",level:4,type:"тийре"}] },
+                                { id: "aralbai", name: "АРАЛБАЙ", level: 3, type: "уруу", tamga: "АР", urан: "Уллы таў", children: [{id:"aqqala",name:"Аққала",level:4,type:"тийре"},{id:"qalmuart-ar",name:"Қалмурат",level:4,type:"тийре"},{id:"ogizbaishy",name:"Өгизбайшы",level:4,type:"тийре"},{id:"baibishe-ar",name:"Бәйбіше",level:4,type:"тийре"},{id:"tile-qusshy",name:"Тілеу қусшы",level:4,type:"тийре"}] }
+                            ]
+                        },
+                        {
+                            id: "kypshak", name: "ҚЫПШАҚ", level: 2, type: "үлкен уруу", tamga: "I", urан: "Тоқсаба",
+                            children: [
+                                { id: "kangly", name: "ҚАҢЛЫ", level: 3, type: "уруу", tamga: "ҚҢ", urан: "Тоқсаба", children: [{id:"tram",name:"Трам",level:4,type:"тийре"},{id:"qatqangly",name:"Қатқаңлы",level:4,type:"тийре"},{id:"yrghaqly",name:"Ырғақлы",level:4,type:"тийре"},{id:"ashamaily-k",name:"Ашамайлы",level:4,type:"тийре"},{id:"taraqty-k",name:"Тарақты",level:4,type:"тийре"},{id:"baspak",name:"Баспақ",level:4,type:"тийре"},{id:"aiat",name:"Айят",level:4,type:"тийре"},{id:"bosyn",name:"Босын",level:4,type:"тийре"},{id:"basapat",name:"Баспат",level:4,type:"тийре"},{id:"konyrqazy",name:"Қоңырқазы",level:4,type:"тийре"},{id:"kenes",name:"Кенес",level:4,type:"тийре"},{id:"tashkent",name:"Ташкент",level:4,type:"тийре"}] },
+                                { id: "sanmuryn", name: "САҢМҰРЫН", level: 3, type: "уруу", tamga: "СМ", urан: "Тоқсаба", children: [{id:"konshi",name:"Көнші",level:4,type:"тийре"},{id:"tubai",name:"Тұбай",level:4,type:"тийре"},{id:"eshkili",name:"Ешкілі",level:4,type:"тийре"},{id:"zhaipaq-shek",name:"Жалпақ шек",level:4,type:"тийре"},{id:"tolebai",name:"Төлебай",level:4,type:"тийре"},{id:"zhabashy",name:"Жабашы",level:4,type:"тийре"}] },
+                                { id: "estek", name: "ЕСТЕК", level: 3, type: "уруу", tamga: "ЕС", urан: "Тоқсаба", children: [{id:"manqanai",name:"Маңқанай",level:4,type:"тийре"},{id:"qaiypnazar",name:"Қайыпназар",level:4,type:"тийре"},{id:"karaterenshi",name:"Қаратереңші",level:4,type:"тийре"},{id:"qalmuart-es",name:"Қалмурат",level:4,type:"тийре"}] },
+                                { id: "qanzhygaly", name: "ҚАНЖЫҒАЛЫ", level: 3, type: "уруу", tamga: "ҚЖ", urан: "Тоқсаба", children: [{id:"shanyshpai",name:"Шанышпай",level:4,type:"тийре"},{id:"sambet-q",name:"Самбет",level:4,type:"тийре"},{id:"zhaghaltai",name:"Жағалтай",level:4,type:"тийре"},{id:"baibishe-q",name:"Бәйбіше",level:4,type:"тийре",children:[{id:"baibishe-q-kosh",name:"Бәйбіше",level:5,type:"көше"}]}] },
+                                { id: "saltyr", name: "САЛТЫР", level: 3, type: "уруу", tamga: "СЛ", urан: "Тоқсаба", children: [{id:"baibishe-s",name:"Бәйбіше",level:4,type:"тийре"},{id:"sart",name:"Сарт",level:4,type:"тийре"},{id:"orazymbet-s",name:"Оразымбет",level:4,type:"тийре"},{id:"shuyghan",name:"Шуылған",level:4,type:"тийре"}] }
+                            ]
+                        },
+                        {
+                            id: "keneges", name: "КЕНЕГЕС", level: 2, type: "үлкен уруу", tamga: "Х", urан: "Шаўлы-Шаўхай",
+                            children: [
+                                { id: "aranshy", name: "АРАНШЫ", level: 3, type: "уруу", tamga: "АР", urан: "Шаўлы-Шаўхай", children: [{id:"annaqul",name:"Аннақұл",level:4,type:"тийре"},{id:"abas-k",name:"Абас",level:4,type:"тийре",children:[{id:"seitimbet",name:"Сейтімбет",level:5,type:"көше"}]},{id:"suiin",name:"Сүйін",level:4,type:"тийре"},{id:"zhuas",name:"Жуас",level:4,type:"тийре"},{id:"dauletqargha",name:"Дәулетқарға",level:4,type:"тийре"},{id:"qaipbergen",name:"Қайыпберген",level:4,type:"тийре"}] },
+                                { id: "aktogyn", name: "АҚТОҒЫН", level: 3, type: "уруу", tamga: "АТ", urан: "Шаўлы-Шаўхай", children: [{id:"nanzhemes",name:"Нанжемес",level:4,type:"тийре"},{id:"kosher",name:"Көшер",level:4,type:"тийре"}] },
+                                { id: "omir", name: "ӨМIР", level: 3, type: "уруу", tamga: "ӨМ", urан: "Шаўлы-Шаўхай", children: [{id:"aqpyshaq",name:"Ақпышақ",level:4,type:"тийре"},{id:"usaq",name:"Усақ",level:4,type:"тийре"},{id:"zhel",name:"Жел",level:4,type:"тийре"},{id:"mynzhyr",name:"Мынжыр",level:4,type:"тийре"},{id:"otemis-o",name:"Өтеміс",level:4,type:"тийре"}] },
+                                { id: "taraqly-ken", name: "ТАРАҚЛЫ", level: 3, type: "уруу", tamga: "ТР", urан: "Шаўлы-Шаўхай", children: [{id:"zhetiqaraghaz",name:"Жетіқарақазақы",level:4,type:"тийре",children:[{id:"zheti-kosh",name:"Жетіқара",level:5,type:"көше"}]}] },
+                                { id: "dobal", name: "ДОБАЛ", level: 3, type: "уруу", tamga: "ДБ", urан: "Шаўлы-Шаўхай" },
+                                { id: "oymauyt", name: "ОЙМАЎЫТ", level: 3, type: "уруу", tamga: "ОЙ", urан: "Шаўлы-Шаўхай", children: [{id:"qara-o",name:"Қара",level:4,type:"тийре"},{id:"sary-o",name:"Сары",level:4,type:"тийре",children:[{id:"zhiydeli",name:"Жийдели",level:5,type:"көше"}]},{id:"aq-o",name:"Ақ",level:4,type:"тийре"}] },
+                                { id: "dombazqaq", name: "ДОМБАЗҚАҚ", level: 3, type: "уруу", tamga: "ДМ", urан: "Шаўлы-Шаўхай" },
+                                { id: "nokis", name: "НӨКIС", level: 3, type: "уруу", tamga: "НК", urан: "Шаўлы-Шаўхай", children: [{id:"zhamanzhak",name:"Жаманжақ",level:4,type:"тийре"},{id:"bozaq",name:"Бозақ",level:4,type:"тийре"},{id:"altynpyshaq",name:"Алтынпышақ",level:4,type:"тийре"},{id:"ghobdir",name:"Гобдир",level:4,type:"тийре"}] }
+                            ]
+                        },
+                        {
+                            id: "mangyt", name: "МАҢҒЫТ", level: 2, type: "үлкен уруу", tamga: "f", urан: "Шаўлы-Шаўхай",
+                            children: [
+                                { id: "qaratay", name: "ҚАРАТАЙ (Қара)", level: 3, type: "топар", tamga: "ҚТ", urан: "Шаўлы-Шаўхай", children: [{id:"qaramangyt",name:"Қараманғыт",level:4,type:"тийре",children:[{id:"ushbas",name:"Үшбас",level:5,type:"көше"},{id:"karasiraq-m",name:"Қарасыйрақ",level:5,type:"көше"},{id:"aqmangyt",name:"Ақманғыт",level:5,type:"көше"}]},{id:"mamyqshy",name:"Мамықшы",level:4,type:"уруу",children:[{id:"zhetiqurt",name:"Жетіқурт",level:5,type:"көше"}]},{id:"kosar-m",name:"Қосар",level:4,type:"уруу",children:[{id:"gubidin",name:"Гүбидин",level:5,type:"көше"}]},{id:"qylqaly",name:"Қылқалы",level:4,type:"тийре"}] },
+                                { id: "sarytay", name: "САРЫТАЙ (Сары)", level: 3, type: "топар", tamga: "СТ", urан: "Шаўлы-Шаўхай", children: [{id:"arshyn",name:"Аршын",level:4,type:"тийре"},{id:"zhailyk",name:"Жайлық",level:4,type:"тийре"},{id:"toqmangyt",name:"Тоқманғыт",level:4,type:"тийре"},{id:"arsary",name:"Арсары",level:4,type:"тийре"},{id:"tazhzhanlyk",name:"Тазжанлық",level:4,type:"тийре"},{id:"shuyt",name:"Шүйт",level:4,type:"тийре"},{id:"zhamansha",name:"Жаманша",level:4,type:"тийре"},{id:"esebii",name:"Есебий",level:4,type:"тийре"},{id:"tamgaly-m",name:"Тамғалы",level:4,type:"тийре"},{id:"toqmoiyin",name:"Тоқмойын",level:4,type:"тийре"},{id:"temirhoja",name:"Темирхожа",level:4,type:"тийре"}] },
+                                { id: "boztay", name: "БОЗТАЙ (Боз)", level: 3, type: "топар", tamga: "БТ", urан: "Шаўлы-Шаўхай", children: [{id:"bozta",name:"Бозта",level:4,type:"тийре",children:[{id:"bozta-kosh",name:"Бозта",level:5,type:"көше"}]}] },
+                                { id: "jetimtay", name: "ЖЕТIМТАЙ (Жетім)", level: 3, type: "топар", tamga: "ЖТ", urан: "Шаўлы-Шаўхай", children: [{id:"eshbuga",name:"Ешбуға",level:4,type:"тийре",children:[{id:"eshbuga-kosh",name:"Ешбуға",level:5,type:"көше"}]}] }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // ИСКЛЮЧЕНИЕ: Уруу Мүйтен и его тийре
+        // В уруу Мүйтен тийре Кеңтанаў, Тели, Самат, Абыз могут вступать в брак между собой
+        const MUYTEN_EXCEPTION = {
+            uruuId: 'muyten', // ID уруу Мүйтен
+            tiyreIds: ['samat', 'teli', 'abyz-m', 'kentanau'], // ID тийре-исключений
+            description: 'Múyten urıwınıń tiyrekleri: Keńtańlaw, Teli, Samat, Abız'
+        };
+
+        // Хранение выбранных значений
+        let selections = {
+            groom: null,
+            bride: null
+        };
+
+        // Получить путь к узлу
+        function getNodePath(nodeId, node = tribeData, path = []) {
+            if (node.id === nodeId) {
+                return [...path, node];
+            }
+            if (node.children) {
+                for (let child of node.children) {
+                    const result = getNodePath(nodeId, child, [...path, node]);
+                    if (result) return result;
+                }
+            }
+            return null;
+        }
+
+        // Найти ближайшего общего предка
+        function findCommonAncestor(path1, path2) {
+            let common = null;
+            let minLength = Math.min(path1.length, path2.length);
+            for (let i = 0; i < minLength; i++) {
+                if (path1[i].id === path2[i].id) {
+                    common = path1[i];
+                } else {
+                    break;
+                }
+            }
+            return common;
+        }
+
+        // Проверить, относится ли узел к исключению Мүйтен
+        function isMuytenException(nodeId) {
+            return MUYTEN_EXCEPTION.tiyreIds.includes(nodeId);
+        }
+
+        // Проверить, является ли узел уруу Мүйтен
+        function isMuytenUruu(nodeId) {
+            return nodeId === MUYTEN_EXCEPTION.uruuId;
+        }
+
+        // Проверить экзогамию
+        function checkExogamy() {
+            if (!selections.groom || !selections.bride) {
+                updateResult('pending');
+                return;
+            }
+
+            const groomPath = getNodePath(selections.groom);
+            const bridePath = getNodePath(selections.bride);
+
+            if (!groomPath || !bridePath) return;
+
+            // Проверяем, не один и тот же узел
+            if (selections.groom === selections.bride) {
+                updateResult('forbidden', 'same');
+                return;
+            }
+
+            // Находим уровни для обоих
+            const groomLevel = groomPath[groomPath.length - 1].level;
+            const brideLevel = bridePath[bridePath.length - 1].level;
+            const groomId = groomPath[groomPath.length - 1].id;
+            const brideId = bridePath[bridePath.length - 1].id;
+
+            // Проверяем исключение для Мүйтен
+            const groomInMuyten = isMuytenException(groomId);
+            const brideInMuyten = isMuytenException(brideId);
+
+            if (groomInMuyten && brideInMuyten) {
+                // Оба из тийре Мүйтен - брак РАЗРЕШЁН (исключение)
+                updateResult('allowed', 'muyten_exception');
+                return;
+            }
+
+            // Находим общего предка
+            const commonAncestor = findCommonAncestor(groomPath, bridePath);
+
+            if (!commonAncestor) {
+                updateResult('allowed', 'different');
+                return;
+            }
+
+            // Проверяем уровень общего предка
+            const commonLevel = commonAncestor.level;
+            
+            if (commonLevel === 5) { // Көше
+                updateResult('forbidden', 'koshe');
+            } else if (commonLevel === 4) { // Тийре
+                updateResult('forbidden', 'tiyre');
+            } else if (commonLevel === 3) { // Уруу
+                // Проверяем, не Мүйтен ли это (на случай если выбран сам уруу, а не тийре)
+                if (isMuytenUruu(commonAncestor.id)) {
+                    // Если один из выбранных - это тийре Мүйтен, а другой - сам уруу
+                    // Нужно проверить отдельно
+                    if (groomInMuyten || brideInMuyten) {
+                        updateResult('allowed', 'muyten_exception');
+                    } else {
+                        updateResult('forbidden', 'uruu');
+                    }
+                } else {
+                    updateResult('forbidden', 'uruu');
+                }
+            } else if (commonLevel === 2) { // Бөлiм
+                updateResult('warning', 'bolim');
+            } else if (commonLevel === 1) { // Арыс
+                updateResult('allowed', 'arys');
+            } else {
+                updateResult('allowed', 'nation');
+            }
+        }
+
+        // Обновить результат
+        function updateResult(status, reason) {
+            const panel = document.getElementById('resultPanel');
+            const icon = panel.querySelector('.result-icon');
+            const title = panel.querySelector('.result-title');
+            const desc = panel.querySelector('.result-description');
+            const details = document.getElementById('resultDetails');
+
+            panel.className = 'result-panel ' + status;
+
+            const messages = {
+                pending: {
+                    icon: '⏳',
+                    title: 'Таңдау күтілуде / Ожидание выбора',
+                    desc: 'Eki tárepti tańlaǵannan keyin nekeniń múmkinshiligi tekserilediі<br>После выбора обеих сторон будет проверена возможность брака'
+                },
+                allowed: {
+                    icon: '✅',
+                    title: 'NEKEGE RUQSAT / БРАК РАЗРЕШЁН',
+                    desc: 'Bul a\'wladlar arasynda u\'yleniwge bolady!<br>Между этими родами брак допускается!'
+                },
+                forbidden: {
+                    icon: '❌',
+                    title: 'NEKE QIYIW QADAǴAN! / БРАК ЗАПРЕЩЁН',
+                    desc: 'Bul a\'wladlar arasynda u\'yleniwge bolmaydi! (insest)<br>Брак между этими родами запрещён! (инцест)'
+                },
+                warning: {
+                    icon: '✅',
+                    title: 'NEKEGE RUQSAT / БРАК РАЗРЕШЁН',
+                    desc: 'Bul a\'wladlar arasynda u\'yleniwge bolady!<br>Между этими родами брак допускается!'
+                }
+            };
+
+            const msg = messages[status];
+            icon.textContent = msg.icon;
+            title.textContent = msg.title;
+            desc.innerHTML = msg.desc;
+
+            // Детали
+            if (status !== 'pending') {
+                details.style.display = 'block';
+                let detailsHTML = '<h4>📋 Analiz / Анализ:</h4><ul>';
+                
+                const groomPath = getNodePath(selections.groom);
+                const bridePath = getNodePath(selections.bride);
+                
+                // Путь жениха
+                detailsHTML += '<li><strong>Kúyew jigit / Жених:</strong> ';
+                detailsHTML += groomPath.map(n => n.name).join(' → ');
+                detailsHTML += '</li>';
+                
+                // Путь невесты
+                detailsHTML += '<li><strong>Kelin/ Невеста:</strong> ';
+                detailsHTML += bridePath.map(n => n.name).join(' → ');
+                detailsHTML += '</li>';
+
+                // Общий предок
+                const common = findCommonAncestor(groomPath, bridePath);
+                if (common && reason !== 'muyten_exception') {
+                    detailsHTML += '<li><strong>Ulıwma ata / Общий предок:</strong> ' + common.name + ' (' + common.type + ')</li>';
+                }
+
+                // Причина
+                const reasons = {
+                    same: 'Saylanǵan urıwlar teń / Выбраны одинаковые роды',
+                    koshe: 'Bir kósheniń ishinde / Внутри одного коша (инцест)',
+                    tiyre: 'Bir teńirektiń ishinde / Внутри одного тийре (инцест)',
+                    uruu: 'Bir urıwdıń ishinde / Внутри одного руа (инцест)',
+                    bolim: 'Bir bólim ishinde / Внутри одного раздела (Шулык/Жауынгыр)',
+                    arys: 'Bir ataǵın\' ishinde, biraq bo\'lek qáwimler / Внутри одного арыса, но разные руы',
+                    different: 'Bútkilley bólek qáwimler / Совершенно разные роды',
+                    nation: 'Bir xalıqtıń arasında / Внутри одного народа',
+                    muyten_exception: 'Múyten urıwınıń átirapları (ayrıqsha jaǵday) / Окружение уруу Муйтен(исключение)'
+                };
+                
+                if (reason) {
+                    detailsHTML += '<li><strong>Sebep / Причина:</strong> ' + reasons[reason] + '</li>';
+
+
+
+        
+
+
+
+
+                }
+
+                // Добавляем пояснение об исключении Мүйтен
+                if (reason === 'muyten_exception') {
+                    detailsHTML += '</ul>';
+                    detailsHTML += '<div class="exception-note">';
+                    detailsHTML += '<h4>💡 Múyten urıwı haqqındaǵı ayrıqsha jaǵday / Особое положение уруу Мүйтен:</h4>';
+                    detailsHTML += '<p>Múyten urıwınıń ishinde Keńtanaw, Teli, Samat hám Abız tiyreleri arasındaǵı nekeske ruxsat etiledi. Bul qaraqalpaq dástúrinde ayrıqsha jaǵday bolıp tabıladı.</p>';
+                    detailsHTML += '<p><em>Брак между тийре Кеңтанаў, Тели, Самат и Абыз внутри уруу Мүйтен разрешён. Это является особым случаем в каракалпакской традиции.</em></p>';
+                    detailsHTML += '<p><strong>Gadag\'an etilgen / Запрещено:</strong>Bir tire ishinde (mısalı, Samat-Samat, Teli-Teli, Abiz-Abiz,Kentanau-Kentanau) nekesin qıyıw</p>';
+                    detailsHTML += '<p><em>Внутри одного тийре (например, Самат-Самат,Тели-Тели,Абыз-Абыз, Кентанаў-Кентанаў) ❌брак запрещён.</em></p>';
+                    detailsHTML += '</div>';
+                    detailsHTML += '<h4>💡 Usınıs / Рекомендация:</h4><ul>';
+                    detailsHTML += '<li>✅ Nekege ruxsat / Брак разрешён</li>';
+                    detailsHTML += '<li>ℹ️ Múyten urıwınıń átirapındaǵılar arasında nekelew dástúr boyınsha qabıllanadı</li>';
+                    detailsHTML += '<li><em>Брак между тийре уруу Мүйтен принимается по традиции</em></li>';
+                } else {
+                    // Рекомендации для обычных случаев
+                    detailsHTML += '</ul><h4>💡 Usınıs / Рекомендация:</h4><ul>';
+                    if (status === 'allowed') {
+                        detailsHTML += '<li>✅ Nekege ruxsat / Брак разрешён</li>';
+                        if (reason === 'arys') {
+                            detailsHTML += '<li>ℹ️ Adette eki bólek arıslan nekeleniw artıqmash / По традиции лучше брак между разными арысами</li>';
+                        }
+                    } else if (status === 'forbidden') {
+                        detailsHTML += '<li>❌ Bul neken islamiq nızam hám dástúr boyınsha qadaǵan etilgen / Этот брак запрещён исламским законом и традицией</li>';
+                        detailsHTML += '<li>⚠️ Basqa ruwdan jup izlew kerek / Необходимо искать пару из другого рода</li>';
+                    } else if (status === 'warning') {
+                        detailsHTML += '<li>⚠️ U\'yleni\'w mu\'mkin, bi\'raq da\'stu\'rge qaray usinis etilmeydi\' / Брак возможен, но не рекомендуется по традиции</li>';
+                        detailsHTML += '<li>💭 Hár qıylı arıqlardan yamasa úlken jaylardan tańlaǵan jaqsıraq / Лучше выбрать из разных арысов или разных больших руов</li>';
+                    }
+                }
+                detailsHTML += '</ul>';
+
+                details.innerHTML = detailsHTML;
+            } else {
+                details.style.display = 'none';
+            }
+        }
+
+        // Создать дерево селектора
+        function createTreeSelector(containerId, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            function createNodeElement(node, level = 0) {
+                const div = document.createElement('div');
+                div.className = 'tree-node';
+                
+                const item = document.createElement('div');
+                item.className = 'tree-item node-level-' + level;
+                item.dataset.id = node.id;
+                item.dataset.type = type;
+                
+                // Иконка раскрытия для родителей
+                let toggleIcon = '';
+                if (node.children && node.children.length > 0) {
+                    toggleIcon = '<span class="tree-toggle" onclick="toggleNode(event, \'' + node.id + '_' + type + '\')">▼</span>';
+                } else {
+                    toggleIcon = '<span style="width:20px;"></span>';
+                }
+                
+                // Значок уровня
+                const levelBadges = ['Millet', 'Arıs', 'Bólim/Úlken urıw', 'Uruw', 'Tiyre', 'Kóshe'];
+                const badge = level > 0 ? '<span class="level-badge">' + levelBadges[level] + '</span>' : '';
+                
+                // Отмечаем тийре Мүйтен особым образом
+                let specialMark = '';
+                if (isMuytenException(node.id)) {
+                    specialMark = ' 💡';
+                }
+
+
+                
+                item.innerHTML = toggleIcon + badge + node.name + specialMark;
+                
+                // Клик по элементу
+                item.onclick = function(e) {
+                    if (e.target.classList.contains('tree-toggle')) return;
+                    selectNode(node, type);
+                };
+                
+                div.appendChild(item);
+                
+                // Дети
+                if (node.children && node.children.length > 0) {
+                    const childrenDiv = document.createElement('div');
+                    childrenDiv.id = 'children_' + node.id + '_' + type;
+                    childrenDiv.style.display = level < 2 ? 'block' : 'none';
+                    
+                    node.children.forEach(child => {
+                        childrenDiv.appendChild(createNodeElement(child, level + 1));
+                    });
+                    
+                    div.appendChild(childrenDiv);
+                }
+                
+                return div;
+            }
+            
+            container.appendChild(createNodeElement(tribeData));
+        }
+
+        // Переключить узел
+        function toggleNode(event, id) {
+            event.stopPropagation();
+            const children = document.getElementById('children_' + id);
+            const toggle = event.target;
+            
+            if (children.style.display === 'none') {
+                children.style.display = 'block';
+                toggle.textContent = '▼';
+            } else {
+                children.style.display = 'none';
+                toggle.textContent = '▶';
+            }
+        }
+
+        // Выбрать узел
+        function selectNode(node, type) {
+            // Сохраняем выбор
+            selections[type] = node.id;
+            
+            // Обновляем отображение
+            const display = document.getElementById(type + 'Display');
+            let displayText = node.name + ' (' + node.type + ')';
+            if (isMuytenException(node.id)) {
+                displayText += ' [Мүйтен тийре]';
+            }
+            display.textContent = displayText;
+            display.classList.remove('empty');
+            
+            // Показываем кнопку очистки
+            document.getElementById(type + 'Clear').classList.add('visible');
+            
+            // Обновляем выделение в дереве
+            document.querySelectorAll('.tree-item[data-type="' + type + '"]').forEach(item => {
+                item.classList.remove('selected');
+                if (item.dataset.id === node.id) {
+                    item.classList.add('selected');
+                }
+            });
+            
+            // Проверяем экзогамию
+            checkExogamy();
+        }
+
+        // Очистить выбор
+        function clearSelection(type) {
+            selections[type] = null;
+            
+            const display = document.getElementById(type + 'Display');
+            display.textContent = 'Túrdi tańlań / Выберите род';
+            display.classList.add('empty');
+            
+            document.getElementById(type + 'Clear').classList.remove('visible');
+            
+            document.querySelectorAll('.tree-item[data-type="' + type + '"]').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            checkExogamy();
+        }
+
+        // Свернуть все
+        function collapseAll(type) {
+            document.querySelectorAll('#' + type + 'Tree [id^="children_"]').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('#' + type + 'Tree .tree-toggle').forEach(el => {
+                el.textContent = '▶';
+            });
+        }
+
+        // Развернуть все
+        function expandAll(type) {
+            document.querySelectorAll('#' + type + 'Tree [id^="children_"]').forEach(el => {
+                el.style.display = 'block';
+            });
+            document.querySelectorAll('#' + type + 'Tree .tree-toggle').forEach(el => {
+                el.textContent = '▼';
+            });
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            createTreeSelector('groomTree', 'groom');
+            createTreeSelector('brideTree', 'bride');
+            
+            // Разворачиваем первые уровни
+            expandAll('groom');
+            expandAll('bride');
+        });
+
+        // Бургер меню функционал
+function burgerMenyunıAynalıstırıw() {
+    const burger = document.getElementById('burgerMenu');
+    const kórinisAlmastırǵısh = document.getElementById('viewSwitch');
+    
+    burger.classList.toggle('active');
+    kórinisAlmastırǵısh.classList.toggle('active');
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    // ... ваш существующий код ...
+    
+    // Добавляем обработчик для бургер меню
+    document.getElementById('burgerMenu').addEventListener('click', burgerMenyunıAynalıstırıw);
+    
+    // Закрываем меню при клике на ссылку (мобильные)
+    document.querySelectorAll('.view-btn').forEach(knopka => {
+        knopka.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                burgerMenyunıAynalıstırıw();
+            }
+        });
+    });
+});
+
+
+
+
+
+        const translations = {
+    // Общие элементы
+    appTitle: {
+        kaa: 'Qaraqalpaq ekzogamiyası',
+        ru: 'Қарақалпақ экзогамиясы'
+    },
+    subtitle: {
+        kaa: 'Úyleniw ushın urıwlıq tekseriw', // Ваш перевод
+        ru: 'Проверка родовой принадлежности для брака'
+    },
+    
+    // Кнопки
+    clearButton: {
+        kaa: 'Tazalaw',
+        ru: 'Очистить'
+    },
+    collapseAll: {
+        kaa: 'Jıynastırıw',
+        ru: 'Свернуть'
+    },
+    expandAll: {
+        kaa: 'Jayıw',
+        ru: 'Развернуть'
+    },
+    
+    // Результаты
+    resultPending: {
+        kaa: 'Tańlawdı kútip atırmız',
+        ru: 'Ожидание выбора'
+    },
+    resultAllowed: {
+        kaa: 'NEKEGE RUQSAT',
+        ru: 'БРАК РАЗРЕШЁН'
+    },
+    resultForbidden: {
+        kaa: 'NEKE QADAǴAN',
+        ru: 'БРАК ЗАПРЕЩЁН'
+    },
+    
+    // Причины
+    reasonSame: {
+        kaa: 'Birdey tuwıslar tan\'landı',
+        ru: 'Выбраны одинаковые роды'
+    },
+    reasonKoshe: {
+        kaa: 'Bir qoshe ishinde',
+        ru: 'Внутри одного коша'
+    },
+    // ... и так далее для всех текстов
+};
+
+// Функция для получения перевода
+function t(key, lang = 'kaa') {
+    return translations[key] ? (translations[key][lang] || translations[key]['ru']) : key;
+}
+    </script>
+</body>
+</html>

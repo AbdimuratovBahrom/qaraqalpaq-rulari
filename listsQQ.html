@@ -103,7 +103,7 @@
         }
         
         /* Mobil menyu */
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .burger-menu {
                 display: flex;
             }
@@ -432,6 +432,12 @@
                 margin-left: 10px;
                 padding-left: 10px;
             }
+
+            .search-box input {
+                position: absolute;
+                top: 47px;
+
+            }
         }
 
         @media (max-width: 765px) {
@@ -695,7 +701,93 @@
     </div>
     </header>
 
-    <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchNode()"></div>
+
+            <!-- Бегущая строка для мобильных устройств -->
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Бегущая строка - только для мобильных */
+        .mobile-warning-marquee {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee-scroll 20s linear infinite;
+        }
+
+        .marquee-content span {
+            padding-right: 50px;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-25%);
+            }
+        }
+
+        /* Показываем на экранах меньше 967px */
+        @media (max-width: 967px) {
+            .mobile-warning-marquee {
+                display: block;
+            }
+            
+            body {
+                padding-top: 115px !important;
+            }
+
+            
+        }
+
+        @media (max-width: 480px) {
+            .marquee-content {
+                animation-duration: 15s;
+            }
+            
+            .mobile-warning-marquee {
+                font-size: 0.8em;
+                padding: 6px 0;
+            }
+        }
+    </style>
+
+    <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="izlew()"></div>
     <div class="stats" id="statsBox"><div><strong>Statistika:</strong></div><div>Arıs: 2</div><div>Bólim: 2</div><div>Uruw: 50+</div><div>Tiyre/ko'she: 300+</div></div>
     
     <div class="container">
@@ -728,11 +820,11 @@
         <div><strong>Ierarxiya:</strong></div>
         <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Xalıq</div>
         <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Arıs</div>
-        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Bólim</div>
-        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Úlken urıw</div>
-        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Urıw</div>
-        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Tiyre</div>
-        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Ko'she</div>
+        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Bólim/Úlken urıw</div>
+        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Urıw</div>
+        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Tiyre</div>
+        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Ko'she</div>
+        
     </div>
 
     <script>
@@ -1363,16 +1455,29 @@ function maǵlıwmatKórsetiw(element) {
     mazmun.innerHTML = html;
 }
 
+// ЗАМЕНИТЕ ЭТУ ФУНКЦИЮ (найдите её в коде и замените полностью)
 function izlew() {
-    const mánis = document.getElementById('searchInput').value.toLowerCase();
+    const mánis = document.getElementById('searchInput').value.toLowerCase().trim();
     const baslıqlar = document.querySelectorAll('.list-header');
+    
+    // Сначала убираем все подсветки
+    baslıqlar.forEach(baslıq => {
+        baslıq.classList.remove('highlight');
+    });
+    
+    // Если поле пустое, не ищем
+    if (!mánis) return;
+    
+    let birinshiTabılǵan = false;
     
     baslıqlar.forEach(baslıq => {
         const tekst = baslıq.textContent.toLowerCase();
         const element = baslıq.closest('.list-item');
         
-        if (tekst.includes(mánis) && mánis.length > 0) {
+        if (tekst.includes(mánis)) {
             baslıq.classList.add('highlight');
+            
+            // Раскрываем всех родителей
             let áke = element.parentElement;
             while (áke) {
                 if (áke.classList.contains('children-container')) {
@@ -1383,16 +1488,27 @@ function izlew() {
                 }
                 áke = áke.parentElement;
             }
-            if (!window.izlepTabıldı) {
+            
+            // Прокручиваем к первому найденному
+            if (!birinshiTabılǵan) {
                 baslıq.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                window.izlepTabıldı = true;
-                setTimeout(() => window.izlepTabıldı = false, 1000);
+                birinshiTabılǵan = true;
             }
-        } else {
-            baslıq.classList.remove('highlight');
         }
     });
+    
+    // Если ничего не найдено
+    if (!birinshiTabılǵan && mánis) {
+        console.log('Tábilmadi: ' + mánis);
+    }
 }
+
+// ЗАМЕНИТЕ ВЫЗОВ В HTML (найдите input и замените onkeyup)
+// Было:
+// <input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchNode()">
+
+// Станет:
+// <input type="text" id="searchInput" placeholder="Izlew..." onkeyup="izlew()">
 
 function expandAll() {
     document.querySelectorAll('.children-container').forEach(el => {

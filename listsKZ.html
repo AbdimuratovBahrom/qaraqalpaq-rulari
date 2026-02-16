@@ -103,7 +103,7 @@
         }
         
         /* Мобильное меню */
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .burger-menu {
                 display: flex;
             }
@@ -727,6 +727,91 @@
     </div>
     </header>
 
+
+               <!-- Бегущая строка для мобильных устройств -->
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Бұл бетті үлкен экранда қарау ұсынылады 🖥️  Бұл бетті үлкен экранда қарау ұсынылады </span>
+                <span>📱 Бұл бетті үлкен экранда қарау ұсынылады 🖥️  Бұл бетті үлкен экранда қарау ұсынылады </span>
+                <span>📱 Бұл бетті үлкен экранда қарау ұсынылады 🖥️  Бұл бетті үлкен экранда қарау ұсынылады </span>
+                <span>📱 Бұл бетті үлкен экранда қарау ұсынылады 🖥️  Бұл бетті үлкен экранда қарау ұсынылады </span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Бегущая строка - только для мобильных */
+        .mobile-warning-marquee {
+            display: none;
+            position: fixed;
+            top: 103px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee-scroll 20s linear infinite;
+        }
+
+        .marquee-content span {
+            padding-right: 50px;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-25%);
+            }
+        }
+
+        /* Показываем на экранах меньше 967px */
+        @media (max-width: 967px) {
+            .mobile-warning-marquee {
+                display: block;
+            }
+            
+            
+            body {
+                padding-top: 115px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .marquee-content {
+                animation-duration: 15s;
+            }
+            
+            .mobile-warning-marquee {
+                font-size: 0.8em;
+                padding: 6px 0;
+            }
+        }
+    </style>
+
     <div class="search-box"><input type="text" id="searchInput" placeholder="Іздеу..." onkeyup="searchNode()"></div>
     <div class="stats" id="statsBox"><div><strong>Статистика:</strong></div><div>Арис: 2</div><div>Бөлім: 2</div><div>Уруу: 50+</div><div>тире/коше: 300+</div></div>
     
@@ -761,11 +846,11 @@
         <div><strong>Иерархия:</strong></div>
         <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Халық</div>
         <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Арис</div>
-        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Бөлім</div>
-        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Үлкен уруу</div>
-        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Урын</div>
-        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Тіре</div>
-        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Көше</div>
+        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Бөлім/Үлкен уруу</div>
+        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Урын</div>
+        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Тіре</div>
+        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Көше</div>
+        
     </div>
 
     <script>

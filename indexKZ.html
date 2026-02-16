@@ -108,7 +108,7 @@
         }
         
         /* Мобильное меню */
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .burger-menu {
                 display: flex;
             }
@@ -296,7 +296,20 @@
         .uran-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; }
         .stats-box { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--accent-blue); border-radius: 6px; padding: 10px; margin: 10px 0; text-align: center; }
         .stats-number { font-size: 1.3em; color: var(--accent-yellow); font-weight: bold; }
-        .legend { position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.75em; z-index: 100; }
+        /* .legend { position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.75em; z-index: 100; } */
+        .legend { 
+    position: sticky; 
+    bottom: 10px; 
+    left: 10px; 
+    background: rgba(0,0,0,0.9); 
+    padding: 10px; 
+    border-radius: 6px; 
+    font-size: 0.75em; 
+    z-index: 100; 
+    align-self: flex-start;
+    width: fit-content;
+    margin-top: auto;
+}
         .legend-item { display: flex; align-items: center; gap: 5px; margin: 2px 0; }
         .legend-color { width: 12px; height: 12px; border-radius: 2px; }
         .stats { position: fixed; top: 90px; right: 475px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.8em; z-index: 100; transition: right 0.3s ease; }
@@ -348,6 +361,11 @@
                 bottom: 20px;
                 right: 20px;
             }
+
+            .legend {
+                display: none;
+            }
+            
         }
 
         @media (max-width: 765px) {
@@ -529,7 +547,7 @@
 <body>
     <header>
         <div class="logo">
-            <span style="font-size: 2rem;">🌳</span>
+            <span style="font-size: 2rem;">🏠</span>
             <a target="_blank" href="./images/uru.jpg">УРУУ</a>
         </div>
         
@@ -552,6 +570,90 @@
     <a target="_self" href="indexKZ.html" class="lang-btn1 active"><img src="./images/KZ.webp" alt="KZ"></a>
 </div>
     </header>
+
+            <!-- Бегущая строка для мобильных устройств -->
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Бұл бетті үлкен экранда қарау ұсынылады 🖥️  Бұл бетті үлкен экранда қарау ұсынылады </span>
+                <span>📱 Бұл бетті үлкен экранда қарау ұсынылады 🖥️  Бұл бетті үлкен экранда қарау ұсынылады </span>
+                <span>📱 Бұл бетті үлкен экранда қарау ұсынылады 🖥️  Бұл бетті үлкен экранда қарау ұсынылады </span>
+                <span>📱 Бұл бетті үлкен экранда қарау ұсынылады 🖥️  Бұл бетті үлкен экранда қарау ұсынылады </span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Бегущая строка - только для мобильных */
+        .mobile-warning-marquee {
+            display: none;
+            position: fixed;
+            top: 103px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee-scroll 20s linear infinite;
+        }
+
+        .marquee-content span {
+            padding-right: 50px;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-25%);
+            }
+        }
+
+        /* Показываем на экранах меньше 967px */
+        @media (max-width: 967px) {
+            .mobile-warning-marquee {
+                display: block;
+            }
+            
+            
+            body {
+                padding-top: 115px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .marquee-content {
+                animation-duration: 15s;
+            }
+            
+            .mobile-warning-marquee {
+                font-size: 0.8em;
+                padding: 6px 0;
+            }
+        }
+    </style>
 
     <div class="search-box"><input type="text" id="searchInput" placeholder="Іздеу..." onkeyup="searchNode()"></div>
     <div class="stats" id="statsBox"><div><strong>Статистика:</strong></div><div>Арис: 2</div><div>Бөлім: 2</div><div>Уруу: 50+</div><div>тире/коше: 300+</div></div>
@@ -577,11 +679,11 @@
         <div><strong>Иерархия:</strong></div>
         <div class="legend-item"><div class="legend-color" style="background: #e74c3c;"></div> Халық</div>
         <div class="legend-item"><div class="legend-color" style="background: #e67e22;"></div> Арис</div>
-        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Бөлім</div>
-        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Үлкен уруу</div>
-        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Уруу</div>
-        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Тіре</div>
-        <div class="legend-item"><div class="legend-color" style="background: #1abc9c;"></div> Коше</div>
+        <div class="legend-item"><div class="legend-color" style="background: #f1c40f;"></div> Бөлім/Үлкен уруу</div>
+        <div class="legend-item"><div class="legend-color" style="background: #2ecc71;"></div> Уруу</div>
+        <div class="legend-item"><div class="legend-color" style="background: #3498db;"></div> Тіре</div>
+        <div class="legend-item"><div class="legend-color" style="background: #9b59b6;"></div> Коше</div>
+        
     </div>
 
     <script>
@@ -1170,5 +1272,138 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
     </script>
+
+
+<!-- Глоссарий -->
+<div class="info-section" style="margin-top: 40px;">
+    <h3 style="color: var(--accent-yellow); margin-bottom: 20px;">📚 Глоссарий</h3>
+    
+    <div class="glossary-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+        
+        <div class="rule-card">
+            <h4>Арыс</h4>
+            <p>Ири родовое объединение (племя). Қарақалпақтарда екі негізгі арыс бар: Қоңырат және Он төрт ру.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Бөлім</h4>
+            <p>Арыстың ішіндегі үлкен топ. Мысалы, Шулық және Жауынгыр — Қоңырат арысының бөлімдері.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Үлкен ру</h4>
+            <p>Бөлімнің ішіндегі бірнеше руды біріктіретін топ. Мысалы: Қыят, Ашамайлы.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Ру</h4>
+            <p>Негізгі туыстық бірлік. Ортақ атадан тараған адамдар тобы.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Тийре</h4>
+            <p>Рудың ішіндегі кішігірім бөлініс. Әдетте рудың белгілі бір бұтағы.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Көше</h4>
+            <p>Ең кіші туыстық бірлік. Тийренің ішіндегі топ немесе отбасылар тобы.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Тамға</h4>
+            <p>Рулық белгі, мөр. Әдетте жануарлар немесе заттар бейнесінде болады.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Уран</h4>
+            <p>Соғыс ұраны, рудың шапқыншылық кездегі айқайы. Руды біріктіретү белгі.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Экзогамия</h4>
+            <p>Өз руынан тыс некелесу ережесі. Қарақалпақ дәстүрінде қатақ сақталады.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Қарымсақ</h4>
+            <p>Ру ішіндегі неке, инцест. Қарақалпақ қоғамында қатаң тыйым салынған.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Шежіре</h4>
+            <p>Рулық тегі, ата-бабалар тізімі. ауызша да, жазбаша да жеткізіледі.</p>
+        </div>
+        
+        <div class="rule-card">
+            <h4>Қасиет</h4>
+            <p>Қарақалпақ әдеттік құқығы, дәстүрлі нормалар жүйесі.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Источники и литература -->
+<div class="info-section" style="margin-top: 40px;">
+    <h3 style="color: var(--accent-yellow); margin-bottom: 20px;">📖 Пайдаланылған дереккөздер</h3>
+    
+    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+        <h4 style="color: var(--accent-cyan); margin-bottom: 15px;">Негізгі әдебиеттер</h4>
+        <ul style="list-style: none; padding: 0; line-height: 1.8; color: var(--text-secondary);">
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Ақынов Ғ. <em>Қарақалпақ этнографиясы</em>. — Нөкіс: Білім, 1995.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Жолымбетов Ә. <em>Қарақалпақ шежіресі</em>. — Нөкіс: Қарақалпақстан, 2003.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Мұратов С. <em>Қоңырат арысы</em>. — Ташкент: Фан, 1982.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Тілеумұратова Р. <em>Қарақалпақ рулық құрылымы</em>. — Нөкіс: 2010.
+            </li>
+        </ul>
+        
+        <h4 style="color: var(--accent-cyan); margin: 20px 0 15px 0;">Архивдік дереккөздер</h4>
+        <ul style="list-style: none; padding: 0; line-height: 1.8; color: var(--text-secondary);">
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Орынбор қазақ даласы жөніндегі жарлықтар жинағы (1844-1868)
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Түркістан өлкелік статистикалық комитеті мәліметтері (1887-1917)
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Қарақалпақ АССР халық шаруашылығы есебі (1926-1939)
+            </li>
+        </ul>
+        
+        <h4 style="color: var(--accent-cyan); margin: 20px 0 15px 0;">Зерттеу жұмыстары</h4>
+        <ul style="list-style: none; padding: 0; line-height: 1.8; color: var(--text-secondary);">
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Басилов В.Н. <em>Культ святых в исламе</em>. — М.: 1970.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Троицкая А.Л. <em>К вопросу о родо-племенном составе каракалпаков</em> // СЭ. — 1937. — №4.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                Жданко Т.А. <em>Каракалпакские родо-племенные традиции</em>. — М.: 1950.
+            </li>
+        </ul>
+        
+        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); font-size: 0.9em; color: var(--text-secondary);">
+            <p><strong>Ескерту:</strong> Бұл жоба академиялық және мәдени-ағарту мақсатында жасалған. Рулық тегін нақты анықтау үшін арнайы шежіреші-генеалогтарға жүгіну ұсынылады.</p>
+            
+        </div>
+    </div>
+</div>
 </body>
 </html>
