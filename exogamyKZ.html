@@ -689,14 +689,23 @@
         }
 
         /* Показываем на экранах меньше 967px */
-        @media (max-width: 967px) {
+            @media (max-width: 967px) {
             .mobile-warning-marquee {
                 display: block;
             }
             
-            
             body {
                 padding-top: 115px !important;
+                overflow: hidden; /* удерживаем запрет прокрутки */
+            }
+            
+            main {
+                margin-top: 0 !important;
+                height: calc(100vh - 115px) !important;
+            }
+            
+            #treeArea {
+                height: 100% !important;
             }
         }
 

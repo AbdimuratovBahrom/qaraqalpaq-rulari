@@ -39,9 +39,17 @@
             --tust-koshe: #1abc9c;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+        body { 
+        font-family: 'Inter', sans-serif; 
+        background: var(--bg); 
+        color: var(--text);
+        overflow: hidden; 
+        padding-top: 70px; 
+        }
+
+    .container { height: calc(100vh - 70px); }
         
-      header {
+        header {
             position: fixed;
             top: 0; left: 0; right: 0;
             background: rgba(10,12,16,0.95);
@@ -168,6 +176,8 @@
     display: flex;
     position: relative;
 }
+
+    
 
 #treeArea {
     flex: 1;
@@ -579,8 +589,6 @@
     }
    
         
-
-        
     </style>
 </head>
 <body>
@@ -610,6 +618,102 @@
     <a target="_self" href="schemeKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
 </div>
     </header>
+
+         <!-- Бегущая строка для мобильных устройств -->
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+            </div>
+        </div>
+    </div>
+
+     <style>
+        /* Бегущая строка - только для мобильных */
+        .mobile-warning-marquee {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee-scroll 20s linear infinite;
+        }
+
+        .marquee-content span {
+            padding-right: 50px;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-25%);
+            }
+        }
+
+        /* Показываем на экранах меньше 967px */
+            @media (max-width: 967px) {
+            .mobile-warning-marquee {
+                display: block;
+            }
+            
+            body {
+                padding-top: 115px !important;
+                overflow: hidden; /* удерживаем запрет прокрутки */
+            }
+            
+            main {
+                margin-top: 0 !important;
+                height: calc(100vh - 115px) !important;
+            }
+            
+            #treeArea {
+                height: 100% !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .marquee-content {
+                animation-duration: 15s;
+            }
+            
+            .mobile-warning-marquee {
+                font-size: 0.8em;
+                padding: 6px 0;
+            }
+        }
+    </style>
+
+    
+
+    
 
     <main>
         <div id="treeArea">
