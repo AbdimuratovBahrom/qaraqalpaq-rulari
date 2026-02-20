@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каракалпакские роды | Схема</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --bg: #0a0c10;
+            --bg-card: #151923;
+            --text: #ffffff;
+            --primary-bg: #0f1419;
+            --secondary-bg: #1a1f2e;
+            --accent-red: #e74c3c;
+            --accent-orange: #e67e22;
+            --accent-yellow: #f1c40f;
+            --accent-green: #2ecc71;
+            --accent-blue: #3498db;
+            --accent-purple: #9b59b6;
+            --accent-cyan: #1abc9c;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --border-color: #34495e;
+            
+            /* Цвета по уровням */
+            --tust-xaliq: #e74c3c;
+            --tust-aris: #e67e22;
+            --tust-bolim: #f1c40f;
+            --tust-ulken: #2ecc71;
+            --tust-uruw: #3498db;
+            --tust-tiyre: #9b59b6;
+            --tust-koshe: #1abc9c;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+        
+        header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10,12,16,0.95);
+            border-bottom: 2px solid var(--gold);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            height: 70px;
+        }
+
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+        
+        .logo a { 
+            font-family: 'Cormorant Garamond', serif; 
+            color: var(--gold); 
+            font-size: 1.8rem; 
+            margin: 0;
+            text-decoration: none;
+        }
+        
+        /* Бургер меню */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        
+        .burger-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .burger-menu.active .burger-bar:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        .view-switch {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 968px) {
+            .burger-menu {
+                display: flex;
+            }
+            
+            .view-switch {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10,12,16,0.98);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+                border-bottom: 2px solid var(--gold);
+                border-radius: 0;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+            }
+            
+            .view-switch.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            .view-btn {
+                text-align: center;
+                padding: 1rem;
+            }
+        }
+        
+        .view-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 16px;
+            border: none;
+            background: transparent;
+            color: #8892b0;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .view-btn:hover { color: white; background: rgba(255,255,255,0.1); }
+        .view-btn.active { background: var(--gold); color: #000; font-weight: 600; }
+
+        main {
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            display: flex;
+            position: relative;
+        }
+
+        #treeArea {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(212,175,55,0.05) 0%, transparent 70%);
+            cursor: grab;
+        }
+        
+        #treeArea:active { cursor: grabbing; }
+
+        .node rect {
+            cursor: pointer;
+            transition: all 0.3s;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+        }
+
+        .node:hover rect {
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.6)) brightness(1.2);
+            stroke: #fff;
+            stroke-width: 3px;
+        }
+
+        .node text {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            fill: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            pointer-events: none;
+        }
+        
+        .node .tamga-text {
+            font-size: 14px;
+            fill: #d4af37;
+            font-weight: bold;
+        }
+
+        .link {
+            fill: none;
+            stroke: #4a5568;
+            stroke-width: 2px;
+            opacity: 0.6;
+        }
+
+        /* Правая панель */
+        .detail-panel {
+            background: var(--bg-card);
+            border-left: 1px solid #2d3548;
+            padding: 2rem;
+            overflow-y: auto;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            position: relative;
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s, width 0.3s ease;
+            width: 450px;
+            flex-shrink: 0;
+            will-change: transform, opacity, visibility;
+        }
+        
+        .detail-panel.collapsed {
+            transform: translateX(100%);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            width: 0;
+            padding: 0;
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s, width 0.3s ease, padding 0.3s ease;
+        }
+        
+        .close-panel-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--tust-xaliq);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s;
+        }
+        
+        .close-panel-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+        
+        .open-panel-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 100px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5em;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .open-panel-btn.visible {
+            display: flex;
+        }
+        
+        .open-panel-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.6);
+        }
+
+        .detail-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #2d3548;
+        }
+
+        .detail-tamga {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.1));
+            border: 3px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 0 30px rgba(212,175,55,0.3);
+        }
+
+        .detail-title { color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 0.5rem; line-height: 1.2; }
+        .detail-subtitle { color: #8892b0; font-size: 0.9rem; margin-bottom: 1rem; }
+        
+        .info-block {
+            background: rgba(0,0,0,0.3);
+            border-left: 4px solid var(--gold);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
+        }
+        
+        .info-block:hover { transform: translateX(5px); }
+
+        .info-label { font-size: 0.75rem; color: #8892b0; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: bold; letter-spacing: 0.5px; }
+        .info-content { color: #e2e8f0; line-height: 1.5; font-size: 0.95rem; }
+        
+        /* Цвета по уровням */
+        .node-xaliq rect { fill: var(--tust-xaliq); stroke: #c0392b; }
+        .node-aris rect { fill: var(--tust-aris); stroke: #d35400; }
+        .node-bolim rect { fill: var(--tust-bolim); stroke: #f39c12; }
+        .node-ulken rect { fill: var(--tust-ulken); stroke: #27ae60; }
+        .node-uruw rect { fill: var(--tust-uruw); stroke: #2980b9; }
+        .node-tiyre rect { fill: var(--tust-tiyre); stroke: #8e44ad; }
+        .node-koshe rect { fill: var(--tust-koshe); stroke: #16a085; }
+        
+        /* Чёрный текст для Болим и Коше */
+        .node-bolim text,
+        .node-koshe text { 
+            fill: #000; 
+            text-shadow: none; 
+            font-weight: 700; 
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .controls button {
+            background: #2d3748;
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+        
+        .controls button:hover { background: var(--gold); color: black; }
+        
+        .legend-tree {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            font-size: 0.8rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .legend-item { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
+        .legend-color { width: 12px; height: 12px; border-radius: 3px; }
+
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(212,175,55,0.3);
+        }
+
+        /* Цепочка иерархии */
+        .hierarchy-chain {
+            background: linear-gradient(135deg, rgba(241, 196, 15, 0.1), rgba(230, 126, 34, 0.1));
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+        }
+        .hierarchy-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px dashed rgba(241, 196, 15, 0.3);
+        }
+        .hierarchy-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .hierarchy-arrow {
+            margin: 0 10px;
+            color: var(--tust-aris);
+        }
+        .hierarchy-level {
+            background: var(--gold);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7em;
+            margin-right: 8px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 53px;
+            height: 53px;
+            border-radius: 10px;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.65rem;
+            font-weight: 400;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .lang-btn1 {
+            width: 53px;
+            height: 53px;
+            border-radius: 8px;
+            background: transparent;
+            
+            color: var(--gold);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lang-btn img {
+            width: 67px;
+            height: 67px;
+            margin-bottom: 4px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        .lang-btn1 img {
+            width: 43px;
+            height: 43px; 
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .lang-btn:hover {
+            background: rgba(212,175,55,0.1);
+            border: 1px solid var(--gold);
+        }
+
+        .lang-btnRU {
+            width: 53px;
+            height: 53px;
+            border: 1px solid var(--accent-orange);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--gold);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lang-btnRU img {
+            width: 43px;
+            height: 43px; 
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .lang-btn1:hover {
+            border: 1px solid var(--gold);
+            width: 53px;
+            height: 53px;
+        }
+
+        @media (max-width: 1200px) {
+            main { display: block; }
+            
+            .detail-panel { 
+                display: block;
+                opacity: 0;
+                visibility: hidden;
+                position: fixed; 
+                left: 0;
+                right: 0;
+                bottom: 0; 
+                top: auto;
+                width: 100%; 
+                max-width: 100%;
+                height: 70vh;
+                max-height: 500px;
+                z-index: 100; 
+                transform: translateY(100%);
+                transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+                padding: 2rem;
+                border-left: none;
+                border-top: 2px solid var(--gold);
+                border-radius: 20px 20px 0 0;
+            }
+            
+            .detail-panel.active { 
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            
+            .detail-panel.collapsed {
+                transform: translateY(100%);
+                width: 100%;
+                padding: 2rem;
+            }
+            
+            .open-panel-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .close-panel-btn {
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lang-switch {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                border-top: 1px solid rgba(212,175,55,0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .lang-btnRU:hover {
+                border: 1px solid var(--gold);
+            }
+
+            .legend-tree {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span style="font-size: 2rem;">🌳</span>
+            <a target="_blank" href="./images/uru.jpg">Родословная</a>
+        </div>
+        
+        <!-- Кнопка бургер-меню -->
+        <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+        
+        <div class="view-switch" id="viewSwitch">
+            <a href="indexRU.html" class="view-btn" target="_self">🏠 Главная</a>
+            <a href="listsRU.html" class="view-btn" target="_self">📋 Списки</a>
+            <a href="schemeRU.html" class="view-btn active" target="_self">🌳 Схема</a>
+            <a href="exogamyRU.html" class="view-btn" target="_self">💑 Экзогамия</a>
+        </div>
+
+        <div class="lang-switch">
+            <a target="_self" href="schemeRU.html" class="lang-btnRU active"><img src="./images/RU.jpg" alt="RU"></a>
+            <a target="_self" href="schemeQQ.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
+            <a target="_self" href="schemeKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
+        </div>
+    </header>
+
+    <!-- Бегущая строка для мобильных устройств -->
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Рекомендуется просматривать эту страницу на большом экране 🖥️  Рекомендуется просматривать эту страницу на большом экране </span>
+                <span>📱 Рекомендуется просматривать эту страницу на большом экране 🖥️  Рекомендуется просматривать эту страницу на большом экране </span>
+                <span>📱 Рекомендуется просматривать эту страницу на большом экране 🖥️  Рекомендуется просматривать эту страницу на большом экране </span>
+                <span>📱 Рекомендуется просматривать эту страницу на большом экране 🖥️  Рекомендуется просматривать эту страницу на большом экране </span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Бегущая строка - только для мобильных */
+        .mobile-warning-marquee {
+            display: none;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-content {
+            display: inline-flex;
+            animation: marquee-scroll 20s linear infinite;
+        }
+
+        .marquee-content span {
+            padding-right: 50px;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-25%);
+            }
+        }
+
+        /* Показываем на экранах меньше 967px */
+            @media (max-width: 967px) {
+            .mobile-warning-marquee {
+                display: block;
+            }
+            
+            body {
+                padding-top: 115px !important;
+                overflow: hidden;
+            }
+            
+            main {
+                margin-top: 0 !important;
+                height: calc(100vh - 115px) !important;
+            }
+            
+            #treeArea {
+                height: 100% !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .marquee-content {
+                animation-duration: 15s;
+            }
+            
+            .mobile-warning-marquee {
+                font-size: 0.8em;
+                padding: 6px 0;
+            }
+        }
+    </style>
+
+    <main>
+        <div id="treeArea">
+            <svg id="treeSvg"></svg>
+            <div class="legend-tree">
+                <div style="color: var(--gold); margin-bottom: 8px; font-weight: bold;">Легенда:</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-xaliq);"></div> Народ</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-aris);"></div> Арыс (Кунграт/Он төрт)</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-bolim);"></div> Отдел/Большой род</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-ulken);"></div> Род</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-uruw);"></div> Тире</div>
+                <div class="legend-item"><div class="legend-color" style="background: var(--tust-tiyre);"></div> Коша</div>             
+            </div>
+            <div class="controls">
+                <button onclick="zoomIn()" title="Приблизить">+</button>
+                <button onclick="resetView()" title="Сбросить">⟲</button>
+                <button onclick="zoomOut()" title="Отдалить">-</button>
+            </div>
+        </div>
+
+        <aside class="detail-panel collapsed" id="details">
+            <button class="close-panel-btn" id="closePanelBtn" title="Закрыть панель">×</button>
+            <div class="detail-header">
+                <div class="detail-tamga" id="dTamga">🏛️</div>
+                <div class="detail-title" id="dName">Каракалпаки</div>
+                <div class="detail-subtitle" id="dSubtitle">Тюркский народ Средней Азии</div>
+            </div>
+            <div id="dContent">
+                <div class="info-block">
+                    <div class="info-label">Навигация</div>
+                    <div class="info-content">
+                        🖱️ <strong>Колесо мыши</strong> — масштаб<br>
+                        ✋ <strong>Перетаскивание</strong> — перемещение<br>
+                        👆 <strong>Клик по роду</strong> — информация<br>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+    
+    <button class="open-panel-btn" id="openPanelBtn" title="Открыть панель информации">ℹ️</button>
+
+    <script>
+        // ПОЛНЫЕ ДАННЫЕ О КАРАКАЛПАКСКИХ РОДАХ
+        const treeData = {
+            name: "Каракалпаки",
+            type: "xaliq",
+            tamga: "🏛️",
+            info: {
+                history: "Каракалпаки - тюркоязычный народ Средней Азии. Сложился в XVI-XVII веках.",
+                origin: "Основа - Ногайская орда, кыпчакские, карлукские племена.",
+                population: "800 тысяч человек",
+                language: "Каракалпакский язык - кыпчакская ветвь тюркских языков"
+            },
+            children: [
+                {
+                    name: "Арыс Кунграт",
+                    type: "aris",
+                    tamga: "P",
+                    battleCry: "Какпа!",
+                    info: {
+                        history: "Один из двух крупных арысов. Из Ногайской орды.",
+                        origin: "Объединение ногайских, кыпчакских племен.",
+                        population: "9520 кибиток (40%)",
+                        structure: "Шулюк (8 родов) и Жаунгыр (7 родов)"
+                    },
+                    children: [
+                        {
+                            name: "Шулюк отдел",
+                            type: "bolim",
+                            tamga: "Sh",
+                            info: { history: "Шулюк - состоит из 8 родов.", population: "5860 кибиток" },
+                            children: [
+                                {
+                                    name: "Кият",
+                                    type: "ulken",
+                                    tamga: "Ψ",
+                                    battleCry: "Алатау!",
+                                    info: {
+                                        history: "Кият - крупнейший род Шулюка.",
+                                        legend: "Три сына: Уштанбалы, Таракты, Балгалы.",
+                                        population: "870 кибиток"
+                                    },
+                                    children: [
+                                        {
+                                            name: "Уштанбалы",
+                                            type: "uruw",
+                                            tamga: "|||",
+                                            info: { history: "Уш танбалы - три знака." },
+                                            children: [
+                                                { name: "Санмурын", type: "tiyre", info: { history: "От сана мурын (морда)" } },
+                                                { name: "Арыккият", type: "tiyre", info: { history: "Худощавый" } },
+                                                { name: "Тартулы", type: "tiyre" },
+                                                { name: "Канжыгалы", type: "tiyre" },
+                                                { name: "Катаган", type: "tiyre" },
+                                                { 
+                                                    name: "Каракият", 
+                                                    type: "tiyre",
+                                                    children: [
+                                                        { name: "Болат", type: "koshe" },
+                                                        { name: "Карабас", type: "koshe" }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            name: "Таракты",
+                                            type: "uruw",
+                                            info: { history: "Кисточка, украшение" },
+                                            children: [
+                                                { name: "Тогузак", type: "tiyre", info: { history: "После девяти поколений" } },
+                                                { name: "Абас", type: "tiyre" },
+                                                { name: "Жалтыршы", type: "tiyre" },
+                                                { name: "Акункараган", type: "tiyre" },
+                                                { name: "Такай", type: "tiyre" },
+                                                { name: "Каржаубарас", type: "tiyre" }
+                                            ]
+                                        },
+                                        {
+                                            name: "Балгалы Кият",
+                                            type: "uruw",
+                                            tamga: "B",
+                                            info: { history: "Владелец молота. Кузнецы." },
+                                            children: [
+                                                { name: "Беспышак", type: "tiyre" },
+                                                { name: "Етекши", type: "tiyre" },
+                                                { name: "Санмурын", type: "tiyre" },
+                                                { name: "Кожакараган", type: "tiyre" }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: "Ашамайлы",
+                                    type: "ulken",
+                                    tamga: "✕",
+                                    battleCry: "Шулюк!",
+                                    info: { history: "Ашамай - плохо видящий.", population: "870 кибиток" },
+                                    children: [
+                                        { name: "Саку", type: "uruw", info: { history: "Сторожевые" } },
+                                        { name: "Каракожа", type: "uruw" },
+                                        { name: "Жаланаяк", type: "uruw", info: { history: "Быстро бегающий" } },
+                                        { 
+                                            name: "Кобасан", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Акназар", type: "tiyre" },
+                                                { name: "Жансары", type: "tiyre" },
+                                                { name: "Отемис", type: "tiyre" },
+                                                { name: "Есен", type: "tiyre" },
+                                                { name: "Тампыш", type: "tiyre" }
+                                            ]
+                                        },
+                                        { name: "Туркменкара", type: "uruw", info: { history: "Смешанные с туркменами" } },
+                                        { name: "Жаппар", type: "uruw" },
+                                        { name: "Сары", type: "uruw" },
+                                        { name: "Абыз", type: "uruw" },
+                                        { name: "Акай", type: "uruw" },
+                                        { name: "Панкара", type: "uruw" },
+                                        { name: "Уш бас", type: "uruw" },
+                                        { name: "Курама", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Колдаулы",
+                                    type: "ulken",
+                                    tamga: "Q",
+                                    battleCry: "Колдау!",
+                                    info: { history: "Колдау - опора.", population: "1140 кибиток" },
+                                    children: [
+                                        { name: "Бескемпир", type: "uruw", info: { history: "Пять старух" } },
+                                        { name: "Майшыгалы", type: "uruw" },
+                                        { name: "Калкаман", type: "uruw" },
+                                        { name: "Гайыпкараган", type: "uruw", info: { history: "Исчезнувший предок" } },
+                                        { name: "Сарытан", type: "uruw" },
+                                        { name: "Кулкикожак", type: "uruw" },
+                                        { name: "Жарымбет", type: "uruw" },
+                                        { name: "Кызылаяк", type: "uruw" },
+                                        { name: "Карасирак", type: "uruw" },
+                                        { name: "Желкараган", type: "uruw" },
+                                        { name: "Улкенбури", type: "uruw" },
+                                        { name: "Шылжуыт", type: "uruw" },
+                                        { name: "Жаманконырат", type: "uruw" },
+                                        { 
+                                            name: "Калмак", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Адил", type: "tiyre" },
+                                                { name: "Ереке", type: "tiyre" }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: "Костанбалы",
+                                    type: "ulken",
+                                    tamga: "⧉",
+                                    battleCry: "Коска!",
+                                    info: { history: "С двумя тамгами." },
+                                    children: [
+                                        { name: "Жангелди", type: "uruw" },
+                                        { name: "Ширжеген", type: "uruw" },
+                                        { name: "Агабегли", type: "uruw" },
+                                        { name: "Карынжуан", type: "uruw" },
+                                        { name: "Костанбалы", type: "uruw" },
+                                        { name: "Каракурсак", type: "uruw" },
+                                        { name: "Казахы", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Балгалы",
+                                    type: "ulken",
+                                    tamga: "B",
+                                    battleCry: "Балга!",
+                                    info: { history: "Кузнецы.", population: "560 кибиток" },
+                                    children: [
+                                        { name: "Акбалгалы", type: "uruw" },
+                                        { name: "Нурбалгалы", type: "uruw" },
+                                        { name: "Туркмен", type: "uruw" },
+                                        { name: "Жаман ауыл", type: "uruw" },
+                                        { name: "Шомишти", type: "uruw" },
+                                        { name: "Токымбет", type: "uruw" },
+                                        { name: "Тазбалгалы", type: "uruw" },
+                                        { name: "Костамгалы", type: "uruw" },
+                                        { name: "Караталшы", type: "uruw" },
+                                        { name: "Асан", type: "uruw" },
+                                        { name: "Арзыкул", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Конdekли",
+                                    type: "ulken",
+                                    tamga: "G",
+                                    battleCry: "Конdek!",
+                                    info: { history: "Конdek - загон.", population: "730 кибиток" },
+                                    children: [
+                                        { name: "Карама", type: "uruw" },
+                                        { name: "Кийикши", type: "uruw", info: { history: "Сторож сайгаков" } },
+                                        { name: "Токболат", type: "uruw" },
+                                        { name: "Кырыксадак", type: "uruw", info: { history: "40 садков" } }
+                                    ]
+                                },
+                                {
+                                    name: "Карамойын",
+                                    type: "ulken",
+                                    tamga: "TM",
+                                    battleCry: "Мойын!",
+                                    info: { history: "Черная шея.", population: "560 кибиток" },
+                                    children: [
+                                        { name: "Аннахожа", type: "uruw", info: { history: "Анна святой" } },
+                                        { name: "Сабалак", type: "uruw", info: { history: "Саба - ребенок" } },
+                                        { name: "Котелек", type: "uruw" },
+                                        { name: "Карлымарал", type: "uruw" },
+                                        { name: "Булкилдек", type: "uruw", info: { history: "Смех" } }
+                                    ]
+                                },
+                                {
+                                    name: "Муйтен",
+                                    type: "ulken",
+                                    tamga: "ψ",
+                                    battleCry: "Акшолпан!",
+                                    info: { 
+                                        history: "Мойын - шея.", 
+                                        legend: "Три сына Муйтена: Самат, Тели, Абыз",
+                                        population: "540 кибиток"
+                                    },
+                                    children: [
+                                        { 
+                                            name: "Самат", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Байбише", type: "tiyre" },
+                                                { name: "Токкараган", type: "tiyre" },
+                                                { name: "Баймурат", type: "tiyre" },
+                                                { name: "Жолан", type: "tiyre" },
+                                                { name: "Бекау", type: "tiyre" }
+                                            ]
+                                        },
+                                        { 
+                                            name: "Тели", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Тилеуберди", type: "tiyre" },
+                                                { name: "Аллаберди", type: "tiyre" },
+                                                { name: "Танирберди", type: "tiyre" },
+                                                { name: "Мантыккараган", type: "tiyre" },
+                                                { name: "Моллакараган", type: "tiyre" }
+                                            ]
+                                        },
+                                        { 
+                                            name: "Абыз", 
+                                            type: "uruw",
+                                            info: { history: "Аксакал, святой" },
+                                            children: [
+                                                { name: "Ады", type: "tiyre" }
+                                            ]
+                                        },
+                                        { 
+                                            name: "Кентанау", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Барн", type: "tiyre" },
+                                                { name: "Итак", type: "tiyre" },
+                                                { name: "Жекенсал", type: "tiyre" }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "Жаунгыр отдел",
+                            type: "bolim",
+                            info: { history: "Жаунгыр - 7 родов.", population: "3660 кибиток" },
+                            children: [
+                                {
+                                    name: "Теристанбалы",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Шомак", type: "uruw" },
+                                        { name: "Хангелди", type: "uruw" },
+                                        { name: "Байкараган", type: "uruw" },
+                                        { name: "Елшибай", type: "uruw" },
+                                        { name: "Курбан", type: "uruw" },
+                                        { name: "Тогуз", type: "uruw" },
+                                        { name: "Тиле", type: "uruw" },
+                                        { name: "Тебеген", type: "uruw" },
+                                        { name: "Тум", type: "uruw" },
+                                        { name: "Туркистан", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Баканлы",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Танмайыл", type: "uruw" },
+                                        { name: "Жаканай", type: "uruw" },
+                                        { name: "Найман", type: "uruw" },
+                                        { name: "Айыс", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Тиекти",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Шиши", type: "uruw", children: [{name:"Шиши Арна",type:"tiyre"}] },
+                                        { name: "Туманай", type: "uruw" },
+                                        { name: "Маулык", type: "uruw" },
+                                        { name: "Байрам", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Ыргакты",
+                                    type: "ulken",
+                                    info: { note: "Есть в обоих арысах!" },
+                                    children: [
+                                        { name: "Атанай", type: "uruw" },
+                                        { name: "Ешкили", type: "uruw" },
+                                        { name: "Байбура", type: "uruw" },
+                                        { name: "Сарытан", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Баймакты",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Саспак", type: "uruw" },
+                                        { name: "Уйес", type: "uruw" },
+                                        { name: "Танмайыл", type: "uruw" },
+                                        { name: "Жаканай", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Казаякты",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Анетай", type: "uruw" },
+                                        { name: "Жарымбет", type: "uruw" },
+                                        { name: "Жунди", type: "uruw" },
+                                        { name: "Садак", type: "uruw" }
+                                    ]
+                                },
+                                {
+                                    name: "Уйгыр",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Шиши", type: "uruw" },
+                                        { name: "Туманай", type: "uruw" },
+                                        { name: "Сабалак", type: "uruw" },
+                                        { name: "Маулык", type: "uruw" },
+                                        { name: "Байрам", type: "uruw" },
+                                        { name: "Сыргалы", type: "uruw" }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "Арыс Он төрт",
+                    type: "aris",
+                    tamga: "14",
+                    battleCry: "Токсаба!",
+                    info: {
+                        history: "Крупный арыс из 14 родов. Многочисленный.",
+                        population: "10260 кибиток (60%)",
+                        structure: "4 больших рода: Кытай, Кыпшак, Кенегес, Мангыт"
+                    },
+                    children: [
+                        {
+                            name: "Кытай",
+                            type: "ulken",
+                            tamga: "Q",
+                            battleCry: "Уллы тау!",
+                            pair: "С Кыпшаком",
+                            info: { history: "Крупнейший род.", population: "4320 кибиток" },
+                            children: [
+                                { name: "Бессары", type: "uruw", children: [{name:"Жунли",type:"tiyre"},{name:"Койлы",type:"tiyre"}] },
+                                { name: "Бексийык", type: "uruw", children: [{name:"Зергер",type:"tiyre"},{name:"Масай",type:"tiyre"},{name:"Шыгыршы",type:"tiyre"},{name:"Малай",type:"tiyre"}] },
+                                { name: "Казаякты", type: "uruw", children: [{name:"Калсен",type:"tiyre"},{name:"Куйик",type:"tiyre"},{name:"Мырзай",type:"tiyre"},{name:"Кылмойын",type:"tiyre"},{name:"Жылкбай",type:"tiyre"}] },
+                                { 
+                                    name: "Кайшылы", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Акымбет",type:"tiyre"},
+                                        {name:"Жувансан",type:"tiyre"},
+                                        {name:"Котерехожа",type:"tiyre"},
+                                        {name:"Танамырза",type:"tiyre"},
+                                        {name:"Баки",type:"tiyre"},
+                                        {name:"Сыбыл",type:"tiyre"},
+                                        {name:"Басар",type:"tiyre"},
+                                        {name:"Толык",type:"tiyre"},
+                                        {name:"Ябы",type:"tiyre"}
+                                    ]
+                                },
+                                { 
+                                    name: "Айтеке", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Жадик",type:"tiyre"},
+                                        {name:"Ырсымбек",type:"tiyre"},
+                                        {name:"Оразымбет",type:"tiyre"},
+                                        {name:"Таниркул",type:"tiyre"},
+                                        {name:"Бектес",type:"tiyre",children:[{name:"Бектес Торе",type:"koshe"}]},
+                                        {name:"Науруз",type:"tiyre"},
+                                        {name:"Манжули",type:"tiyre"},
+                                        {name:"Тазшылык",type:"tiyre"}
+                                    ]
+                                },
+                                { name: "Манжули", type: "uruw", children: [{name:"Эки шыйык",type:"tiyre"},{name:"Караманжули",type:"tiyre"},{name:"Айереке",type:"tiyre"}] },
+                                { name: "Аралбай", type: "uruw", children: [{name:"Аккала",type:"tiyre"},{name:"Калмурат",type:"tiyre"},{name:"Огизбайшы",type:"tiyre"},{name:"Байбише",type:"tiyre"},{name:"Тиле кушы",type:"tiyre"}] }
+                            ]
+                        },
+                        {
+                            name: "Кыпшак",
+                            type: "ulken",
+                            tamga: "I",
+                            battleCry: "Токсаба!",
+                            pair: "С Кытаем",
+                            info: { history: "Древний кыпчакский род.", population: "2240 кибиток" },
+                            children: [
+                                { 
+                                    name: "Канлы", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Трам",type:"tiyre"},
+                                        {name:"Катканлы",type:"tiyre"},
+                                        {name:"Ыргакты",type:"tiyre"},
+                                        {name:"Ашамайлы",type:"tiyre"},
+                                        {name:"Таракты",type:"tiyre"},
+                                        {name:"Баспак",type:"tiyre"},
+                                        {name:"Айят",type:"tiyre"},
+                                        {name:"Босын",type:"tiyre"},
+                                        {name:"Баспат",type:"tiyre"},
+                                        {name:"Конырказы",type:"tiyre"},
+                                        {name:"Кенес",type:"tiyre"},
+                                        {name:"Ташкент",type:"tiyre"}
+                                    ]
+                                },
+                                { name: "Санмурын", type: "uruw", children: [{name:"Конши",type:"tiyre"},{name:"Тубай",type:"tiyre"},{name:"Ешкили",type:"tiyre"},{name:"Жалпак шек",type:"tiyre"},{name:"Толебай",type:"tiyre"},{name:"Жабашы",type:"tiyre"}] },
+                                { name: "Естек", type: "uruw", children: [{name:"Манканай",type:"tiyre"},{name:"Кайыпназар",type:"tiyre"},{name:"Каратеренши",type:"tiyre"},{name:"Калмурат",type:"tiyre"}] },
+                                { name: "Канжыгалы", type: "uruw", children: [{name:"Шанышпай",type:"tiyre"},{name:"Самбет",type:"tiyre"},{name:"Жагалтай",type:"tiyre"},{name:"Байбише",type:"tiyre"}] },
+                                { name: "Салтыр", type: "uruw", children: [{name:"Байбише",type:"tiyre"},{name:"Сарт",type:"tiyre"},{name:"Оразымбет",type:"tiyre"},{name:"Шуылган",type:"tiyre"}] }
+                            ]
+                        },
+                        {
+                            name: "Кенегес",
+                            type: "ulken",
+                            tamga: "X",
+                            battleCry: "Шаулы-Шаухай!",
+                            pair: "С Мангытом",
+                            info: { history: "Кенегес.", population: "1480 кибиток" },
+                            children: [
+                                { 
+                                    name: "Араншы", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Аннакул",type:"tiyre"},
+                                        {name:"Абас",type:"tiyre",children:[{name:"Сейтимбет",type:"koshe"}]},
+                                        {name:"Суйин",type:"tiyre"},
+                                        {name:"Жуас",type:"tiyre"},
+                                        {name:"Даулеткарга",type:"tiyre"},
+                                        {name:"Кайыпберген",type:"tiyre"}
+                                    ]
+                                },
+                                { name: "Актогын", type: "uruw", children: [{name:"Нанжемес",type:"tiyre"},{name:"Кошек",type:"tiyre"}] },
+                                { name: "Умир", type: "uruw", children: [{name:"Акпыжак",type:"tiyre"},{name:"Усак",type:"tiyre"},{name:"Жел",type:"tiyre"},{name:"Мынжыр",type:"tiyre"},{name:"Отемис",type:"tiyre"}] },
+                                { name: "Таракты", type: "uruw", children: [{name:"Жетикараган",type:"tiyre",children:[{name:"Жетикара",type:"koshe"}]}] },
+                                { name: "Добал", type: "uruw" },
+                                { 
+                                    name: "Оймауыт", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Кара",type:"tiyre"},
+                                        {name:"Сары",type:"tiyre",children:[{name:"Жийдели",type:"koshe"}]},
+                                        {name:"Ак",type:"tiyre"}
+                                    ]
+                                },
+                                { name: "Домбазкак", type: "uruw" },
+                                { name: "Нокис", type: "uruw", info: { note: "Столица Каракалпакстана!" }, children: [{name:"Жаманжак",type:"tiyre"},{name:"Бозак",type:"tiyre"},{name:"Алтынпыжак",type:"tiyre"},{name:"Гобдир",type:"tiyre"}] }
+                            ]
+                        },
+                        {
+                            name: "Мангыт",
+                            type: "ulken",
+                            tamga: "f",
+                            battleCry: "Шаулы-Шаухай!",
+                            pair: "С Кенегесом",
+                            info: { history: "Воинственный род. Потомки Едиге.", population: "2220 кибиток" },
+                            children: [
+                                { 
+                                    name: "Каратай", 
+                                    type: "uruw",
+                                    info: { group: "Кара (Каралар)" },
+                                    children: [
+                                        {name:"Карамангыд",type:"tiyre",children:[{name:"Ушбас",type:"koshe"},{name:"Карасирак",type:"koshe"},{name:"Акмангыд",type:"koshe"}]},
+                                        {name:"Мамыкшы",type:"tiyre",children:[{name:"Жетикурт",type:"koshe"}]},
+                                        {name:"Косар",type:"tiyre",children:[{name:"Губидин",type:"koshe"}]},
+                                        {name:"Кылкалы",type:"tiyre"}
+                                    ]
+                                },
+                                { 
+                                    name: "Сарытай", 
+                                    type: "uruw",
+                                    info: { group: "Сары (Сарылар)" },
+                                    children: [
+                                        {name:"Аршын",type:"tiyre"},
+                                        {name:"Жайлык",type:"tiyre"},
+                                        {name:"Токмангыд",type:"tiyre"},
+                                        {name:"Арсары",type:"tiyre"},
+                                        {name:"Тазжанлык",type:"tiyre"},
+                                        {name:"Шуйт",type:"tiyre"},
+                                        {name:"Жаманша",type:"tiyre"},
+                                        {name:"Есебий",type:"tiyre"},
+                                        {name:"Тамгалы",type:"tiyre"},
+                                        {name:"Токмойын",type:"tiyre"},
+                                        {name:"Темирхожа",type:"tiyre"}
+                                    ]
+                                },
+                                { name: "Бозтай", type: "uruw", info: { group: "Боз (Боздар)" }, children: [{name:"Бозта",type:"tiyre",children:[{name:"Бозта баба",type:"koshe"}]}] },
+                                { name: "Жетимтай", type: "uruw", info: { group: "Жетим (Жетимдер)" }, children: [{name:"Ешбуга",type:"tiyre",children:[{name:"Еш буга",type:"koshe"}]}] }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        let svg, g, zoom;
+        let currentTransform = d3.zoomIdentity;
+        let panelOpen = false;
+
+        function initTree() {
+            const container = document.getElementById('treeArea');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            svg = d3.select("#treeSvg")
+                .attr("width", width)
+                .attr("height", height);
+
+            // Очистка
+            svg.selectAll("*").remove();
+
+            zoom = d3.zoom()
+                .scaleExtent([0.05, 3])
+                .on("zoom", (e) => {
+                    g.attr("transform", e.transform);
+                    currentTransform = e.transform;
+                });
+
+            svg.call(zoom);
+
+            g = svg.append("g");
+
+            const root = d3.hierarchy(treeData, d => d.children);
+            
+            const leafCount = root.leaves().length;
+            const depth = root.height;
+                    
+            // Необходимые размеры
+            const minWidth = Math.max(width, leafCount * 25);
+            const minHeight = Math.max(height, (depth + 1) * 100);
+            
+            const treeLayout = d3.tree()
+                .size([minWidth, minHeight])
+                .separation((a, b) => {
+                    if (a.parent === b.parent) return 1;
+                    return 1.2;
+                });
+            
+            treeLayout(root);
+
+            // Начальный вид - по центру
+            const initialScale = Math.min(
+                (width - 100) / minWidth,
+                (height - 150) / minHeight,
+                0.9
+            );
+            
+            const initialX = (width - minWidth * initialScale) / 2;
+            const initialY = 50;
+
+            g.attr("transform", `translate(${initialX}, ${initialY}) scale(${initialScale})`);
+            
+            currentTransform = d3.zoomIdentity
+                .translate(initialX, initialY)
+                .scale(initialScale);
+
+            svg.call(zoom.transform, currentTransform);
+
+            // Линии связей
+            g.selectAll(".link")
+                .data(root.links())
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", d3.linkVertical()
+                    .x(d => d.x)
+                    .y(d => d.y));
+
+            // Узлы
+            const node = g.selectAll(".node")
+                .data(root.descendants())
+                .enter().append("g")
+                .attr("class", d => `node node-${d.data.type}`)
+                .attr("transform", d => `translate(${d.x},${d.y})`)
+                .on("click", (e, d) => showInfo(d.data));
+
+            // Прямоугольники - размер зависит от уровня
+            node.append("rect")
+                .attr("width", d => {
+                    const length = Math.max(d.data.name.length * 7 + 16, 50);
+                    return d.data.type === 'koshe' ? length * 0.8 : length;
+                })
+                .attr("height", d => d.data.type === 'koshe' ? 22 : 28)
+                .attr("x", d => {
+                    const length = Math.max(d.data.name.length * 7 + 16, 50);
+                    const actualLength = d.data.type === 'koshe' ? length * 0.8 : length;
+                    return -actualLength / 2;
+                })
+                .attr("y", d => d.data.type === 'koshe' ? -11 : -14)
+                .attr("rx", 6)
+                .attr("stroke-width", d => d.data.type === 'xaliq' ? 3 : 2);
+
+            // Текст названия
+            node.append("text")
+                .attr("dy", ".35em")
+                .attr("text-anchor", "middle")
+                .style("font-size", d => {
+                    if (d.data.type === 'koshe') return "9px";
+                    if (d.data.type === 'tiyre') return "10px";
+                    return "11px";
+                })
+                .text(d => d.data.name);
+
+            // Тамга (сверху)
+            node.filter(d => d.data.tamga && d.data.type !== 'koshe' && d.data.type !== 'tiyre')
+                .append("text")
+                .attr("class", "tamga-text")
+                .attr("dy", -22)
+                .attr("text-anchor", "middle")
+                .text(d => d.data.tamga);
+                
+            // Боевой клич (снизу)
+            node.filter(d => d.data.battleCry && (d.data.type === 'aris' || d.data.type === 'ulken'))
+                .append("text")
+                .attr("dy", 28)
+                .attr("text-anchor", "middle")
+                .style("font-size", "9px")
+                .style("fill", "#d4af37")
+                .style("font-weight", "bold")
+                .text(d => d.data.battleCry);
+        }
+
+        function showInfo(data) {
+            openPanel();
+            
+            document.getElementById('dTamga').textContent = data.tamga || (data.type === 'aris' ? '🏛️' : '🏹');
+            document.getElementById('dName').textContent = data.name;
+            
+            let subtitle = "";
+            const types = {
+                'xaliq': 'Народ',
+                'aris': 'Арыс (племенное объединение)',
+                'bolim': 'Отдел (болим)',
+                'ulken': 'Большой род (улкен ру)',
+                'uruw': 'Род (ру)',
+                'tiyre': 'Тире (тире)',
+                'koshe': 'Коша (ветвь)'
+            };
+            subtitle = types[data.type] || 'Родовая единица';
+            if (data.info && data.info.population) subtitle += ` • ${data.info.population}`;
+            document.getElementById('dSubtitle').textContent = subtitle;
+            
+            let html = '';
+            
+            // Боевой клич
+            if (data.battleCry) {
+                html += `<div class="info-block" style="border-color:#e74c3c; background:rgba(231,76,60,0.1)">
+                    <div class="info-label">Боевой клич (Уран)</div>
+                    <div class="info-content" style="color:#ff8a80; font-size:1.3rem; font-weight:bold; text-align:center">${data.battleCry}</div>
+                </div>`;
+            }
+            
+            // Парный род (для экзогамии)
+            if (data.pair) {
+                html += `<div class="info-block" style="border-color:#3498db; background:rgba(52,152,219,0.1)">
+                    <div class="info-label">Парный род (для брака)</div>
+                    <div class="info-content">${data.pair}</div>
+                </div>`;
+            }
+            
+            // Основная информация
+            if (data.info) {
+                if (data.info.history) {
+                    html += `<div class="info-block">
+                        <div class="info-label">История</div>
+                        <div class="info-content">${data.info.history}</div>
+                    </div>`;
+                }
+                if (data.info.origin) {
+                    html += `<div class="info-block" style="border-color:#3498db">
+                        <div class="info-label">Происхождение</div>
+                        <div class="info-content">${data.info.origin}</div>
+                    </div>`;
+                }
+                if (data.info.legend) {
+                    html += `<div class="info-block" style="border-color:#f39c12; background:rgba(243,156,18,0.1)">
+                        <div class="info-label">Легенда</div>
+                        <div class="info-content"><em>${data.info.legend}</em></div>
+                    </div>`;
+                }
+                if (data.info.structure) {
+                    html += `<div class="info-block" style="border-color:#27ae60">
+                        <div class="info-label">Структура</div>
+                        <div class="info-content">${data.info.structure}</div>
+                    </div>`;
+                }
+                if (data.info.population) {
+                    html += `<div class="info-block" style="border-color:#9b59b6">
+                        <div class="info-label">Численность (кибитки)</div>
+                        <div class="info-content">${data.info.population}</div>
+                    </div>`;
+                }
+                if (data.info.language) {
+                    html += `<div class="info-block">
+                        <div class="info-label">Язык</div>
+                        <div class="info-content">${data.info.language}</div>
+                    </div>`;
+                }
+                if (data.info.note) {
+                    html += `<div class="info-block" style="border-color:#e67e22">
+                        <div class="info-label">Примечание</div>
+                        <div class="info-content">${data.info.note}</div>
+                    </div>`;
+                }
+                if (data.info.group) {
+                    html += `<div class="info-block" style="border-color:#1abc9c">
+                        <div class="info-label">Группа</div>
+                        <div class="info-content">${data.info.group}</div>
+                    </div>`;
+                }
+            }
+            
+            // Количество подгрупп
+            if (data.children && data.children.length > 0) {
+                html += `<div class="info-block" style="border-color:#d4af37; text-align:center">
+                    <div class="info-label">Количество подгрупп</div>
+                    <div class="info-content" style="font-size:1.5rem; color:var(--gold); font-weight:bold">${data.children.length}</div>
+                </div>`;
+            }
+            
+            // Иерархическая цепочка
+            html += buildHierarchyChain(data);
+            
+            document.getElementById('dContent').innerHTML = html || '<div class="info-block"><div class="info-label">Информация</div><div class="info-content">Нажмите на другие элементы для просмотра</div></div>';
+        }
+
+        function buildHierarchyChain(data) {
+            // Найти путь к текущему элементу в дереве
+            function findPath(node, target, path = []) {
+                if (node === target) return [...path, node];
+                if (!node.children) return null;
+                
+                for (let child of node.children) {
+                    const result = findPath(child, target, [...path, node]);
+                    if (result) return result;
+                }
+                return null;
+            }
+            
+            const path = findPath(treeData, data);
+            if (!path || path.length <= 1) return '';
+            
+            let html = `<div class="hierarchy-chain">
+                <div class="info-label" style="color: var(--gold); margin-bottom: 10px;">Иерархия</div>`;
+            
+            path.forEach((item, index) => {
+                const isLast = index === path.length - 1;
+                const levelNames = {
+                    'xaliq': 'Народ',
+                    'aris': 'Арыс',
+                    'bolim': 'Отдел',
+                    'ulken': 'Бол.род',
+                    'uruw': 'Род',
+                    'tiyre': 'Тире',
+                    'koshe': 'Коша'
+                };
+                
+                html += `<div class="hierarchy-item" style="${isLast ? 'background: rgba(241,196,15,0.1); border-radius: 4px; padding: 8px;' : ''}">
+                    <span class="hierarchy-level">${levelNames[item.type] || item.type}</span>
+                    <span style="${isLast ? 'color: var(--gold); font-weight: bold;' : ''}">${item.name}</span>
+                </div>`;
+                
+                if (!isLast) {
+                    html += `<div style="text-align: center; color: var(--gold); font-size: 1.2em;">↓</div>`;
+                }
+            });
+            
+            html += `</div>`;
+            return html;
+        }
+
+        function openPanel() {
+            const panel = document.getElementById('details');
+            const openBtn = document.getElementById('openPanelBtn');
+            
+            if (window.innerWidth <= 1200) {
+                panel.style.display = 'block';
+                setTimeout(() => {
+                    panel.classList.remove('collapsed');
+                    panel.classList.add('active');
+                }, 10);
+            } else {
+                panel.classList.remove('collapsed');
+                panel.classList.add('active');
+            }
+            
+            openBtn.classList.remove('visible');
+            panelOpen = true;
+        }
+
+        function closePanel() {
+            const panel = document.getElementById('details');
+            const openBtn = document.getElementById('openPanelBtn');
+            
+            panel.classList.add('collapsed');
+            panel.classList.remove('active');
+            openBtn.classList.add('visible');
+            panelOpen = false;
+            
+            if (window.innerWidth <= 1200) {
+                setTimeout(() => {
+                    if (!panelOpen) {
+                        panel.style.display = 'none';
+                    }
+                }, 300);
+            }
+        }
+
+        function zoomIn() {
+            svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+        }
+
+        function zoomOut() {
+            svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+        }
+
+        function resetView() {
+            initTree();
+        }
+
+        function toggleBurgerMenu() {
+            const burger = document.getElementById('burgerMenu');
+            const viewSwitch = document.getElementById('viewSwitch');
+            
+            burger.classList.toggle('active');
+            viewSwitch.classList.toggle('active');
+        }
+
+        window.onload = function() {
+            initTree();
+            
+            document.getElementById('burgerMenu').addEventListener('click', toggleBurgerMenu);
+            
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        toggleBurgerMenu();
+                    }
+                });
+            });
+            
+            document.getElementById('closePanelBtn').addEventListener('click', closePanel);
+            
+            document.getElementById('openPanelBtn').addEventListener('click', openPanel);
+            
+            let width = window.innerWidth;
+            window.addEventListener('resize', function() {
+                if (window.innerWidth !== width) {
+                    width = window.innerWidth;
+                    setTimeout(initTree, 100);
+                }
+            });
+        };
+    </script>
+</body>
+</html>

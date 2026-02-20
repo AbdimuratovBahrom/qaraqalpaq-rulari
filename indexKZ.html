@@ -19,6 +19,7 @@
             --gold: #f1c40f;
             --accent-green: #2ecc71;
             --accent-blue: #3498db;
+            --accent-darkblue: #3346ee;
             --accent-purple: #9b59b6;
             --accent-cyan: #1abc9c;
             --text-primary: #ecf0f1;
@@ -265,7 +266,7 @@
         .tree { display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .branch { display: flex; flex-direction: column; align-items: center; margin: 3px; }
         .node {
-            background: var(--secondary-bg); border: 2px solid var(--border-color); border-radius: 6px;
+            background: var(--accent-red); border: 2px solid var(--border-color); border-radius: 6px;
             padding: 6px 10px; cursor: pointer; transition: all 0.3s;
             min-width: 80px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); font-size: 0.8em;
         }
@@ -286,6 +287,7 @@
         .info-title { font-size: 1.4em; color: var(--accent-yellow); margin-bottom: 5px; }
         .info-type { color: var(--accent-orange); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
         .info-section { margin-bottom: 12px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 5px; border-left: 3px solid var(--accent-blue); }
+        .info-section ul a { color: var(--accent-darkblue); text-decoration:none; }
         .info-section h3 { color: var(--accent-cyan); margin-bottom: 8px; font-size: 0.9em; display: flex; align-items: center; gap: 8px; }
         .info-section p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9em; text-align: justify; }
         .tamga-box { background: rgba(231, 76, 60, 0.15); border: 2px solid var(--accent-red); border-radius: 8px; padding: 15px; text-align: center; margin: 12px 0; }
@@ -459,6 +461,29 @@
     border-left: 1px solid rgba(212,175,55,0.3);
 }
 
+.lang-btnRU img {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            /* vertical-align: middle; */
+        }
+
+        .lang-btnRU {
+
+            width: 53px;
+            height: 53px; 
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lang-btnRU:hover {
+            width: 53px;
+            height: 53px; 
+            border: 1px solid var(--gold);
+        }
+
 .lang-btn {
     /* padding: 0.1rem 0.1rem; */
     border-radius: 10px;
@@ -511,15 +536,50 @@
     
 }
 
-.lang-btn1:hover {
+/* .lang-btn1:hover {
     background: rgba(197, 212, 210, 0.1);
-}
+} */
 
 .lang-btn1.active {
     width: 53px;
     height: 53px;
     
     border: 1px solid var(--accent-orange);
+}
+
+.scrollup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--accent-green); /* Золотой фон */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border: 2px solid rgba(0,0,0,0.2);
+}
+
+.scrollup.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scrollup img {
+    width: 30px; /* Увеличьте размер */
+    height: 30px;
+    object-fit: contain;
+
+}
+.scrollup img {
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); /* Тень для видимости */
 }
 
 
@@ -548,7 +608,7 @@
     <header>
         <div class="logo">
             <span style="font-size: 2rem;">🏠</span>
-            <a target="_blank" href="./images/uru.jpg">УРУУ</a>
+            <a target="_blank" href="./images/uru.jpg">Шежіре</a>
         </div>
         
         <!-- Бургер меню кнопка -->
@@ -566,6 +626,7 @@
         </div>
 
         <div class="lang-switch">
+    <a target="_self" href="indexRU.html" class="lang-btnRU"><img src="./images/RU.jpg" alt="RU"></a>
     <a target="_self" href="index.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
     <a target="_self" href="indexKZ.html" class="lang-btn1 active"><img src="./images/KZ.webp" alt="KZ"></a>
 </div>
@@ -687,7 +748,7 @@
     </div>
 
     <script>
-const levelsMap = ['Халық / Народ', 'Арís', 'Бөлім', 'Үлкен уруу', 'Тіре', 'Коше'];
+const levelsMap = ['Халық / Народ', 'Арís', 'Бөлім/Үлкен уруу', 'Уруу', 'Тіре', 'Коше'];
 
 // Флаг состояния панели
 let isPanelOpen = false;
@@ -1346,40 +1407,45 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="info-section" style="margin-top: 40px;">
     <h3 style="color: var(--accent-yellow); margin-bottom: 20px;">📖 Пайдаланылған дереккөздер</h3>
     
-    <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
-        <h4 style="color: var(--accent-cyan); margin-bottom: 15px;">Негізгі әдебиеттер</h4>
+   <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px;">
+        <h4 style="color: var(--accent-cyan); margin-bottom: 15px;">Сайттар</h4>
         <ul style="list-style: none; padding: 0; line-height: 1.8; color: var(--text-secondary);">
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
-                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
-                Ақынов Ғ. <em>Қарақалпақ этнографиясы</em>. — Нөкіс: Білім, 1995.
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span><a href="https://eurasica.ru/">eurasica.ru</a> › forums › topic
+                Родоплеменной состав каракалпаков. Шежере. - Тюрки - «Евразийского исторического сервера».
             </li>
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
-                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
-                Жолымбетов Ә. <em>Қарақалпақ шежіресі</em>. — Нөкіс: Қарақалпақстан, 2003.
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span><a href="https://kk.wikipedia.org/wiki/Қарақалпақ_рулары">https://kk.wikipedia.org/wiki/Қарақалпақ_рулары</a>
+                -Қарақалпақ рулары - Wikipedia. Қарақалпақ рулары - Қазақша Википедия.
             </li>
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
-                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
-                Мұратов С. <em>Қоңырат арысы</em>. — Ташкент: Фан, 1982.
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span><a href="https://abai.kz/index.php/post/207525">https://abai.kz/index.php/post/207525</a>
+                -Қарақалпақ рулары - Абаи.
             </li>
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
-                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
-                Тілеумұратова Р. <em>Қарақалпақ рулық құрылымы</em>. — Нөкіс: 2010.
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span><a href="https://web.archive.org/web/20240122073225/https://kaa.wikipedia.org/wiki/Qaraqalpaq_ruwları">https://web.archive.org/web/20240122073225/https://kaa.wikipedia.org/wiki/Qaraqalpaq_ruwları</a>
+                -Qaraqalpaq ruwları - Qaraqalpaqsha Wikipedia.
             </li>
+        
         </ul>
         
         <h4 style="color: var(--accent-cyan); margin: 20px 0 15px 0;">Архивдік дереккөздер</h4>
         <ul style="list-style: none; padding: 0; line-height: 1.8; color: var(--text-secondary);">
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
                 <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
-                Орынбор қазақ даласы жөніндегі жарлықтар жинағы (1844-1868)
+                <a href="./pdf/Этнографическая.pdf">PDF sıpatında júklep alıw - </a>КУРБАНОВА З.И.ЭТНОГРАФИЧЕСКАЯ НАУКА КАРАКАЛПАКСТАНА:<em>ЭТАПЫ СТАНОВЛЕНИЯ,СОВРЕМЕННОЕ СОСТОЯНИЕ</em>, Нукус - 2020.
             </li>
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
                 <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
-                Түркістан өлкелік статистикалық комитеті мәліметтері (1887-1917)
+                <a href="./pdf/Жданко.pdf">PDF sıpatında júklep alıw - </a>Т . А . Ж Д А Н К О . ОЧЕРКИ ИСТОРИЧЕСКОЙ ЭТНОГРАФИИ КАРАКАЛПАКОВ.<em> РОДО-ПЛЕМЕННАЯ СТРУКТУРА И Р А С С Е Л Е Н И Е В XIX — Н А Ч А Л Е XX В Е К А,</em> М.: 1950.
             </li>
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
                 <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
-                Қарақалпақ АССР халық шаруашылығы есебі (1926-1939)
+                <a href="./pdf/PİTKERİW QÁNİYGELİK JUMISI.pdf">PDF sıpatında júklep alıw - </a>Nazarov Nurulla Begdullaevich «QARAQALPAQSTANNIŃ RUWXIY MÁDENIYATIN OQITIWDA BERDAQ SHAYIRDIŃ «SHEJIRE» Nókis-2019.
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                <a href="./pdf/Kamal Mambetov. Qaraqalpaqlar shejiresi (1993).pdf">PDF sıpatında júklep alıw - </a>К. Мэмбетов. Қарақалпақлар шежиресй Нөкис «Билим» 1993 128 бет..
             </li>
         </ul>
         
@@ -1440,10 +1506,23 @@ document.addEventListener('DOMContentLoaded', function() {
         🙏 Қарақалпақ шежіресін сақтауда сіздің көмегіңіз керек!
     </p>
 </div>
+
+<div class="scrollup visible" id="scrollUpBtn">
+    <span style="font-size: 30px; color: #000;">↑</span>
+    
+</div>
    <div style="text-align: center; padding: 20px; font-size: 0.9em; color: var(--text-secondary);">
         <p>© 2024 Қарақалпақ шежіресі. Барлық құқықтар қорғалған.</p>
-        <p>Жасаушы: [Bake9791].</p>
+        <p>Жасаушы: [Bahrom9791].</p>
     </div>
 </footer>
+<script>
+scrollUpBtn.addEventListener('click', function() {
+    // Скролл страницы до header
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Скролл панели с деревом до верха
+    document.querySelector('.tree-panel').scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
 </body>
 </html>

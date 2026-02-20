@@ -463,8 +463,8 @@
             justify-content: center;
         }
         .lang-btn img {
-            width: 65px;
-            height: 65px;
+            width: 67px;
+            height: 67px;
             margin-bottom: 4px;
             border-radius: 50%;
             vertical-align: middle;
@@ -481,17 +481,35 @@
             border: 1px solid var(--gold);
         }
 
-        /* .lang-btn.active {
+        .lang-btnRU {
+            
             width: 53px;
             height: 53px;
-            
-        } */
+            border-radius: 8px;
+            background: transparent;
+            color: var(--gold);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        /* .lang-btn1:hover {
+        .lang-btnRU img {
+            width: 43px;
+            height: 43px; 
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+      
+
+        .lang-btnRU:hover {
             border: 1px solid var(--gold);
             width: 53px;
             height: 53px;
-        } */
+        }
 
         @media (max-width: 1200px) {
             main { display: block; }
@@ -552,8 +570,8 @@
                 justify-content: center;
             }
             
-            .lang-btn1:hover {
-                border: 0px solid var(--gold);
+            .lang-btnRU:hover {
+                border: 1px solid var(--gold);
             }
 
             .legend-tree {
@@ -566,7 +584,7 @@
     <header>
         <div class="logo">
             <span style="font-size: 2rem;">🌳</span>
-            <a target="_blank" href="./images/uru.jpg">УРУУ</a>
+            <a target="_blank" href="./images/uru.jpg">Шежіре</a>
         </div>
         
         <!-- Бургер меню кнопка -->
@@ -584,6 +602,7 @@
         </div>
 
         <div class="lang-switch">
+            <a target="_self" href="schemeRU.html" class="lang-btnRU"><img src="./images/RU.jpg" alt="RU"></a>
             <a target="_self" href="schemeQQ.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
             <a target="_self" href="schemeKZ.html" class="lang-btn1 active"><img src="./images/KZ.webp" alt="KZ"></a>
         </div>

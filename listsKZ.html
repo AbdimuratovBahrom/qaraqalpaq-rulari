@@ -591,23 +591,11 @@
     border-left: 1px solid rgba(212,175,55,0.3);
 }
 
-.lang-btn {
-    /* padding: 0.4rem 0.4rem; */
-    border-radius: 8px;
-    /* border: 1px solid var(--gold); */
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s;
-    text-decoration: none;
-}
+
 
 .lang-btn img {
     width: 65px;
     height: 65px;
-   margin-bottom: 5px;
     border-radius: 50%;
     vertical-align: middle;
 }
@@ -615,11 +603,10 @@
 
 
 .lang-btn:hover {
-    background: rgba(212,175,55,0.1);
+    border-radius: 10px;
     border: 1px solid var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: rgba(212,175,55,0.1);
+    transition: all 0.3s;
     width: 53px;
     height: 53px;
 }
@@ -630,11 +617,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
 }
 
-.lang-btn1.active {
+.lang-btn1 {
     padding: 0.4rem 0.4rem;
-    border-radius: 8px;
+    border-radius: 10px;
     border: 1px solid var(--accent-orange);
     background: transparent;
     color: var(--gold);
@@ -658,12 +652,49 @@
 
 
 
-.lang-btn1:hover {
+.lang-btn1.active:hover {
+    border-radius: 10px;
+    vertical-align: middle;
     background: rgba(212,175,55,0.1);
     border: 1px solid var(--gold);
     
 
 }
+.lang-btnRU {
+    padding: 0.4rem 0.4rem;
+   
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lang-btnRU img {
+    width: 40px;
+    height: 40px;
+    margin-top: 0px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+
+
+.lang-btnRU:hover {
+    border-radius: 10px;
+    vertical-align: middle;
+    background: rgba(212,175,55,0.1);
+    border-radius: 10px;
+    border: 1px solid var(--gold);
+    
+
+}
+
 
 
 
@@ -673,21 +704,15 @@
         padding-left: 0;
         border-left: none;
         border-top: 1px solid rgba(212,175,55,0.3);
-        padding-top: 0.5rem;
-        margin-top: 0.5rem;
         justify-content: center;
     }
     
-    .lang-btn {
-        margin-bottom: 13px;
-    }
+    
 
      
 
     
-    .lang-btn:hover {
-        border: 0px solid var(--gold);
-    }
+   
 
     .lang-btn1 {
       width: 53px;
@@ -704,7 +729,7 @@
     <header>
         <div class="logo">
             <span style="font-size: 2rem;">📋</span>
-            <a target="_blank" href="./images/uru.jpg">УРУУ</a>
+            <a target="_blank" href="./images/uru.jpg">Шежіре</a>
         </div>
         
         <!-- Бургер меню кнопка -->
@@ -722,6 +747,7 @@
         </div>
 
     <div class="lang-switch">
+        <a target="_self" href="listsRU.html" class="lang-btnRU "><img src="./images/RU.jpg" alt="RU"></a>
         <a target="_self" href="listsQQ.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
         <a target="_self" href="listsKZ.html" class="lang-btn1 active"><img src="./images/KZ.webp" alt="KZ"></a>
     </div>
