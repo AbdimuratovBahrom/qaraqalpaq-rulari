@@ -143,9 +143,6 @@
 
 /* Мобильное меню */
 @media (max-width: 968px) {
-    .burger-menu {
-        display: flex;
-    }
     
     .view-switch {
         position: fixed;
@@ -617,7 +614,6 @@
 
 
 
-
         @media (max-width: 768px) {
     .lang-switch {
         margin-left: 0;
@@ -660,7 +656,7 @@
         </div>
 
         <div class="lang-switch">
-    <a target="_self" href="exogamyRU.html" class="lang-btnRU"><img src="./images/RU.jpg" alt="RU"></a>
+    <a target="_self" href="exogamyRU.html" class="lang-btn1"><img src="./images/RU.jpg" alt="RU"></a>
     <a target="_self" href="exogamyQQ.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
     <a target="_self" href="exogamyKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
 </div>
@@ -728,6 +724,9 @@
 
         /* Показываем на экранах меньше 967px */
         @media (max-width: 967px) {
+            .burger-menu {
+                display: flex;
+            }
             .mobile-warning-marquee {
                 display: block;
             }

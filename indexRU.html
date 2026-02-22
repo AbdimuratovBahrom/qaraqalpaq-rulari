@@ -364,13 +364,15 @@
             .stats { display: none; }
         }
         
-        .search-box { position: fixed; top: 72px; left: 10px; z-index: 100; }
+        .search-box { display: none; }
         .search-box input { padding: 6px 10px; border-radius: 15px; border: 1px solid var(--accent-blue); background: rgba(0,0,0,0.9); color: white; width: 180px; font-size: 0.85em; }
         .highlight { 
             animation: pulse 1.5s infinite;
             border-color: var(--accent-yellow) !important;
             border: solid 5px var(--accent-yellow) !important;
         }
+
+            
 
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); } 70% { box-shadow: 0 0 0 12px rgba(241, 196, 15, 0); } 100% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); } }
         
@@ -579,6 +581,8 @@
                 align-items: center;
                 justify-content: center;
             }
+
+            
         }
     </style>
 <base target="_blank">
@@ -587,7 +591,7 @@
     <header>
         <div class="logo">
             <span style="font-size: 2rem;">🏠</span>
-            <a target="_blank" href="./images/uru.jpg">Родословная</a>
+            <a target="_blank" href="./images/uru.jpg">Род</a>
         </div>
         
         <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню">
@@ -626,7 +630,7 @@
         .mobile-warning-marquee {
             display: none;
             position: fixed;
-            top: 103px;
+            top: 65px;
             left: 0;
             right: 0;
             background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
@@ -666,8 +670,13 @@
         }
 
         @media (max-width: 967px) {
-            .mobile-warning-marquee { display: block; }
+            
             body { padding-top: 115px !important; }
+        }
+        @media (max-width: 768px) {
+            .mobile-warning-marquee {
+                display: block;
+            }
         }
 
         @media (max-width: 480px) {
