@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -441,6 +444,7 @@
 
         @media (max-width: 765px) {
             .stats { display: none; }
+
         }
         
         .search-box { position: fixed; top: 72px; left: 10px; z-index: 100; }
@@ -591,7 +595,8 @@
     border-left: 1px solid rgba(212,175,55,0.3);
 }
 
-.lang-btn {
+ .lang-btn1 {
+    padding: 0.4rem 0.4rem;
     border-radius: 8px;
     background: transparent;
     color: var(--gold);
@@ -600,55 +605,52 @@
     font-weight: 600;
     transition: all 0.3s;
     text-decoration: none;
-    width: 53px;
-    height: 53px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.lang-btn img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    vertical-align: middle;
-}
-
-.lang-btn:hover {
-    background: rgba(212,175,55,0.1);
-    border: 1px solid var(--gold);
-}
-
-.lang-btn1 {
-    border-radius: 8px;
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s;
-    text-decoration: none;
-    width: 53px;
-    height: 53px; 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .lang-btn1 img {
-    width: 40px;
-    height: 40px;
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     vertical-align: middle;
 }
 
-.lang-btn1:hover {
-    background: rgba(212,175,55,0.1);
+.lang-btn img {
+    width: 3rem;
+    height: 3rem;
+    /* margin-bottom: 4px; */
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.lang-btn:hover {
     border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+     width: 2.9rem;
+    height: 2.9rem;
+}
+
+
+.lang-btn1:hover {
+    border: 1px solid var(--gold);
+    width: 3rem;
+    height: 3rem;
+}
+
+.lang-btn1.active img {
+    width: 2rem;
+    height: 2rem;
 }
 
 .lang-btn1.active {
-    border: 1px solid var(--accent-orange);
+    border: 1px solid var(--accent-red);
+     width: 3rem;
+    height: 3rem;
 }
 
 @media (max-width: 768px) {
@@ -659,11 +661,22 @@
         border-top: 1px solid rgba(212,175,55,0.3);
         justify-content: center;
     }
-    
-    .lang-btn:hover {
-        border: 0px solid var(--gold);
+
+    .search-box input {
+        display: none;
     }
-}     
+
+     .logo a {
+        font-size: 1.4rem;
+    
+    }
+
+        
+    }
+
+    
+   
+   
     </style>
 <base target="_blank">
 </head>
@@ -671,7 +684,7 @@
     <header>
         <div class="logo">
             <span style="font-size: 2rem;">📋</span>
-            <a target="_blank" href="./images/uru.jpg">Родословная</a>
+            <a target="_blank" href="./images/uru.jpg">Род</a>
         </div>
         
         <!-- Бургер меню кнопка -->
@@ -768,16 +781,25 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .mobile-warning-marquee {
+                top: 70px;
+            }
+        }
+
         @media (max-width: 480px) {
             .marquee-content {
                 animation-duration: 15s;
             }
             
-            .mobile-warning-marquee {
-                font-size: 0.8em;
-                padding: 6px 0;
+             .mobile-warning-marquee {
+       font-size: 0.5em;
+            font-weight: 400;
+                padding: 5px 0;
+       top: 70px;
+    }
             }
-        }
+        
     </style>
 
     <div class="search-box"><input type="text" id="searchInput" placeholder="Поиск..." onkeyup="searchNode()"></div>

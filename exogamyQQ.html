@@ -559,28 +559,9 @@
             animation: pulse 1s infinite;
         }
 
-        
-.lang-btn {
-    width: 53px;
-    height: 53px;
-    border-radius: 10px;
-    border: 1px solid var(--accent-orange);
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.65rem;
-    font-weight: 400;
-    transition: all 0.3s;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.lang-btn1 {
+         .lang-btn1 {
     padding: 0.4rem 0.4rem;
     border-radius: 8px;
-    width: 53px;
-    height: 53px;
     background: transparent;
     color: var(--gold);
     cursor: pointer;
@@ -592,43 +573,89 @@
     align-items: center;
     justify-content: center;
 }
-.lang-btn img {
-    width: 65px;
-    height: 65px;
-    margin-bottom: 4px;
-    border-radius: 50%;
-    vertical-align: middle;
-}
+
 .lang-btn1 img {
-    width: 43px;
-    height: 43px; 
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     vertical-align: middle;
 }
+
+.lang-btn img {
+    width: 3rem;
+    height: 3rem;
+    /* margin-bottom: 4px; */
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.lang-btn {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+     width: 2.9rem;
+    height: 2.9rem;
+}
+.lang-btn:hover {
+    border: 1px solid var(--gold);
+    width: 3rem;
+    height: 3rem;
+}
+
 
 .lang-btn1:hover {
-    
     border: 1px solid var(--gold);
+    width: 3rem;
+    height: 3rem;
 }
 
+.lang-btn1.active img {
+    width: 2rem;
+    height: 2rem;
+}
 
+.lang-btn.active {
+    border: 1px solid var(--accent-red);
+     border-radius: 8px;
+     width: 3rem;
+    height: 3rem;
+}
 
-
-        @media (max-width: 768px) {
+@media (max-width: 768px) {
     .lang-switch {
         margin-left: 0;
         padding-left: 0;
         border-left: none;
         border-top: 1px solid rgba(212,175,55,0.3);
-        display: flex;
-        align-items: center;
         justify-content: center;
     }
+
+    .search-box input {
+        display: none;
+    }
+     
+    .logo a {
+        font-size: 1rem;
     
-.lang-btn1:hover {
-    border: 0px solid var(--gold);
     }
+        
     }
+
+
+
+        @media (max-width: 768px) {
+            .lang-switch {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                border-top: 1px solid rgba(212,175,55,0.3);
+                padding-top: 0.5rem;
+                margin-top: 0.5rem;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -675,11 +702,11 @@
     </div>
 
     <style>
-        /* Бегущая строка - только для мобильных */
+             /* Бегущая строка - только для мобильных */
         .mobile-warning-marquee {
             display: none;
             position: fixed;
-            top: 80px;
+            top: 103px;
             left: 0;
             right: 0;
             background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
@@ -687,7 +714,7 @@
             padding: 8px 0;
             font-size: 0.9em;
             font-weight: 600;
-            z-index: 999;
+            z-index: 99;
             overflow: hidden;
             white-space: nowrap;
             box-shadow: 0 2px 10px rgba(231, 76, 60, 0.4);
@@ -722,17 +749,38 @@
             }
         }
 
+        @media (max-width: 1200px) {
+    .legend-tree {
+        display: none;
+    
+    }
+}
+    @media (max-width: 1200px) {
+    .legend-tree {
+        display: none;
+    }
+    
+    }
+
+
+
         /* Показываем на экранах меньше 967px */
         @media (max-width: 967px) {
-            .burger-menu {
-                display: flex;
+          
             }
-            .mobile-warning-marquee {
-                display: block;
-            }
+            
             
             body {
                 padding-top: 115px !important;
+            }
+        
+
+        @media (max-width: 768px) {
+             
+                
+            .mobile-warning-marquee {
+                display: block;
+                top: 100px;
             }
         }
 
@@ -741,11 +789,21 @@
                 animation-duration: 15s;
             }
             
-            .mobile-warning-marquee {
-                font-size: 0.8em;
-                padding: 6px 0;
+             .mobile-warning-marquee {
+       font-size: 0.5em;
+            font-weight: 400;
+                padding: 5px 0;
+       top: 100px;
+    }
             }
-        }
+
+              @media (max-width: 400px) {
+                .logo a {
+                    display: none;
+                }
+           
+            }
+            
     </style>
 
     <div class="container">
@@ -792,7 +850,7 @@
             <div class="rules-grid">
                 <div class="rule-card forbidden">
                     <h4>❌ Qadaǵan</h4>
-                    <p>Bir qoshtıń yamasa tiyreniń ishinde nekeleiw incest dep esaplanadı.</p>
+                    <p>Bir rıwın qoshtıń yamasa tiyreniń ishinde nekeleiw incest dep esaplanadı.</p>
                 </div>
                 <div class="rule-card exception">
                     <h4>💡 Ayrıqsha jaǵday</h4>

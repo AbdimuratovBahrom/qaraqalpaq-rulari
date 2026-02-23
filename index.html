@@ -8,7 +8,7 @@
   <meta name="description" content="Tolıq shejire: Qaraqalpaq urıwları hám tuwıslıq baylanıslardı körsetetin tarıyxıy sayt.">
 
     
-    <style>
+     <style>
         :root {
             --primary-bg: #0f1419;
             --secondary-bg: #1a1f2e;
@@ -363,19 +363,9 @@
     border-left: 1px solid rgba(212,175,55,0.3);
 }
 
-.lang-btn {
-    /* padding: 0.1rem 0.1rem; */
-    border-radius: 10px;
-    border: 1px solid var(--gold);
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.65rem;
-    font-weight: 400;
-    transition: all 0.3s;
-    text-decoration: none;
-}
-.lang-btn1 {
+
+
+ .lang-btn1 {
     padding: 0.4rem 0.4rem;
     border-radius: 8px;
     background: transparent;
@@ -389,45 +379,49 @@
     align-items: center;
     justify-content: center;
 }
-.lang-btn img {
-    width: 65px;
-    height: 65px;
-    margin-bottom: 4px;
-    border-radius: 50%;
-    vertical-align: middle;
-}
+
 .lang-btn1 img {
-    width: 43px;
-    height: 43px; 
+    width: 2rem;
+    height: 2rem;
     border-radius: 50%;
     vertical-align: middle;
 }
 
-.lang-btn:hover {
-    background: rgba(212,175,55,0.1);
-    border: 1px solid var(--gold);
+.lang-btn.active  img {
+    width: 3rem;
+    height: 3rem;
+    /* margin-bottom: 4px; */
+    border-radius: 50%;
+    vertical-align: middle;
 }
 
 .lang-btn.active {
-    width: 53px;
-    height: 53px;
-    border: 1px solid var(--accent-orange);
+    border: 1px solid var(--accent-red);
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 8px;
+     width: 2.9rem;
+    height: 2.9rem;
 }
+
 
 .lang-btn1:hover {
     border: 1px solid var(--gold);
-    width: 53px;
-    height: 53px;
+    width: 3rem;
+    height: 3rem;
+}
 
-   
+.lang-btn1.active img {
+    width: 2rem;
+    height: 2rem;
 }
+
 .lang-btn1.active {
-    background: #000;
-    color: #000;
-}
+    border: 1px solid var(--accent-red);
+     width: 3rem;
+    height: 3rem;
+} 
 .scrollup {
     position: fixed;
     bottom: 30px;
@@ -465,53 +459,7 @@
 
    
     
-    </style>
-<base target="_blank">
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <span style="font-size: 2rem;">🏠</span>
-            <a target="_blank" href="./images/uru.jpg">Shejire</a>
-        </div>
-        
-        <!-- Бургер меню кнопка -->
-        <button class="burger-menu" id="burgerMenu" aria-label="Menúdi ashıw">
-            <span class="burger-bar"></span>
-            <span class="burger-bar"></span>
-            <span class="burger-bar"></span>
-        </button>
-        
-        <div class="view-switch" id="viewSwitch">
-            
-            <a href="index.html" class="view-btn active" target="_self">🏠 Bas bet</a>
-            <a href="listsQQ.html" class="view-btn" target="_self">📋 Tizimler</a>
-            <a href="schemeQQ.html" class="view-btn" target="_self">🌳 Sxema</a>
-            <a href="exogamyQQ.html" class="view-btn" target="_self">💑 Ekzogamiya</a>
-        </div>
-
-        <div class="lang-switch">
-    <a target="_self" href="indexRU.html" class="lang-btn1"><img src="./images/RU.jpg" alt="RU"></a>
-    <a target="_self" href="index.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
-    <a target="_self" href="indexKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
-</div>
-    </header>
-
-
-        <!-- Бегущая строка для мобильных устройств -->
-    <div class="mobile-warning-marquee" id="mobileMarquee">
-        <div class="marquee-wrapper">
-            <div class="marquee-content">
-                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
-                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
-                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
-                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
-            </div>
-        </div>
-    </div>
-    
-
-    <style>
+  
         /* Бегущая строка - только для мобильных */
         .mobile-warning-marquee {
             display: none;
@@ -701,24 +649,30 @@
         padding-left: 0.5rem;
     }
 
+     .search-box input {
+        display: none;
+    }
+
    
 
-    .lang-btn.active img {
+    /* .lang-btn.active img {
         width: 53px;
         height: 53px;
     }
     
     .lang-btn1 img
     {
-        width: 32px;
-        height: 32px;
+        width: 41px;
+        height: 41px;
     }
+
+    
     
     .lang-btn.active {
         width: 42px;
         height: 42px;
     }
-    
+     */
     .burger-menu {
         width: 25px;
         height: 25px;
@@ -748,6 +702,8 @@
     /* Бегущая строка */
     .mobile-warning-marquee {
         display: block;
+        position: fixed;
+        top: 70px;
     }
     
     body {
@@ -756,8 +712,8 @@
     
     /* Языковой переключатель */
     .lang-switch {
-        margin-left: 0;
-        padding-left: 0;
+        margin-left: 0.2rem;
+        padding-left: 0.2rem;
         border-left: none;
         border-top: 1px solid rgba(212,175,55,0.3);
         display: flex;
@@ -765,9 +721,11 @@
         justify-content: center;
     }
     
-    .lang-btn1:hover {
-        border: 0px solid var(--gold);
-    }
+    /* .lang-btn1:hover {
+        border: 1px solid var(--gold);
+        width: 53px;
+    height: 53px; 
+    } */
 
     .stats {
         display: none;
@@ -785,8 +743,8 @@
 
 /* ─── 640px и меньше (альтернативный header) ─── */
 /* Раскомментируйте, если нужен многострочный header */
-/*
-@media (max-width: 640px) {
+
+/* @media (max-width: 640px) {
     header {
         flex-direction: column;
         align-items: stretch;
@@ -838,8 +796,8 @@
     .burger-menu {
         display: none;
     }
-}
-*/
+} */
+
 
 
 /* ─── 480px и меньше (маленькие телефоны) ─── */
@@ -864,25 +822,40 @@
         font-size: 1.2rem;
     }
     
-    .lang-btn1 img
+   /* .lang-btn1 img
     {
         width: 28px;
         height: 28px;
     }
+
+     .lang-btn1.active img {
+        width: 29px;
+        height: 29px;
+    }
     
-    .lang-btn.active {
+    .lang-btn1.active {
+        border: 1px solid var(--accent-red);
         width: 42px;
         height: 42px;
     }
 
-    .lang-btn.active img {
-        width: 44px;
-        height: 44px;
+    .lang-btn1 img {
+        width: 29px;
+        height: 29px;
     }
     
-    .lang-btn1 {
-        padding: 0.2rem;
+    .lang-btn1:hover {
+        border: 1px solid var(--gold);
+        width: 42px;
+        height: 42px;
     }
+
+    .lang-btn img {
+        width: 42px;
+        height: 42px;
+    }
+    
+     */
     
     .burger-menu {
         width: 25px;
@@ -933,9 +906,10 @@
     }
     
     .mobile-warning-marquee {
-       
-        font-size: 0.8em;
-        padding: 6px 0;
+       font-size: 0.5em;
+            font-weight: 400;
+                padding: 5px 0;
+       top: 60px;
     }
     
     /* Дерево */
@@ -1006,13 +980,59 @@
 }
 
     </style>
+<base target="_blank">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span style="font-size: 2rem;">🏠</span>
+            <a target="_blank" href="./images/uru.jpg">Shejire</a>
+        </div>
+        
+        <!-- Бургер меню кнопка -->
+        <button class="burger-menu" id="burgerMenu" aria-label="Menúdi ashıw">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+        
+        <div class="view-switch" id="viewSwitch">
+            
+            <a href="index.html" class="view-btn active" target="_self">🏠 Bas bet</a>
+            <a href="listsQQ.html" class="view-btn" target="_self">📋 Tizimler</a>
+            <a href="schemeQQ.html" class="view-btn" target="_self">🌳 Sxema</a>
+            <a href="exogamyQQ.html" class="view-btn" target="_self">💑 Ekzogamiya</a>
+        </div>
+
+        <div class="lang-switch">
+    <a target="_self" href="indexRU.html" class="lang-btn1"><img src="./images/RU.jpg" alt="RU"></a>
+    <a target="_self" href="index.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
+    <a target="_self" href="indexKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
+</div>
+    </header>
+
+
+        <!-- Бегущая строка для мобильных устройств -->
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+                <span>📱 Bul betti úlken ekranda qaraw usınıs etiledi  🖥️ Bul betti úlken ekranda qaraw usınıs etiledi | </span>
+            </div>
+        </div>
+    </div>
+    
+
+    
 
     <div class="search-box"><input type="text" id="searchInput" placeholder="Izlew..." onkeyup="searchNode()"></div>
     <div class="stats" id="statsBox"><div><strong>Statistika:</strong></div><div>Arıs: 2</div><div>Bólim: 2</div><div>Uriw: 50+</div><div>tiyre/ko'she: 300+</div></div>
     
     <div class="container">
         <div class="tree-panel" id="treePanel">
-            <h1 style="margin-top: 10px;">QARAQALPAQ URIWLARI</h1>
+            <h1 style="margin-top: 10px;">QARAQALPAQ RIWLARI</h1>
             <div class="subtitle"></div>
             <div class="tree" id="tree"></div>
         </div>
@@ -1746,6 +1766,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
                 <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
                 <a href="./pdf/Kamal Mambetov. Qaraqalpaqlar shejiresi (1993).pdf">PDF sıpatında júklep alıw - </a>К. Мэмбетов. Қарақалпақлар шежиресй Нөкис «Билим» 1993 128 бет..
+            </li>
+             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                <a href="./images/riu.jpg">Скачать jpg - </a> Қарақалпақлар шежиресй схемасы.
             </li>
         </ul>
         

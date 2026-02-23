@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каракалпакские роды - Полная шежере</title>
-    <style>
+
+     <style>
         :root {
             --primary-bg: #0f1419;
             --secondary-bg: #1a1f2e;
@@ -30,6 +31,7 @@
             overflow-x: hidden;
             padding-top: 80px;
         }
+       
 
         /* HEADER STYLES */
         header {
@@ -103,39 +105,6 @@
             transition: all 0.3s ease;
         }
         
-        /* Мобильное меню */
-        @media (max-width: 968px) {
-            .burger-menu {
-                display: flex;
-            }
-            
-            .view-switch {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: rgba(10,12,16,0.98);
-                flex-direction: column;
-                padding: 1rem;
-                border-bottom: 2px solid var(--gold);
-                border-radius: 0;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-            }
-            
-            .view-switch.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .view-btn {
-                width: 100%;
-                text-align: center;
-                padding: 1rem;
-            }
-        }
         
         .view-btn {
             padding: 0.5rem 1.5rem;
@@ -166,11 +135,9 @@
 
         .container { 
             display: flex; 
-            height: calc(100vh - 80px);
-            overflow: hidden; 
-            position: relative;
-        }
-        
+            min-height: calc(100vh - 80px);  /* min-height вместо height */
+            height: auto;  /* позволяет растягиваться */
+}
         .tree-panel { 
             flex: 1; 
             overflow-y: auto; 
@@ -258,8 +225,8 @@
         
         h1 { text-align: center; color: var(--accent-yellow); margin-bottom: 5px; font-size: 1.8em; }
         .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 15px; font-size: 0.8em; }
-        .tree { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .branch { display: flex; flex-direction: column; align-items: center; margin: 3px; }
+        .tree { display: flex; flex-direction: column; align-items: center;  gap: 10px; }
+        .branch { display: flex; flex-direction: column; align-items:center; flex-wrap: wrap; margin: 3px; }
         .node {
             background: var(--accent-red); border: 2px solid var(--border-color); border-radius: 6px;
             padding: 6px 10px; cursor: pointer; transition: all 0.3s;
@@ -282,9 +249,10 @@
         .info-title { font-size: 1.4em; color: var(--accent-yellow); margin-bottom: 5px; }
         .info-type { color: var(--accent-orange); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
         .info-section { margin-bottom: 12px; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 5px; border-left: 3px solid var(--accent-blue); }
-        .info-section ul a { color: var(--accent-darkblue); text-decoration:none; }
+        .info-section ul a { color: var(--accent-darkblue); text-decoration:none;display: flex; align-items: center; flex-wrap: wrap; }
         .info-section h3 { color: var(--accent-cyan); margin-bottom: 8px; font-size: 0.9em; display: flex; align-items: center; gap: 8px; }
         .info-section p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9em; text-align: justify; }
+        .info-section
         .tamga-box { background: rgba(231, 76, 60, 0.15); border: 2px solid var(--accent-red); border-radius: 8px; padding: 15px; text-align: center; margin: 12px 0; }
         .tamga-symbol { font-size: 2em; color: var(--accent-yellow); font-weight: bold; margin-bottom: 5px; }
         .tamga-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; }
@@ -293,89 +261,29 @@
         .uran-label { font-size: 0.8em; color: var(--text-secondary); text-transform: uppercase; }
         .stats-box { background: rgba(52, 152, 219, 0.1); border: 1px solid var(--accent-blue); border-radius: 6px; padding: 10px; margin: 10px 0; text-align: center; }
         .stats-number { font-size: 1.3em; color: var(--accent-yellow); font-weight: bold; }
+        /* .legend { position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.75em; z-index: 100; } */
         .legend { 
-            position: sticky; 
-            bottom: 10px; 
-            left: 10px; 
-            background: rgba(0,0,0,0.9); 
-            padding: 10px; 
-            border-radius: 6px; 
-            font-size: 0.75em; 
-            z-index: 100; 
-            align-self: flex-start;
-            width: fit-content;
-            margin-top: auto;
-        }
+    position: sticky; 
+    bottom: 10px; 
+    left: 10px; 
+    background: rgba(0,0,0,0.9); 
+    padding: 10px; 
+    border-radius: 6px; 
+    font-size: 0.75em; 
+    z-index: 100; 
+    align-self: flex-start;
+    width: fit-content;
+    margin-top: auto;
+}
         .legend-item { display: flex; align-items: center; gap: 5px; margin: 2px 0; }
         .legend-color { width: 12px; height: 12px; border-radius: 2px; }
         .stats { position: fixed; top: 90px; right: 475px; background: rgba(0,0,0,0.9); padding: 10px; border-radius: 6px; font-size: 0.8em; z-index: 100; transition: right 0.3s ease; }
         
-        @media (max-width: 1024px) {
-            .stats { right: 10px; top: 90px; }
-        }
-        
-        @media (max-width: 968px) { 
-            .stats { 
-                right: 10px; 
-                top: 80px; 
-                font-size: 0.65em;
-                max-width: 150px;
-            } 
-            
-            .info-panel { 
-                width: 100%; 
-                position: fixed; 
-                bottom: 0; 
-                left: 0; 
-                height: 60vh; 
-                transform: translateY(100%); 
-                transition: transform 0.3s ease;
-                z-index: 1000;
-                border-left: none;
-                border-top: 3px solid var(--accent-orange);
-            } 
-            
-            .info-panel.active { 
-                transform: translateY(0); 
-            }
-            
-            .info-panel.collapsed {
-                transform: translateY(100%);
-            }
-            
-            header { 
-                padding: 0.5rem 1rem; 
-            }
-            
-            body { padding-top: 70px; }
-            .container { height: calc(100vh - 70px); }
-            
-            .open-panel-btn {
-                bottom: 20px;
-                right: 20px;
-            }
-
-            .legend {
-                display: none;
-            }
-        }
-
-        @media (max-width: 765px) {
-            .stats { display: none; }
-        }
-        
-        .search-box { display: none; }
-        .search-box input { padding: 6px 10px; border-radius: 15px; border: 1px solid var(--accent-blue); background: rgba(0,0,0,0.9); color: white; width: 180px; font-size: 0.85em; }
-        .highlight { 
-            animation: pulse 1.5s infinite;
-            border-color: var(--accent-yellow) !important;
-            border: solid 5px var(--accent-yellow) !important;
-        }
-
-            
+       
 
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0.7); } 70% { box-shadow: 0 0 0 12px rgba(241, 196, 15, 0); } 100% { box-shadow: 0 0 0 0 rgba(241, 196, 15, 0); } }
         
+        /* Hierarchy styles */
         .hierarchy-chain {
             background: linear-gradient(135deg, rgba(241, 196, 15, 0.1), rgba(230, 126, 34, 0.1));
             border: 2px solid var(--accent-yellow);
@@ -444,193 +352,116 @@
         }
 
         .lang-switch {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-left: 1rem;
-            padding-left: 1rem;
-            border-left: 1px solid rgba(212,175,55,0.3);
-        }
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 1px solid rgba(212,175,55,0.3);
+}
 
-        .lang-btn {
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            color: var(--gold);
-            cursor: pointer;
-            font-size: 0.65rem;
-            font-weight: 400;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-        .lang-btn1 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            background: transparent;
-            color: var(--gold);
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
 
-        .lang-btnRU {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            background: transparent;
-            color: var(--gold);
-            cursor: pointer;
-            /* font-size: 0.85rem;
-            font-weight: 600; */
-            /* transition: all 0.3s; */
-            text-decoration: none;
-        }
-        .lang-btn img {
-            width: 65px;
-            height: 65px;
-            margin-bottom: 3px;
-            border-radius: 50%;
-            vertical-align: middle;
-        }
-        .lang-btn1 img {
-            width: 43px;
-            height: 43px;
-            border-radius: 50%;
-            vertical-align: middle;
-        }
 
-         .lang-btnRU img {
-            width: 46px;
-            height: 46px;
-            border-radius: 50%;
-            /* vertical-align: middle; */
-        }
-        .lang-btn:hover {
-            border: 1px solid var(--gold);
-            width: 53px;
-            height: 53px;
-        }
-        .lang-btn1:hover {
-            background: rgba(197, 212, 210, 0.1);
-            width: 53px;
-            height: 53px;
-            border: 1px solid var(--accent-orange);
-        }
-        .lang-btn1.active {
-            width: 53px;
-            height: 53px;
-            border: 1px solid var(--accent-orange);
-        }
+ .lang-btn1 {
+    padding: 0.4rem 0.4rem;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-         .lang-btnRU:hover {
-        
-            background: rgba(197, 212, 210, 0.1);
-        }
-        .lang-btnRU.active {
-            width: 53px;
-            height: 53px; 
-            border: 1px solid var(--accent-orange);
-        }
+.lang-btn1 img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    vertical-align: middle;
+}
 
-        .scrollup {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 9999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            border: 2px solid rgba(0,0,0,0.2);
-        }
-        .scrollup.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .scrollup img {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-        }
-        .scrollup img {
-            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
-        }
+.lang-btn img {
+    width: 3rem;
+    height: 3rem;
+    /* margin-bottom: 4px; */
+    border-radius: 50%;
+    vertical-align: middle;
+}
 
-        @media (max-width: 768px) {
-            .lang-switch {
-                margin-left: 0;
-                padding-left: 0;
-                border-left: none;
-                border-top: 1px solid rgba(212,175,55,0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+.lang-btn:hover {
+    border: 1px solid var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+     width: 2.9rem;
+    height: 2.9rem;
+}
 
-            
-        }
-    </style>
-<base target="_blank">
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <span style="font-size: 2rem;">🏠</span>
-            <a target="_blank" href="./images/uru.jpg">Род</a>
-        </div>
-        
-        <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню">
-            <span class="burger-bar"></span>
-            <span class="burger-bar"></span>
-            <span class="burger-bar"></span>
-        </button>
-        
-        <div class="view-switch" id="viewSwitch">
-            <a href="indexRU.html" class="view-btn active" target="_self">🏠 Главная</a>
-            <a href="listsRU.html" class="view-btn" target="_self">📋 Списки</a>
-            <a href="schemeRU.html" class="view-btn" target="_self">🌳 Схема</a>
-            <a href="exogamyRU.html" class="view-btn" target="_self">💑 Экзогамия</a>
-        </div>
 
-        <div class="lang-switch">
-            <a target="_self" href="indexRU.html" class="lang-btnRU active"><img src="./images/RU.jpg" alt="RU"></a>
-            <a target="_self" href="index.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
-            <a target="_self" href="indexKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
-           
-        </div>
-    </header>
+.lang-btn1:hover {
+    border: 1px solid var(--gold);
+    width: 3rem;
+    height: 3rem;
+}
 
-    <div class="mobile-warning-marquee" id="mobileMarquee">
-        <div class="marquee-wrapper">
-            <div class="marquee-content">
-                <span>📱 Рекомендуется просматривать на большом экране 🖥️  Рекомендуется просматривать на большом экране </span>
-                <span>📱 Рекомендуется просматривать на большом экране 🖥️  Рекомендуется просматривать на большом экране </span>
-                <span>📱 Рекомендуется просматривать на большом экране 🖥️  Рекомендуется просматривать на большом экране </span>
-                <span>📱 Рекомендуется просматривать на большом экране 🖥️  Рекомендуется просматривать на большом экране </span>
-            </div>
-        </div>
-    </div>
+.lang-btn1.active img {
+    width: 2rem;
+    height: 2rem;
+}
 
-    <style>
+.lang-btn1.active {
+    border: 1px solid var(--accent-red);
+     width: 3rem;
+    height: 3rem;
+} 
+.scrollup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--accent-green); /* Золотой фон */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    border: 2px solid rgba(0,0,0,0.2);
+}
+
+.scrollup.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scrollup img {
+    width: 30px; /* Увеличьте размер */
+    height: 30px;
+    object-fit: contain;
+
+}
+.scrollup img {
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); /* Тень для видимости */
+}
+
+   
+    
+  
+        /* Бегущая строка - только для мобильных */
         .mobile-warning-marquee {
             display: none;
             position: fixed;
-            top: 65px;
+            top: 60px;
             left: 0;
             right: 0;
             background: linear-gradient(90deg, var(--accent-orange), var(--accent-red));
@@ -665,25 +496,530 @@
         }
 
         @keyframes marquee-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-25%); }
-        }
-
-        @media (max-width: 967px) {
-            
-            body { padding-top: 115px !important; }
-        }
-        @media (max-width: 768px) {
-            .mobile-warning-marquee {
-                display: block;
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-25%);
             }
         }
 
-        @media (max-width: 480px) {
-            .marquee-content { animation-duration: 15s; }
-            .mobile-warning-marquee { font-size: 0.8em; padding: 6px 0; }
-        }
+        .search-box { position:
+             fixed; top: 72px;
+              left: 10px; 
+              z-index: 100; }
+
+
+    .search-box input { padding: 6px 10px;
+         border-radius: 15px; border:
+          1px solid var(--accent-blue);
+           background: rgba(0,0,0,0.9);
+            color: white; width: 180px; 
+            font-size: 0.85em; }
+
+        
+
+      /* ============================================
+   ВСЕ МЕДИА-ЗАПРОСЫ (удалите лишние по необходимости)
+   ============================================ */
+
+/* ─── 1024px и меньше (планшеты) ─── */
+@media (max-width: 1024px) {
+    .stats { 
+        right: 10px; 
+        top: 90px; 
+    }
+}
+
+
+/* ─── 968px и меньше (мобильные меню) ─── */
+@media (max-width: 968px) { 
+    .burger-menu {
+        display: flex;
+    }
+    
+    .view-switch {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(10,12,16,0.98);
+        flex-direction: column;
+        padding: 1rem;
+        border-bottom: 2px solid var(--gold);
+        border-radius: 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+    }
+    
+    .view-switch.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .view-btn {
+        width: 100%;
+        text-align: center;
+        padding: 6px 8px;
+    }
+    
+    .stats { 
+        right: 10px; 
+        top: 80px; 
+        font-size: 0.65em;
+        max-width: 150px;
+    } 
+
+    .legend {
+        display: none;
+    }
+    
+    .info-panel { 
+        width: 100%; 
+        position: fixed; 
+        bottom: 0; 
+        left: 0; 
+        height: 60vh; 
+        transform: translateY(100%); 
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        border-left: none;
+        border-top: 3px solid var(--accent-orange);
+    } 
+    
+    .info-panel.active { 
+        transform: translateY(0); 
+    }
+    
+    .info-panel.collapsed {
+        transform: translateY(100%);
+    }
+    
+    header { 
+        padding: 0.5rem 1rem; 
+    }
+    
+    body { 
+        padding-top: 70px; 
+    }
+    
+    .container { 
+        height: calc(100vh - 70px); 
+    }
+    
+    .open-panel-btn {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .search-box input {
+        padding: 2px 8px;
+        position: absolute;
+        top: 0px;
+        
+    }
+}
+
+
+/* ─── 768px и меньше (планшеты/телефоны) ─── */
+@media (max-width: 768px) {
+    /* Header */
+    header {
+        height: auto;
+        min-height: 60px;
+        padding: 0.5rem 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .logo a {
+        font-size: 1.4rem;
+    }
+    
+    .logo span {
+        font-size: 1.5rem;
+    }
+    
+    .lang-switch {
+        margin-left: 0.5rem;
+        padding-left: 0.5rem;
+    }
+
+     .search-box input {
+        display: none;
+    }
+
+   
+
+    /* .lang-btn.active img {
+        width: 53px;
+        height: 53px;
+    }
+    
+    .lang-btn1 img
+    {
+        width: 41px;
+        height: 41px;
+    }
+
+    
+    
+    .lang-btn.active {
+        width: 42px;
+        height: 42px;
+    }
+     */
+    .burger-menu {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .burger-bar {
+        height: 2px;
+    }
+    
+    /* ScrollUp */
+    .scrollup {
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .scrollup img {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .scrollup span {
+        font-size: 24px !important;
+    }
+    
+    /* Бегущая строка */
+    .mobile-warning-marquee {
+        display: block;
+        position: fixed;
+        top: 70px;
+    }
+    
+    body {
+        padding-top: 115px !important;
+    }
+    
+    /* Языковой переключатель */
+    .lang-switch {
+        margin-left: 0.2rem;
+        padding-left: 0.2rem;
+        border-left: none;
+        border-top: 1px solid rgba(212,175,55,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* .lang-btn1:hover {
+        border: 1px solid var(--gold);
+        width: 53px;
+    height: 53px; 
+    } */
+
+    .stats {
+        display: none;
+    }
+}
+
+
+/* ─── 765px и меньше ─── */
+@media (max-width: 765px) {
+    .stats { 
+        display: none; 
+    }
+}
+
+
+/* ─── 640px и меньше (альтернативный header) ─── */
+/* Раскомментируйте, если нужен многострочный header */
+
+/* @media (max-width: 640px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        height: auto;
+    }
+    
+    .logo {
+        justify-content: center;
+    }
+    
+    .burger-menu {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .lang-switch {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .view-switch {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 0.3rem;
+    }
+    
+    .view-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .burger-menu {
+        display: none;
+    }
+} */
+
+
+
+/* ─── 480px и меньше (маленькие телефоны) ─── */
+@media (max-width: 480px) {
+    /* Header */
+    header {
+        padding: 0.4rem  0.8rem;
+        min-height: 55px;
+        flex-wrap: wrap;
+    }
+    
+    
+    .logo {
+        gap: 5px;
+    }
+    
+    .logo a {
+        font-size: 1.1rem;
+    }
+    
+    .logo span {
+        font-size: 1.2rem;
+    }
+    
+   /* .lang-btn1 img
+    {
+        width: 28px;
+        height: 28px;
+    }
+
+     .lang-btn1.active img {
+        width: 29px;
+        height: 29px;
+    }
+    
+    .lang-btn1.active {
+        border: 1px solid var(--accent-red);
+        width: 42px;
+        height: 42px;
+    }
+
+    .lang-btn1 img {
+        width: 29px;
+        height: 29px;
+    }
+    
+    .lang-btn1:hover {
+        border: 1px solid var(--gold);
+        width: 42px;
+        height: 42px;
+    }
+
+    .lang-btn img {
+        width: 42px;
+        height: 42px;
+    }
+    
+     */
+    
+    .burger-menu {
+        width: 25px;
+        height: 25px;
+    }
+    
+    /* ScrollUp */
+    .scrollup {
+        width: 36px;
+        height: 36px;
+        left: 277px;
+        
+        bottom: 15px;
+        z-index: 1000;
+    }
+    
+    .scrollup img {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .scrollup span {
+        font-size: 20px !important;
+    }
+    
+    .info-panel.active ~ .scrollup,
+    .info-panel.active + .scrollup {
+        display: none !important;
+    }
+    
+    /* Open Panel Button */
+    .open-panel-btn {
+        width: 44px;
+        height: 44px;
+        bottom: 15px;
+        right: 15px;
+        font-size: 1.2em;
+    }
+    
+    /* Body */
+    body {
+        padding-top: 55px !important;
+    }
+    
+    /* Бегущая строка */
+    .marquee-content {
+        animation-duration: 15s;
+    }
+    
+    .mobile-warning-marquee {
+       font-size: 0.5em;
+            font-weight: 400;
+                padding: 5px 0;
+       top: 60px;
+    }
+    
+    /* Дерево */
+    .tree-panel {
+        padding: 8px;
+        overflow-x: auto;
+    }
+    
+    h1 {
+        font-size: 1.3em;
+        margin-top: 5px;
+    }
+    
+    .subtitle {
+        font-size: 0.7em;
+        margin-bottom: 10px;
+    }
+    
+    /* Узлы дерева */
+    .node { 
+        min-width: 50px; 
+        padding: 3px 5px; 
+        font-size: 0.6em; 
+    }
+    
+    .level-0 .node { 
+        font-size: 0.9em; 
+        padding: 6px 10px; 
+    }
+    
+    .children { 
+        gap: 2px; 
+        flex-wrap: wrap; 
+    }
+    
+    .connector { 
+        height: 8px; 
+    }
+    
+    /* Поиск */
+    .search-box { 
+        position: relative; 
+        top: auto; 
+        left: auto; 
+        margin: 10px; 
+        width: calc(100% - 20px); 
+    }
+    
+    
+    
+    /* Скрыть элементы */
+    .stats, 
+    .legend
+    {
+        display: none;
+   
+    /* Контейнер */
+    .container { 
+        height: auto; 
+        min-height: calc(100vh - 55px); 
+    }
+    
+    /* Панель информации */
+    .info-panel { 
+        height: 50vh; 
+    }
+}
+}
+
     </style>
+    
+<base target="_blank">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span style="font-size: 2rem;">🏠</span>
+            <a target="_blank" href="./images/uru.jpg">Род</a>
+        </div>
+        
+        <button class="burger-menu" id="burgerMenu" aria-label="Открыть меню">
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+            <span class="burger-bar"></span>
+        </button>
+        
+        <div class="view-switch" id="viewSwitch">
+            <a href="indexRU.html" class="view-btn active" target="_self">🏠 Главная</a>
+            <a href="listsRU.html" class="view-btn" target="_self">📋 Списки</a>
+            <a href="schemeRU.html" class="view-btn" target="_self">🌳 Схема</a>
+            <a href="exogamyRU.html" class="view-btn" target="_self">💑 Экзогамия</a>
+        </div>
+
+        <div class="lang-switch">
+            <a target="_self" href="indexRU.html" class="lang-btn1 active"><img src="./images/RU.jpg" alt="RU"></a>
+            <a target="_self" href="index.html" class="lang-btn"><img src="./images/QQ_.png" alt="QQ"></a>
+            <a target="_self" href="indexKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
+           
+        </div>
+    </header>
+
+    <div class="mobile-warning-marquee" id="mobileMarquee">
+        <div class="marquee-wrapper">
+            <div class="marquee-content">
+                <span>📱 Рекомендуется просматривать на большом экране 🖥️  Рекомендуется просматривать на большом экране </span>
+                <span>📱 Рекомендуется просматривать на большом экране 🖥️  Рекомендуется просматривать на большом экране </span>
+                <span>📱 Рекомендуется просматривать на большом экране 🖥️  Рекомендуется просматривать на большом экране </span>
+                <span>📱 Рекомендуется просматривать на большом экране 🖥️  Рекомендуется просматривать на большом экране </span>
+            </div>
+        </div>
+    </div>
+
+    
 
     <div class="search-box"><input type="text" id="searchInput" placeholder="Поиск..." onkeyup="searchNode()"></div>
     <div class="stats" id="statsBox"><div><strong>Статистика:</strong></div><div>Арыс: 2</div><div>Болим: 2</div><div>Уруу: 50+</div><div>тире/коше: 300+</div></div>
@@ -1366,8 +1702,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 -Қарақалпақ рулары - Абаи.
             </li>
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
-                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span><a href="https://web.archive.org/web/20240122073225/https://kaa.wikipedia.org/wiki/Qaraqalpaq_ruwlar ı">https://web.archive.org/web/20240122073225/https://kaa.wikipedia.org/wiki/Qaraqalpaq_ruwlar ı</a>
-                -Qaraqalpaq ruwları - Qaraqalpaqsha Wikipedia.
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span><a href="https://web.archive.org/web/20240122073225/https://kaa.wikipedia.org/wiki/Qaraqalpaq_ruwlar ı">Qaraqalpaq ruwları</a>
+                 - Qaraqalpaqsha Wikipedia.
             </li>
         </ul>
         
@@ -1388,6 +1724,10 @@ document.addEventListener('DOMContentLoaded', function() {
             <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
                 <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
                 <a href="./pdf/Kamal Mambetov. Qaraqalpaqlar shejiresi (1993).pdf">Скачать PDF - </a>К. Мэмбетов. Қарақалпақлар шежиресй Нөкис «Билим» 1993 128 бет..
+            </li>
+            <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent-yellow);">•</span>
+                <a href="./images/riu.jpg">Скачать jpg - </a> Қарақалпақлар шежиресй схемасы.
             </li>
         </ul>
         
