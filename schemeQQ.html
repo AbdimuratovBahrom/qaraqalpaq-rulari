@@ -6,21 +6,18 @@
     <title>Qaraqalpaq urıwları | Shema</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="./images/naqsh.jpg" type="image/x-icon">
     <style>
         :root {
             --gold: #d4af37;
             --bg: #0a0c10;
             --bg-card: #151923;
             --text: #ffffff;
-
-             --primary-bg: #0f1419;
-            --secondary-bg: #1a1f2e;
-             --primary-bg: #0f1419;
+            --primary-bg: #0f1419;
             --secondary-bg: #1a1f2e;
             --accent-red: #e74c3c;
             --accent-orange: #e67e22;
             --accent-yellow: #f1c40f;
-            --gold: #f1c40f;
             --accent-green: #2ecc71;
             --accent-blue: #3498db;
             --accent-purple: #9b59b6;
@@ -40,14 +37,13 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-        font-family: 'Inter', sans-serif; 
-        background: var(--bg); 
-        color: var(--text);
-        overflow: hidden; 
-        padding-top: 70px; 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--text);
+            overflow: hidden; 
         }
 
-    .container { height: calc(100vh - 70px); }
+        .container { height: calc(100vh - 70px); }
         
         header {
             position: fixed;
@@ -76,7 +72,6 @@
             margin: 0;
             text-decoration: none;
         }
-        
         
         /* Burger menyu */
         .burger-menu {
@@ -171,21 +166,19 @@
         .view-btn.active { background: var(--gold); color: #000; font-weight: 600; }
 
         main {
-    margin-top: 70px;
-    height: calc(100vh - 70px);
-    display: flex;
-    position: relative;
-}
+            margin-top: 70px;
+            height: calc(100vh - 70px);
+            display: flex;
+            position: relative;
+        }
 
-    
-
-#treeArea {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-    background: radial-gradient(circle at center, rgba(212,175,55,0.05) 0%, transparent 70%);
-    cursor: grab;
-}
+        #treeArea {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(212,175,55,0.05) 0%, transparent 70%);
+            cursor: grab;
+        }
         
         #treeArea:active { cursor: grabbing; }
 
@@ -224,36 +217,33 @@
         }
 
         /* On panel */
-    .detail-panel {
-    background: var(--bg-card);
-    border-left: 1px solid #2d3548;
-    padding: 2rem;
-    overflow-y: auto;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-    position: relative;
-    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s, width 0.3s ease;
-    width: 400px;
-    flex-shrink: 0;
-    /* Добавляем will-change для производительности */
-    will-change: transform, opacity, visibility;
-}
+        .detail-panel {
+            background: var(--bg-card);
+            border-left: 1px solid #2d3548;
+            padding: 2rem;
+            overflow-y: auto;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+            position: relative;
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s, width 0.3s ease;
+            width: 450px;
+            flex-shrink: 0;
+            will-change: transform, opacity, visibility;
+        }
         
-        
-    .detail-panel.collapsed {
-    transform: translateX(100%);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    width: 0;
-    padding: 0;
-    border: none;
-    overflow: hidden;
-    /* Добавляем display none после анимации */
-    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s, width 0.3s ease, padding 0.3s ease;
-}
+        .detail-panel.collapsed {
+            transform: translateX(100%);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            width: 0;
+            padding: 0;
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s, width 0.3s ease, padding 0.3s ease;
+        }
         
         .close-panel-btn {
-            position: absolute;
+            position: fixed;
             top: 10px;
             right: 10px;
             background: var(--tust-xaliq);
@@ -403,16 +393,12 @@
         .legend-color { width: 12px; height: 12px; border-radius: 3px; }
 
         .lang-switch {
-    display: flex;
-    gap: 0.5rem;
-    margin-left: 1rem;
-    padding-left: 1rem;
-    border-left: 1px solid rgba(212,175,55,0.3);
-}
-
-
-
-
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(212,175,55,0.3);
+        }
 
         /* Ierarxiya tizimi */
         .hierarchy-chain {
@@ -449,225 +435,222 @@
         }
 
         .lang-btn {
-    /* padding: 0.1rem 0.1rem; */
-    border-radius: 10px;
-    border: 1px solid var(--gold);
-    background: transparent;
-    
-    cursor: pointer;
-    font-size: 0.65rem;
-    font-weight: 400;
-    transition: all 0.3s;
-    text-decoration: none;
-}
-.lang-btn1 {
-    padding: 0.4rem 0.4rem;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.lang-btn img {
-    width: 65px;
-    height: 65px;
-    margin-bottom: 4px;
-    border-radius: 50%;
-    vertical-align: middle;
-}
-.lang-btn1 img {
-    width: 43px;
-    height: 43px; 
-    border-radius: 50%;
-    vertical-align: middle;
-}
-
-.lang-btn:hover {
-    background: rgba(212,175,55,0.1);
-    border: 1px solid var(--gold);
-}
-
-.lang-btn.active {
-    width: 53px;
-    height: 53px;
-    border: 1px solid var(--accent-orange);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.lang-btn1:hover {
-    border: 1px solid var(--gold);
-    width: 53px;
-    height: 53px;
-
-   
-}
-
-
-       
-
-   
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            width: 2.9rem;
+            height: 2.9rem;
+            border: 1px solid transparent;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.65rem;
+            font-weight: 400;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
         
-      @media (max-width: 1200px) {
-    main { display: block; }
-
-     .legend-tree {
-        display: none;
-    }
-    
-    .detail-panel { 
-        display: block;
-        opacity: 0;
-        visibility: hidden;
-        position: fixed; 
-        left: 0;
-        right: 0;
-        bottom: 0; 
-        top: auto;
-        width: 100%; 
-        max-width: 100%;
-        height: 70vh;
-        max-height: 500px;
-        z-index: 100; 
-        transform: translateY(100%);
-        transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
-        padding: 2rem;
-        border-left: none;
-        border-top: 2px solid var(--gold);
-        border-radius: 20px 20px 0 0;
-        /* Прозрачный фон с размытием */
-        background: rgba(21, 25, 35, 0.85);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-    }
-    
-    .detail-panel.active { 
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-    
-    .detail-panel.collapsed {
-        transform: translateY(100%);
-        width: 100%;
-        padding: 2rem;
-        /* Сохраняем прозрачность даже когда закрыто */
-        background: rgba(21, 25, 35, 0.85);
-    }
-    
-    .open-panel-btn {
-        bottom: 20px;
-        right: 20px;
-    }
-    
-    .close-panel-btn {
-        top: 10px;
-        right: 10px;
-    }
-}
-
-    @media (max-width: 768px) {
-    .lang-switch {
-        margin-left: 0;
-        padding-left: 0;
-        border-left: none;
-        border-top: 1px solid rgba(212,175,55,0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-   .lang-btn1 {
-    padding: 0.4rem 0.4rem;
-    border-radius: 8px;
-    background: transparent;
-    color: var(--gold);
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.lang-btn1 img {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    vertical-align: middle;
-}
-
-.lang-btn img {
-    width: 3rem;
-    height: 3rem;
-    /* margin-bottom: 4px; */
-    border-radius: 50%;
-    vertical-align: middle;
-}
-
-.lang-btn {
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-     width: 2.9rem;
-    height: 2.9rem;
-}
-.lang-btn:hover {
-    border: 1px solid var(--gold);
-    width: 3rem;
-    height: 3rem;
-}
-
-
-.lang-btn1:hover {
-    border: 1px solid var(--gold);
-    width: 3rem;
-    height: 3rem;
-}
-
-.lang-btn1.active img {
-    width: 2rem;
-    height: 2rem;
-}
-
-.lang-btn.active {
-    border: 1px solid var(--accent-red);
-     border-radius: 8px;
-     width: 3rem;
-    height: 3rem;
-}
-    }
-
-@media (max-width: 768px) {
-    .lang-switch {
-        margin-left: 0;
-        padding-left: 0;
-        border-left: none;
-        border-top: 1px solid rgba(212,175,55,0.3);
-        justify-content: center;
-    }
-
-    .search-box input {
-        display: none;
-    }
-     
-    .logo a {
-        font-size: 1rem;
-    
-    }
+        .lang-btn1 {
+            padding: 0.4rem 0.4rem;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--gold);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         
-    }
+        .lang-btn img {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        
+        .lang-btn1 img {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .lang-btn:hover {
+            border: 1px solid var(--gold);
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .lang-btn1:hover {
+            border: 1px solid var(--gold);
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .lang-btn.active {
+            border: 1px solid var(--accent-orange);
+            width: 3rem;
+            height: 3rem;
+        }
+        
+        .lang-btn1.active {
+            border: 1px solid var(--accent-red);
+            border-radius: 8px;
+            width: 3rem;
+            height: 3rem;
+        }
+
+        @media (max-width: 1200px) {
+            main { display: block; }
+            .legend-tree { display: none; }
+            
+            .detail-panel { 
+                display: block;
+                opacity: 0;
+                visibility: hidden;
+                position: fixed; 
+                left: 0;
+                right: 0;
+                bottom: 0; 
+                top: auto;
+                width: 100%; 
+                max-width: 100%;
+                height: 70vh;
+                max-height: 500px;
+                z-index: 100; 
+                transform: translateY(100%);
+                transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s;
+                padding: 2rem;
+                border-left: none;
+                border-top: 2px solid var(--gold);
+                border-radius: 20px 20px 0 0;
+                background: rgba(21, 25, 35, 0.85);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+            
+            .detail-panel.active { 
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            
+            .detail-panel.collapsed {
+                transform: translateY(100%);
+                width: 100%;
+                padding: 2rem;
+                background: rgba(21, 25, 35, 0.85);
+            }
+            
+            .open-panel-btn {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .close-panel-btn {
+                top: 10px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lang-switch {
+                margin-left: 0;
+                padding-left: 0;
+                border-left: none;
+                border-top: 1px solid rgba(212,175,55,0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .lang-btn1 {
+                padding: 0.4rem 0.4rem;
+                border-radius: 8px;
+                background: transparent;
+                color: var(--gold);
+                cursor: pointer;
+                font-size: 0.85rem;
+                font-weight: 600;
+                transition: all 0.3s;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .lang-btn1 img {
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                vertical-align: middle;
+            }
+
+            .lang-btn img {
+                width: 3rem;
+                height: 3rem;
+                border-radius: 50%;
+                vertical-align: middle;
+            }
+
+            .lang-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 8px;
+                width: 2.9rem;
+                height: 2.9rem;
+            }
+            
+            .lang-btn:hover {
+                border: 1px solid var(--gold);
+                width: 3rem;
+                height: 3rem;
+            }
+
+            .lang-btn1:hover {
+                border: 1px solid var(--gold);
+                width: 3rem;
+                height: 3rem;
+            }
+
+            .lang-btn1.active img {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .lang-btn.active {
+                border: 1px solid var(--accent-red);
+                border-radius: 8px;
+                width: 3rem;
+                height: 3rem;
+            }
+            
+            .search-box input {
+                display: none;
+            }
+             
+            .logo a {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .marquee-content {
+                animation-duration: 15s;
+            }
+            
+            .mobile-warning-marquee {
+                font-size: 0.5em;
+                font-weight: 400;
+                padding: 5px 0;
+                top: 70px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -685,7 +668,6 @@
         </button>
         
         <div class="view-switch" id="viewSwitch">
-            
             <a href="index.html" class="view-btn" target="_self">🏠 Bas bet</a>
             <a href="listsQQ.html" class="view-btn" target="_self">📋 Tizimler</a>
             <a href="schemeQQ.html" class="view-btn active" target="_self">🌳 Sxema</a>
@@ -693,13 +675,13 @@
         </div>
 
         <div class="lang-switch">
-    <a target="_self" href="schemeRU.html" class="lang-btn1 "><img src="./images/RU.jpg" alt="RU"></a>
-    <a target="_self" href="schemeQQ.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
-    <a target="_self" href="schemeKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
-</div>
+            <a target="_self" href="schemeRU.html" class="lang-btn1"><img src="./images/RU.jpg" alt="RU"></a>
+            <a target="_self" href="schemeQQ.html" class="lang-btn active"><img src="./images/QQ_.png" alt="QQ"></a>
+            <a target="_self" href="schemeKZ.html" class="lang-btn1"><img src="./images/KZ.webp" alt="KZ"></a>
+        </div>
     </header>
 
-         <!-- Бегущая строка для мобильных устройств -->
+    <!-- Бегущая строка для мобильных устройств -->
     <div class="mobile-warning-marquee" id="mobileMarquee">
         <div class="marquee-wrapper">
             <div class="marquee-content">
@@ -711,8 +693,7 @@
         </div>
     </div>
 
-     <style>
-       
+    <style>
         /* Бегущая строка - только для мобильных */
         .mobile-warning-marquee {
             display: none;
@@ -761,34 +742,12 @@
         }
 
         @media (max-width: 1200px) {
-    .legend-tree {
-        display: none;
-    
-    }
-}
-    @media (max-width: 1200px) {
-    .legend-tree {
-        display: none;
-    }
-    
-    }
-
-
-
-        /* Показываем на экранах меньше 967px */
-        @media (max-width: 967px) {
-          
+            .legend-tree {
+                display: none;
             }
-            
-            
-            body {
-                padding-top: 115px !important;
-            }
-        
+        }
 
         @media (max-width: 768px) {
-             
-                
             .mobile-warning-marquee {
                 display: block;
                 top: 70px;
@@ -800,18 +759,14 @@
                 animation-duration: 15s;
             }
             
-             .mobile-warning-marquee {
-       font-size: 0.5em;
-            font-weight: 400;
+            .mobile-warning-marquee {
+                font-size: 0.5em;
+                font-weight: 400;
                 padding: 5px 0;
-       top: 70px;
-    }
+                top: 70px;
             }
-        
+        }
     </style>
-    
-
-    
 
     <main>
         <div id="treeArea">
@@ -857,265 +812,265 @@
     <script>
         // TOLIQ QARAQALPAQ URUVLARI MAǴLIWMATLARI
         const terekMaǵlıwmatları = {
-            at: "Qaraqalpaqlar",
-            túri: "xaliq",
+            name: "Qaraqalpaqlar",
+            type: "xaliq",
             tamga: "🏛️",
-            maǵlıwmat: {
-                tariyx: "Qaraqalpaqlar - Orta Aziyadaǵı túrk tilles xalıq. XVI-XIII ásirlerde qalıptasqan.",
-                túbegi: "Negizi Noǵay ordası, Qıpshaq, Qarluq taıpalarınan.",
-                qalaqı: "800 mıń adam",
-                tili: "Qaraqalpaq tili - túrk tilleriniń qıpshaq tarmaǵı"
+            info: {
+                history: "Qaraqalpaqlar - Orta Aziyadaǵı túrk tilles xalıq. XVI-XVII ásirlerde qalıptasqan.",
+                origin: "Negizi Noǵay ordası, Qıpshaq, Qarluq taıpalarınan.",
+                population: "800 mıń adam",
+                language: "Qaraqalpaq tili - túrk tilleriniń qıpshaq tarmaǵı"
             },
-            ballar: [
+            children: [
                 {
-                    at: "Arıs Qońırat",
-                    túri: "aris",
+                    name: "Arıs Qońırat",
+                    type: "aris",
                     tamga: "P",
-                    uran: "Qaqpa!",
-                    maǵlıwmat: {
-                        tariyx: "Eki iri arıstıń biri. Noǵay ordasınan.",
-                        túbegi: "Noǵaylıq, Qıpshaq taıpalarınıń qosındısı.",
-                        qalaqı: "9520 kibitok (40%)",
-                        qurilimi: "Shulıq (8 urıw) hám Jauıńǵır (7 urıw)"
+                    battleCry: "Qaqpa!",
+                    info: {
+                        history: "Eki iri arıstıń biri. Noǵay ordasınan.",
+                        origin: "Noǵaylıq, Qıpshaq taıpalarınıń qosındısı.",
+                        population: "9520 kibitok (40%)",
+                        structure: "Shulıq (8 urıw) hám Jauıńǵır (7 urıw)"
                     },
-                    ballar: [
+                    children: [
                         {
-                            at: "Shulıq bólimi",
-                            túri: "bolim",
+                            name: "Shulıq bólimi",
+                            type: "bolim",
                             tamga: "Sh",
-                            maǵlıwmat: { tariyx: "Shulıq - 8 urıwdan turadı.", qalaqı: "5860 kibitok" },
-                            ballar: [
+                            info: { history: "Shulıq - 8 urıwdan turadı.", population: "5860 kibitok" },
+                            children: [
                                 {
-                                    at: "Qıyat",
-                                    túri: "ulken",
+                                    name: "Qıyat",
+                                    type: "ulken",
                                     tamga: "Ψ",
-                                    uran: "Alataw!",
-                                    maǵlıwmat: {
-                                        tariyx: "Qıyat - Shulıqtıń eń iri urıwı.",
-                                        anız: "Úsh ulı: Úshtańbalı, Taraqtı, Balǵalı.",
-                                        qalaqı: "870 kibitok"
+                                    battleCry: "Alataw!",
+                                    info: {
+                                        history: "Qıyat - Shulıqtıń eń iri urıwı.",
+                                        legend: "Úsh ulı: Úshtańbalı, Taraqtı, Balǵalı.",
+                                        population: "870 kibitok"
                                     },
-                                    ballar: [
+                                    children: [
                                         {
-                                            at: "Úshtańbalı",
-                                            túri: "uruw",
+                                            name: "Úshtańbalı",
+                                            type: "uruw",
                                             tamga: "|||",
-                                            maǵlıwmat: { tariyx: "Úsh tańbalı - úsh belgi." },
-                                            ballar: [
-                                                { at: "Sańmurın", túri: "tiyre", maǵlıwmat: { tariyx: "Sań murındıq maldan" } },
-                                                { at: "Arıqqıyat", túri: "tiyre", maǵlıwmat: { tariyx: "Arıq deneli" } },
-                                                { at: "Tartulı", túri: "tiyre" },
-                                                { at: "Qanjıǵalı", túri: "tiyre" },
-                                                { at: "Qataǵan", túri: "tiyre" },
+                                            info: { history: "Úsh tańbalı - úsh belgi." },
+                                            children: [
+                                                { name: "Sańmurın", type: "tiyre", info: { history: "Sań murındıq maldan" } },
+                                                { name: "Arıqqıyat", type: "tiyre", info: { history: "Arıq deneli" } },
+                                                { name: "Tartulı", type: "tiyre" },
+                                                { name: "Qanjıǵalı", type: "tiyre" },
+                                                { name: "Qataǵan", type: "tiyre" },
                                                 { 
-                                                    at: "Qaraqıyat", 
-                                                    túri: "tiyre",
-                                                    ballar: [
-                                                        { at: "Bolat", túri: "koshe" },
-                                                        { at: "Qarabas", túri: "koshe" }
+                                                    name: "Qaraqıyat", 
+                                                    type: "tiyre",
+                                                    children: [
+                                                        { name: "Bolat", type: "koshe" },
+                                                        { name: "Qarabas", type: "koshe" }
                                                     ]
                                                 }
                                             ]
                                         },
                                         {
-                                            at: "Taraqtı",
-                                            túri: "uruw",
-                                            maǵlıwmat: { tariyx: "Shashaqtı, órnekti" },
-                                            ballar: [
-                                                { at: "Toǵızaq", túri: "tiyre", maǵlıwmat: { tariyx: "Toǵız urpaqtan keyin" } },
-                                                { at: "Abas", túri: "tiyre" },
-                                                { at: "Jaltırshı", túri: "tiyre" },
-                                                { at: "Aqunqaraǵan", túri: "tiyre" },
-                                                { at: "Taqay", túri: "tiyre" },
-                                                { at: "Qarjawbaras", túri: "tiyre" }
+                                            name: "Taraqtı",
+                                            type: "uruw",
+                                            info: { history: "Shashaqtı, órnekti" },
+                                            children: [
+                                                { name: "Toǵızaq", type: "tiyre", info: { history: "Toǵız urpaqtan keyin" } },
+                                                { name: "Abas", type: "tiyre" },
+                                                { name: "Jaltırshı", type: "tiyre" },
+                                                { name: "Aqunqaraǵan", type: "tiyre" },
+                                                { name: "Taqay", type: "tiyre" },
+                                                { name: "Qarjawbaras", type: "tiyre" }
                                             ]
                                         },
                                         {
-                                            at: "Balǵalı Qıyat",
-                                            túri: "uruw",
+                                            name: "Balǵalı Qıyat",
+                                            type: "uruw",
                                             tamga: "B",
-                                            maǵlıwmat: { tariyx: "Balǵa ustagan. Temirshiler." },
-                                            ballar: [
-                                                { at: "Bespıshaq", túri: "tiyre" },
-                                                { at: "Etekshi", túri: "tiyre" },
-                                                { at: "Sańmurın", túri: "tiyre" },
-                                                { at: "Qojaqqaraǵan", túri: "tiyre" }
+                                            info: { history: "Balǵa ustagan. Temirshiler." },
+                                            children: [
+                                                { name: "Bespıshaq", type: "tiyre" },
+                                                { name: "Etekshi", type: "tiyre" },
+                                                { name: "Sańmurın", type: "tiyre" },
+                                                { name: "Qojaqqaraǵan", type: "tiyre" }
                                             ]
                                         }
                                     ]
                                 },
                                 {
-                                    at: "Ashamaylı",
-                                    túri: "ulken",
+                                    name: "Ashamaylı",
+                                    type: "ulken",
                                     tamga: "✕",
-                                    uran: "Shulıq!",
-                                    maǵlıwmat: { tariyx: "Ashamay - kózi nashar kóretin.", qalaqı: "870 kibitok" },
-                                    ballar: [
-                                        { at: "Saqu", túri: "uruw", maǵlıwmat: { tariyx: "Saqshılar" } },
-                                        { at: "Qaraqoja", túri: "uruw" },
-                                        { at: "Jalańayaq", túri: "uruw", maǵlıwmat: { tariyx: "Tez júgirwshi" } },
+                                    battleCry: "Shulıq!",
+                                    info: { history: "Ashamay - kózi nashar kóretin.", population: "870 kibitok" },
+                                    children: [
+                                        { name: "Saqu", type: "uruw", info: { history: "Saqshılar" } },
+                                        { name: "Qaraqoja", type: "uruw" },
+                                        { name: "Jalańayaq", type: "uruw", info: { history: "Tez júgirwshi" } },
                                         { 
-                                            at: "Qobasan", 
-                                            túri: "uruw",
-                                            ballar: [
-                                                { at: "Aqnazar", túri: "tiyre" },
-                                                { at: "Jansarı", túri: "tiyre" },
-                                                { at: "Ótemis", túri: "tiyre" },
-                                                { at: "Esen", túri: "tiyre" },
-                                                { at: "Tampısh", túri: "tiyre" }
+                                            name: "Qobasan", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Aqnazar", type: "tiyre" },
+                                                { name: "Jansarı", type: "tiyre" },
+                                                { name: "Ótemis", type: "tiyre" },
+                                                { name: "Esen", type: "tiyre" },
+                                                { name: "Tampısh", type: "tiyre" }
                                             ]
                                         },
-                                        { at: "Túrkmenqara", túri: "uruw", maǵlıwmat: { tariyx: "Túrkmenler men aralasqan" } },
-                                        { at: "Jappar", túri: "uruw" },
-                                        { at: "Sarı", túri: "uruw" },
-                                        { at: "Abız", túri: "uruw" },
-                                        { at: "Aqay", túri: "uruw" },
-                                        { at: "Pańqara", túri: "uruw" },
-                                        { at: "Úsh bas", túri: "uruw" },
-                                        { at: "Qurama", túri: "uruw" }
+                                        { name: "Túrkmenqara", type: "uruw", info: { history: "Túrkmenler men aralasqan" } },
+                                        { name: "Jappar", type: "uruw" },
+                                        { name: "Sarı", type: "uruw" },
+                                        { name: "Abız", type: "uruw" },
+                                        { name: "Aqay", type: "uruw" },
+                                        { name: "Pańqara", type: "uruw" },
+                                        { name: "Úsh bas", type: "uruw" },
+                                        { name: "Qurama", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Qoldaulı",
-                                    túri: "ulken",
+                                    name: "Qoldaulı",
+                                    type: "ulken",
                                     tamga: "Q",
-                                    uran: "Qoldaw!",
-                                    maǵlıwmat: { tariyx: "Qoldaw - opora.", qalaqı: "1140 kibitok" },
-                                    ballar: [
-                                        { at: "Beskempir", túri: "uruw", maǵlıwmat: { tariyx: "Bes kempir" } },
-                                        { at: "Mayshıshalı", túri: "uruw" },
-                                        { at: "Qalqaman", túri: "uruw" },
-                                        { at: "Ǵayıpqaraǵan", túri: "uruw", maǵlıwmat: { tariyx: "Ǵayıp bolǵan ata" } },
-                                        { at: "Sarıtan", túri: "uruw" },
-                                        { at: "Kúlkıqojaqq", túri: "uruw" },
-                                        { at: "Jarımbet", túri: "uruw" },
-                                        { at: "Qızılayaq", túri: "uruw" },
-                                        { at: "Qarasıraq", túri: "uruw" },
-                                        { at: "Jelqaraǵan", túri: "uruw" },
-                                        { at: "Úlkenbórik", túri: "uruw" },
-                                        { at: "Shıljuıt", túri: "uruw" },
-                                        { at: "Jamanqońırat", túri: "uruw" },
+                                    battleCry: "Qoldaw!",
+                                    info: { history: "Qoldaw - opora.", population: "1140 kibitok" },
+                                    children: [
+                                        { name: "Beskempir", type: "uruw", info: { history: "Bes kempir" } },
+                                        { name: "Mayshıshalı", type: "uruw" },
+                                        { name: "Qalqaman", type: "uruw" },
+                                        { name: "Ǵayıpqaraǵan", type: "uruw", info: { history: "Ǵayıp bolǵan ata" } },
+                                        { name: "Sarıtan", type: "uruw" },
+                                        { name: "Kúlkıqojaqq", type: "uruw" },
+                                        { name: "Jarımbet", type: "uruw" },
+                                        { name: "Qızılayaq", type: "uruw" },
+                                        { name: "Qarasıraq", type: "uruw" },
+                                        { name: "Jelqaraǵan", type: "uruw" },
+                                        { name: "Úlkenbórik", type: "uruw" },
+                                        { name: "Shıljuıt", type: "uruw" },
+                                        { name: "Jamanqońırat", type: "uruw" },
                                         { 
-                                            at: "Qalmaq", 
-                                            túri: "uruw",
-                                            ballar: [
-                                                { at: "Adil", túri: "tiyre" },
-                                                { at: "Ereke", túri: "tiyre" }
+                                            name: "Qalmaq", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Adil", type: "tiyre" },
+                                                { name: "Ereke", type: "tiyre" }
                                             ]
                                         }
                                     ]
                                 },
                                 {
-                                    at: "Qostańbalı",
-                                    túri: "ulken",
+                                    name: "Qostańbalı",
+                                    type: "ulken",
                                     tamga: "⧉",
-                                    uran: "Qosqa!",
-                                    maǵlıwmat: { tariyx: "Eki tamǵalı." },
-                                    ballar: [
-                                        { at: "Jangeldi", túri: "uruw" },
-                                        { at: "Shirjegen", túri: "uruw" },
-                                        { at: "Aǵabegli", túri: "uruw" },
-                                        { at: "Qarınjuan", túri: "uruw" },
-                                        { at: "Qostańbalı", túri: "uruw" },
-                                        { at: "Qaraqursaq", túri: "uruw" },
-                                        { at: "Qazaqı", túri: "uruw" }
+                                    battleCry: "Qosqa!",
+                                    info: { history: "Eki tamǵalı." },
+                                    children: [
+                                        { name: "Jangeldi", type: "uruw" },
+                                        { name: "Shirjegen", type: "uruw" },
+                                        { name: "Aǵabegli", type: "uruw" },
+                                        { name: "Qarınjuan", type: "uruw" },
+                                        { name: "Qostańbalı", type: "uruw" },
+                                        { name: "Qaraqursaq", type: "uruw" },
+                                        { name: "Qazaqı", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Balǵalı",
-                                    túri: "ulken",
+                                    name: "Balǵalı",
+                                    type: "ulken",
                                     tamga: "B",
-                                    uran: "Balǵa!",
-                                    maǵlıwmat: { tariyx: "Temirshiler.", qalaqı: "560 kibitok" },
-                                    ballar: [
-                                        { at: "Aqbalǵalı", túri: "uruw" },
-                                        { at: "Nur balǵalı", túri: "uruw" },
-                                        { at: "Túrkmen", túri: "uruw" },
-                                        { at: "Jaman awıl", túri: "uruw" },
-                                        { at: "Shómishti", túri: "uruw" },
-                                        { at: "Toqımbet", túri: "uruw" },
-                                        { at: "Taz balǵalı", túri: "uruw" },
-                                        { at: "Qostamǵalı", túri: "uruw" },
-                                        { at: "Qaratalshı", túri: "uruw" },
-                                        { at: "Asan", túri: "uruw" },
-                                        { at: "Arzıqul", túri: "uruw" }
+                                    battleCry: "Balǵa!",
+                                    info: { history: "Temirshiler.", population: "560 kibitok" },
+                                    children: [
+                                        { name: "Aqbalǵalı", type: "uruw" },
+                                        { name: "Nur balǵalı", type: "uruw" },
+                                        { name: "Túrkmen", type: "uruw" },
+                                        { name: "Jaman awıl", type: "uruw" },
+                                        { name: "Shómishti", type: "uruw" },
+                                        { name: "Toqımbet", type: "uruw" },
+                                        { name: "Taz balǵalı", type: "uruw" },
+                                        { name: "Qostamǵalı", type: "uruw" },
+                                        { name: "Qaratalshı", type: "uruw" },
+                                        { name: "Asan", type: "uruw" },
+                                        { name: "Arzıqul", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Kándeкli",
-                                    túri: "ulken",
+                                    name: "Kándeкli",
+                                    type: "ulken",
                                     tamga: "G",
-                                    uran: "Kóndek!",
-                                    maǵlıwmat: { tariyx: "Kóndek - qora.", qalaqı: "730 kibitok" },
-                                    ballar: [
-                                        { at: "Qarama", túri: "uruw" },
-                                        { at: "Kiikshi", túri: "uruw", maǵlıwmat: { tariyx: "Kiik saqshı" } },
-                                        { at: "Toqbolat", túri: "uruw" },
-                                        { at: "Qırıqsadaq", túri: "uruw", maǵlıwmat: { tariyx: "40 sadaq" } }
+                                    battleCry: "Kóndek!",
+                                    info: { history: "Kóndek - qora.", population: "730 kibitok" },
+                                    children: [
+                                        { name: "Qarama", type: "uruw" },
+                                        { name: "Kiikshi", type: "uruw", info: { history: "Kiik saqshı" } },
+                                        { name: "Toqbolat", type: "uruw" },
+                                        { name: "Qırıqsadaq", type: "uruw", info: { history: "40 sadaq" } }
                                     ]
                                 },
                                 {
-                                    at: "Qaramoyın",
-                                    túri: "ulken",
+                                    name: "Qaramoyın",
+                                    type: "ulken",
                                     tamga: "TM",
-                                    uran: "Moyın!",
-                                    maǵlıwmat: { tariyx: "Qara moyın.", qalaqı: "560 kibitok" },
-                                    ballar: [
-                                        { at: "Annahoja", túri: "uruw", maǵlıwmat: { tariyx: "Anna áwliye" } },
-                                        { at: "Sabalaq", túri: "uruw", maǵlıwmat: { tariyx: "Saba - bala" } },
-                                        { at: "Kótelek", túri: "uruw" },
-                                        { at: "Qarılmaral", túri: "uruw" },
-                                        { at: "Búlkildek", túri: "uruw", maǵlıwmat: { tariyx: "Kúlý" } }
+                                    battleCry: "Moyın!",
+                                    info: { history: "Qara moyın.", population: "560 kibitok" },
+                                    children: [
+                                        { name: "Annahoja", type: "uruw", info: { history: "Anna áwliye" } },
+                                        { name: "Sabalaq", type: "uruw", info: { history: "Saba - bala" } },
+                                        { name: "Kótelek", type: "uruw" },
+                                        { name: "Qarılmaral", type: "uruw" },
+                                        { name: "Búlkildek", type: "uruw", info: { history: "Kúlý" } }
                                     ]
                                 },
                                 {
-                                    at: "Múyten",
-                                    túri: "ulken",
+                                    name: "Múyten",
+                                    type: "ulken",
                                     tamga: "ψ",
-                                    uran: "Aqsholpan!",
-                                    maǵlıwmat: { 
-                                        tariyx: "Moyın - moyın.", 
-                                        anız: "Múytenniń úsh ulı: Samat, Teli, Abız",
-                                        qalaqı: "540 kibitok"
+                                    battleCry: "Aqsholpan!",
+                                    info: { 
+                                        history: "Moyın - moyın.", 
+                                        legend: "Múytenniń úsh ulı: Samat, Teli, Abız",
+                                        population: "540 kibitok"
                                     },
-                                    ballar: [
+                                    children: [
                                         { 
-                                            at: "Samat", 
-                                            túri: "uruw",
-                                            ballar: [
-                                                { at: "Baybíshe", túri: "tiyre" },
-                                                { at: "Toqqaraǵan", túri: "tiyre" },
-                                                { at: "Baymurat", túri: "tiyre" },
-                                                { at: "Jolan", túri: "tiyre" },
-                                                { at: "Bekaw", túri: "tiyre" }
+                                            name: "Samat", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Baybíshe", type: "tiyre" },
+                                                { name: "Toqqaraǵan", type: "tiyre" },
+                                                { name: "Baymurat", type: "tiyre" },
+                                                { name: "Jolan", type: "tiyre" },
+                                                { name: "Bekaw", type: "tiyre" }
                                             ]
                                         },
                                         { 
-                                            at: "Teli", 
-                                            túri: "uruw",
-                                            ballar: [
-                                                { at: "Tilewberdi", túri: "tiyre" },
-                                                { at: "Allaberdi", túri: "tiyre" },
-                                                { at: "Tańirberdi", túri: "tiyre" },
-                                                { at: "Mantıqqaraǵan", túri: "tiyre" },
-                                                { at: "Mollaqqaraǵan", túri: "tiyre" }
+                                            name: "Teli", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Tilewberdi", type: "tiyre" },
+                                                { name: "Allaberdi", type: "tiyre" },
+                                                { name: "Tańirberdi", type: "tiyre" },
+                                                { name: "Mantıqqaraǵan", type: "tiyre" },
+                                                { name: "Mollaqqaraǵan", type: "tiyre" }
                                             ]
                                         },
                                         { 
-                                            at: "Abız", 
-                                            túri: "uruw",
-                                            maǵlıwmat: { tariyx: "Aqsaqал, áwliye" },
-                                            ballar: [
-                                                { at: "Adı", túri: "tiyre" }
+                                            name: "Abız", 
+                                            type: "uruw",
+                                            info: { history: "Aqsaqал, áwliye" },
+                                            children: [
+                                                { name: "Adı", type: "tiyre" }
                                             ]
                                         },
                                         { 
-                                            at: "Keńtanaw", 
-                                            túri: "uruw",
-                                            ballar: [
-                                                { at: "Barn", túri: "tiyre" },
-                                                { at: "Itaq", túri: "tiyre" },
-                                                { at: "Jekensal", túri: "tiyre" }
+                                            name: "Keńtanaw", 
+                                            type: "uruw",
+                                            children: [
+                                                { name: "Barn", type: "tiyre" },
+                                                { name: "Itaq", type: "tiyre" },
+                                                { name: "Jekensal", type: "tiyre" }
                                             ]
                                         }
                                     ]
@@ -1123,87 +1078,87 @@
                             ]
                         },
                         {
-                            at: "Jauıńǵır bólimi",
-                            túri: "bolim",
-                            maǵlıwmat: { tariyx: "Jauıńǵır - 7 urıw.", qalaqı: "3660 kibitok" },
-                            ballar: [
+                            name: "Jauıńǵır bólimi",
+                            type: "bolim",
+                            info: { history: "Jauıńǵır - 7 urıw.", population: "3660 kibitok" },
+                            children: [
                                 {
-                                    at: "Teristańbalı",
-                                    túri: "ulken",
-                                    ballar: [
-                                        { at: "Shomaq", túri: "uruw" },
-                                        { at: "Hangildi", túri: "uruw" },
-                                        { at: "Bayqaraǵan", túri: "uruw" },
-                                        { at: "Elshibay", túri: "uruw" },
-                                        { at: "Qurban", túri: "uruw" },
-                                        { at: "Toǵız", túri: "uruw" },
-                                        { at: "Tile", túri: "uruw" },
-                                        { at: "Tebegen", túri: "uruw" },
-                                        { at: "Tum", túri: "uruw" },
-                                        { at: "Túrkistan", túri: "uruw" }
+                                    name: "Teristańbalı",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Shomaq", type: "uruw" },
+                                        { name: "Hangildi", type: "uruw" },
+                                        { name: "Bayqaraǵan", type: "uruw" },
+                                        { name: "Elshibay", type: "uruw" },
+                                        { name: "Qurban", type: "uruw" },
+                                        { name: "Toǵız", type: "uruw" },
+                                        { name: "Tile", type: "uruw" },
+                                        { name: "Tebegen", type: "uruw" },
+                                        { name: "Tum", type: "uruw" },
+                                        { name: "Túrkistan", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Baqanlı",
-                                    túri: "ulken",
-                                    ballar: [
-                                        { at: "Tańmayıl", túri: "uruw" },
-                                        { at: "Jaganay", túri: "uruw" },
-                                        { at: "Nayman", túri: "uruw" },
-                                        { at: "Ayıs", túri: "uruw" }
+                                    name: "Baqanlı",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Tańmayıl", type: "uruw" },
+                                        { name: "Jaganay", type: "uruw" },
+                                        { name: "Nayman", type: "uruw" },
+                                        { name: "Ayıs", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Tiyektі",
-                                    túri: "ulken",
-                                    ballar: [
-                                        { at: "Shishi", túri: "uruw", ballar: [{at:"Shishi Arna",túri:"tiyre"}] },
-                                        { at: "Tumanay", túri: "uruw" },
-                                        { at: "Mawlik", túri: "uruw" },
-                                        { at: "Bayram", túri: "uruw" }
+                                    name: "Tiyektі",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Shishi", type: "uruw", children: [{name:"Shishi Arna",type:"tiyre"}] },
+                                        { name: "Tumanay", type: "uruw" },
+                                        { name: "Mawlik", type: "uruw" },
+                                        { name: "Bayram", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Irǵaqtı",
-                                    túri: "ulken",
-                                    maǵlıwmat: { eskertpe: "Eki arısta da bar!" },
-                                    ballar: [
-                                        { at: "Atanay", túri: "uruw" },
-                                        { at: "Eshkili", túri: "uruw" },
-                                        { at: "Baybura", túri: "uruw" },
-                                        { at: "Sarıtan", túri: "uruw" }
+                                    name: "Irǵaqtı",
+                                    type: "ulken",
+                                    info: { note: "Eki arısta da bar!" },
+                                    children: [
+                                        { name: "Atanay", type: "uruw" },
+                                        { name: "Eshkili", type: "uruw" },
+                                        { name: "Baybura", type: "uruw" },
+                                        { name: "Sarıtan", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Baymaqtı",
-                                    túri: "ulken",
-                                    ballar: [
-                                        { at: "Saspaq", túri: "uruw" },
-                                        { at: "Úyes", túri: "uruw" },
-                                        { at: "Tańmayıl", túri: "uruw" },
-                                        { at: "Jaganay", túri: "uruw" }
+                                    name: "Baymaqtı",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Saspaq", type: "uruw" },
+                                        { name: "Úyes", type: "uruw" },
+                                        { name: "Tańmayıl", type: "uruw" },
+                                        { name: "Jaganay", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Qazayaqtı",
-                                    túri: "ulken",
-                                    ballar: [
-                                        { at: "Anetay", túri: "uruw" },
-                                        { at: "Jarımbet", túri: "uruw" },
-                                        { at: "Jundi", túri: "uruw" },
-                                        { at: "Sadaq", túri: "uruw" }
+                                    name: "Qazayaqtı",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Anetay", type: "uruw" },
+                                        { name: "Jarımbet", type: "uruw" },
+                                        { name: "Jundi", type: "uruw" },
+                                        { name: "Sadaq", type: "uruw" }
                                     ]
                                 },
                                 {
-                                    at: "Uyǵır",
-                                    túri: "ulken",
-                                    ballar: [
-                                        { at: "Shishi", túri: "uruw" },
-                                        { at: "Tumanay", túri: "uruw" },
-                                        { at: "Sabalaq", túri: "uruw" },
-                                        { at: "Mawlik", túri: "uruw" },
-                                        { at: "Bayram", túri: "uruw" },
-                                        { at: "Sırǵalı", túri: "uruw" }
+                                    name: "Uyǵır",
+                                    type: "ulken",
+                                    children: [
+                                        { name: "Shishi", type: "uruw" },
+                                        { name: "Tumanay", type: "uruw" },
+                                        { name: "Sabalaq", type: "uruw" },
+                                        { name: "Mawlik", type: "uruw" },
+                                        { name: "Bayram", type: "uruw" },
+                                        { name: "Sırǵalı", type: "uruw" }
                                     ]
                                 }
                             ]
@@ -1211,168 +1166,168 @@
                     ]
                 },
                 {
-                    at: "Arıs On tórt",
-                    túri: "aris",
+                    name: "Arıs On tórt",
+                    type: "aris",
                     tamga: "14",
-                    uran: "Toqsaba!",
-                    maǵlıwmat: {
-                        tariyx: "14 urıwdan ibarat iri arıs. Kóp sanlı.",
-                        qalaqı: "10260 kibitok (60%)",
-                        qurilimi: "4 úlken urıw: Qıtay, Qıpshaq, Keneges, Mańǵıt"
+                    battleCry: "Toqsaba!",
+                    info: {
+                        history: "14 urıwdan ibarat iri arıs. Kóp sanlı.",
+                        population: "10260 kibitok (60%)",
+                        structure: "4 úlken urıw: Qıtay, Qıpshaq, Keneges, Mańǵıt"
                     },
-                    ballar: [
+                    children: [
                         {
-                            at: "Qıtay",
-                            túri: "ulken",
+                            name: "Qıtay",
+                            type: "ulken",
                             tamga: "Q",
-                            uran: "Ullı taw!",
-                            jup: "Qıpshaq penen",
-                            maǵlıwmat: { tariyx: "Eń iri urıw.", qalaqı: "4320 kibitok" },
-                            ballar: [
-                                { at: "Bessarı", túri: "uruw", ballar: [{at:"Júnli",túri:"tiyre"},{at:"Qoylı",túri:"tiyre"}] },
-                                { at: "Beksıyıq", túri: "uruw", ballar: [{at:"Zerger",túri:"tiyre"},{at:"Masay",túri:"tiyre"},{at:"Shıǵırshı",túri:"tiyre"},{at:"Malay",túri:"tiyre"}] },
-                                { at: "Qazayaqlı", túri: "uruw", ballar: [{at:"Kálsen",túri:"tiyre"},{at:"Kúyik",túri:"tiyre"},{at:"Mırzay",túri:"tiyre"},{at:"Qılmoyın",túri:"tiyre"},{at:"Jılqbay",túri:"tiyre"}] },
+                            battleCry: "Ullı taw!",
+                            pair: "Qıpshaq penen",
+                            info: { history: "Eń iri urıw.", population: "4320 kibitok" },
+                            children: [
+                                { name: "Bessarı", type: "uruw", children: [{name:"Júnli",type:"tiyre"},{name:"Qoylı",type:"tiyre"}] },
+                                { name: "Beksıyıq", type: "uruw", children: [{name:"Zerger",type:"tiyre"},{name:"Masay",type:"tiyre"},{name:"Shıǵırshı",type:"tiyre"},{name:"Malay",type:"tiyre"}] },
+                                { name: "Qazayaqlı", type: "uruw", children: [{name:"Kálsen",type:"tiyre"},{name:"Kúyik",type:"tiyre"},{name:"Mırzay",type:"tiyre"},{name:"Qılmoyın",type:"tiyre"},{name:"Jılqbay",type:"tiyre"}] },
                                 { 
-                                    at: "Qayshılı", 
-                                    túri: "uruw",
-                                    ballar: [
-                                        {at:"Aqımbet",túri:"tiyre"},
-                                        {at:"Juwansan",túri:"tiyre"},
-                                        {at:"Kóterehoja",túri:"tiyre"},
-                                        {at:"Tanamırza",túri:"tiyre"},
-                                        {at:"Baqı",túri:"tiyre"},
-                                        {at:"Sıbıl",túri:"tiyre"},
-                                        {at:"Basar",túri:"tiyre"},
-                                        {at:"Tolıq",túri:"tiyre"},
-                                        {at:"Yabı",túri:"tiyre"}
+                                    name: "Qayshılı", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Aqımbet",type:"tiyre"},
+                                        {name:"Juwansan",type:"tiyre"},
+                                        {name:"Kóterehoja",type:"tiyre"},
+                                        {name:"Tanamırza",type:"tiyre"},
+                                        {name:"Baqı",type:"tiyre"},
+                                        {name:"Sıbıl",type:"tiyre"},
+                                        {name:"Basar",type:"tiyre"},
+                                        {name:"Tolıq",type:"tiyre"},
+                                        {name:"Yabı",type:"tiyre"}
                                     ]
                                 },
                                 { 
-                                    at: "Áyteke", 
-                                    túri: "uruw",
-                                    ballar: [
-                                        {at:"Jádik",túri:"tiyre"},
-                                        {at:"Irsımbek",túri:"tiyre"},
-                                        {at:"Orazımbet",túri:"tiyre"},
-                                        {at:"Tańirkul",túri:"tiyre"},
-                                        {at:"Bektes",túri:"tiyre",ballar:[{at:"Bektes Tóre",túri:"koshe"}]},
-                                        {at:"Nawriz",túri:"tiyre"},
-                                        {at:"Manjúwli",túri:"tiyre"},
-                                        {at:"Tazshılıq",túri:"tiyre"}
+                                    name: "Áyteke", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Jádik",type:"tiyre"},
+                                        {name:"Irsımbek",type:"tiyre"},
+                                        {name:"Orazımbet",type:"tiyre"},
+                                        {name:"Tańirkul",type:"tiyre"},
+                                        {name:"Bektes",type:"tiyre",children:[{name:"Bektes Tóre",type:"koshe"}]},
+                                        {name:"Nawriz",type:"tiyre"},
+                                        {name:"Manjúwli",type:"tiyre"},
+                                        {name:"Tazshılıq",type:"tiyre"}
                                     ]
                                 },
-                                { at: "Manjúwli", túri: "uruw", ballar: [{at:"Eki shıyıq",túri:"tiyre"},{at:"Qaramanjúwli",túri:"tiyre"},{at:"Áyereke",túri:"tiyre"}] },
-                                { at: "Aralbay", túri: "uruw", ballar: [{at:"Aqqala",túri:"tiyre"},{at:"Qalmurat",túri:"tiyre"},{at:"Ógizbayshı",túri:"tiyre"},{at:"Baybíshe",túri:"tiyre"},{at:"Tilew qushı",túri:"tiyre"}] }
+                                { name: "Manjúwli", type: "uruw", children: [{name:"Eki shıyıq",type:"tiyre"},{name:"Qaramanjúwli",type:"tiyre"},{name:"Áyereke",type:"tiyre"}] },
+                                { name: "Aralbay", type: "uruw", children: [{name:"Aqqala",type:"tiyre"},{name:"Qalmurat",type:"tiyre"},{name:"Ógizbayshı",type:"tiyre"},{name:"Baybíshe",type:"tiyre"},{name:"Tilew qushı",type:"tiyre"}] }
                             ]
                         },
                         {
-                            at: "Qıpshaq",
-                            túri: "ulken",
+                            name: "Qıpshaq",
+                            type: "ulken",
                             tamga: "I",
-                            uran: "Toqsaba!",
-                            jup: "Qıtay penen",
-                            maǵlıwmat: { tariyx: "Kóne qıpshaq urıw.", qalaqı: "2240 kibitok" },
-                            ballar: [
+                            battleCry: "Toqsaba!",
+                            pair: "Qıtay penen",
+                            info: { history: "Kóne qıpshaq urıw.", population: "2240 kibitok" },
+                            children: [
                                 { 
-                                    at: "Qańlı", 
-                                    túri: "uruw",
-                                    ballar: [
-                                        {at:"Tram",túri:"tiyre"},
-                                        {at:"Qatqańlı",túri:"tiyre"},
-                                        {at:"Irǵaqılı",túri:"tiyre"},
-                                        {at:"Ashamaylı",túri:"tiyre"},
-                                        {at:"Taraqtı",túri:"tiyre"},
-                                        {at:"Baspaq",túri:"tiyre"},
-                                        {at:"Ayat",túri:"tiyre"},
-                                        {at:"Bosın",túri:"tiyre"},
-                                        {at:"Basapat",túri:"tiyre"},
-                                        {at:"Qońırqazı",túri:"tiyre"},
-                                        {at:"Kenes",túri:"tiyre"},
-                                        {at:"Tashkent",túri:"tiyre"}
+                                    name: "Qańlı", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Tram",type:"tiyre"},
+                                        {name:"Qatqańlı",type:"tiyre"},
+                                        {name:"Irǵaqılı",type:"tiyre"},
+                                        {name:"Ashamaylı",type:"tiyre"},
+                                        {name:"Taraqtı",type:"tiyre"},
+                                        {name:"Baspaq",type:"tiyre"},
+                                        {name:"Ayat",type:"tiyre"},
+                                        {name:"Bosın",type:"tiyre"},
+                                        {name:"Basapat",type:"tiyre"},
+                                        {name:"Qońırqazı",type:"tiyre"},
+                                        {name:"Kenes",type:"tiyre"},
+                                        {name:"Tashkent",type:"tiyre"}
                                     ]
                                 },
-                                { at: "Sańmurın", túri: "uruw", ballar: [{at:"Kónshi",túri:"tiyre"},{at:"Tubay",túri:"tiyre"},{at:"Eshkili",túri:"tiyre"},{at:"Jalpaq shek",túri:"tiyre"},{at:"Tólebay",túri:"tiyre"},{at:"Jabashı",túri:"tiyre"}] },
-                                { at: "Estek", túri: "uruw", ballar: [{at:"Mańqanay",túri:"tiyre"},{at:"Qayıpnazar",túri:"tiyre"},{at:"Qaraterenshi",túri:"tiyre"},{at:"Qalmurat",túri:"tiyre"}] },
-                                { at: "Qanjıǵalı", túri: "uruw", ballar: [{at:"Shanıshpay",túri:"tiyre"},{at:"Sambet",túri:"tiyre"},{at:"Jaǵaltay",túri:"tiyre"},{at:"Baybíshe",túri:"tiyre"}] },
-                                { at: "Saltır", túri: "uruw", ballar: [{at:"Baybíshe",túri:"tiyre"},{at:"Sart",túri:"tiyre"},{at:"Orazımbet",túri:"tiyre"},{at:"Shuyıǵan",túri:"tiyre"}] }
+                                { name: "Sańmurın", type: "uruw", children: [{name:"Kónshi",type:"tiyre"},{name:"Tubay",type:"tiyre"},{name:"Eshkili",type:"tiyre"},{name:"Jalpaq shek",type:"tiyre"},{name:"Tólebay",type:"tiyre"},{name:"Jabashı",type:"tiyre"}] },
+                                { name: "Estek", type: "uruw", children: [{name:"Mańqanay",type:"tiyre"},{name:"Qayıpnazar",type:"tiyre"},{name:"Qaraterenshi",type:"tiyre"},{name:"Qalmurat",type:"tiyre"}] },
+                                { name: "Qanjıǵalı", type: "uruw", children: [{name:"Shanıshpay",type:"tiyre"},{name:"Sambet",type:"tiyre"},{name:"Jaǵaltay",type:"tiyre"},{name:"Baybíshe",type:"tiyre"}] },
+                                { name: "Saltır", type: "uruw", children: [{name:"Baybíshe",type:"tiyre"},{name:"Sart",type:"tiyre"},{name:"Orazımbet",type:"tiyre"},{name:"Shuyıǵan",type:"tiyre"}] }
                             ]
                         },
                         {
-                            at: "Keneges",
-                            túri: "ulken",
+                            name: "Keneges",
+                            type: "ulken",
                             tamga: "X",
-                            uran: "Shawlı-Shawhay!",
-                            jup: "Mańǵıt penen",
-                            maǵlıwmat: { tariyx: "Keneges.", qalaqı: "1480 kibitok" },
-                            ballar: [
+                            battleCry: "Shawlı-Shawhay!",
+                            pair: "Mańǵıt penen",
+                            info: { history: "Keneges.", population: "1480 kibitok" },
+                            children: [
                                 { 
-                                    at: "Aranshı", 
-                                    túri: "uruw",
-                                    ballar: [
-                                        {at:"Annaqul",túri:"tiyre"},
-                                        {at:"Abas",túri:"tiyre",ballar:[{at:"Seytimbet",túri:"koshe"}]},
-                                        {at:"Súyin",túri:"tiyre"},
-                                        {at:"Juwas",túri:"tiyre"},
-                                        {at:"Dáwletqarǵa",túri:"tiyre"},
-                                        {at:"Qayıpbergen",túri:"tiyre"}
+                                    name: "Aranshı", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Annaqul",type:"tiyre"},
+                                        {name:"Abas",type:"tiyre",children:[{name:"Seytimbet",type:"koshe"}]},
+                                        {name:"Súyin",type:"tiyre"},
+                                        {name:"Juwas",type:"tiyre"},
+                                        {name:"Dáwletqarǵa",type:"tiyre"},
+                                        {name:"Qayıpbergen",type:"tiyre"}
                                     ]
                                 },
-                                { at: "Aqtoǵın", túri: "uruw", ballar: [{at:"Nanjemes",túri:"tiyre"},{at:"Kóshek",túri:"tiyre"}] },
-                                { at: "Ómir", túri: "uruw", ballar: [{at:"Aqpıshaq",túri:"tiyre"},{at:"Usaq",túri:"tiyre"},{at:"Jel",túri:"tiyre"},{at:"Mınjır",túri:"tiyre"},{at:"Ótemis",túri:"tiyre"}] },
-                                { at: "Taraqtı", túri: "uruw", ballar: [{at:"Jetiqaraǵaz",túri:"tiyre",ballar:[{at:"Jetiqara",túri:"koshe"}]}] },
-                                { at: "Dobal", túri: "uruw" },
+                                { name: "Aqtoǵın", type: "uruw", children: [{name:"Nanjemes",type:"tiyre"},{name:"Kóshek",type:"tiyre"}] },
+                                { name: "Ómir", type: "uruw", children: [{name:"Aqpıshaq",type:"tiyre"},{name:"Usaq",type:"tiyre"},{name:"Jel",type:"tiyre"},{name:"Mınjır",type:"tiyre"},{name:"Ótemis",type:"tiyre"}] },
+                                { name: "Taraqtı", type: "uruw", children: [{name:"Jetiqaraǵaz",type:"tiyre",children:[{name:"Jetiqara",type:"koshe"}]}] },
+                                { name: "Dobal", type: "uruw" },
                                 { 
-                                    at: "Oymawıt", 
-                                    túri: "uruw",
-                                    ballar: [
-                                        {at:"Qara",túri:"tiyre"},
-                                        {at:"Sarı",túri:"tiyre",ballar:[{at:"Jiydeli",túri:"koshe"}]},
-                                        {at:"Aq",túri:"tiyre"}
+                                    name: "Oymawıt", 
+                                    type: "uruw",
+                                    children: [
+                                        {name:"Qara",type:"tiyre"},
+                                        {name:"Sarı",type:"tiyre",children:[{name:"Jiydeli",type:"koshe"}]},
+                                        {name:"Aq",type:"tiyre"}
                                     ]
                                 },
-                                { at: "Dombazqaq", túri: "uruw" },
-                                { at: "Nókis", túri: "uruw", maǵlıwmat: { eskertpe: "Qaraqalpaqstan paytaxtı!" }, ballar: [{at:"Jamanjaq",túri:"tiyre"},{at:"Bozaq",túri:"tiyre"},{at:"Altınpıshaq",túri:"tiyre"},{at:"Ǵobdir",túri:"tiyre"}] }
+                                { name: "Dombazqaq", type: "uruw" },
+                                { name: "Nókis", type: "uruw", info: { note: "Qaraqalpaqstan paytaxtı!" }, children: [{name:"Jamanjaq",type:"tiyre"},{name:"Bozaq",type:"tiyre"},{name:"Altınpıshaq",type:"tiyre"},{name:"Ǵobdir",type:"tiyre"}] }
                             ]
                         },
                         {
-                            at: "Mańǵıt",
-                            túri: "ulken",
+                            name: "Mańǵıt",
+                            type: "ulken",
                             tamga: "f",
-                            uran: "Shawlı-Shawhay!",
-                            jup: "Keneges penen",
-                            maǵlıwmat: { tariyx: "Soyısqor urıw. Edige urpaqtarı.", qalaqı: "2220 kibitok" },
-                            ballar: [
+                            battleCry: "Shawlı-Shawhay!",
+                            pair: "Keneges penen",
+                            info: { history: "Soyısqor urıw. Edige urpaqtarı.", population: "2220 kibitok" },
+                            children: [
                                 { 
-                                    at: "Qaratay", 
-                                    túri: "uruw",
-                                    maǵlıwmat: { topar: "Qara (Qaralar)" },
-                                    ballar: [
-                                        {at:"Qaramańǵıt",túri:"tiyre",ballar:[{at:"Úshbas",túri:"koshe"},{at:"Qarasıraq",túri:"koshe"},{at:"Aqmańǵıt",túri:"koshe"}]},
-                                        {at:"Mamıqshı",túri:"tiyre",ballar:[{at:"Jetiqurt",túri:"koshe"}]},
-                                        {at:"Qosar",túri:"tiyre",ballar:[{at:"Gúbidin",túri:"koshe"}]},
-                                        {at:"Qılqalı",túri:"tiyre"}
+                                    name: "Qaratay", 
+                                    type: "uruw",
+                                    info: { group: "Qara (Qaralar)" },
+                                    children: [
+                                        {name:"Qaramańǵıt",type:"tiyre",children:[{name:"Úshbas",type:"koshe"},{name:"Qarasıraq",type:"koshe"},{name:"Aqmańǵıt",type:"koshe"}]},
+                                        {name:"Mamıqshı",type:"tiyre",children:[{name:"Jetiqurt",type:"koshe"}]},
+                                        {name:"Qosar",type:"tiyre",children:[{name:"Gúbidin",type:"koshe"}]},
+                                        {name:"Qılqalı",type:"tiyre"}
                                     ]
                                 },
                                 { 
-                                    at: "Sarıtay", 
-                                    túri: "uruw",
-                                    maǵlıwmat: { topar: "Sarı (Sarılar)" },
-                                    ballar: [
-                                        {at:"Arshın",túri:"tiyre"},
-                                        {at:"Jaylıq",túri:"tiyre"},
-                                        {at:"Toqmańǵıt",túri:"tiyre"},
-                                        {at:"Arsarı",túri:"tiyre"},
-                                        {at:"Tazjanlıq",túri:"tiyre"},
-                                        {at:"Shúyt",túri:"tiyre"},
-                                        {at:"Jamansha",túri:"tiyre"},
-                                        {at:"Esebiy",túri:"tiyre"},
-                                        {at:"Tamǵalı",túri:"tiyre"},
-                                        {at:"Toqmoyın",túri:"tiyre"},
-                                        {at:"Temirhoja",túri:"tiyre"}
+                                    name: "Sarıtay", 
+                                    type: "uruw",
+                                    info: { group: "Sarı (Sarılar)" },
+                                    children: [
+                                        {name:"Arshın",type:"tiyre"},
+                                        {name:"Jaylıq",type:"tiyre"},
+                                        {name:"Toqmańǵıt",type:"tiyre"},
+                                        {name:"Arsarı",type:"tiyre"},
+                                        {name:"Tazjanlıq",type:"tiyre"},
+                                        {name:"Shúyt",type:"tiyre"},
+                                        {name:"Jamansha",type:"tiyre"},
+                                        {name:"Esebiy",type:"tiyre"},
+                                        {name:"Tamǵalı",type:"tiyre"},
+                                        {name:"Toqmoyın",type:"tiyre"},
+                                        {name:"Temirhoja",type:"tiyre"}
                                     ]
                                 },
-                                { at: "Boztay", túri: "uruw", maǵlıwmat: { topar: "Boz (Bozlar)" }, ballar: [{at:"Bozta",túri:"tiyre",ballar:[{at:"Bozta baba",túri:"koshe"}]}] },
-                                { at: "Jetimtay", túri: "uruw", maǵlıwmat: { topar: "Jetim (Jetimler)" }, ballar: [{at:"Eshbuǵa",túri:"tiyre",ballar:[{at:"Esh buǵa",túri:"koshe"}]}] }
+                                { name: "Boztay", type: "uruw", info: { group: "Boz (Bozlar)" }, children: [{name:"Bozta",type:"tiyre",children:[{name:"Bozta baba",type:"koshe"}]}] },
+                                { name: "Jetimtay", type: "uruw", info: { group: "Jetim (Jetimler)" }, children: [{name:"Eshbuǵa",type:"tiyre",children:[{name:"Esh buǵa",type:"koshe"}]}] }
                             ]
                         }
                     ]
@@ -1385,35 +1340,33 @@
         let panelAshıq = false;
 
         function terektiBaslaw() {
-    const qorap = document.getElementById('treeArea');
-    const keńlik = qorap.clientWidth;
-    const biyiklik = qorap.clientHeight;
+            const qorap = document.getElementById('treeArea');
+            const keńlik = qorap.clientWidth;
+            const biyiklik = qorap.clientHeight;
 
-    svg = d3.select("#treeSvg")
-        .attr("width", keńlik)
-        .attr("height", biyiklik);
+            svg = d3.select("#treeSvg")
+                .attr("width", keńlik)
+                .attr("height", biyiklik);
 
-    // Tazalaw
-    svg.selectAll("*").remove();
+            // Tazalaw
+            svg.selectAll("*").remove();
 
-    zoom = d3.zoom()
-        .scaleExtent([0.05, 3])
-        .on("zoom", (e) => {
-            g.attr("transform", e.transform);
-            ámeldegiMasshtab = e.transform;
-        });
+            zoom = d3.zoom()
+                .scaleExtent([0.05, 3])
+                .on("zoom", (e) => {
+                    g.attr("transform", e.transform);
+                    ámeldegiMasshtab = e.transform;
+                });
 
-    svg.call(zoom);
+            svg.call(zoom);
 
-    g = svg.append("g");
+            g = svg.append("g");
 
-    // ИСПРАВЛЕНИЕ ЗДЕСЬ:
-    const támır = d3.hierarchy(terekMaǵlıwmatları, d => d.ballar);
-    
-    // Остальной код без изменений...
-    const japrakSanaqı = támır.leaves().length;
-    const terenlik = támır.height;
+            const támır = d3.hierarchy(terekMaǵlıwmatları, d => d.children);
             
+            const japrakSanaqı = támır.leaves().length;
+            const terenlik = támır.height;
+                    
             // Kerek ólshem
             const eńAzamattıqKeńlik = Math.max(keńlik, japrakSanaqı * 25);
             const eńAzamattıqBiyiklik = Math.max(biyiklik, (terenlik + 1) * 100);
@@ -1458,39 +1411,39 @@
             const bólek = g.selectAll(".node")
                 .data(támır.descendants())
                 .enter().append("g")
-                .attr("class", d => `node node-${d.data.túri}`)
+                .attr("class", d => `node node-${d.data.type}`)
                 .attr("transform", d => `translate(${d.x},${d.y})`)
                 .on("click", (e, d) => maǵlıwmatKórsetiw(d.data));
 
             // Tórtbúrıshlar - kólemı dárejege qaray ózgeredi
             bólek.append("rect")
                 .attr("width", d => {
-                    const uzınlıq = Math.max(d.data.at.length * 7 + 16, 50);
-                    return d.data.túri === 'koshe' ? uzınlıq * 0.8 : uzınlıq;
+                    const uzınlıq = Math.max(d.data.name.length * 7 + 16, 50);
+                    return d.data.type === 'koshe' ? uzınlıq * 0.8 : uzınlıq;
                 })
-                .attr("height", d => d.data.túri === 'koshe' ? 22 : 28)
+                .attr("height", d => d.data.type === 'koshe' ? 22 : 28)
                 .attr("x", d => {
-                    const uzınlıq = Math.max(d.data.at.length * 7 + 16, 50);
-                    const haqıqıyUzınlıq = d.data.túri === 'koshe' ? uzınlıq * 0.8 : uzınlıq;
+                    const uzınlıq = Math.max(d.data.name.length * 7 + 16, 50);
+                    const haqıqıyUzınlıq = d.data.type === 'koshe' ? uzınlıq * 0.8 : uzınlıq;
                     return -haqıqıyUzınlıq / 2;
                 })
-                .attr("y", d => d.data.túri === 'koshe' ? -11 : -14)
+                .attr("y", d => d.data.type === 'koshe' ? -11 : -14)
                 .attr("rx", 6)
-                .attr("stroke-width", d => d.data.túri === 'xaliq' ? 3 : 2);
+                .attr("stroke-width", d => d.data.type === 'xaliq' ? 3 : 2);
 
             // Ataw mátini
             bólek.append("text")
                 .attr("dy", ".35em")
                 .attr("text-anchor", "middle")
                 .style("font-size", d => {
-                    if (d.data.túri === 'koshe') return "9px";
-                    if (d.data.túri === 'tiyre') return "10px";
+                    if (d.data.type === 'koshe') return "9px";
+                    if (d.data.type === 'tiyre') return "10px";
                     return "11px";
                 })
-                .text(d => d.data.at);
+                .text(d => d.data.name);
 
             // Tamǵa (joqarıda)
-            bólek.filter(d => d.data.tamga && d.data.túri !== 'koshe' && d.data.túri !== 'tiyre')
+            bólek.filter(d => d.data.tamga && d.data.type !== 'koshe' && d.data.type !== 'tiyre')
                 .append("text")
                 .attr("class", "tamga-text")
                 .attr("dy", -22)
@@ -1498,21 +1451,21 @@
                 .text(d => d.data.tamga);
                 
             // Uran (tómende)
-            bólek.filter(d => d.data.uran && (d.data.túri === 'aris' || d.data.túri === 'ulken'))
+            bólek.filter(d => d.data.battleCry && (d.data.type === 'aris' || d.data.type === 'ulken'))
                 .append("text")
                 .attr("dy", 28)
                 .attr("text-anchor", "middle")
                 .style("font-size", "9px")
                 .style("fill", "#d4af37")
                 .style("font-weight", "bold")
-                .text(d => d.data.uran);
+                .text(d => d.data.battleCry);
         }
 
         function maǵlıwmatKórsetiw(maǵlıwmat) {
             paneldiAshıw();
             
-            document.getElementById('dTamga').textContent = maǵlıwmat.tamga || (maǵlıwmat.túri === 'aris' ? '🏛️' : '🏹');
-            document.getElementById('dName').textContent = maǵlıwmat.at;
+            document.getElementById('dTamga').textContent = maǵlıwmat.tamga || (maǵlıwmat.type === 'aris' ? '🏛️' : '🏹');
+            document.getElementById('dName').textContent = maǵlıwmat.name;
             
             let qospa = "";
             const túrler = {
@@ -1524,130 +1477,176 @@
                 'tiyre': 'Tiyre (tiyre)',
                 'koshe': 'Ko\'she (bútik)'
             };
-            qospa = túrler[maǵlıwmat.túri] || 'Ruwlıq birlik';
-            if (maǵlıwmat.maǵlıwmat && maǵlıwmat.maǵlıwmat.qalaqı) qospa += ` • ${maǵlıwmat.maǵlıwmat.qalaqı}`;
+            qospa = túrler[maǵlıwmat.type] || 'Ruwlıq birlik';
+            if (maǵlıwmat.info && maǵlıwmat.info.population) qospa += ` • ${maǵlıwmat.info.population}`;
             document.getElementById('dSubtitle').textContent = qospa;
             
             let html = '';
             
-            if (maǵlıwmat.uran) {
+            // Uran (soyıs urawı)
+            if (maǵlıwmat.battleCry) {
                 html += `<div class="info-block" style="border-color:#e74c3c; background:rgba(231,76,60,0.1)">
                     <div class="info-label">Soyıs urawı (Uran)</div>
-                    <div class="info-content" style="color:#ff8a80; font-size:1.3rem; font-weight:bold; text-align:center">${maǵlıwmat.uran}</div>
+                    <div class="info-content" style="color:#ff8a80; font-size:1.3rem; font-weight:bold; text-align:center">${maǵlıwmat.battleCry}</div>
                 </div>`;
             }
             
-            if (maǵlıwmat.maǵlıwmat) {
-                if (maǵlıwmat.maǵlıwmat.tariyx) {
+            // Jupar urıw (ekzogamiya ushın)
+            if (maǵlıwmat.pair) {
+                html += `<div class="info-block" style="border-color:#3498db; background:rgba(52,152,219,0.1)">
+                    <div class="info-label">Jupar urıw (úyleńiw ushın)</div>
+                    <div class="info-content">${maǵlıwmat.pair}</div>
+                </div>`;
+            }
+            
+            // Tiykarǵı maǵlıwmat
+            if (maǵlıwmat.info) {
+                if (maǵlıwmat.info.history) {
                     html += `<div class="info-block">
                         <div class="info-label">Tariyxı</div>
-                        <div class="info-content">${maǵlıwmat.maǵlıwmat.tariyx}</div>
+                        <div class="info-content">${maǵlıwmat.info.history}</div>
                     </div>`;
                 }
-                if (maǵlıwmat.maǵlıwmat.túbegi) {
+                if (maǵlıwmat.info.origin) {
                     html += `<div class="info-block" style="border-color:#3498db">
                         <div class="info-label">Kelip shıǵıwı</div>
-                        <div class="info-content">${maǵlıwmat.maǵlıwmat.túbegi}</div>
+                        <div class="info-content">${maǵlıwmat.info.origin}</div>
                     </div>`;
                 }
-                if (maǵlıwmat.maǵlıwmat.anız) {
+                if (maǵlıwmat.info.legend) {
                     html += `<div class="info-block" style="border-color:#f39c12; background:rgba(243,156,18,0.1)">
                         <div class="info-label">Anız</div>
-                        <div class="info-content"><em>${maǵlıwmat.maǵlıwmat.anız}</em></div>
+                        <div class="info-content"><em>${maǵlıwmat.info.legend}</em></div>
                     </div>`;
                 }
-                if (maǵlıwmat.maǵlıwmat.qurilimi) {
+                if (maǵlıwmat.info.structure) {
                     html += `<div class="info-block" style="border-color:#27ae60">
                         <div class="info-label">Qurilimi</div>
-                        <div class="info-content">${maǵlıwmat.maǵlıwmat.qurilimi}</div>
+                        <div class="info-content">${maǵlıwmat.info.structure}</div>
                     </div>`;
                 }
-                if (maǵlıwmat.maǵlıwmat.qalaqı) {
+                if (maǵlıwmat.info.population) {
                     html += `<div class="info-block" style="border-color:#9b59b6">
-                        <div class="info-label">Qalaqı</div>
-                        <div class="info-content">${maǵlıwmat.maǵlıwmat.qalaqı}</div>
+                        <div class="info-label">Qalaqı (kibitok)</div>
+                        <div class="info-content">${maǵlıwmat.info.population}</div>
                     </div>`;
                 }
-                if (maǵlıwmat.maǵlıwmat.tili) {
+                if (maǵlıwmat.info.language) {
                     html += `<div class="info-block">
                         <div class="info-label">Tili</div>
-                        <div class="info-content">${maǵlıwmat.maǵlıwmat.tili}</div>
+                        <div class="info-content">${maǵlıwmat.info.language}</div>
                     </div>`;
                 }
-                if (maǵlıwmat.maǵlıwmat.eskertpe) {
+                if (maǵlıwmat.info.note) {
                     html += `<div class="info-block" style="border-color:#e67e22">
                         <div class="info-label">Eskertpe</div>
-                        <div class="info-content">${maǵlıwmat.maǵlıwmat.eskertpe}</div>
+                        <div class="info-content">${maǵlıwmat.info.note}</div>
+                    </div>`;
+                }
+                if (maǵlıwmat.info.group) {
+                    html += `<div class="info-block" style="border-color:#1abc9c">
+                        <div class="info-label">Topar</div>
+                        <div class="info-content">${maǵlıwmat.info.group}</div>
                     </div>`;
                 }
             }
             
-            if (maǵlıwmat.ballar && maǵlıwmat.ballar.length > 0) {
+            // Toparlar sáni
+            if (maǵlıwmat.children && maǵlıwmat.children.length > 0) {
                 html += `<div class="info-block" style="border-color:#d4af37; text-align:center">
                     <div class="info-label">Toparlar sáni</div>
-                    <div class="info-content" style="font-size:1.5rem; color:var(--gold); font-weight:bold">${maǵlıwmat.ballar.length}</div>
+                    <div class="info-content" style="font-size:1.5rem; color:var(--gold); font-weight:bold">${maǵlıwmat.children.length}</div>
                 </div>`;
             }
             
-            if (maǵlıwmat.jup) {
-                html += `<div class="info-block" style="border-color:#3498db; background:rgba(52,152,219,0.1)">
-                    <div class="info-label">Jupar urıw</div>
-                    <div class="info-content">${maǵlıwmat.jup}</div>
-                </div>`;
-            }
+            // Ierarxiya tizimi
+            html += ierarxiyaTiziminQurıw(maǵlıwmat);
             
             document.getElementById('dContent').innerHTML = html || '<div class="info-block"><div class="info-label">Maǵlıwmat</div><div class="info-content">Basqa bóleklerdi kóriw ushın basıń</div></div>';
         }
 
-        function paneldiAshıw() {
-    const panel = document.getElementById('details');
-    const ashıwKnopkası = document.getElementById('openPanelBtn');
-    
-    panel.classList.remove('collapsed');
-    panel.classList.add('active');
-    ashıwKnopkası.classList.remove('visible');
-    panelAshıq = true;
-}
-
-function paneldiJabıw() {
-    const panel = document.getElementById('details');
-    const ashıwKnopkası = document.getElementById('openPanelBtn');
-    
-    panel.classList.add('collapsed');
-    panel.classList.remove('active');
-    ashıwKnopkası.classList.add('visible');
-    panelAshıq = false;
-    
-    // На мобильных принудительно скрываем после анимации
-    if (window.innerWidth <= 1200) {
-        setTimeout(() => {
-            if (!panelAshıq) {
-                panel.style.display = 'none';
+        function ierarxiyaTiziminQurıw(maǵlıwmat) {
+            // Terektegi joly tabıw
+            function jolyTabıw(node, target, path = []) {
+                if (node === target) return [...path, node];
+                if (!node.children) return null;
+                
+                for (let child of node.children) {
+                    const result = jolyTabıw(child, target, [...path, node]);
+                    if (result) return result;
+                }
+                return null;
             }
-        }, 300);
-    }
-}
+            
+            const jol = jolyTabıw(terekMaǵlıwmatları, maǵlıwmat);
+            if (!jol || jol.length <= 1) return '';
+            
+            let html = `<div class="hierarchy-chain">
+                <div class="info-label" style="color: var(--gold); margin-bottom: 10px;">Ierarxiya</div>`;
+            
+            const dárejeAtawları = {
+                'xaliq': 'Xalıq',
+                'aris': 'Arıs',
+                'bolim': 'Bólim',
+                'ulken': 'Úlken urıw',
+                'uruw': 'Urıw',
+                'tiyre': 'Tiyre',
+                'koshe': 'Ko\'she'
+            };
+            
+            jol.forEach((element, index) => {
+                const aqırǵısı = index === jol.length - 1;
+                
+                html += `<div class="hierarchy-item" style="${aqırǵısı ? 'background: rgba(241,196,15,0.1); border-radius: 4px; padding: 8px;' : ''}">
+                    <span class="hierarchy-level">${dárejeAtawları[element.type] || element.type}</span>
+                    <span style="${aqırǵısı ? 'color: var(--gold); font-weight: bold;' : ''}">${element.name}</span>
+                </div>`;
+                
+                if (!aqırǵısı) {
+                    html += `<div style="text-align: center; color: var(--gold); font-size: 1.2em;">↓</div>`;
+                }
+            });
+            
+            html += `</div>`;
+            return html;
+        }
 
-function paneldiAshıw() {
-    const panel = document.getElementById('details');
-    const ashıwKnopkası = document.getElementById('openPanelBtn');
-    
-    // На мобильных сначала показываем
-    if (window.innerWidth <= 1200) {
-        panel.style.display = 'block';
-        // Небольшая задержка чтобы браузер успел применить display:block
-        setTimeout(() => {
-            panel.classList.remove('collapsed');
-            panel.classList.add('active');
-        }, 10);
-    } else {
-        panel.classList.remove('collapsed');
-        panel.classList.add('active');
-    }
-    
-    ashıwKnopkası.classList.remove('visible');
-    panelAshıq = true;
-}
+        function paneldiAshıw() {
+            const panel = document.getElementById('details');
+            const ashıwKnopkası = document.getElementById('openPanelBtn');
+            
+            if (window.innerWidth <= 1200) {
+                panel.style.display = 'block';
+                setTimeout(() => {
+                    panel.classList.remove('collapsed');
+                    panel.classList.add('active');
+                }, 10);
+            } else {
+                panel.classList.remove('collapsed');
+                panel.classList.add('active');
+            }
+            
+            ashıwKnopkası.classList.remove('visible');
+            panelAshıq = true;
+        }
+
+        function paneldiJabıw() {
+            const panel = document.getElementById('details');
+            const ashıwKnopkası = document.getElementById('openPanelBtn');
+            
+            panel.classList.add('collapsed');
+            panel.classList.remove('active');
+            ashıwKnopkası.classList.add('visible');
+            panelAshıq = false;
+            
+            if (window.innerWidth <= 1200) {
+                setTimeout(() => {
+                    if (!panelAshıq) {
+                        panel.style.display = 'none';
+                    }
+                }, 300);
+            }
+        }
 
         function ulıwlastırıw() {
             svg.transition().duration(300).call(zoom.scaleBy, 1.3);
